@@ -24,7 +24,7 @@
 
     "autoload": {
         "psr-4": {
-            "Knut7\\framework\\": "src/"
+            "FWAP\\": "src/FWAP"
         }
     },
         "minimum-stability": "dev"
