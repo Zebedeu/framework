@@ -1,6 +1,6 @@
 
 {
-    "name": "Knut7/framework",
+    "name": "knut7/framework",
     "type": "library",
     "description": "Min framwork em mvc para PHP 7.0.0 ou superior",
     "keywords": ["framwork","mvc"],
