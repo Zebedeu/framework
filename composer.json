@@ -26,7 +26,5 @@
         "psr-4": {
             "FWAP\\": "src/FWAP"
         }
-    },
-        "minimum-stability": "dev"
-
+    }
 }
