@@ -3,7 +3,7 @@
 /**
  * Brazilian Portuguese PHPMailer language file: refer to English translation for definitive list
  * @package PHPMailer
- * @author Paulo Henrique Garcia <paulo@controllerweb.com.br>
+ * @author Paulo Henrique Garcia <paulo@Controllerweb.com.br>
  * @author Lucas Guimarães <lucas@lucasguimaraes.com>
  * @author Phelipe Alves <phelipealvesdesouza@gmail.com>
  */

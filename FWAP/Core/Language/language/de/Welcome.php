@@ -22,12 +22,12 @@ return array(
     // Index method
     'welcome_text' => 'Willkommen Apweb Framework',
     'welcome_message' => '
-		Hallo und Willkommen im welcome-Controlleres! <br />
+		Hallo und Willkommen im welcome Controlleres! <br />
 	',
     // Subpage method
     'subpage_text' => 'Subpage',
     'subpage_message' => '
-		Hallo und Wilkommen im welcome-Controlleres in der subpage-Methode! <br />
+		Hallo und Wilkommen im welcome-Ap_Controlleres in der subpage-Methode! <br />
 	',
     // Buttons
     'open_subpage' => 'Subpage öffnen',

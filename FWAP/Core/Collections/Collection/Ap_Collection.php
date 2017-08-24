@@ -14,33 +14,26 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
  */
-
-namespace FWAP\Core\FWCols\FWAPColections;
+namespace FWAP\Core\Collections\Collection;
+use Traversable;
 
 /**
- * Description of RecursiveIteratorIterator
+ * Description of Colections
  *
  * @author artphotografie
  */
-class RecursiveIteratorIterator {
+interface Ap_Collection extends Traversable
+{
 
-    /**
-     * @var array
-     */
-    private $elements;
+    public function getIterator();
 
-    //put your code here
+    public function offsetExists($offset);
 
-    public function __construct($elements) {
+    public function offsetGet($offset);
 
-        $this->elements = $elements;
-    }
+    public function offsetSet($offset, $value);
 
-    public function recursiveIteratorIterator() {
+    public function offsetUnset($offset);
 
-        $obj = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->elements));
-       echo $obj->rewind();
-        return iterator_to_array($obj, TRUE);
-    }
-
+//put your code here
 }

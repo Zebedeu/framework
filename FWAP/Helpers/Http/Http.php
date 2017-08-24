@@ -25,11 +25,13 @@ class Http {
          $this->securite = $securite;
 
     }
-    public function url(){
-        if($this->securite == true) {
-            echo $this->url =  'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR;
-        }else{
-           echo $this->url = 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') .DS;
+    public function url()
+    {
+        if ($this->securite == true) {
+            return $this->url = 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR;
         }
+
+        return $this->url = 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\');
+
     }
 }

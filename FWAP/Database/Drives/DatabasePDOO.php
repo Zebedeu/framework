@@ -24,10 +24,18 @@ use function var_dump;
 final class DatabasePDOO  extends DBconnection implements iDatabase {
 
     public $conn;
-     public $stmt;
+    public $stmt;
+    /**
+     * @var array
+     */
+    private $param;
 
-     public function __construct() {
-        parent::__construct(array('dns' => DB_TYPE . ':host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME,  'users' => DB_USER, 'pass' => DB_PASS));
+    /**
+     * DatabasePDOO constructor.
+     * @param array $param
+     */
+    public function __construct(array $param = array() ) {
+        parent::__construct($param);
         $this->conn = $this->connection();
     }
 
@@ -61,17 +69,17 @@ final class DatabasePDOO  extends DBconnection implements iDatabase {
 
     public function selectManager($sql, $array = array(), $fetchMode = \PDO::FETCH_ASSOC)
     {
-        $this->stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
 
         foreach ($array as $key => $values) {
-            $this->stmt->bindValue("$key", $values);
+            $stmt->bindValue("$key", $values);
         }
-        $this->stmt->execute();
+        $stmt->execute();
         do {
-            return $this->stmt->fetchAll($fetchMode);
+            return $stmt->fetchAll($fetchMode);
 
         } while (
-            $this->stmt->nextRowset());
+            $stmt->nextRowset());
 
     }
 
@@ -80,7 +88,7 @@ final class DatabasePDOO  extends DBconnection implements iDatabase {
      * @param $data recebido do array
      * @return bool
      */
-    public function insert($table, $data) {
+    public function insert($table, array $data) {
 
         krsort($data);
 
@@ -88,10 +96,10 @@ final class DatabasePDOO  extends DBconnection implements iDatabase {
         $fieldValues = ':' . implode(',:', array_keys($data));
         try {
 
-            $this->stmt = $this->conn->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
+            $stmt = $this->conn->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
 
             foreach ($data as $key => $values) {
-                $this->stmt->bindValue(":$key", $values);
+                $stmt->bindValue(":$key", $values);
             }
         } catch (Exception $e) {
             $this->_Rollback();
@@ -100,8 +108,8 @@ final class DatabasePDOO  extends DBconnection implements iDatabase {
 
 
 
-        return $this->stmt->execute();
-        unset($this->stmt);
+         $stmt->execute();
+        unset($stmt);
     }
 
     /**

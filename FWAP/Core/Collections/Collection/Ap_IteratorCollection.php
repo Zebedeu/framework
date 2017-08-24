@@ -25,7 +25,7 @@ namespace FWAP\Core\Collections\Collection;
 use ArrayIterator;
 use Closure;
 
-class IteratorCollection implements \ArrayAccess {
+class Ap_IteratorCollection implements \ArrayAccess {
 
     /**
      * @var array

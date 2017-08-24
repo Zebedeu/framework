@@ -28,7 +28,6 @@ private $_currentItem = null;
 private $_postData = array("text" => "text", "button"=>"button");
 
 
-    private $_cu = null;
     private $_name;
     private $_value;
     public $_va;

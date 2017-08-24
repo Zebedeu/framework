@@ -1,4 +1,5 @@
 <?php
+use FWAP\Database\Drives\iDatabase;
 
 /**
  *
@@ -15,32 +16,30 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
  */
-class SQLite3 implements interfaceDatabase {
-
-    public $linha;
-
-    public function __construct($DB_TYPE, $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS) {
-        parent::__construct($DB_TYPE . ':host=' . $DB_HOST . ';dbname=' . $DB_NAME, $DB_USER, $DB_PASS);
-    }
+class SQLite3 implements iDatabase {
 
 
     /**
-     * @param $table
-     * @param $array
+     * @param $sql
+     * @param array $array
+     * @param int $fetchMode
+     * @return mixed
      */
-    public function CreatedDatabase($table, $array) {
-
-//        $db->exec('CREATE TABLE $table (bar $data)');
+    public function selectManager($sql, $array = array (), $fetchMode = PDO::FETCH_ASSOC)
+    {
+        // TODO: Implement selectManager() method.
     }
 
-    public function select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC) {
-        $stmt = $this->prepare($sql);
-
-        foreach ($array as $key => $values) {
-            $stmt->bindValue("$key", $values);
-        }
-        $stmt->execute();
-        return $stmt->fetchAll($fetchMode);
+    /**
+     * select
+     * @param string $sql An SQL string
+     * @param array $array Paramters to bind
+     * @param constant $fetchMode A PDO Fetch mode
+     * @return mixed
+     */
+    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array (), $fetchMode)
+    {
+        // TODO: Implement select() method.
     }
 
     /**
@@ -48,18 +47,9 @@ class SQLite3 implements interfaceDatabase {
      * @param $data recebido do array
      * @return bool
      */
-    public function insert($table, $data) {
-        krsort($data);
-
-        $fieldNme = implode('`,`', array_keys($data));
-        $fieldValues = ':' . implode(',:', array_keys($data));
-
-        $stmt = $this->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
-
-        foreach ($data as $key => $values) {
-            $stmt->bindValue(":$key", $values);
-        }
-        return $stmt->execute();
+    public function insert($table, array $data)
+    {
+        // TODO: Implement insert() method.
     }
 
     /**
@@ -68,32 +58,38 @@ class SQLite3 implements interfaceDatabase {
      * @param $where
      * @return bool
      */
-    public function update($table, $data, $where) {
-        ksort($data);
-
-        $fielDetail = null;
-
-        foreach ($data as $key => $values) {
-            $fielDetail .= "`$key`=:$key,";
-        }
-
-        $fielDetail = trim($fielDetail, ',');
-        $stmt = $this->prepare("UPDATE $table SET $fielDetail WHERE $where ");
-        foreach ($data as $key => $values) {
-            $stmt->bindValue(":$key", $values);
-        }
-
-        return $stmt->execute();
+    public function update($table, $data, $where)
+    {
+        // TODO: Implement update() method.
     }
 
     /**
      * @param $table
      * @param $where
-     * @param int $limit
-     * @return int
+     * @param $limit
+     * @return mixed
      */
-    public function delete($table, $where, $limit = 1) {
-        return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");
+    public function delete($table, $where, $limit)
+    {
+        // TODO: Implement delete() method.
     }
 
+    /**
+     * @param $db
+     * @return mixed
+     */
+    public function get_Data_definition($db)
+    {
+        // TODO: Implement get_Data_definition() method.
+    }
+
+    /**
+     * @param String $table
+     * @param array $fileds
+     * @return mixed
+     */
+    public function createTable(String $table, array $fileds)
+    {
+        // TODO: Implement createTable() method.
+    }
 }

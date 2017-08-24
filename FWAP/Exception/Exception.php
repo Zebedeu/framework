@@ -30,7 +30,7 @@ class Exception {
   pasta  nova para a tua aplicação então você pode cria uma pasta para a tua aplicação em <code>" . PV . "</code><br/>
   Exemplo:<br/><br/>
   <code>" . PV . "MINHA APLICACÃO;</code><br/><br/>
-  2 Na pasta <code>Config</code> no ficheiro <code>Config.module.php</code> insere o nome da tua <code>aplicação</code> na variavel <code>$<en>MY_PROJECT_NAME</code><br/>
+  2 Na pasta <code>Config</code> no ficheiro <code>Ap_Config.module.php</code> insere o nome da tua <code>aplicação</code> na variavel <code>$<en>MY_PROJECT_NAME</code><br/>
   Exemplo:<br/><br/>
   <code>$<en>MY_PROJECT_NAME = 'MINHA APLICACÃO';</code><br/><br/> ");
     }
@@ -42,7 +42,7 @@ class Exception {
         ----------<br/><code><? php <br/>class $classFile { <br/><br/>public function __construct()\n{<br/><br/># code...<br/>}<br/><br/>public function Index(){<br/><br/>}<br/>}</code><br/>----------");
     }
 
-    public static function Controller($classFile) {
+    public static function controller($classFile) {
 
         Auth::Auth("<p class='btn btn-danger>' 3 . A class nao exise. Você deve criar em primeiro lugar uma classe em <code>$classFile</code>.'</p>' ");
     }
@@ -79,7 +79,7 @@ class Exception {
 
     public static function notFound() {
 
-        FWAPException::error();
+        ApException::error();
     }
 
     public static function langNotLoad() {
@@ -88,7 +88,7 @@ class Exception {
 
     public static function Error($string)
     {
-        FWAPException::error($string);
+        ApException::error($string);
     }
 
 }

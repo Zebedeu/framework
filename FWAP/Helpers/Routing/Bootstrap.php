@@ -20,19 +20,15 @@ namespace FWAP\Helpers\Routing;
 
 use \FWAP\Exception\Exception;
 use FWAP\Helpers\Log;
-use function ucfirst;
 
 final class Bootstrap {
 
     private $_url = null;
     private $_controller = "";
-    private $method = "";
-    private $parems = "";
     private $_controllerPath = PV . APP . DS. "Controllers/";
     private $_modelPath = 'Models';
     private $_errorPath = 'Error.php';
     private $_defaultFile = 'Index.php';
-    private $_callback;
     private $log;
 
     /**
@@ -44,8 +40,8 @@ final class Bootstrap {
         // Sets the protected $_url
         $this->_getUrl();
 
-        // Load the default controller if no URL is set
-        // eg: Visit http://localhost it loads Default Controller
+        // Load the default Ap_Controller if no URL is set
+        // eg: Visit http://localhost it loads Default Ap_Controller
         if (empty($this->_url[0])) {
             $this->_loadDefaultController();
             return false;
@@ -56,11 +52,11 @@ final class Bootstrap {
     }
 
     /**
-     * (Optional) Set a custom path to controllers
+     * (Optional) Set a custom path to Ap_Controllers
      * @param string $path
      */
     public function setControllerPath($path) {
-        $this->_controllerPath = trim($path, '/') . '/';
+        $this->_ControllerPath = trim($path, '/') . '/';
     }
 
     /**
@@ -73,7 +69,7 @@ final class Bootstrap {
 
     /**
      * (Optional) Set a custom path to the error file
-     * @param string $path Use the file name of your controller, eg: error.php
+     * @param string $path Use the file name of your Ap_Controller, eg: error.php
      */
     public function setErrorFile($path) {
         $this->_errorFile = trim($path, '/');
@@ -81,7 +77,7 @@ final class Bootstrap {
 
     /**
      * (Optional) Set a custom path to the error file
-     * @param string $path Use the file name of your controller, eg: Index.php
+     * @param string $path Use the file name of your Ap_Controller, eg: Index.php
      */
     public function setDefaultFile($path) {
         $this->_defaultFile = trim($path, '/');
@@ -109,7 +105,7 @@ final class Bootstrap {
     }
 
     /**
-     * Load an existing controller if there IS a GET parameter passed
+     * Load an existing Ap_Controller if there IS a GET parameter passed
      * 
      * @return boolean|string
      */
@@ -129,8 +125,8 @@ final class Bootstrap {
     /**
      * If a method is passed in the GET url paremter
      * 
-     *  http://localhost/controller/method/(param)/(param)/(param)
-     *  url[0] = Controller
+     *  http://localhost/Controller/method/(param)/(param)/(param)
+     *  url[0] = Ap_Controller
      *  url[1] = Method
      *  url[2] = Param
      *  url[3] = Param
@@ -151,25 +147,25 @@ final class Bootstrap {
         // Determine what to load
         switch ($length) {
             case 5:
-                //Controller->Method(Param1, Param2, Param3)
+                //Ap_Controller->Method(Param1, Param2, Param3)
                 $data=  $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3], $this->_url[4]);
                 $this->log->write($data);
                 break;
 
             case 4:
-                //Controller->Method(Param1, Param2)
+                //Ap_Controller->Method(Param1, Param2)
                 $data= $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
                 $this->log->write($data);
                 break;
 
             case 3:
-                //Controller->Method(Param1, Param2)
+                //Ap_Controller->Method(Param1, Param2)
                 $data= $this->_controller->{$this->_url[1]}($this->_url[2]);
                 $this->log->write($data);
                 break;
 
             case 2:
-                //Controller->Method(Param1, Param2)
+                //Ap_Controller->Method(Param1, Param2)
                 $data=  $this->_controller->{$this->_url[1]}();
                 $this->log->write($data);
                 break;

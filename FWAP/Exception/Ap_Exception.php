@@ -21,7 +21,7 @@ use FWAP\Helpers\Assets;
 use FWAP\Helpers\Ucfirst;
 
 
-class FWAPException {
+class ApException {
 
     public static function error( $params = null){ ?>
 

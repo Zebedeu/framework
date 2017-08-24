@@ -26,9 +26,9 @@ namespace FWAP\Helpers\Security;
 
 interface iRenderFiles
 {
-    public function isViewPath($controllers);
+    public function isViewPath($Ap_Controllers);
     public function isHeader();
     public function isFooter();
-    public function isIndex($controllers, $view);
+    public function isIndex($Ap_Controllers, $view);
 
 }

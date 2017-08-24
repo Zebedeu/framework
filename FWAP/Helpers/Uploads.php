@@ -18,7 +18,7 @@
 
 namespace FWAP\Helpers;
 
-use FWAP\Core\Controller\Controller;
+use FWAP\Core\Ap_Controller\Ap_Controller;
 use FWAP\Core\Language\iLanguage;
 use FWAP\Core\Language\Language;
 use FWAP\Helpers\Security\Session;

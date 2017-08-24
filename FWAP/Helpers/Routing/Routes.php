@@ -16,7 +16,7 @@
 
 namespace FWAP\Helpers\Routing;
 
-use FWAP\Exception\FWAPException;
+use FWAP\Exception\ApException;
 use FWAP\Helpers\Language;
 
 class Routes
@@ -63,25 +63,25 @@ class Routes
 //
                 $segmento = explode('/', $path);
 //
-                $controllerName = array_shift($segmento) . 'Controller';
+                $Ap_ControllerName = array_shift($segmento) . 'Ap_Controller';
 
-//                echo $controllerName;
-                $controllerName = ucfirst($controllerName);
+//                echo $Ap_ControllerName;
+                $Ap_ControllerName = ucfirst($Ap_ControllerName);
 
                 $actionName = 'action' . ucfirst(array_shift($segmento));
 
                 $parameters = $segmento;
 
 
-                $controllerPath = DIR_FILE . '/Controllers/' . $controllerName . '.php';
+                $Ap_ControllerPath = DIR_FILE . '/Controllers/' . $Ap_ControllerName . '.php';
 
-                if(file_exists($controllerPath))
+                if(file_exists($Ap_ControllerPath))
                 {
-                    include_once $controllerPath;
+                    include_once $Ap_ControllerPath;
 
                 }
 
-                $objec = new $controllerName;
+                $objec = new $Ap_ControllerName;
 
 
                 $result = call_user_func_array(array($objec, $actionName), $parameters);
@@ -100,7 +100,7 @@ class Routes
         }else {
             $lang = new Language();
             $lang->Load('welcome');
-            FWAPException::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
+            ApException::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
         }
     }
 }

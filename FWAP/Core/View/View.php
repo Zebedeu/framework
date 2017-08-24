@@ -23,9 +23,13 @@ namespace FWAP\Core\View;
 
 
 
+use function extract;
 use FWAP\Exception\Exception;
 use FWAP\Helpers\Security\iRenderFiles;
 use FWAP\Helpers\Security\RenderFiles;
+use function ob_end_clean;
+use function ob_get_contents;
+use function ob_start;
 
 class View extends RenderFiles implements iView
 {
@@ -33,17 +37,18 @@ class View extends RenderFiles implements iView
     private $view;
 
     /**
-     * @param $controller $this responsavel para pegar a pasta da View
-     * @param $view Index responsavel em pegar  os arquivos Index da pasta do controller
+     * @param $Ap_Controller $this responsavel para pegar a pasta da View
+     * @param $view Index responsavel em pegar  os arquivos Index da pasta do Ap_Controller
      */
     private $controllers;
     /**
      * @var iRenderFiles
      */
     private $files;
+    private $data = array();
 
     /**
-     * @param $controller
+     * @param $Ap_Controller
      * @param String|NULL $view
      * @return bool|void
      */
@@ -51,10 +56,15 @@ class View extends RenderFiles implements iView
 
     public function render($controller, String $view )
     {
+        ob_start();
         $this->view = $view;
         $this->controllers = get_class($controller);
 
-        return $this->init();
+        $str = ob_get_contents();
+        ob_end_clean();
+        extract($this->data);
+        $this->init();
+        return $str;
 
     }
 
@@ -66,6 +76,21 @@ class View extends RenderFiles implements iView
         $this->isFooter();
 
         return true;
+
+    }
+
+    public function assign($key, $val) {
+        $this->data[$key] = $val;
+    }
+
+    function __get($name)
+    {
+       return $this->data[$name];
+    }
+
+    function set($name, $value)
+    {
+        $this->data[$name] = $value;
 
     }
 }

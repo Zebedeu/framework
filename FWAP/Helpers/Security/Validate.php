@@ -122,7 +122,7 @@ class Validate
      */
     public function val($typeOfValidator, $arg = null)
     {
-        if ($arg == null)
+        if ($arg == null && $this->_val  instanceof Val)
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
         else
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);

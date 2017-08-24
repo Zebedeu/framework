@@ -17,6 +17,8 @@
 
 namespace FWAP\Helpers;
 
+use FWAP\Exception\Exception;
+
 class Language
 {
 
@@ -43,7 +45,7 @@ class Language
             /** require file */
             return $this->array = require_once($file);
         } else {
-            echo Exception::langNotLoad();
+             echo Exception::langNotLoad();
         }
     }
 
@@ -83,8 +85,7 @@ class Language
             $array = include($file);
         } else {
             /** display error */
-//            echo Error::display("Could not load language file '$code/$name.php'");
-//            die;
+           echo Exception::langNotLoad();
         }
 
         if (!empty($array[$value])) {

@@ -26,13 +26,13 @@ class RenderFiles implements iRenderFiles
     private $footer = "footer.phtml";
     private $ex = '.phtml';
 
-    public function isViewPath($controllers) {
+    public function isViewPath($controller) {
         if (!file_exists(VIEW) || !is_readable(VIEW)) {
             return Exception::noPathView();
         }
 
-        if (!is_readable(VIEW . $controllers) || !file_exists(VIEW . $controllers)) {
-            return Exception::noPathinView($controllers);
+        if (!is_readable(VIEW . $controller) || !file_exists(VIEW . $controller)) {
+            return Exception::noPathinView($controller);
         }
 
     }
@@ -54,13 +54,13 @@ class RenderFiles implements iRenderFiles
         require_once VIEW . $this->footer;
     }
 
-    public function isIndex($controllers, $view)
+    public function isIndex($controller, $view)
     {
 
-        if (!is_readable(VIEW . $controllers . DS . $view . $this->ex) || !file_exists(VIEW . $controllers . DS . $view . $this->ex)) {
-            return Exceptio::notIndex($controllers);
+        if (!is_readable(VIEW . $controller . DS . $view . $this->ex) || !file_exists(VIEW . $controller . DS . $view . $this->ex)) {
+            return Exceptio::notIndex($controller);
         }
-        require_once VIEW . $controllers . DS . $view . $this->ex;
+        require_once VIEW . $controller . DS . $view . $this->ex;
     }
 
 }

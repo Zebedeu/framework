@@ -25,13 +25,13 @@ return array(
     'face' => 'FACEBOOK',
     'welcome_text' => 'Bem-Vindo ao Apweb Framework',
     'welcome_message' => '
-		Olá, Seja bem vindo ao controller de Boas Vindas! <br/>
+		Olá, Seja bem vindo ao Controller de Boas Vindas! <br/>
 	',
     'version'=> "A versão do teu PHP é  " . phpversion() . ". Por favor para rodar este aplicativo precisa atualize o PHP para uma versão PHP7.1 ou superior",
     // Subpage method
     'subpage_text' => 'Subpagina',
     'subpage_message' => '
-		Olá, Seja bem vindo ao controller de Boas Vindas e Method da Subpagina! <br/>
+		Olá, Seja bem vindo ao Ap_Controller de Boas Vindas e Method da Subpagina! <br/>
 	',
     // Buttons
     'open_subpage' => 'Open subpage',

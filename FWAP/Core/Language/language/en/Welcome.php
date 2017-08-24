@@ -25,13 +25,13 @@ return array(
     'face' => 'FACEBOOK',
     'welcome_text' => 'Welcome Apweb Framework',
     'welcome_message' => '
-		Hello, welcome from the welcome controller! <br/>
+		Hello, welcome from the welcome Controller! <br/>
 	',
     'version'=> "The version of your PHP is " .phpversion() . ". Please, to run this application needs to update the PHP to a version PHP7.1 or hegher",
     // Subpage method
     'subpage_text' => 'Subpage',
     'subpage_message' => '
-		Hello, welcome from the welcome controller and subpage method! <br/>
+		Hello, welcome from the welcome Ap_Controller and subpage method! <br/>
 	',
     // Buttons
     'open_subpage' => 'Open subpage',
