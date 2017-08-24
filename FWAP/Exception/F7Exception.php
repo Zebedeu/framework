@@ -18,10 +18,9 @@
 
 namespace FWAP\Exception;
 use FWAP\Helpers\Assets;
-use FWAP\Helpers\Ucfirst;
 
 
-class ApException {
+class F7Exception {
 
     public static function error( $params = null){ ?>
 

@@ -79,7 +79,7 @@ class Exception {
 
     public static function notFound() {
 
-        ApException::error();
+        F7Exception::error();
     }
 
     public static function langNotLoad() {
@@ -88,7 +88,7 @@ class Exception {
 
     public static function Error($string)
     {
-        ApException::error($string);
+        F7Exception::error($string);
     }
 
 }
