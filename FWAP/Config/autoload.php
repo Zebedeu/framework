@@ -2,10 +2,10 @@
 
 /**
  *
- * APWEB Framework (http://framework.artphoweb.com/)
+ * knut7 Framework (http://framework.artphoweb.com/)
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  APWEB Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2016.  knut7 Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  */
 /**

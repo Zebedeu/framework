@@ -4,10 +4,10 @@
 
 /**
  *
- * APWEB Framework (http://framework.artphoweb.com/)
+ * knut7 Framework (http://framework.artphoweb.com/)
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  APWEB Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2016.  knut7 Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  */
 
@@ -35,14 +35,14 @@ Session	24
 
 
 ## Introdução
-A apweb é um framework criado e mantida pelo Artphoweb para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
+A knut7 é um framework criado e mantida pelo Artphoweb para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
 Um framework para aplicações web é um framework de software designado para suportar o desenvolvimento de sites web dinâmicos, aplicações Web e serviços Web. O framework destina-se a aliviar a sobrecarga associada a atividades comuns realizadas em desenvolvimento Web.
 
 Fonte: wikipedia
 
-Ele é modular. Tudo se passa na pasta módulo. O grande benefício no apweb é pelo facto dele ser totalmente modular. Você pode instalar um módulo em MVC pelo composer ou ainda mesmo remove-lo sem que haja complicações!!. Os módulos são totalmente substituíveis.!
+Ele é modular. Tudo se passa na pasta módulo. O grande benefício no knut7 é pelo facto dele ser totalmente modular. Você pode instalar um módulo em MVC pelo composer ou ainda mesmo remove-lo sem que haja complicações!!. Os módulos são totalmente substituíveis.!
 
-A APWEB- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC) que permitirá a reutilização do teu código sem muitas dificuldades. Ela possui a seguinte estrutura:
+A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC) que permitirá a reutilização do teu código sem muitas dificuldades. Ela possui a seguinte estrutura:
 
 ## Requisitos:
 PHP v7.x
@@ -75,7 +75,7 @@ Pra configurar a framework é simples. Vai ate ao Diretório Config (1) e altera
 	•	Idioma do projecto (Padrão Inglês)
 
 
-A APWEB- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC), logo, a estrutura do teu projecto devera ficar da seguinte forma:
+A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC), logo, a estrutura do teu projecto devera ficar da seguinte forma:
 
 
 
@@ -457,7 +457,7 @@ $name
 Exemplo:
 ```php
 <footer class="footer panel-footer ">
-    <?php echo  Copyright::copyright(2015, 'APWEB FRAMWORK'); ?>
+    <?php echo  Copyright::copyright(2015, 'knut7 FRAMWORK'); ?>
 </footer>
 
 
