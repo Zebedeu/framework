@@ -56,15 +56,11 @@ class View extends RenderFiles implements iView
 
     public function render($controller, String $view )
     {
-        ob_start();
         $this->view = $view;
         $this->controllers = get_class($controller);
 
-        $str = ob_get_contents();
-        ob_end_clean();
-        extract($this->data);
         $this->init();
-        return $str;
+        
 
     }
 
@@ -79,20 +75,6 @@ class View extends RenderFiles implements iView
 
     }
 
-    public function assign($key, $val) {
-        $this->data[$key] = $val;
-    }
-
-    function __get($name)
-    {
-       return $this->data[$name];
-    }
-
-    function set($name, $value)
-    {
-        $this->data[$name] = $value;
-
-    }
-}
+   }
 
 

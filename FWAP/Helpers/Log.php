@@ -44,7 +44,7 @@ class Log {
      */
     public function write($message, $type = null) {
         if($this->handle = fopen( $this->filename, 'a')) {
-            if (is_array($message) && $type == 'A') {
+            if (is_array($message) && $type === 'A') {
                 foreach ($message as $key => $value) {
                     fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value, true) . "\n");
 

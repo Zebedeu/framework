@@ -141,33 +141,27 @@ final class Bootstrap {
                 $this->_error();
             }
         }
-        $this->log = new Log('navegacao.log');
-        $this->log->write($this->_url, 'A');
 
         // Determine what to load
         switch ($length) {
             case 5:
                 //Ap_Controller->Method(Param1, Param2, Param3)
                 $data=  $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3], $this->_url[4]);
-                $this->log->write($data);
                 break;
 
             case 4:
                 //Ap_Controller->Method(Param1, Param2)
                 $data= $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
-                $this->log->write($data);
                 break;
 
             case 3:
                 //Ap_Controller->Method(Param1, Param2)
                 $data= $this->_controller->{$this->_url[1]}($this->_url[2]);
-                $this->log->write($data);
                 break;
 
             case 2:
                 //Ap_Controller->Method(Param1, Param2)
                 $data=  $this->_controller->{$this->_url[1]}();
-                $this->log->write($data);
                 break;
 
             default:

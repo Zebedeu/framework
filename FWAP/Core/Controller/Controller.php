@@ -58,8 +58,6 @@ abstract class Controller extends Model implements iController {
         Session::init();
 
         $this->view = new View();
-        $this->language = new Language();
-        $this->language->Load('Welcome');
         $this->imagem = new Uploads();
 
 

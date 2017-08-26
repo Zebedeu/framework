@@ -28,7 +28,8 @@
  * This is for other hash keys... Not sure yet
  *
  */
-require_once 'Config/Config.module.php';
+
+require './Config/Config.module.php';
 
 define('AUTH_KEY', ' Xakm<o xQy rw4EMsLKM-?!T+,PFF})H4lzcW57AF0U@N@< >M%G4Yt>f`z]MON');
 define('SECURE_AUTH_KEY', 'LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~');
@@ -75,13 +76,13 @@ define('PV', 'Module' . DS);
  * Você pode renomear o nome da tua applicacao aqui alterando o seu nome.
  * OBS Se alterar o nome da Applicaçao aqui, terá que criar uma pasta com o novo nome.
  */
-global $MY_PROJECT_NAME;
-if (!empty($MY_PROJECT_NAME)) {
+
+   global $MY_PROJECT_NAME;
+if (isset($MY_PROJECT_NAME)) {
     define('APP', $MY_PROJECT_NAME);
 } else {
     define('APP', 'Applications');
 }
-
 global $HEADER_TITLE;
 	if (!empty($HEADER_TITLE)) {
     define('HEADER_TITLE', $HEADER_TITLE);
@@ -128,9 +129,7 @@ define('DIR_FILE', PV . APP . DS);
 
 // define('DIR_FILES', PV . APP . '/class/');
 
-define('DIR_LANGUAGE', 'FWAP/Core/Language/Language/');
-
-//define('LANGUAGE_CODE', 'en');
+define('DIR_LANGUAGE', 'FWAP/Core/Language/language/');
 
 define('DIR_LOGS', 'FWAP/storage/');
 

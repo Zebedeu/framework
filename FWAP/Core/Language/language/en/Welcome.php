@@ -44,3 +44,5 @@ return array(
     'r_3' => '........!',
     'pic_empty' => 'Please, choose 1 file to be loaded!',
 );
+
+
