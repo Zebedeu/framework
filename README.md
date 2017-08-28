@@ -2,6 +2,11 @@
 [![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
 
+[![Total Downloads](https://poser.pugx.org/Knut7/framework/downloads)](https://packagist.org/packages/Knut7/framework)
+[![Daily Downloads](https://poser.pugx.org/Knut7/framework/d/daily)](https://packagist.org/packages/Knut7/framework)
+[![Monthly Downloads](https://poser.pugx.org/Knut7/framework/d/monthly)](https://packagist.org/packages/Knut7/framework)
+
+
 /**
  *
  * knut7 Framework (http://framework.artphoweb.com/)
