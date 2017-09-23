@@ -22,12 +22,12 @@
 
     "autoload": {
         "psr-4": {
-            "FWAP\\": "src/FWAP"
+            "Ballybran\\": "src/Ballybran"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FWAP\\Tests\\": "tests/"
+            "Ballybran\\Tests\\": "tests/"
         }
     }
 }
