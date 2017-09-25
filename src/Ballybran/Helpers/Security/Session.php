@@ -88,16 +88,16 @@ class Session {
         }
     }
 
-    public static function handleLogin() {
-        @session_start();
-        Session::init();
-        $logged = Session::get('U_NAME');
-        $role = Session::get('role');
-        if ($logged == false || $role != 'owner') {
-            session_destroy();
-            Hook::Header('login');
-            exit;
-        }
-    }
+//    public static function handleLogin() {
+//        @session_start();
+//        Session::init();
+//        $logged = Session::get('U_NAME');
+//        $role = Session::get('role');
+//        if ($logged == false || $role != 'owner') {
+//            session_destroy();
+//            \Ballybran\Helpers\Http\Hook::Header('login');
+//            exit;
+//        }
+//    }
 
 }

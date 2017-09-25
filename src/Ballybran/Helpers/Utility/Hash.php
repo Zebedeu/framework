@@ -17,6 +17,9 @@
 
 namespace Ballybran\Helpers\Utility;
 
+use const ALGO;
+use Prophecy\Exception\InvalidArgumentException;
+
 class Hash {
     private $key;
 
@@ -28,23 +31,31 @@ class Hash {
      * @param $salt
      * @return string
      */
-    public static function Create($algo, $data, $salt) {
+    public static function Create(String $algo, String $data, String $salt) : String {
         $context = hash_init($algo, HASH_HMAC, $salt);
         hash_update($context, $data);
 
         return hash_final($context);
     }
 
-    public static function token($length = 32) {
-        // Create random token
-        $string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' . AUTH_SALT;
+    /**
+     * @param int $length lenght for tokon
+     * @return string
+     */
+    public static function token(int $length = 1) : String {
+
+        $string = SECURE_AUTH_SALT;
 
         $max = strlen($string) - 1;
 
         $token = '';
 
+        if(! intVal($length)) {
+            throw new  InvalidArgumentException('tripleInteger function only accepts integers. Input was: '.$length);
+
+        }
         for ($i = 0; $i < $length; $i++) {
-            $token .= $string[mt_rand(0, $max)];
+            $token .= self::Create(ALGO,  uniqid($string[mt_rand(0, $max)]), SECURE_AUTH_KEY);
         }
 
         return $token;
