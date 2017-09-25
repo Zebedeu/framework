@@ -66,7 +66,7 @@ Alternativamente, você também pode instalar o Knut7 emitindo o comando Compose
 
 
 
-##Criando o Projecto
+## Criando o Projecto
 
 composer create-project --prefer-dist knut7/knut7 blog
 
