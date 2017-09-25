@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=v1.0.1)](https://travis-ci.org/knut7/framework)
 [![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
 
