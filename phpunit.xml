@@ -19,6 +19,8 @@
         <const name="SECURE_AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
         <const name="SECURE_AUTH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
         <const name="HASH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
+                <const name="AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
+
         <const name="ALGO" value="md5" />
     </php>
 </phpunit>
