@@ -36,6 +36,12 @@ final class Bootstrap {
      * 
      * @return boolean
      */
+
+
+    public function __construct()
+    {
+    }
+
     public function init() {
         // Sets the protected $_url
         $this->_getUrl();

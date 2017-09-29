@@ -41,7 +41,7 @@ class ValidateInput
             switch ($type) {
                 case 'string' :
                     if (is_string($_GET[$key]) && strlen($_GET[$key]) < 256) {
-                      echo "ola mundo";
+                        echo "ola mundo";
                     }
                     break;
                 case 'int' :
@@ -52,14 +52,16 @@ class ValidateInput
                 case "double":
                     if (is_double($_GET[$key])) {
                         ${$key} = $_GET[$key];
-                        break;
+
                     }
+                    break;
 
                 case "long":
                     if (is_long($_GET[$key])) {
                         ${$key} = $_GET[$key];
-                        break;
                     }
+                    break;
+
                 case 'filename' :
                     // limit filenames to 64 characters
                     if (is_string($_GET[$key]) && strlen($_GET[$key]) < 64) {

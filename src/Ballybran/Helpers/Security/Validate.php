@@ -18,7 +18,12 @@
 namespace Ballybran\Helpers\Security;
 
 
-
+use Ballybran\Exception\Exception;
+use const false;
+use function intval;
+use function is_int;
+use function is_string;
+use function method_exists;
 use function var_dump;
 
 class Validate
@@ -100,15 +105,19 @@ class Validate
      *
      * @return mixed String or array
      */
+
     public function getPostDate($fieldName = false)
     {
-        if (! empty($fieldName ) ) {
+        if ($fieldName)
+        {
             if (isset($this->_postData[$fieldName]))
                 return $this->_postData[$fieldName];
 
             else
                 return false;
-        } else {
+        }
+        else
+        {
             return $this->_postData;
         }
 
@@ -117,20 +126,29 @@ class Validate
     /**
      * val - This is to validate
      *
-     * @param string $typeOfValidator A method from the Security/Val class
+     * @param string $typeOfValidator A method from the Form/Val class
      * @param string $arg A property to validate against
      */
-    public function val($typeOfValidator, $arg)
+    public function val($typeOfValidator, $arg = null)
     {
-        if ($arg == null && $this->_val  instanceof Val)
-            $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
-        else
+        if (! $arg == null && $this->_val instanceof val )
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
+        else
+        $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
 
         if ($error)
             $this->_error[$this->_currentItem] = $error;
 
         return $this;
+    }
+
+    public function isString() {
+
+        if (is_string( $this->_postData[$this->_currentItem] ) ){
+        return true;
+    }
+
+    return false;
     }
 
     /**
@@ -142,15 +160,18 @@ class Validate
      */
     public function submit()
     {
-        if (empty($this->_error)) {
+        if (empty($this->_error))
+        {
             return true;
-        } else {
-             $str = '';
-            foreach ($this->_error as $key => $value) {
-               return $str .= $key . ' => ' . $value . "\n";
+        }
+        else
+        {
+            $str = '';
+            foreach ($this->_error as $key => $value)
+            {
+                $str .= $key . ' => ' . $value . "\n";
             }
-            throw new Exception($str);
+            Exception::Error($str);
         }
     }
-
 }

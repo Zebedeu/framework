@@ -20,53 +20,31 @@ namespace Ballybran\Helpers\Security;
 class Val
 {
 
-    /**
-     * @param $data
-     * @param $arg
-     * @return bool
-     */
-    public function minLength($data , $arg){
 
-        if(strlen($data ) < is_int($arg)) {
-            echo "you streng can only $arg leng";
-            return false;
-        }
-    }
-
-
-    /**
-     * @param $data
-     * @param $arg
-     * @return bool
-     */
-    public function maxLength($data, $arg){
-
-        if(strlen($data ) > is_int($arg)) {
-            echo "you streng can only $arg leng";
-            return false;
-        }
-    }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    public function digit($data){
-
-        if(ctype_digit($data ) == null ) {
-            return "you streng must be a digited";
-        }
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @throws \Exception
-     */
-    function __call($name, $arguments)
+    public function minlength(string $data, int $arg)
     {
-        throw new \Exception(" $name does not exist inside of :" . __CLASS__ );
+        if (strlen($data) < $arg) {
+            return "Your string can only be $arg long";
+        }
+    }
 
+    public function maxlength(string $data, int $arg)
+    {
+        if (strlen($data) > $arg) {
+            return "Your string can only be $arg long";
+        }
+    }
+
+    public function digit(string $data)
+    {
+        if (ctype_digit($data) == false) {
+            return "Your string must be a digit";
+        }
+    }
+
+    public function __call(string $name, $arguments)
+    {
+        throw new \Exception("$name does not exist inside of: " . __CLASS__);
     }
 
 }
