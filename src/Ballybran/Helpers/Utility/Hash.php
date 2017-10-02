@@ -19,6 +19,7 @@ namespace Ballybran\Helpers\Utility;
 
 use const ALGO;
 use Prophecy\Exception\InvalidArgumentException;
+use function random_int;
 
 class Hash {
     private $key;
@@ -55,7 +56,7 @@ class Hash {
 
         }
         for ($i = 0; $i < $length; $i++) {
-            $token .= self::Create(ALGO,  uniqid($string[mt_rand(0, $max)]), SECURE_AUTH_KEY);
+            $token .= self::Create(ALGO,  uniqid($string[random_int(0, $max)]), SECURE_AUTH_KEY);
         }
 
         return $token;

@@ -25,10 +25,6 @@ use function var_dump;
 class ValidateTypes
 {
 
-    public function __construct()
-    {
-
-    }
 
     public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "")
     {

@@ -18,10 +18,9 @@
 namespace Ballybran\Helpers\Security;
 
 
+use Ballybran\Exception\Exception;
 
-use function var_dump;
-
-class Validate
+class Validate extends ValidateTypes
 {
 
 
@@ -40,6 +39,11 @@ class Validate
     /** @var string $_method The Method POST, GET and PUT for form */
     private $_method;
 
+    private  $theValue;
+    private  $theType;
+    private  $theDefinedValue;
+    private  $theNotDefinedValue;
+
     /**
      * __construct - Instantiates the validator class
      *
@@ -47,6 +51,7 @@ class Validate
     public function __construct()
     {
         $this->_val = new Val();
+
     }
 
     public function getMethod()
@@ -69,8 +74,11 @@ class Validate
      *
      * @param string $field - The HTML fieldname to post
      */
-    public function post($field)
+    public function post($field, $theType = null, $theDefinedValue = "", $theNotDefinedValue = "")
     {
+       // $this->theType = $theType;
+       // $this->theDefinedValue = $theDefinedValue;
+       // $this->theNotDefinedValue = $theNotDefinedValue;
         if ($this->_method == "POST") {
 
             $this->_postData[$field] = $_POST[$field];
@@ -89,7 +97,6 @@ class Validate
             $this->_postData[$field] = $_COOKIE[$field];
             $this->_currentItem = $field;
         }
-
         return $this;
     }
 
@@ -100,15 +107,22 @@ class Validate
      *
      * @return mixed String or array
      */
-    public function getPostDate($fieldName = false)
+
+    public function getPostData($fieldName = false)
     {
-        if (! empty($fieldName ) ) {
+        if( $this->is_validLength() ) {
+            return false;
+        }
+        if ($fieldName)
+        {
             if (isset($this->_postData[$fieldName]))
                 return $this->_postData[$fieldName];
 
             else
                 return false;
-        } else {
+        }
+        else 
+        {
             return $this->_postData;
         }
 
@@ -117,19 +131,53 @@ class Validate
     /**
      * val - This is to validate
      *
-     * @param string $typeOfValidator A method from the Security/Val class
+     * @param string $typeOfValidator A method from the Form/Val class
      * @param string $arg A property to validate against
      */
-    public function val($typeOfValidator, $arg)
+    public function val($typeOfValidator, $arg = null)
     {
-        if ($arg == null && $this->_val  instanceof Val)
-            $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
-        else
+        if (! $arg == null && $this->_val instanceof val )
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
+        else
+        $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
 
         if ($error)
             $this->_error[$this->_currentItem] = $error;
 
+        return $this;
+    }
+    
+     /**
+     * is_valid method
+     *
+     * @return boolean
+     *
+     * @throws Exception
+     */
+    public function is_validLength() : bool {
+
+        if(! empty($this->_error)) {
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+    /**
+     * submit - Handles the form, and throws an exception upon error.
+     *
+     * @return boolean
+     *
+     * @throws Exception
+     */
+
+    public function is_validTypes(): bool {
+
+        if(! empty(self::getSQLValueString($this->_postData , $this->theType, $this->theDefinedValue, $this->theNotDefinedValue ) ) )  {
+            return true;
+        } else {
+            return false;
+        }
         return $this;
     }
 
@@ -142,14 +190,20 @@ class Validate
      */
     public function submit()
     {
-        if (empty($this->_error)) {
+        if (empty($this->_error))
+        {
             return true;
-        } else {
-             $str = '';
-            foreach ($this->_error as $key => $value) {
-               return $str .= $key . ' => ' . $value . "\n";
+        }
+        else
+        {
+            $str = '';
+            foreach ($this->_error as $key => $value)
+            {
+                $str .= $key . ' => ' . $value . "\n";
             }
-            throw new Exception($str);
+
+            echo("Error Processing Request $str");
+            
         }
     }
 
