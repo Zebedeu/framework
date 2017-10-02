@@ -19,14 +19,8 @@ namespace Ballybran\Helpers\Security;
 
 
 use Ballybran\Exception\Exception;
-use const false;
-use function intval;
-use function is_int;
-use function is_string;
-use function method_exists;
-use function var_dump;
 
-class Validate
+class Validate extends ValidateTypes
 {
 
 
@@ -45,6 +39,11 @@ class Validate
     /** @var string $_method The Method POST, GET and PUT for form */
     private $_method;
 
+    private  $theValue;
+    private  $theType;
+    private  $theDefinedValue;
+    private  $theNotDefinedValue;
+
     /**
      * __construct - Instantiates the validator class
      *
@@ -52,6 +51,7 @@ class Validate
     public function __construct()
     {
         $this->_val = new Val();
+
     }
 
     public function getMethod()
@@ -74,8 +74,11 @@ class Validate
      *
      * @param string $field - The HTML fieldname to post
      */
-    public function post($field)
+    public function post($field, $theType = null, $theDefinedValue = "", $theNotDefinedValue = "")
     {
+       // $this->theType = $theType;
+       // $this->theDefinedValue = $theDefinedValue;
+       // $this->theNotDefinedValue = $theNotDefinedValue;
         if ($this->_method == "POST") {
 
             $this->_postData[$field] = $_POST[$field];
@@ -94,7 +97,6 @@ class Validate
             $this->_postData[$field] = $_COOKIE[$field];
             $this->_currentItem = $field;
         }
-
         return $this;
     }
 
@@ -106,8 +108,11 @@ class Validate
      * @return mixed String or array
      */
 
-    public function getPostDate($fieldName = false)
+    public function getPostData($fieldName = false)
     {
+        if( $this->is_validLength() ) {
+            return false;
+        }
         if ($fieldName)
         {
             if (isset($this->_postData[$fieldName]))
@@ -116,7 +121,7 @@ class Validate
             else
                 return false;
         }
-        else
+        else 
         {
             return $this->_postData;
         }
@@ -141,14 +146,39 @@ class Validate
 
         return $this;
     }
+    
+     /**
+     * is_valid method
+     *
+     * @return boolean
+     *
+     * @throws Exception
+     */
+    public function is_validLength() : bool {
 
-    public function isString() {
+        if(! empty($this->_error)) {
+            return true;
+        }else {
+            return false;
+        }
 
-        if (is_string( $this->_postData[$this->_currentItem] ) ){
-        return true;
     }
+    /**
+     * submit - Handles the form, and throws an exception upon error.
+     *
+     * @return boolean
+     *
+     * @throws Exception
+     */
 
-    return false;
+    public function is_validTypes(): bool {
+
+        if(! empty(self::getSQLValueString($this->_postData , $this->theType, $this->theDefinedValue, $this->theNotDefinedValue ) ) )  {
+            return true;
+        } else {
+            return false;
+        }
+        return $this;
     }
 
     /**
@@ -171,7 +201,10 @@ class Validate
             {
                 $str .= $key . ' => ' . $value . "\n";
             }
-            Exception::Error($str);
+
+            echo("Error Processing Request $str");
+            
         }
     }
+
 }

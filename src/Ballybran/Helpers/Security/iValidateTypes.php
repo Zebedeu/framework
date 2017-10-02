@@ -1,7 +1,5 @@
 <?php
-
 /**
- *
  * knut7 Framework (http://framework.artphoweb.com/)
  * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
@@ -16,21 +14,18 @@
  * @version   1.0.0
  */
 
-namespace Ballybran\Helpers\Http;
+/**
+ * Created by PhpStorm.
+ * User: artphotografie
+ * Date: 11/08/17
+ * Time: 13:23
+ */
 
-class Hook {
+namespace Ballybran\Helpers\Security;
 
-    private static $header;
-    private $url;
 
-    public static function Header($header) {
-        return self::$header = header('Location: ' . URL . "$header");
-        exit();
-    }
-
-    public static function redirect($url, $status = 302) {
-        return self::$header = header('Location:' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
-        exit();
-    }
+interface iValidateTypes
+{
+      public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "");
 
 }
