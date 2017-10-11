@@ -16,10 +16,11 @@
  * @version   1.0.0
  */
 
+namespace Ballybran\Helpers;
 
-namespace Ballybran\Core\Controller;
+interface UploadsInterface {
 
-interface iController {
+    public function file($dir = null);
 
-    public function getModel();
+    public function formUploadFiles($dir_rec = null, $type = "hidden", $name = null);
 }

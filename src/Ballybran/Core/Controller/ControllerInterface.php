@@ -16,12 +16,10 @@
  * @version   1.0.0
  */
 
-namespace Ballybran\Core\Language;
 
-interface iLanguage {
+namespace Ballybran\Core\Controller;
 
-    public function set($key, $value);
+interface ControllerInterface {
 
-    public function get($key);
-
+    public function getModel();
 }

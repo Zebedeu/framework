@@ -21,7 +21,7 @@ namespace Ballybran\Helpers\Security;
 
 use Ballybran\Exception\Exception;
 
-class RenderFiles implements iRenderFiles
+class RenderFiles implements RenderFilesInterface
 {
     private $index = "index.phtml";
     private $header = "header.phtml";
@@ -49,7 +49,7 @@ class RenderFiles implements iRenderFiles
     }
     public function isFooter() {
 
-        if (!is_readable(VIEW . $this->footer) || !file_exists(VIEW . $this->footer)) {
+        if (! is_readable(VIEW . $this->footer) || !file_exists(VIEW . $this->footer)) {
             return Exception::notFooter();
         }
 

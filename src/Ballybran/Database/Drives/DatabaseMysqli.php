@@ -20,7 +20,7 @@ namespace Ballybran\Database\Drives;
 
 use mysqli;
 
-class DatabaseMysqli extends mysqli implements iDatabase
+class DatabaseMysqli extends mysqli implements DatabaseInterface
 {
 
     private $mysqli;

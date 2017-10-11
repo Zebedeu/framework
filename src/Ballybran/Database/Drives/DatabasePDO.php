@@ -20,7 +20,7 @@ namespace Ballybran\Database\Drives;
 
 use Ballybran\Database\DBconnection;
 
- class DatabasePDO extends DBconnection implements iDatabase
+ class DatabasePDO extends DBconnection implements DatabaseInterface
  {
 
      private $columns;

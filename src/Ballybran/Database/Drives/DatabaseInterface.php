@@ -5,7 +5,7 @@ namespace Ballybran\Database\Drives;
 
 use PDO;
 
-interface iDatabase {
+interface DatabaseInterface {
 
     /**
      * @param $sql

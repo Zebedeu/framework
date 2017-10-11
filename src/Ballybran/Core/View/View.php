@@ -62,7 +62,6 @@ class View extends RenderFiles implements iView
 
         return $this->init();
 
-
     }
 
     public function init() : bool

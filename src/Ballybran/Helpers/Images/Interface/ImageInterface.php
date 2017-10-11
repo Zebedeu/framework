@@ -1,8 +1,8 @@
 <?php
 
-namespace Ballybran\Helpers\Images\Iimage;
+namespace Ballybran\Helpers\Images\Interface;
 
-interface interfaceImage {
+interface ImageInterface {
 
     public function save($file, $quality);
 

@@ -26,7 +26,7 @@
 
 namespace Ballybran\Core\Language;
 
-use Ballybran\Core\Language\iLanguage;
+use Ballybran\Core\Language\LanguageInterface;
 use Ballybran\Exception\Exception;
 
 /**

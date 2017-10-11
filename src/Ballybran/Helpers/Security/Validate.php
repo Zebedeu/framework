@@ -121,8 +121,9 @@ class Validate extends ValidateTypes
             else
                 return false;
         }
-        else 
+        else
         {
+
             return $this->_postData;
         }
 
@@ -136,6 +137,8 @@ class Validate extends ValidateTypes
      */
     public function val($typeOfValidator, $arg = null)
     {
+      // $this->_val->isValideLenght($tamanho, $this->_postData[$this->_currentItem], $arg);
+
         if (! $arg == null && $this->_val instanceof val )
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
         else
@@ -146,7 +149,7 @@ class Validate extends ValidateTypes
 
         return $this;
     }
-    
+
      /**
      * is_valid method
      *
@@ -203,7 +206,7 @@ class Validate extends ValidateTypes
             }
 
             echo("Error Processing Request $str");
-            
+
         }
     }
 

@@ -21,7 +21,7 @@ namespace Ballybran\Helpers;
 
 use Ballybran\Helpers\Security\Session;
 
-class Uploads implements interfaceUploads
+class Uploads implements UploadsInterface
 {
 
 

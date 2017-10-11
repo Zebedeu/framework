@@ -16,7 +16,7 @@ use Ballybran\Database\Drives\iDatabase;
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
  */
-class SQLite3 implements iDatabase {
+class SQLite3 implements DatabaseInterface {
 
 
     /**

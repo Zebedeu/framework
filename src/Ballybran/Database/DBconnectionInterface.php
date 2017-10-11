@@ -9,7 +9,7 @@
 namespace Ballybran\Database;
 
 
-interface iDBconnection
+interface DBconnectionInterface
 {
 
 

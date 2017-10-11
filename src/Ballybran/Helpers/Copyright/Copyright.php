@@ -17,8 +17,8 @@
  */
 
 namespace Ballybran\Helpers\Copyright;
-use Ballybran\Helpers\Copyright\interfaceCopyright;
-class Copyright implements interfaceCopyright {
+use Ballybran\Helpers\Copyright\CopyrightInterface;
+class Copyright implements CopyrightInterface {
 
     private static $date;
 

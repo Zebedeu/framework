@@ -24,11 +24,8 @@
 namespace Ballybran\Helpers\Security;
 
 
-interface iRenderFiles
+interface ValidateTypesInterface
 {
-    public function isViewPath($Ap_Controllers);
-    public function isHeader();
-    public function isFooter();
-    public function isIndex($Ap_Controllers, $view);
+      public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "");
 
 }

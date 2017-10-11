@@ -21,7 +21,7 @@ namespace Ballybran\Database\Drives;
 use Ballybran\Database\Drives\iDatabase;
 use PDO;
 
-class Postgroul implements iDatabase {
+class Postgroul implements DatabaseInterface {
 
     public function __construct() {
         

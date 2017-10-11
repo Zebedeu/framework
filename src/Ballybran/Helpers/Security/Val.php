@@ -47,4 +47,13 @@ class Val
         throw new \Exception("$name does not exist inside of: " . __CLASS__);
     }
 
+    public function isValideLenght(string $lenght, string $data, int $arg)
+    {
+        if($this->{$lenght}($data, $arg)) {
+            var_export($this->{$lenght}($data, $arg));
+          } else {
+            return false;
+          }
+      }
+
 }

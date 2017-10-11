@@ -1,7 +1,5 @@
 <?php
-
 /**
- *
  * knut7 Framework (http://framework.artphoweb.com/)
  * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
@@ -16,11 +14,21 @@
  * @version   1.0.0
  */
 
-namespace Ballybran\Helpers;
+/**
+ * Created by PhpStorm.
+ * User: artphotografie
+ * Date: 11/08/17
+ * Time: 13:23
+ */
 
-interface interfaceUploads {
+namespace Ballybran\Helpers\Security;
 
-    public function file($dir = null);
 
-    public function formUploadFiles($dir_rec = null, $type = "hidden", $name = null);
+interface RenderFilesInterface
+{
+    public function isViewPath($Ap_Controllers);
+    public function isHeader();
+    public function isFooter();
+    public function isIndex($Ap_Controllers, $view);
+
 }

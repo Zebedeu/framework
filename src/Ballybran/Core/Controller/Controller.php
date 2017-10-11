@@ -23,7 +23,7 @@ namespace Ballybran\Core\Controller;
 
 
 use Ballybran\Core\Model\Model;
-use Ballybran\Core\View\iView;
+use Ballybran\Core\View\ViewInterface;
 use Ballybran\Core\View\View;
 use Ballybran\Helpers\Uploads;
 use Ballybran\Library\Bootstrap;
@@ -34,7 +34,7 @@ use Ballybran\Helpers\Security\Session;
  * @property iView iView desacopolamento da View
  * @property iLanguage iLanguage desacopolamento da Language
  */
- class Controller extends Model implements iController {
+ class Controller extends Model implements ControllerInterface {
 
     public $view;
     public $language;

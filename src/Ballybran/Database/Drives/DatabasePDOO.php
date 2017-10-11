@@ -21,7 +21,7 @@ use Ballybran\Database\DBconnection;
 use PDO;
 use function var_dump;
 
-final class DatabasePDOO  extends DBconnection implements iDatabase {
+final class DatabasePDOO  extends DBconnection implements DatabaseInterface {
 
     public $conn;
     public $stmt;

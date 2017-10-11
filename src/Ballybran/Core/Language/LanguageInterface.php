@@ -1,5 +1,7 @@
 <?php
+
 /**
+ *
  * knut7 Framework (http://framework.artphoweb.com/)
  * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
@@ -14,18 +16,12 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 11/08/17
- * Time: 13:23
- */
+namespace Ballybran\Core\Language;
 
-namespace Ballybran\Helpers\Security;
+interface LanguageInterface {
 
+    public function set($key, $value);
 
-interface iValidateTypes
-{
-      public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "");
+    public function get($key);
 
 }
