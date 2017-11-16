@@ -1,27 +1,20 @@
 <?php
 
 /**
- *
- * knut7 Framework (http://framework.artphoweb.com/)
- * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * APWEB Framework (http://framework.artphoweb.com/)
+ * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 2016/02/14
- * Time: 11:02 AM
- */
 /**
  *
  * The sitewide hashkey, do not change this because its used for passwords!
@@ -29,7 +22,16 @@
  *
  */
 namespace Ballybran\Config;
+
+
 require './Config/Config.module.php';
+
+/**
+ *
+ * This is for database passwords only
+ *
+ */
+define('HASH_KEY', '?j)o@LHX~E!SqxRwzm%Jy^Dyo<cEjL<j1:}!cpuleU9~}f8/M@n L[4XwMkaRog=');
 
 define('AUTH_KEY', ' Xakm<o xQy rw4EMsLKM-?!T+,PFF})H4lzcW57AF0U@N@< >M%G4Yt>f`z]MON');
 define('SECURE_AUTH_KEY', 'LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~');
@@ -44,12 +46,7 @@ define('NONCE_SALT', 'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{
  * prefix to cache
  */
 define("Ballybran_CACHE", "cache_");
-/**
- *
- * This is for database passwords only
- *
- */
-define('HASH_KEY', '?j)o@LHX~E!SqxRwzm%Jy^Dyo<cEjL<j1:}!cpuleU9~}f8/M@n L[4XwMkaRog=');
+
 
 /**
  *
@@ -109,11 +106,13 @@ if (!empty($code)) {
  *
  *  O URL base do sistema
  */
+//define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DS);
+
+
 define('URL', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . DS);
+//define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
 
-// define('URL', dirname( '__DIR__' ) . '/');
-define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
-
+define('ROOT', dirname(__FILE__));
 
 /**
  *
@@ -131,7 +130,7 @@ define('DIR_FILE', PV . APP . DS);
 
 define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
 
-define('DIR_LOGS', 'Ballybran/storage/');
+define('DIR_LOGS', 'Log/storage/');
 
 
 

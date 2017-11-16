@@ -1,15 +1,15 @@
 <?php
 
 /**
- * knut7 Framework (http://framework.artphoweb.com/)
- * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * APWEB Framework (http://framework.artphoweb.com/)
+ * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * Copyright (c) 2017.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
@@ -39,10 +39,6 @@ class Validate extends ValidateTypes
     /** @var string $_method The Method POST, GET and PUT for form */
     private $_method;
 
-    private  $theValue;
-    private  $theType;
-    private  $theDefinedValue;
-    private  $theNotDefinedValue;
 
     /**
      * __construct - Instantiates the validator class
@@ -56,7 +52,7 @@ class Validate extends ValidateTypes
 
     public function getMethod()
     {
-        $this->_method;
+        return  $this->_method;
     }
 
     /**
@@ -73,12 +69,11 @@ class Validate extends ValidateTypes
      * post - This is to run $_POST or GET
      *
      * @param string $field - The HTML fieldname to post
+     * @return $this
      */
-    public function post($field, $theType = null, $theDefinedValue = "", $theNotDefinedValue = "")
+    public function post($field)
     {
-       // $this->theType = $theType;
-       // $this->theDefinedValue = $theDefinedValue;
-       // $this->theNotDefinedValue = $theNotDefinedValue;
+
         if ($this->_method == "POST") {
 
             $this->_postData[$field] = $_POST[$field];
@@ -134,10 +129,10 @@ class Validate extends ValidateTypes
      *
      * @param string $typeOfValidator A method from the Form/Val class
      * @param string $arg A property to validate against
+     * @return $this
      */
     public function val($typeOfValidator, $arg = null)
     {
-      // $this->_val->isValideLenght($tamanho, $this->_postData[$this->_currentItem], $arg);
 
         if (! $arg == null && $this->_val instanceof val )
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
@@ -174,23 +169,6 @@ class Validate extends ValidateTypes
      * @throws Exception
      */
 
-    public function is_validTypes(): bool {
-
-        if(! empty(self::getSQLValueString($this->_postData , $this->theType, $this->theDefinedValue, $this->theNotDefinedValue ) ) )  {
-            return true;
-        } else {
-            return false;
-        }
-        return $this;
-    }
-
-    /**
-     * submit - Handles the form, and throws an exception upon error.
-     *
-     * @return boolean
-     *
-     * @throws Exception
-     */
     public function submit()
     {
         if (empty($this->_error))
@@ -202,7 +180,7 @@ class Validate extends ValidateTypes
             $str = '';
             foreach ($this->_error as $key => $value)
             {
-                $str .= $key . ' => ' . $value . "\n";
+                $str .= $key . ' => ' . $value . "\n" . "<br>";
             }
 
             echo("Error Processing Request $str");
