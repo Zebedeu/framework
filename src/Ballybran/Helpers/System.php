@@ -1,14 +1,14 @@
 <?php
 /**
- * knut7 Framework (http://framework.artphoweb.com/)
- * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * APWEB Framework (http://framework.artphoweb.com/)
+ * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
@@ -16,28 +16,47 @@
 
 namespace Ballybran\Helpers;
 
-use function var_dump;
 
+/**
+ * Class System
+ * @package Ballybran\Helpers
+ */
 class System
 {
 
-    private const OS_UNKNOWN = "NÃO ENCONTRADO";
-    private const OS_WIN = "WIN";
-    private const OS_LINUX = "LINUX";
-    private const OS_OSX = "MAC OSX";
+    /**
+     * @var string
+     */
+    private  static $OS_UNKNOWN = "NÃO ENCONTRADO";
+    /**
+     * @var string
+     */
+    private  static $OS_WIN = "WIN";
+    /**
+     * @var string
+     */
+    private  static $OS_LINUX = "LINUX";
+    /**
+     * @var string
+     */
+    private  static $OS_OSX = "MAC OSX";
 
     /**
      * @return int
      */
     static public function getOS(): string {
         switch (true) {
-            case stristr(PHP_OS, 'DAR'): return self::OS_OSX;
-            case stristr(PHP_OS, 'WIN'): return self::OS_WIN;
-            case stristr(PHP_OS, 'LINUX'): return self::OS_LINUX;
-            default : return self::OS_UNKNOWN;
+            case stristr(PHP_OS, 'DAR'): return self::$OS_OSX;
+            case stristr(PHP_OS, 'WIN'): return self::$OS_WIN;
+            case stristr(PHP_OS, 'LINUX'): return self::$OS_LINUX;
+            default : return self::$OS_UNKNOWN;
         }
     }
-    static function microtime_float()
+
+    /**
+     * @return float
+     */
+    private static function microtime_float()
     {
         $time = explode(" ", microtime());
         foreach ($time as $item => $value) {
@@ -46,6 +65,9 @@ class System
 //
     }
 
+    /**
+     * @return string
+     */
     public static function time_start() : string
     {
 

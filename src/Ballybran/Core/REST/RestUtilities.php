@@ -2,15 +2,15 @@
 
 
 /**
- * knut7 Framework (http://framework.artphoweb.com/)
- * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * APWEB Framework (http://framework.artphoweb.com/)
+ * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * Copyright (c) 2017.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
@@ -25,11 +25,10 @@ class RestUtilities
     {
         $req_method = strtolower($_SERVER['REQUEST_METHOD']);
         $obj = new RestRequest();
-        $data = array();
-        switch ($req_method)
-
-        {
+        $data = array ();
+        switch ($req_method) {
             case 'get':
+            case 'DELETE':
                 $data = $_GET;
                 break;
             case 'post':
@@ -41,11 +40,11 @@ class RestUtilities
                 break;
             default:
                 die();
-                break; }
+                break;
+        }
         $obj->setMethod($req_method);
         $obj->setRequestVars($data);
-        if(isset($data['data']))
-        {
+        if (isset($data['data'])) {
             $obj->setData(json_decode($data['data']));
         }
         return $obj;

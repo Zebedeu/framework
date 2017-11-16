@@ -1,8 +1,7 @@
 <?php
 
 
-use Ballybran\Core\Controller\Controller;
-use Ballybran\Core\Controller\iController;
+use Ballybran\Core\Controller\AbstractcontrollerInterface;
 use Ballybran\Helpers\Utility\Hash;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
@@ -12,14 +11,14 @@ class ControllerTest extends PHPUnit {
     private $objController;
 
     public function setUp() {
-        $this->objController = new \Ballybran\Core\Controller\Controller();
+        $this->objController = new \Ballybran\Core\Controller\AbstractController();
 
     }
 
     public function testIfControllerIsInstanciOf(){
 
 
-       $this->assertInstanceOf(iController::class, $this->objController);
+       $this->assertInstanceOf(AbstractcontrollerInterface::class, $this->objController);
     }
 
     public function testClassInstance()

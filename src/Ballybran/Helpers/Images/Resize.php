@@ -1,15 +1,14 @@
 <?php
 /**
- *
- * knut7 Framework (http://framework.artphoweb.com/)
- * knut7 FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * APWEB Framework (http://framework.artphoweb.com/)
+ * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
@@ -17,7 +16,10 @@
 
 namespace  Ballybran\Helpers\Images;
 
- class Resize {
+ use Ballybran\Helpers\Images\ImageInterface\ResizeInterface;
+ use Ballybran\Helpers\vardump\Vardump;
+
+ class Resize implements ResizeInterface {
 
     private $image;
     private $width;
@@ -103,9 +105,27 @@ namespace  Ballybran\Helpers\Images;
                 $optionalWidth = $optionaArray['optionalWidth'];
                 $optionalHeight = $optionaArray['optionalHeight'];
                 break;
+            case 'perfil':
+                $optionaArray = $this->getOptionalPerfil($new_width, $new_height);
+                $optionalWidth = $optionaArray['optionalWidth'];
+                $optionalHeight = $optionaArray['optionalHeight'];
         }
 
         return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+    }
+
+    private function getOptionalPerfil($new_width, $new_height) {
+        $heightRatio = $new_height;
+        $widthRatio = $new_width;
+
+        if (! $heightRatio < $widthRatio) {
+            $optionalRatio = $heightRatio;
+        }
+        $optionalRatio = $widthRatio;
+        $optionalHeight =  $optionalRatio;
+        $optionalWidth = $heightRatio;
+        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+
     }
 
     private function getSizeByFixedHeight($new_height) {
@@ -191,13 +211,13 @@ namespace  Ballybran\Helpers\Images;
             case '.jpg':
             case '.jpeg':
                 if (imagetypes() & IMG_JPG) {
-                    imagejpeg($this->imageResized, DIR_FILE . $savePath, $imageQuality);
+                    imagejpeg($this->imageResized,  $savePath, $imageQuality);
                 }
                 break;
 
             case '.gif':
                 if (imagetypes() & IMG_GIF) {
-                    imagegif($this->imageResized, DIR_FILE . $savePath);
+                    imagegif($this->imageResized,  $savePath);
                 }
                 break;
 
@@ -210,7 +230,7 @@ namespace  Ballybran\Helpers\Images;
 
                 if (imagetypes() & IMG_PNG) {
 
-                    imagepng($this->imageResized, DIR_FILE . $savePath, $invertScaleQuality);
+                    imagepng($this->imageResized,  $savePath, $invertScaleQuality);
                 }
                 break;
 

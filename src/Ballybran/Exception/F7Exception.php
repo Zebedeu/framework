@@ -10,7 +10,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  knut7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.0
@@ -22,7 +22,7 @@ use Ballybran\Helpers\Assets;
 
 class F7Exception {
 
-    public static function error( $params = null){ ?>
+public static function error( $params = null){ ?>
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -90,34 +90,34 @@ class F7Exception {
 
             <hr>
 
-                <?php
+            <?php
 
-                    if(is_array($params)) {
-                        echo"<div class=\"well\">";
-                        foreach ($params as $k => $v) {
-                            echo "<ul>";
-                            echo "<li>" .$k . " :::::::::::: ". $v . "</li>";
-                            echo "</ul>";
+            if(is_array($params)) {
+                echo"<div class=\"well\">";
+                foreach ($params as $k => $v) {
+                    echo "<ul>";
+                    echo "<li>" .$k . " :::::::::::: ". $v . "</li>";
+                    echo "</ul>";
 
-                        }
-                        echo "</div>";
+                }
+                echo "</div>";
 
-                    }else if($params){
-                        echo"<div class=\"well\">";
-                        echo $params;
-                        echo "</div>";
+            }else if($params){
+                echo"<div class=\"well\">";
+                echo $params;
+                echo "</div>";
 
-                } else if(class_exists($params)){
+            } else if(class_exists($params)){
 
-                    } ?>
-
-            </div>
+            } ?>
 
         </div>
+
     </div>
 </div>
-   <?php
-    }
+</div>
+<?php
+}
 }
 ?>
 </body>

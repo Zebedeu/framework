@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=master)](https://travis-ci.org/knut7/framework)
 [![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
 
@@ -11,7 +10,7 @@
  *
  * knut7 Framework (http://framework.artphoweb.com/)
  *
- * @link      http://github.com/zebedeu/Knut7 for the canonical source repository
+ * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
  * @copyright (c) 2016.  knut7 Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  */
@@ -53,22 +52,13 @@ A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC) 
 PHP v7.x
 Conhecimentos básicos de php
 Do resto é moleza.
-Link pra contribuições e Download : https://github.com/Knut7
+Link pra contribuições e Download : https://github.com/aphra-frameworkaphra-framework
 
 
 
-## Instalando o Knut7
-O Knut7 utiliza o Composer para gerenciar suas dependências. Então, antes de usar o Knut7, certifique-se de ter Composer instalado em sua máquina.
 
 
-
-Alternativamente, você também pode instalar o Knut7 emitindo o comando Composer em seu terminal:create-project
-
-
-
-## Criando o Projecto
-
-composer create-project --prefer-dist knut7/knut7 blog
+#Criando o Projecto
 
 Existe um Diretório padrão na framewok que se chama Module. Dentro dela, você criara um outro diretório e renomeara dando o nome do teu projecto como mostra a fig 1.1. 
 

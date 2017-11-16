@@ -1,4 +1,19 @@
 
+<!--
+  ~ APWEB Framework (http://framework.artphoweb.com/)
+  ~ APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+  ~
+  ~ Licensed under The MIT License
+  ~ For full copyright and license information, please see the LICENSE.txt
+  ~ Redistributions of files must retain the above copyright notice.
+  ~
+  ~ @link      http://github.com/zebedeu/artphoweb for the canonical source repository
+  ~ @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
+  ~ @license   http://framework.artphoweb.com/license/new-bsd New BSD License
+  ~ @author    Marcio Zebedeu - artphoweb@artphoweb.com
+  ~ @version   1.0.0
+  -->
+
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
@@ -8,19 +23,17 @@
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false">
+
     <testsuites>
         <testsuite name="Tests Application">
             <directory>./tests</directory>
         </testsuite>
+        <php>
+            <includePath>.</includePath>
+            <const name="DIR_FILE" value="" />
+            <const name="SECURE_AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
+            <const name="SECURE_AUTH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
+            <const name="HASH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
+            <const name="ALGO" value="md5" />        </php>
     </testsuites>
-    <php>
-        <includePath>.</includePath>
-        <const name="DIR_FILE" value="" />
-        <const name="SECURE_AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
-        <const name="SECURE_AUTH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
-        <const name="HASH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
-                <const name="AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~" />
-
-        <const name="ALGO" value="md5" />
-    </php>
 </phpunit>
