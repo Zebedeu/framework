@@ -1,36 +1,48 @@
 <?php
-/**
- * APWEB Framework (http://framework.artphoweb.com/)
- * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
- * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
- * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- * @version   1.0.0
- */
 
+
+use Ballybran\Core\Controller\AbstractcontrollerInterface;
 use Ballybran\Helpers\Utility\Hash;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
 
 class ControllerTest extends PHPUnit {
 
-    public function testCase(){
+    private $objController;
 
-       $obj = new \Ballybran\Core\Controller\AbstractController();
+    public function setUp() {
+        $this->objController = new \Ballybran\Core\Controller\AbstractController();
 
-       $this->getActualOutput();
+    }
+
+    public function testIfControllerIsInstanciOf(){
+
+
+       $this->assertInstanceOf(AbstractcontrollerInterface::class, $this->objController);
+    }
+
+    public function testClassInstance()
+    {
+
+        $this->assertInstanceOf('\Ballybran\Core\Model\Model', $this->objController);
+
     }
 
     public function testReturnToHashTokenClass() {
 
-        $token = Hash::token( 12);
+        $token = Hash::token( 233);
 
-        $this->returnValue($token);
+        $this->assertNotFalse($token);
     }
+
+    public function testCreateHashCript(){
+
+        $string = "test1234";
+        $hash = Hash::Create(ALGO, $string, HASH_KEY);
+
+        $this->assertNotFalse($hash);
+
+    }
+
+
 }
