@@ -37,6 +37,8 @@ class View extends RenderFiles implements ViewrInterface
 
     private $view;
 
+    public $title;
+
     /**
      * @param $Controller $this responsavel para pegar a pasta da View
      * @param $view Index responsavel em pegar  os arquivos Index da pasta do Controller
@@ -50,6 +52,7 @@ class View extends RenderFiles implements ViewrInterface
 
     public function __construct($key= null, $value = null)
     {
+
         $this->data;
         if (!is_null($key)) {
             if (is_array($key)) {

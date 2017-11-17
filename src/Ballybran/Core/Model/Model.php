@@ -18,6 +18,10 @@
 namespace Ballybran\Core\Model;
 
 
+use Ballybran\Database\RegistryDatabase;
+use Ballybran\Helpers\Event\Register;
+use Ballybran\Helpers\vardump\Vardump;
+
 class Model
 {
 
@@ -59,21 +63,13 @@ class Model
 
     }
 
-    private function dbObject() {
-        $baseClass = "\Ballybran\Database\Drives\AbstractDatabase%db%";
-        $className = str_replace('%db%', TYPE , $baseClass);
+    private function dbObject()
+    {
 
-        $a = require 'Config/Database/Config.php';
-        $this->db = new $className($a);
-
-
-
-        $className = str_replace( '/', '\\', $this->modelClass);
-
-         return $this->model = new $className($this->db);
-
-
+        $registry = RegistryDatabase::getInstance();
+        $obj = $registry->get(TYPE);
+        $className = str_replace('/', '\\', $this->modelClass);
+        return $this->model = new $className($obj);
     }
-
 
 }

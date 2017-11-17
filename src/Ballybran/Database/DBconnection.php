@@ -54,22 +54,23 @@ class DBconnection extends PDOStatement {
       * @throws \Exception
       */
      public function connection() {
-        if (empty($this->_instances) || !is_array($this->_instances)) {
+//        if (empty($this->_instances) || !is_array($this->_instances)) {
 
             try {
                 $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass']);
+
+                $attributes = array(
+                    "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
+                    "ORACLE_NULLS", "PERSISTENT", "SERVER_INFO", "SERVER_VERSION"
+                );
+                foreach ($attributes as $value) {
+                    $this->_instances->getAttribute(constant("PDO::ATTR_$value")). "\n";
+                }
             } catch (\PDOException $exc) {
                 throw new \Exception('Failed to connect to database. Reason: \'' . $exc->getMessage());
-            }
+//            }
         }
 
-         $attributes = array(
-             "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
-             "ORACLE_NULLS", "PERSISTENT", "SERVER_INFO", "SERVER_VERSION"
-         );
-         foreach ($attributes as $value) {
-             $this->_instances->getAttribute(constant("PDO::ATTR_$value")). "\n";
-         }
         return $this->_instances;
     }
 

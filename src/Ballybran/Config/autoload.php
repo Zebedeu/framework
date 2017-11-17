@@ -35,6 +35,7 @@ use function str_split;
 
  });
 
+
 function search_lib($lib, $file, $ds = '/'){
    // Verifica se o diretório informado é válido
    if (is_dir($lib)){

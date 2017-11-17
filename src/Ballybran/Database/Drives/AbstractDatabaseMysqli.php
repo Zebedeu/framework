@@ -19,7 +19,7 @@ namespace Ballybran\Database\Drives;
 
 use mysqli;
 
-abstract class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
+ class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
 {
 
     private $mysqli;
@@ -27,9 +27,9 @@ abstract class AbstractDatabaseMysqli extends mysqli implements AbstractDatabase
     private $table = array ();
     private $result;
 
-    public function __construct($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $PORT)
+    public function __construct()
     {
-        $this->mysqli = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $PORT);
+        $this->mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
         $this->conexao();
     }
 
@@ -56,7 +56,7 @@ abstract class AbstractDatabaseMysqli extends mysqli implements AbstractDatabase
         $this->result->close();
     }
 
-    public function insert($table, $data)
+    public function insert($table,array $data)
     {
 
         ksort($data);
@@ -121,4 +121,27 @@ abstract class AbstractDatabaseMysqli extends mysqli implements AbstractDatabase
     {
         // TODO: Implement createTable() method.
     }
-}
+
+     /**
+      * select
+      * @param string $sql An SQL string
+      * @param array $array Paramters to bind
+      * @param constant $fetchMode A PDO Fetch mode
+      * @return mixed
+      */
+     public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode)
+     {
+         // TODO: Implement find() method.
+     }
+
+     /**
+      * @param $table
+      * @param $data
+      * @param null $where
+      * @return mixed
+      */
+     public function save($table, $data, $where = null)
+     {
+         // TODO: Implement save() method.
+     }
+ }
