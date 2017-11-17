@@ -1,10 +1,6 @@
-[![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
-[![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
-
-[![Total Downloads](https://poser.pugx.org/Knut7/framework/downloads)](https://packagist.org/packages/Knut7/framework)
-[![Daily Downloads](https://poser.pugx.org/Knut7/framework/d/daily)](https://packagist.org/packages/Knut7/framework)
-[![Monthly Downloads](https://poser.pugx.org/Knut7/framework/d/monthly)](https://packagist.org/packages/Knut7/framework)
-
+[![Build Status](https://travis-ci.org/Knut7/Knut7.svg?branch=master)](https://travis-ci.org/Knut7/Knut7)
+[![license](https://img.shields.io/github/license/Knut7/Knut7.svg)]()
+[![Packagist](https://img.shields.io/packagist/v/Knut7/Knut7.svg)]()
 
 /**
  *
@@ -39,7 +35,7 @@ Session	24
 
 
 ## Introdução
-A knut7 é um framework criado e mantida pelo Artphoweb para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
+A Knut7 é um framework criado e mantida pelo Artphoweb para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
 Um framework para aplicações web é um framework de software designado para suportar o desenvolvimento de sites web dinâmicos, aplicações Web e serviços Web. O framework destina-se a aliviar a sobrecarga associada a atividades comuns realizadas em desenvolvimento Web.
 
 Fonte: wikipedia
@@ -111,7 +107,7 @@ AUTH_SALT;
 SECURE_AUTH_SALT;
 LOGGED_IN_SALT;
 NONCE_SALT;
-FWAP_CACHE;
+Ballybran_CACHE;
 
 
 ?>
@@ -129,12 +125,13 @@ Methods
 index é um método padrão que todos o controllers deverão ter.
 index( void)
 
-###Exemplo:
+### Exemplo:
  ```php
-<?php
 
 
-class index extends Controller {
+use  \Ballybran\Core\Controller\AbstractController;
+
+class index extends AbstractControllerController {
     public function __construct() {
         parent::__construct();
     }
@@ -144,7 +141,7 @@ class index extends Controller {
     }
 }
 
-?>
+
 ```
 
 
@@ -183,10 +180,10 @@ Redireciona para vista
 
 Exemplo:
  ```php
-<?php
 
+use  \Ballybran\Core\Controller\AbstractController;
 
-class index extends Controller {
+class index extends AbstractController {
     public function __construct() {
         parent::__construct();
     }
@@ -196,7 +193,6 @@ class index extends Controller {
     }
 }
 
-?>
 ```
 ## Models
 
@@ -219,23 +215,23 @@ iDatabase
 
 Exemplo:
  ```php
-<?php
 
+use Ballybran\Database\Drives\AbstractDatabaseInterface;
 class indexModel {
 
     private $entity;
 
     private $db;
-    public function __construct(iDatabase $entity ) {
+    public function __construct(AbstractDatabaseInterface $entity ) {
         $this-> entity = $entity;
     }
 
 }
-?>
+
 
 ```
 Details
-__construct( iDatabase $entity) 
+__construct( AbstractDatabaseInterface $entity) 
 
 
 usando a PROPRIEDADE $entity
@@ -247,13 +243,19 @@ save Fungsi untuk menambah atau mengupdate record (Insert/Update)
 string
 
 ```php
-<?php
-$this->entity->delete($table, $where, $limit )
 
+$this->entity->delete($table, $where, $limit )
+```
 static array
+
+```php
+
 $this->entity->select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC
-)
+);
+```
 find function for select query
+
+```php
 
 $this->entity->insert($table, $data)
 ?>
@@ -283,15 +285,12 @@ PDO::FETCH_ASSOC e outros
 Exemplo:
 
  ```php
- 
- <?php   
- 
+  
 public function _getArticleById($id) {
     
     return $this->entity->select("SELECT * FROM article WHERE id_article =" . $id);
 }
 
-?>
 ```
 
 insert($table, $data)
@@ -304,13 +303,12 @@ $ata
 Exemplo:
  ```php
  
- <php
+
  public function insertArticle($data) {
     return $this->entity->insert('article', $data);
  }
 delete($table, $where, $limit)
 
-?>
 ```
 Return Value
 string
@@ -323,8 +321,6 @@ Default limit 1
 Exemplo:
  ```php
  
-<?php
-
 
 public function deleteArticle($id) {
     return $this->entity->delete('article', "id_article=$id", 1);
@@ -332,7 +328,7 @@ public function deleteArticle($id) {
 
 
 update($table, $data, $where)
-?>
+
 ```
 
 Return Value
@@ -346,14 +342,11 @@ SQL Query
 
 Exemplo :
  ```php
-<?php
-
  
 public function editPublish($data, $id) {
     return $this->entity->update('article', $data, "id_article=$id");
 }
 
-?>
 ```
 
 Methods
@@ -366,7 +359,6 @@ Exemplo:
 
 ##Class Controller index 
  ```php
-<?php
 
 class Article extends Controller {
   
@@ -396,8 +388,6 @@ class ArticleModel {
         
         return $this->entity->select("SELECT * FROM article "
     }
-
- ?>
 
 ```
 
@@ -429,7 +419,8 @@ Return Value
 
 Exemplo:
  ```php
-<?php echo Assets::js([ URL . 'Public/js/bootstrap.js', URL . "Public/bootstrap/js/bootstrap-theme.min.js", URL . "Public/bootstrap/js/bootstrap.min.js",  DIR_FILE . 'Public/js/myStyle.js']); 
+ 
+ echo Assets::js([ URL . 'Public/js/bootstrap.js', URL . "Public/bootstrap/js/bootstrap-theme.min.js", URL . "Public/bootstrap/js/bootstrap.min.js",  DIR_FILE . 'Public/js/myStyle.js']); 
 
 Assets::css([ URL . 'Public/css/bootstrap.css', URL . "Public/bootstrap/css/bootstrap-theme.min.css", URL . "Public/bootstrap/css/bootstrap.min.css",  DIR_FILE . 'Public/css/myStyle.css']); ?>
 
@@ -461,9 +452,8 @@ $name
 Exemplo:
 ```php
 <footer class="footer panel-footer ">
-    <?php echo  Copyright::copyright(2015, 'knut7 FRAMWORK'); ?>
+   echo  Copyright::copyright(2015, 'knut7 FRAMWORK'); ?>
 </footer>
-
 
 ```
 
@@ -488,7 +478,6 @@ $header
 Exemplo:
 
  ```php
-<?php
 
 public function deleteArticle($id) {
     if (Session::exist()) {
@@ -501,7 +490,6 @@ public function deleteArticle($id) {
     }
 }
 
-?>
 ```
 
 
@@ -512,12 +500,15 @@ class Hash
 Methods
 
 ```php
-<?php
+
 static Create( $algo, $data, $salt )
+``` 
 No description
+
+```php
 static token( $length = 32 )
-?>
-```
+
+``` 
 
 
 Details
@@ -538,7 +529,7 @@ hash keys
 Exemplo:
 
  ```php
-<?php
+
 public function signUp() {
     if (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['username']) && !empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
         $data['firstname'] = Ucfirst::_ucfirst(htmlspecialchars($_POST['firstname']));
@@ -589,15 +580,13 @@ $value
 
 Exemplo de uma function para a Criação de uma Session
  ```php
-<?php
+
 public function CreateSession($username, $role, $id) {
     Session::set('U_NAME', $username);
     Session::set('role', $role);
     Session::set('ID', $id);
 }
 static get( $key )
-string
-$value
 
 static Destroy( )
 
@@ -607,19 +596,18 @@ void
 
 
 Exemplo de uma function de Destruição de uma Session
+
  ```php
-<?php
 public function DestroySession() {
     Session::Destroy();
     Hook::Header('');
 }
 static exists( )
-?>
+
 
 ```
 void
  ```php
-<?php
 public function Cpanel() {
     if (Session::exist()) {
         $title = $this->view->title = "Cpanel";
@@ -635,7 +623,6 @@ public function Cpanel() {
 
 static handleLogin( )
 
-?>
 ```
 void
 
