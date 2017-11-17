@@ -86,7 +86,7 @@ use Module\FeedRider;
       public function getModel()
       {
 
-          return $this->model = $this->getloadModel();
+          return $this->model = $this->getLoadModel();
       }
 
       public function demensionOfImage() {

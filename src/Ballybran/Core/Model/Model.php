@@ -19,15 +19,28 @@ namespace Ballybran\Core\Model;
 
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Helpers\Event\Register;
+use Ballybran\Helpers\Event\Registry;
 use Ballybran\Helpers\vardump\Vardump;
 
+/**
+ * Class Model
+ * @package Ballybran\Core\Model
+ */
 class Model
 {
 
+    /**
+     * @var
+     */
     private $modelClass;
+    /**
+     * @var
+     */
     public $model;
-    private $db;
+
+    /**
+     * @var string
+     */
     public $modelPath = "/Models/";
 
     /**
@@ -43,7 +56,10 @@ class Model
     }
 
 
-    public function getloadModel() {
+    /**
+     * @return mixed
+     */
+    public function getLoadModel() {
 
        $className = str_replace( '\\', '/', get_class($this));
        $classModel = str_replace('Controllers','Models', $className);
@@ -56,13 +72,15 @@ class Model
         if (file_exists($path)  || is_readable($path)) {
             require_once $path;
 
-
             return $this->dbObject();
         }
 
 
     }
 
+    /**
+     * @return mixed
+     */
     private function dbObject()
     {
 
