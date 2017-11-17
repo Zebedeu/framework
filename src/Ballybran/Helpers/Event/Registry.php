@@ -14,47 +14,69 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 15/11/17
- * Time: 14:16
- */
-
 namespace Ballybran\Helpers\Event;
 
+use Ballybran\Exception;
 
-use function array_key_exists;
-use const false;
-
+/**
+ * Class Registry
+ * @package Ballybran\Helpers\Event
+ */
 class Registry
 {
-    private $_store = array();
-    static $instance = array();
 
-    public static function getInstance()
+
+    /**
+     * @var array
+     */
+    private $method = array();
+    private $_object = [];
+
+    /**
+     *
+     */
+    public function doSomething()
     {
-        if(self::$instance == null) {
-            self::$instance = new Registry();
+       throw new Exception\InvalidCallException("");
+    }
+
+    function __set($name, $value)
+    {
+            $this->_object[$name] =   $value;
+
+    }
+
+    function __get($name)
+    {
+        if(array_key_exists($name, $this->_object)) {
+            return $this->_object[$name];
         }
-
-        return self::$instance;
     }
 
-    public function get( $key )
+    /**
+     * @param $method
+     * @param null $param
+     * @return mixed
+     */
+    public function __call($method, $param = null)
     {
-            if(array_key_exists($key, $this->_store)) {
-                return $this->_store[$key];
+        $prefix = substr($method, 0, 3);
+        $key = strtolower(substr($method, 3));
+        if($prefix == 'set' && count($param) == 1) {
+
+            // $key = $param[0];
+            $value = $param[0];
+            $this->method[$key] = $value;
+        }
+        elseif($prefix == 'get') {
+
+            if(array_key_exists($key, $this->method)){
+                return $this->method[$key];
+            } else {
+                throw new  Exception\InvalidCallException ('Setting read-only method: ' .'::' );
+
             }
-    }
-
-    public function set($key, $obj  )
-    {
-        $this->_store[$key] = $obj;
-    }
-
-    public function isValid( $key )
-    {
-        return array_key_exists($key, $this->_store);
+        }
     }
 }
+
