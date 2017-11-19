@@ -1,7 +1,7 @@
 <?php
 
 
-use Ballybran\Core\Controller\AbstractcontrollerInterface;
+use Ballybran\Core\Controller\AbstractControllerInterface;
 use Ballybran\Helpers\Utility\Hash;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
