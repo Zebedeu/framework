@@ -1,5 +1,4 @@
 <?php
-
 /**
  * APWEB Framework (http://framework.artphoweb.com/)
  * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
@@ -15,10 +14,22 @@
  * @version   1.0.0
  */
 
+/**
+ * Created by PhpStorm.
+ * User: macbookpro
+ * Date: 08/11/17
+ * Time: 06:47
+ */
 
-namespace Ballybran\Core\Controller;
-
-interface AbstractcontrollerInterface {
+namespace Ballybran\Helpers\Event;
 
 
+class DefaultHandler
+{
+
+    // Do default stuff here
+
+    function respond() {
+        // make whatever response
+    }
 }

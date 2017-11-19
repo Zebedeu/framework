@@ -20,13 +20,12 @@ namespace Ballybran\Helpers;
 
 use Ballybran\Helpers\Images\Image;
 use Ballybran\Helpers\Security\Session;
-use Ballybran\Helpers\vardump\Vardump;
 
 /**
  * Class Uploads
  * @package Ballybran\Helpers
  */
-class Uploads
+class Uploads implements UploadsInterface
 {
 
 
@@ -73,7 +72,13 @@ class Uploads
      * @var
      */
     private $option;
+    /**
+     * @var
+     */
     private $ext;
+    /**
+     * @var
+     */
     private $dir;
 
     /**
@@ -162,73 +167,53 @@ class Uploads
         }
     }
 
+
     /**
      * @param null $dir
-     * @return string
      */
     public function file($dir = null)
     {
-        if (null == $dir) {
-            return $this->isValid();
-        }
+        $this->dir = $dir;
 
-        $this->ext = end($this->explode);
+        $this->make();
+    }
+
+    /**
+     * @return string
+     */
+    private function make()
+    {
+
         if (!Session::exist()) {
 
-            $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
-        }
-        $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
-
-        $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
-
-        // echo $ext . "<br/>";
-
-
-        if (empty($this->isValid())) {
-            return $this->isValid();
+            $this->makeDefaultPath();
+            $this->makePathDirIfDefaultFileNotExist();
+            return $this->move_upload();
         }
 
-        if (Session::exist() && !file_exists(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS, 0777, true);
-
-        }  // chmod('uploads/', 0755);
-        if (!file_exists(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS, 0777, true);
-
-        }  // chmod('uploads/', 0755);
+        $this->makePathBayUserName();
+        $this->makePathDirIfUserExist();
         return $this->move_upload();
 
     }
 
-
-
-    private function isValid()
+    private function makePathDirIfUserExist()
     {
-        if(empty($this->dir)) {
-            return $errors[] = '<div class="btn btn-danger"> sem diretorio</div>';
-
-        }
-        if (empty($this->type)) {
-            return $errors[] = '<div class="btn btn-danger"> Por favor, escolhe 1 ficheiro para ser carregado</div>';
+        if (!file_exists(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS, 0777, true);
         }
 
+    }
 
-        $allowed = array('jpg', 'JPG', 'jpeg', 'gif', 'btm', 'png', 'txt', 'docx', 'doc', 'pdf', 'mp3');
+    private function makePathDirIfDefaultFileNotExist()
+    {
 
-        if (in_array($this->ext, $allowed) === false)
-            return $errors[] = '<div class="btn btn-danger">A extensao do ficheiro nao foi permitido </div>';
+        if (!file_exists(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS, 0777, true);
 
-//                              100000000
-        $max_size = 100000000;
-        if ($this->size > $max_size) {
-            return $errors[] = '<div class="btn btn-danger"> O tamanho do ficheiro é muito grande</div>';
         }
-    }// end foreach
+    }
 
-
-    /**
-     *
-     */
     private function getObjectImage()
     {
 
@@ -237,25 +222,25 @@ class Uploads
     }
 
 
-    /**
-     * @return string
-     */
     private function move_upload()
     {
-
         if (move_uploaded_file($this->tmp, $this->path)) {
             $this->getObjectImage();
-
-            $output = '<div class="btn btn-success">';
-            $output .= 'Ficheiro carregado  com sucesso';
-            $output .= '</div>';
-            return $output;
         }
-            $output = '<div class="btn btn-warning">';
-            $output .= 'Nenhum ficheiro foi carregado';
-            $output .= '</div>';
-            return $output;
 
+    }
+
+    private function makeDefaultPath()
+    {
+        $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
+
+    }
+
+    private function makePathBayUserName()
+    {
+        $this->ext = end($this->explode);
+        $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
+        $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
     }
 
 }

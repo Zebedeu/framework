@@ -22,7 +22,17 @@ use \Ballybran\Core\REST\RestRequest;
 
 class ClientRest extends Encodes{
 
-	public function get($argm) {
+    /**
+     * @var string
+     */
+    private $params;
+
+    public function __construct(string $params = null )
+    {
+        $this->params = $params;
+    }
+
+    public function get($argm) {
 
      $ch = curl_init();
  

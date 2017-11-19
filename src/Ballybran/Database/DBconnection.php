@@ -48,13 +48,11 @@ class DBconnection extends PDOStatement {
         $this->params = $params;
     }
 
-
      /**
       * @return mixed
       * @throws \Exception
       */
      public function connection() {
-//        if (empty($this->_instances) || !is_array($this->_instances)) {
 
             try {
                 $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass']);
@@ -67,14 +65,11 @@ class DBconnection extends PDOStatement {
                     $this->_instances->getAttribute(constant("PDO::ATTR_$value")). "\n";
                 }
             } catch (\PDOException $exc) {
-                throw new \Exception('Failed to connect to database. Reason: \'' . $exc->getMessage());
-//            }
+                throw new \Exception('Failed to connect to database. Reason: ' . $exc->getMessage());
         }
 
         return $this->_instances;
     }
-
-// end connection
 
     /**
      * undocumented function

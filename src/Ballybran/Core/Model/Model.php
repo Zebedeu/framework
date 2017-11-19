@@ -19,8 +19,6 @@ namespace Ballybran\Core\Model;
 
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Helpers\Event\Registry;
-use Ballybran\Helpers\vardump\Vardump;
 
 /**
  * Class Model
@@ -43,47 +41,35 @@ class Model
      */
     public $modelPath = "/Models/";
 
-    /**
-     * @return string
-     */
 
     /**
-     * @return mixed
+     * Model constructor.
      */
-    public function getModelPath()
+    function __construct()
     {
-        return $this->modelPath;
+        $this->getLoadModel();
     }
 
-
     /**
      * @return mixed
      */
-    public function getLoadModel() {
-
-       $className = str_replace( '\\', '/', get_class($this));
-       $classModel = str_replace('Controllers','Models', $className);
-
-
+    public function getLoadModel()
+    {
+        $className = str_replace('\\', '/', get_class($this));
+        $classModel = str_replace('Controllers', 'Models', $className);
         $this->modelClass = $classModel . 'Model';
+        $path = $this->modelClass . '.php';
 
-        $path =  $this->modelClass . '.php';
-
-        if (file_exists($path)  || is_readable($path)) {
+        if (file_exists($path) || is_readable($path)) {
             require_once $path;
-
             return $this->dbObject();
         }
-
-
     }
-
     /**
      * @return mixed
      */
     private function dbObject()
     {
-
         $registry = RegistryDatabase::getInstance();
         $obj = $registry->get(TYPE);
         $className = str_replace('/', '\\', $this->modelClass);

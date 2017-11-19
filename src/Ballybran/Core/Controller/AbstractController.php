@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * APWEB Framework (http://framework.artphoweb.com/)
  * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
@@ -19,23 +20,14 @@
  */
 
 namespace Ballybran\Core\Controller;
-
-
 use Ballybran\Core\Model\Model;
-use Ballybran\Core\Variables\Variable;
 use Ballybran\Core\View\View;
-use Ballybran\Core\View\ViewrInterface;
-use Ballybran\Helpers\Images\Image;
 use Ballybran\Helpers\Uploads;
-use Ballybran\Helpers\vardump\Vardump;
-use Ballybran\Library\Bootstrap;
-use Ballybran\Library\Log;
 use Ballybran\Helpers\Security\Session;
-use Module\FeedRider;
 
 /**
  */
-   class AbstractController extends Model implements AbstractControllerInterface
+   class AbstractController extends Model
   {
 
       /**
@@ -48,10 +40,22 @@ use Module\FeedRider;
       protected $imagem;
 
 
-      protected $width;
-      protected $height;
-      protected $quality;
-      protected $option;
+       /**
+        * @var
+        */
+       protected $width;
+       /**
+        * @var
+        */
+       protected $height;
+       /**
+        * @var
+        */
+       protected $quality;
+       /**
+        * @var
+        */
+       protected $option;
 
 
       /**
@@ -63,33 +67,16 @@ use Module\FeedRider;
         public function __construct()
       {
 
+          parent::__construct();
           Session::init();
-
 
           $this->view = new View();
           $this->imagem = new Uploads();
           $this->demensionOfImage();
 
-//          $this->call = new Caller();
-
-          $this->getModel();
       }
 
-      /**
-       * @return mixed
-       */
-//      ImageInterface function index();
-
-      /**
-       * @return mixed
-       */
-      public function getModel()
-      {
-
-          return $this->model = $this->getLoadModel();
-      }
-
-      public function demensionOfImage() {
+       public function demensionOfImage() {
           $this->imagem->setWidth($this->width);
           $this->imagem->setHeight($this->height);
           $this->imagem->setQuality($this->quality);

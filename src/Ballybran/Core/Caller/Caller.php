@@ -14,15 +14,8 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 09/01/17
- * Time: 13:18
- */
 
 namespace Ballybran\Core\Caller;
-
 
 use Ballybran\Helpers\vardump\Vardump;
 use function str_replace;
@@ -52,15 +45,16 @@ class Caller implements CallerInterface
      * @param array $args
      * @return mixed
      */
-    function __call($funcname, $args = array()) {
+    function __call($funcname, $args = array())
+    {
         $this->setModuleInformation();
 
-        if (is_object($this->caller) && function_exists('call_user_func_array'))
-            $return = call_user_func_array(array(&$this->caller, $funcname), $args);
-        else
+        if (!is_object($this->caller) && !function_exists('call_user_func_array')) {
             trigger_error("Call to Function with call_user_func_array failed", E_USER_ERROR);
+            $this->unsetModuleInformation();
+        }
 
-        $this->unsetModuleInformation();
+        $return = call_user_func_array(array(&$this->caller, $funcname), $args);
         return $return;
     }
 
@@ -69,117 +63,114 @@ class Caller implements CallerInterface
      * @param bool $callerClassName
      * @param string $callerModuleName
      */
-    function __construct($callerClassName = false, $callerModuleName = 'Webboard') {
-        if ($callerClassName == false)
+    function __construct($callerClassName = false, $callerModuleName = 'Webboard')
+    {
+        if ($callerClassName == false) {
             trigger_error('No Classname', E_USER_ERROR);
+        }
 
         $this->module = $callerModuleName;
 
-        $pthOfObject = str_replace("\\", '/', $callerClassName) .'.php';
+        $pthOfObject = str_replace("\\", '/', $callerClassName) . '.php';
 
 //        require_once  $pthOfObject;
 
-        if (class_exists($callerClassName)) {
-
-            $this->caller = new $callerClassName();
-        }else {
-
+        if (!class_exists($callerClassName)) {
             trigger_error('Class not exists: \'' . $callerClassName . '\'', E_USER_ERROR);
+
         }
+        $this->caller = new $callerClassName();
 
-
-
-        if (is_object($this->caller))
-        {
-            $this->setModuleInformation();
-            if (method_exists($this->caller, '__init'))
-                $this->caller->__init();
+        if (!is_object($this->caller) && !method_exists($this->caller, '__init')) {
             $this->unsetModuleInformation();
-        }
-        else
             trigger_error('Caller is no object!', E_USER_ERROR);
+        }
+        $this->setModuleInformation();
+        $this->caller->__init();
+
     }
 
     /**
      *
      */
-    function __destruct() {
+    function __destruct()
+    {
         $this->setModuleInformation();
-        if (method_exists($this->caller, '__deinit'))
-            $this->caller->__deinit();
-        $this->unsetModuleInformation();
+        if (! method_exists($this->caller, '__deinit')) {
+            $this->unsetModuleInformation();
+        }
+        $this->caller->__deinit();
+
     }
 
     /**
      * @param $isset
      * @return bool
      */
-    function __isset($isset) {
+    function __isset($isset)
+    {
         $this->setModuleInformation();
-        if (is_object($this->caller))
-            $return = isset($this->caller->{$isset});
-        else
+        if (!is_object($this->caller)) {
+            $this->unsetModuleInformation();
             trigger_error('Caller is no object!', E_USER_ERROR);
-        $this->unsetModuleInformation();
+        }
+        $return = isset($this->caller->{$isset});
         return $return;
     }
 
     /**
      * @param $unset
      */
-    function __unset($unset) {
+    function __unset($unset)
+    {
         $this->setModuleInformation();
-        if (is_object($this->caller)) {
-            if (isset($this->caller->{$unset}))
-                unset($this->caller->{$unset});
-        }
-        else
+        if (!is_object($this->caller) && !isset($this->caller->{$unset})) {
             trigger_error('Caller is no object!', E_USER_ERROR);
+        }
         $this->unsetModuleInformation();
+        unset($this->caller->{$unset});
     }
+
 
     /**
      * @param $set
      * @param $val
      */
-    function __set($set, $val) {
+    function __set($set, $val)
+    {
         $this->setModuleInformation();
-        if (is_object($this->caller))
-            $this->caller->{$set} = $val;
-        else
+        if (!is_object($this->caller)) {
             trigger_error('Caller is no object!', E_USER_ERROR);
-        $this->unsetModuleInformation();
+            $this->unsetModuleInformation();
+        }
+        $this->caller->{$set} = $val;
     }
+
 
     /**
      * @param $get
      * @return bool
      */
-    function __get($get) {
+    function __get($get)
+    {
         $this->setModuleInformation();
-        if (is_object($this->caller)) {
-            if (isset($this->caller->{$get}))
-                $return = $this->caller->{$get};
-            else
-                $return = false;
-        }
-        else
+        if (!is_object($this->caller) && !isset($this->caller->{$get})) {
+
             trigger_error('Caller is no object!', E_USER_ERROR);
-        $this->unsetModuleInformation();
+            $this->unsetModuleInformation();
+        }
+        $return = $this->caller->{$get};
         return $return;
+
     }
 
-    /**
-     *
-     */
-    function setModuleInformation() {
+    function setModuleInformation()
+    {
         $this->caller->module = $this->module;
     }
 
-    /**
-     *
-     */
-    function unsetModuleInformation() {
+    function unsetModuleInformation()
+    {
         $this->caller->module = NULL;
     }
 

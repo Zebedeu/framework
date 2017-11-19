@@ -19,11 +19,11 @@ namespace Ballybran\Helpers;
 
 class Ucfirst {
 
+
     /**
-     * 
-     * @param type $post insert your data ($_POST['NAME'])
-     * @param type $a_char it is a array
-     * @return type String
+     * @param $post
+     * @param array $a_char
+     * @return string
      */
     public static function _ucfirst($post, $a_char = array("'", "-", " ")) {
 

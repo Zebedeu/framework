@@ -52,21 +52,21 @@ use PHPUnit\Runner\Exception;
       * @param int $fetchMode
       * @return mixed
       */
+
+
     public function selectManager( $sql, $array = array (), $fetchMode = \PDO::FETCH_ASSOC )
     {
 
-        $stnt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
 
         foreach ($array as $key => $values) {
-            $stnt->bindValue("$key", $values);
-        }
-        $stnt->execute();
-//        $stmt->getColumnMeta(0);
+                $stmt->bindValue("$key", $values);
+        }        $stmt->execute();
 
         do {
-            return $stnt->fetchAll($fetchMode);
+            return $stmt->fetchAll($fetchMode);
         } while (
-            $stnt->nextRowset());
+            $stmt->nextRowset());
 
     }
 
@@ -91,7 +91,7 @@ use PHPUnit\Runner\Exception;
         $stmt = $this->conn->prepare($sql);
 
         foreach ($array as $key => $values) {
-            $stmt->bindValue("$key", $values);
+            return  $stmt->bindValue("$key", $values);
         }
         $stmt->execute();
 
