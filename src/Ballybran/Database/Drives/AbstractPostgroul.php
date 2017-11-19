@@ -54,7 +54,7 @@ abstract class Postgroul implements AbstractDatabaseInterface {
      * @param $data recebido do array
      * @return bool
      */
-    public function insert($table, $data)
+    public function insert($table, array $data)
     {
         // TODO: Implement insert() method.
     }

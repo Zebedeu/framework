@@ -21,5 +21,4 @@ interface UploadsInterface {
 
     public function file($dir = null);
 
-    public function formUploadFiles($dir_rec = null, $type = "hidden", $name = null);
 }

@@ -14,18 +14,11 @@
  * @version   1.0.0
  */
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 namespace Ballybran\Helpers;
-
 /**
- * Description of Cache
- *
- * @author artphotografie
+ * Class Cache
+ * @package Ballybran\Helpers
  */
 class Cache {
 
@@ -41,15 +34,11 @@ class Cache {
             throw new \Exception('Error: Coult not load cache Adaptor' . $adaptor . 'cache!!');
         }
     }
-    
+
     /**
-	 * Register a binding with the container.
-	 *
-	 * @param  string               $abstract
-	 * @param  Closure|string|null  $concrete
-	 * @param  bool                 $shared
-	 * @return mixed
-	*/
+     * @param $key
+     * @return mixed
+     */
 	public function get($key) {
 		return $this->adaptor->get($key);
 	}

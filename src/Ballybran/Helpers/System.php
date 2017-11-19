@@ -62,6 +62,7 @@ class System
         foreach ($time as $item => $value) {
             return ((float)$item + (float)$value);
         }
+        return false;
 //
     }
 

@@ -26,9 +26,8 @@ final class Bootstrap
     private $_controller = "";
     private $_controllerPath = PV . APP . DS . "Controllers/";
     private $_modelPath = 'Models';
-    private $_errorPath = 'Error.php';
+    private $_errorFile = 'Error.php';
     private $_defaultFile = 'Index.php';
-    private $log;
 
     /**
      * Starts the Bootstrap
@@ -36,7 +35,7 @@ final class Bootstrap
      * @return boolean
      */
 
-    public function init()
+    public function init() : bool
     {
         // Sets the protected $_url
         $this->_getUrl();
@@ -50,6 +49,7 @@ final class Bootstrap
 
         $this->_loadExistingController();
         $this->_callControllerMethod();
+        return true;
     }
 
     /**
@@ -58,7 +58,7 @@ final class Bootstrap
      */
     public function setControllerPath( $path )
     {
-        $this->_ControllerPath = trim($path, '/') . '/';
+        $this->_controllerPath = trim($path, '/') . '/';
     }
 
     /**
@@ -106,8 +106,8 @@ final class Bootstrap
      */
     private function _loadDefaultController()
     {
-        require $this->_controllerPath . $this->_defaultFile;
-        $this->_controller->index();
+        require_once ($this->_controllerPath . $this->_defaultFile);
+        return $this->_controller->index();
     }
 
     /**
@@ -120,18 +120,18 @@ final class Bootstrap
 
         $file = $this->_controllerPath . ucfirst($this->_url[0]) . '.php';
 
-        if (file_exists($file)) {
-            require $file;
-
-            $namespace = str_replace('/', '\\', $this->_controllerPath);
-            $className = $namespace . $this->_url[0];
-
-            $this->_controller = new $className;
-
-        } else {
+        if (!file_exists($file)) {
             $this->_error();
             return false;
         }
+        require($file);
+
+        $namespace = str_replace('/', '\\', $this->_controllerPath);
+        $className = $namespace . $this->_url[0];
+
+        $this->_controller = new $className;
+        return true;
+
     }
 
     /**

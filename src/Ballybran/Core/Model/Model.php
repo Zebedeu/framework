@@ -19,53 +19,57 @@ namespace Ballybran\Core\Model;
 
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Helpers\Event\Register;
-use Ballybran\Helpers\vardump\Vardump;
 
+/**
+ * Class Model
+ * @package Ballybran\Core\Model
+ */
 class Model
 {
 
+    /**
+     * @var
+     */
     private $modelClass;
+    /**
+     * @var
+     */
     public $model;
-    private $db;
-    public $modelPath = "/Models/";
 
     /**
-     * @return string
+     * @var string
      */
+    public $modelPath = "/Models/";
+
+
+    /**
+     * Model constructor.
+     */
+    function __construct()
+    {
+        $this->getLoadModel();
+    }
 
     /**
      * @return mixed
      */
-    public function getModelPath()
+    public function getLoadModel()
     {
-        return $this->modelPath;
-    }
-
-
-    public function getloadModel() {
-
-       $className = str_replace( '\\', '/', get_class($this));
-       $classModel = str_replace('Controllers','Models', $className);
-
-
+        $className = str_replace('\\', '/', get_class($this));
+        $classModel = str_replace('Controllers', 'Models', $className);
         $this->modelClass = $classModel . 'Model';
+        $path = $this->modelClass . '.php';
 
-        $path =  $this->modelClass . '.php';
-
-        if (file_exists($path)  || is_readable($path)) {
+        if (file_exists($path) || is_readable($path)) {
             require_once $path;
-
-
             return $this->dbObject();
         }
-
-
     }
-
+    /**
+     * @return mixed
+     */
     private function dbObject()
     {
-
         $registry = RegistryDatabase::getInstance();
         $obj = $registry->get(TYPE);
         $className = str_replace('/', '\\', $this->modelClass);

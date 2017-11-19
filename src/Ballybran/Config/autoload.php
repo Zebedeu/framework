@@ -16,9 +16,6 @@
  */
 
 namespace Ballybran\Config;
-use Ballybran\Helpers\vardump\Vardump;
-use function explode;
-use function str_split;
 
 /**
  *

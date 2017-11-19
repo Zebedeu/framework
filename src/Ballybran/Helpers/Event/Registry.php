@@ -37,18 +37,18 @@ class Registry
      */
     public function doSomething()
     {
-       throw new Exception\InvalidCallException("");
+        throw new Exception\InvalidCallException("");
     }
 
     function __set($name, $value)
     {
-            $this->_object[$name] =   $value;
+        $this->_object[$name] = $value;
 
     }
 
     function __get($name)
     {
-        if(array_key_exists($name, $this->_object)) {
+        if (array_key_exists($name, $this->_object)) {
             return $this->_object[$name];
         }
     }
@@ -62,21 +62,18 @@ class Registry
     {
         $prefix = substr($method, 0, 3);
         $key = strtolower(substr($method, 3));
-        if($prefix == 'set' && count($param) == 1) {
+        if ($prefix == 'set' && count($param) == 1) {
 
-            // $key = $param[0];
             $value = $param[0];
             $this->method[$key] = $value;
-        }
-        elseif($prefix == 'get') {
 
-            if(array_key_exists($key, $this->method)){
+        }
+        if ($prefix == 'get' && array_key_exists($key, $this->method)) {
                 return $this->method[$key];
             } else {
-                throw new  Exception\InvalidCallException ('Setting read-only method: ' .'::' );
+                throw new  Exception\InvalidCallException ('Setting read-only method: ' . '::');
 
             }
-        }
     }
 }
 

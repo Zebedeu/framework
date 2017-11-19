@@ -24,7 +24,7 @@
 namespace Ballybran\Helpers;
 
 
-use Ballybran\Helpers\Event\Register;
+use Ballybran\Helpers\Event\Registry;
 use function count;
 use function var_dump;
 

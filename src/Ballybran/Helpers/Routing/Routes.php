@@ -16,7 +16,6 @@
 
 namespace Ballybran\Helpers\Routing;
 
-use Ballybran\Exception\ApException;
 use Ballybran\Exception\Exception;
 use Ballybran\Helpers\Language;
 
@@ -63,7 +62,7 @@ class Routes
                 $controllerPath = DIR_FILE . '/controllers/' .$controllerName . '.php';
 
                 if(file_exists($controllerPath)) {
-                    include_once $controllerPath;
+                    include_once ($controllerPath);
 
                     $objec = new $controllerName;
 
@@ -89,7 +88,7 @@ class Routes
 
     public static function route() {
         if( 7.1 >= phpversion()  ) {
-            $bootstrap = new \Ballybran\Helpers\Routing\Bootstrap();
+            $bootstrap = new Bootstrap();
             $bootstrap->init();
         }else {
             $lang = new Language();

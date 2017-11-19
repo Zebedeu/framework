@@ -1,4 +1,5 @@
 <?php
+
 /**
  * APWEB Framework (http://framework.artphoweb.com/)
  * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
@@ -24,9 +25,21 @@ use PDO;
  */
 interface AbstractDatabaseInterface {
 
+    /**
+     *
+     */
     const HOST ="localhost";
+    /**
+     *
+     */
     const UNAME ="root";
+    /**
+     *
+     */
     const PW ="root";
+    /**
+     *
+     */
     const DBNAME = "";
 
 
@@ -38,14 +51,19 @@ interface AbstractDatabaseInterface {
      */
     public function selectManager($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC);
 
+
     /**
-     * select
-     * @param string $sql An SQL string
-     * @param array $array Paramters to bind
-     * @param constant $fetchMode A PDO Fetch mode
+     * @param $table
+     * @param null $fields
+     * @param null $where
+     * @param null $order
+     * @param null $limit
+     * @param null $offset
+     * @param array $array
+     * @param $fetchMode
      * @return mixed
      */
-    public function find($table, $fields = null, $where = null, $order= null , $limit=null, $offset=null,  $array = array(), $fetchMode );
+    public function find($table, $fields = null, $where = null, $order= null , $limit=null, $offset=null, $array = array(), $fetchMode );
 
 
     /**
@@ -56,10 +74,11 @@ interface AbstractDatabaseInterface {
      */
     public function save( $table, $data, $where= null);
 
+
     /**
-     * @param $table da base de dados
-     * @param $data recebido do array
-     * @return bool
+     * @param $table
+     * @param array $data
+     * @return mixed
      */
     public function insert($table, array $data);
 
@@ -91,8 +110,6 @@ interface AbstractDatabaseInterface {
      * @return mixed
      */
     public function createTable(String $table, array $fileds);
-
-
 
 
 }
