@@ -27,7 +27,7 @@ use Ballybran\Helpers\Security\Session;
 
 /**
  */
-   class AbstractController extends Model implements AbstractcontrollerInterface
+   class AbstractController extends Model implements AbstractControllerInterface
   {
 
       /**
