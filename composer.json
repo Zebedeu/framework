@@ -16,8 +16,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "phpunit/phpunit": "6.3.*",
-        "knut7/knut7": "@dev"
+        "phpunit/phpunit": "6.3.*"
 
     },
 
