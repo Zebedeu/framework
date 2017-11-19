@@ -18,7 +18,7 @@
 
 namespace Ballybran\Core\Controller;
 
-interface AbstractcontrollerInterface {
+interface AbstractControllerInterface {
 
 
 }
