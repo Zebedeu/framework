@@ -20,6 +20,10 @@ namespace Ballybran\Helpers\Security;
 
 use Ballybran\Exception\Exception;
 
+/**
+ * Class Validate
+ * @package Ballybran\Helpers\Security
+ */
 class Validate extends ValidateTypes
 {
 

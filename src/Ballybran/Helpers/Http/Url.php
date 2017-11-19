@@ -15,11 +15,16 @@
  * @version   1.0.0
  */
 
+
 namespace Ballybran\Helpers;
 
 
 use Ballybran\Helpers\Security\Http;
 
+/**
+ * Class Url
+ * @package Ballybran\Helpers
+ */
 class Url extends Http {
 
     private $url;

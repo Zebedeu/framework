@@ -14,13 +14,6 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 06/01/17
- * Time: 16:31
- */
-
 namespace Ballybran\Helpers\Routing;
 
 

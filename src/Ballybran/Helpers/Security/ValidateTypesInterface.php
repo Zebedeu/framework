@@ -14,16 +14,13 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 11/08/17
- * Time: 13:23
- */
 
 namespace Ballybran\Helpers\Security;
 
-
+/**
+ * Interface ValidateTypesInterface
+ * @package Ballybran\Helpers\Security
+ */
 interface ValidateTypesInterface
 {
       public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "");

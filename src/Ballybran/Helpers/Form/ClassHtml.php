@@ -14,13 +14,6 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 05/06/17
- * Time: 22:30
- */
-
 namespace Ballybran\Helpers\Form;
 
 

@@ -19,6 +19,10 @@ namespace Ballybran\Helpers\Routing;
 
 use \Ballybran\Exception\Exception;
 
+/**
+ * Class Bootstrap
+ * @package Ballybran\Helpers\Routing
+ */
 final class Bootstrap
 {
 

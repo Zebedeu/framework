@@ -14,12 +14,6 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 24/09/17
- * Time: 22:09
- */
 
 namespace Ballybran\Database;
 

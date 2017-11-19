@@ -20,7 +20,6 @@ namespace Ballybran\Helpers\Security;
 
 
 use Ballybran\Exception\Exception;
-use Ballybran\Helpers\vardump\Vardump;
 
 class RenderFiles
 {

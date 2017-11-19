@@ -21,11 +21,11 @@ class Form extends Value
 {
 
 
-/** @var array $_currentItem The immediately posted item*/
-private $_currentItem = null;
+    /** @var array $_currentItem The immediately posted item */
+    private $_currentItem = null;
 
-/** @var array $_postData Stores the Posted Data */
-private $_postData = array("text" => "text", "button"=>"button");
+    /** @var array $_postData Stores the Posted Data */
+    private $_postData = array("text" => "text", "button" => "button");
 
 
     private $_name;
@@ -33,10 +33,10 @@ private $_postData = array("text" => "text", "button"=>"button");
     public $_va;
 
     function __construct()
-{
-    parent::__construct();
-    $this->_va = new Value();
-}
+    {
+        parent::__construct();
+        $this->_va = new Value();
+    }
 
     public function setMethod($string)
     {
@@ -44,45 +44,47 @@ private $_postData = array("text" => "text", "button"=>"button");
         return $this;
     }
 
-public function setType($field, $nome = null, $value = null)
-{
+    public function setType($field, $nome = null, $value = null)
+    {
 
         $this->_postData[$field] = $field;
-    $this->_currentItem = $field;
-    $this->_name = $nome;
-    $this->_value = $value;
+        $this->_currentItem = $field;
+        $this->_name = $nome;
+        $this->_value = $value;
         return $this;
 
-}
+    }
 
-public function getType(){
-    $this->_postData;
-    $this->_currentItem;
-    $this->_name;
-    $this->_value;
-    return $this;
+    public function getType()
+    {
+        $this->_postData;
+        $this->_currentItem;
+        $this->_name;
+        $this->_value;
+        return $this;
 
-}
+    }
 
     /**
      * @return
      */
     public function show()
     {
-        echo "<input type='".$this->_currentItem . "' name='".$this->_name ."'  placeholder='".$this->_value . "' />";
+        echo "<input type='" . $this->_currentItem . "' name='" . $this->_name . "'  placeholder='" . $this->_value . "' />";
 
         return $this;
     }
 
     public function textarea()
     {
-        echo "<textarea name='".$this->_name ."'  value='".$this->_value . "'></textarea>";
+        echo "<textarea name='" . $this->_name . "'  value='" . $this->_value . "'></textarea>";
 
         return $this;
     }
 
     public function select()
-    {?>
+    {
+        ?>
         <select name="quantidade" id="">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -91,10 +93,9 @@ public function getType(){
             <option value="5">5</option>
         </select>
 
-<?php
+        <?php
         return $this;
     }
-
 
 
 }

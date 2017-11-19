@@ -17,6 +17,10 @@
 namespace Ballybran\Helpers\Security;
 
 
+/**
+ * Class Val
+ * @package Ballybran\Helpers\Security
+ */
 class Val
 {
 

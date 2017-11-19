@@ -17,7 +17,6 @@
 
 namespace Ballybran\Helpers\Form;
 
-use Ballybran\Helpers\Security\Validate;
 
 class Value
 {

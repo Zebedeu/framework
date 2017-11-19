@@ -19,10 +19,8 @@ use Ballybran\Helpers\Routing\Routes;
 use Ballybran\Helpers\vardump\Vardump;
 
 /**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 17/10/17
- * Time: 23:28
+ * Class Map
+ * @package Ballybran\Helpers\Routing
  */
 class Map
 {
