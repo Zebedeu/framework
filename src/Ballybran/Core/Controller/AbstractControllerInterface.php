@@ -21,4 +21,6 @@ namespace Ballybran\Core\Controller;
 interface AbstractControllerInterface {
 
 
+    public function demensionOfImage();
+
 }
