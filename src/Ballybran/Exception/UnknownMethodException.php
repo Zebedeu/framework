@@ -14,13 +14,6 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 07/01/17
- * Time: 01:02
- */
-
 namespace Ballybran\Exception;
 
 

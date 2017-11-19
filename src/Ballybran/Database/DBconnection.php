@@ -17,28 +17,23 @@
 
 namespace Ballybran\Database;
 
-use Ballybran\Helpers\vardump\Vardump;
 use PDO;
-use function var_dump;
 
 class DBconnection extends PDOStatement {
 
     /**
-     * undocumented class variable
      *
      * @params array
      * */
     private $params = array();
 
     /**
-     * undocumented class variable
      *
      * @_instances array
      * */
     private $_instances = array();
 
     /**
-     * undocumented class variable
      *
      * @var string
      * */
@@ -72,10 +67,8 @@ class DBconnection extends PDOStatement {
     }
 
     /**
-     * undocumented function
      *
      * @return bool
-     * @author 
      * */
     protected function _beginTransaction() {
         if (!$this->beginTransactioncount && $this->beginTransactioncount++) {
@@ -85,10 +78,8 @@ class DBconnection extends PDOStatement {
     }
 
     /**
-     * undocumented function
      *
      * @return bool
-     * @author Marcio Zebedeu
      * */
     protected function _commit() {
         $beginTransactioncount =0;
@@ -99,10 +90,8 @@ class DBconnection extends PDOStatement {
     }
 
     /**
-     * undocumented function
      *
      * @return bool
-     * @author Marcio Zebedeu
      * */
     protected function _Rollback() {
         if ($this->beginTransactioncount >= 0) {

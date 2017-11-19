@@ -24,6 +24,7 @@ use Ballybran\Exception;
  */
 class Registry
 {
+    private static $instance;
 
 
     /**
@@ -51,6 +52,7 @@ class Registry
         if (array_key_exists($name, $this->_object)) {
             return $this->_object[$name];
         }
+        return false;
     }
 
     /**
@@ -58,6 +60,31 @@ class Registry
      * @param null $param
      * @return mixed
      */
+
+    public static function getInstance()
+    {
+        if(self::$instance == null) {
+            self::$instance = new static();
+        }
+
+        return self::$instance;
+    }
+    
+    public function isValid($name) {
+        return array_key_exists($name, $this->_object);
+    }
+
+    public function set($name, $value)
+    {
+        $this->_object[$name] = $value;
+    }
+
+    public function get($name)
+    {
+        if(array_key_exists($name, $this->_object)) {
+            return $this->_object[$name];
+        }
+    }
     public function __call($method, $param = null)
     {
         $prefix = substr($method, 0, 3);

@@ -16,14 +16,10 @@
  */
 
 namespace Ballybran\Helpers\Copyright;
-use Ballybran\Helpers\Copyright\CopyrightInterface;
 class Copyright implements CopyrightInterface {
 
     private static $date;
 
-    /**
-     *
-     */
     public static function copyright(int $data_last = 2015, string $name = "knut7 FRAMWORK") {
 
         self::$date = date('y');

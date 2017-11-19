@@ -36,14 +36,6 @@ public static function error( $params = null){ ?>
 <script src="<?php echo URL; ?>Public/bootstrap/jQuery.js"></script>
 
 
-<?php
-// if (isset($this->Js)) {
-//     foreach ($this->Js as $Js) {
-//         echo ' <script type="text/javascript" src="' . URL . 'view/' . $Js . '"></script>';
-//     }
-// }
-//
-?>
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top" id="my-navbar">

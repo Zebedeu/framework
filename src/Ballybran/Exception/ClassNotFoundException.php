@@ -14,12 +14,6 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: macbookpro
- * Date: 17/11/17
- * Time: 06:31
- */
 
 namespace Ballybran\Exception;
 
@@ -28,9 +22,12 @@ use Throwable;
 class ClassNotFoundException extends \RuntimeException
 {
 
+
     /**
      * ClassNotFoundException constructor.
-     * @param string $string
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
      */
    public function __construct($message = "", $code = 0, Throwable $previous = null)
    {

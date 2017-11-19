@@ -17,6 +17,10 @@
 
 namespace Ballybran\Helpers\Security;
 
+/**
+ * Class ValidateInput
+ * @package Ballybran\Helpers\Security
+ */
 
 class ValidateInput
 {

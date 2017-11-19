@@ -20,6 +20,10 @@ namespace Ballybran\Helpers;
 use Ballybran\Exception\Exception;
 use Ballybran\Helpers\vardump\Vardump;
 
+/**
+ * Class Language
+ * @package Ballybran\Helpers
+ */
 class Language
 {
 

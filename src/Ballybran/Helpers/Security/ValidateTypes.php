@@ -22,6 +22,10 @@ namespace Ballybran\Helpers\Security;
 use function is_array;
 use function var_dump;
 
+/**
+ * Class ValidateTypes
+ * @package Ballybran\Helpers\Security
+ */
 class ValidateTypes
 {
 

@@ -21,16 +21,13 @@ namespace  Ballybran\Helpers\Images;
 class Image extends Resize   {
 
 
-
-  /**
-   * 
-   * @param type $filename  insert a file (jpg,jpeg, png, gif, )
-   * @param type $new_width insert width for image. 
-   * @param type $new_height insert Height for image.
-   * @param type $options insert optional parans (lendscape, auto, crop, portrait, or exact)
-   * 
-   * Exemple: new Image('exemplo.jpg', 800, 600, 'lendscape');
-   */
+    /**
+     * Image constructor.
+     * @param $filename
+     * @param $new_width
+     * @param $new_height
+     * @param string $options
+     */
     public function __construct($filename, $new_width, $new_height, $options = "auto") {
 
         parent::__construct($filename);

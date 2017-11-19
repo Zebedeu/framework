@@ -14,18 +14,9 @@
  * @version   1.0.0
  */
 
-/**
- * Created by PhpStorm.
- * User: macbookpro
- * Date: 16/11/17
- * Time: 23:41
- */
 
 namespace Ballybran\Database;
 
-
-
-use Prophecy\Exception\Doubler\ClassNotFoundException;
 
 /**
  * Class RegistryDatabase

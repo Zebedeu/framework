@@ -19,6 +19,10 @@ namespace Ballybran\Helpers\Routing;
 use Ballybran\Exception\Exception;
 use Ballybran\Helpers\Language;
 
+/**
+ * Class Routes
+ * @package Ballybran\Helpers\Routing
+ */
 class Routes
 {
     private static $routes;

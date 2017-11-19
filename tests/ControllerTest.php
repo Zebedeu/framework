@@ -18,7 +18,7 @@ class ControllerTest extends PHPUnit {
     public function testIfControllerIsInstanciOf(){
 
 
-       $this->assertInstanceOf(AbstractcontrollerInterface::class, $this->objController);
+       $this->assertInstanceOf(AbstractControllerInterface::class, $this->objController);
     }
 
     public function testClassInstance()

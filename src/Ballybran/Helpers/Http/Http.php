@@ -15,8 +15,10 @@
  */
 
 namespace Ballybran\Helpers\Security;
-use function openssl_open;
-
+/**
+ * Class Http
+ * @package Ballybran\Helpers\Security
+ */
 class Http {
 
 	private $securite;

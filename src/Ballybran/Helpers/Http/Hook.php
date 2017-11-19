@@ -15,8 +15,14 @@
  * @version   1.0.0
  */
 
+
+
 namespace Ballybran\Helpers\Http;
 
+/**
+ * Class Hook
+ * @package Ballybran\Helpers\Http
+ */
 class Hook {
 
     private static $header;
