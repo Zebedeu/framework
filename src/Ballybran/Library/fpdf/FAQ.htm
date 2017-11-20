@@ -1,3 +1,18 @@
+<!--
+  ~ KNUT7 K7F (http://framework.artphoweb.com/)
+  ~ KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+  ~
+  ~ Licensed under The MIT License
+  ~ For full copyright and license information, please see the LICENSE.txt
+  ~ Redistributions of files must retain the above copyright notice.
+  ~
+  ~ @link      http://github.com/zebedeu/artphoweb for the canonical source repository
+  ~ @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
+  ~ @license   http://framework.artphoweb.com/license/new-bsd New BSD License
+  ~ @author    Marcio Zebedeu - artphoweb@artphoweb.com
+  ~ @version   1.0.2
+  -->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
@@ -15,7 +30,7 @@
         <ul>
             <li><b>1.</b> <a href='#q1'>What's exactly the license of FPDF? Are there any usage restrictions?</a></li>
             <li><b>2.</b> <a href='#q2'>I get the following error when I try to generate a PDF: Some data has already been output, can't send PDF file</a></li>
-            <li><b>3.</b> <a href='#q3'>Accented letters are replaced with some strange characters like Ã©.</a></li>
+            <li><b>3.</b> <a href='#q3'>Accented letters are replaced with some strange characters like é.</a></li>
             <li><b>4.</b> <a href='#q4'>I try to display the Euro symbol but it doesn't work.</a></li>
             <li><b>5.</b> <a href='#q5'>I try to display a variable in the Header method but nothing prints.</a></li>
             <li><b>6.</b> <a href='#q6'>I have defined the Header and Footer methods in my PDF class but nothing shows.</a></li>
@@ -60,7 +75,7 @@
             </li>
 
             <li id='q3'>
-                <p><b>3.</b> <span class='question'>Accented letters are replaced with some strange characters like Ã©.</span></p>
+                <p><b>3.</b> <span class='question'>Accented letters are replaced with some strange characters like é.</span></p>
                 Don't use UTF-8 with the standard fonts; they expect text encoded in ISO-8859-1 or windows-1252.
                 You can use utf8_decode() to perform a conversion to ISO-8859-1:
                 <div class="doc-source">

@@ -2,18 +2,18 @@
 
 
 /**
- * APWEB Framework (http://framework.artphoweb.com/)
- * APWEB FW(tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * KNUT7 K7F (http://framework.artphoweb.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2015.  APWEB  Software Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- * @version   1.0.0
+ * @version   1.0.2
  */
 /**
  * @property
@@ -22,6 +22,7 @@
 namespace Ballybran\Core\Controller;
 use Ballybran\Core\Model\Model;
 use Ballybran\Core\View\View;
+use Ballybran\Helpers\Language;
 use Ballybran\Helpers\Uploads;
 use Ballybran\Helpers\Security\Session;
 
@@ -56,9 +57,10 @@ use Ballybran\Helpers\Security\Session;
         * @var
         */
        protected $option;
+       public $language;
 
 
-      /**
+       /**
        * AbstractController constructor.
        *  call method function  init
        * View view estancia a class view
@@ -72,6 +74,7 @@ use Ballybran\Helpers\Security\Session;
 
           $this->view = new View();
           $this->imagem = new Uploads();
+          $this->language = new Language();
           $this->demensionOfImage();
 
       }
