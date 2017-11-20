@@ -14,16 +14,26 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Exception;
+/**
+ * Created by PhpStorm.
+ * User: macbookpro
+ * Date: 20/11/17
+ * Time: 03:03
+ */
+
+namespace Ballybran\Helpers\Security;
 
 
-use BadMethodCallException;
-
-class UnknownPropertyException extends BadMethodCallException
+interface ValInterface
 {
 
-    public function flashMessageError(  )
-    {
-        return "Invalid Call";
-    }
+    public function minlength(string $data, int $arg);
+
+    public function maxlength(string $data, int $arg);
+
+    public function digit(string $data);
+
+    public function __call(string $name, $arguments);
+
+    public function isValideLenght(string $lenght, string $data, int $arg);
 }

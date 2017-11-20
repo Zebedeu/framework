@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Knut7/Knut7.svg?branch=master)](https://travis-ci.org/Knut7/Knut7)
+[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=1.0.2)](https://travis-ci.org/knut7/framework)
 [![license](https://img.shields.io/github/license/Knut7/Knut7.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/Knut7.svg)]()
 
@@ -10,7 +10,6 @@
  * @copyright (c) 2016.  knut7 Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  */
-
 
 
 
@@ -163,10 +162,11 @@ e em seguida no teu controller inserir o codigo abaixo:
 
 Views
 View
-class View implements iView
+class View 
 
 
 Class View
+
 BrowserRedirect render( $controller, string $view)
 controller
 $controller
@@ -471,8 +471,16 @@ Details
 static Header( $header )
 Parameters
 
+```php
+            Hook::Header('article/publish');
+```
 
+para retornar ao home use :
 
+```php
+        Hook::Header('');
+
+```
 string
 $header
 
@@ -626,6 +634,213 @@ static handleLogin( )
 
 ```
 void
+
+
+Datadabase
+
+
+Config 
+
+```php
+define('TYPE', 'PDO'); // Insert ou type database Drive hire. \\ PDO, MYSQLI, POSTGROUL and SQLite
+
+define('DB_PORT', 8889);
+define('DB_TYPE', 'mysql');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', 'root');
+define('DB_NAME', 'apweb');
+
+```
+
+use RegistryDatabase class global
+use method get para escolher o Drive da Database : PDO, MYSQL, 'SQLIT'
+Exemplo:
+
+```php
+
+$registry = new \Ballybran\Database\RegistryDatabase();
+$registry->get("PDO");
+
+```
+
+
+Validação
+
+use classes:
+
+Validate
+
+
+ class Validate
+ 
+ ```php
+    $valid = new Validate();
+
+```
+Methods
+
+public getMethod( Strting $type )
+ description 
+get method form type
+
+Details
+public getMethod( Strting $type )
+Parameters
+
+```php
+
+$valid->getMethod('POST');
+```
+string
+$type (POST, GET, COOKIE)
+
+
+public post( string $input  ) 
+
+Details
+
+public post( string $input  )  
+
+Parameters
+
+string
+$input 
+```php
+
+$valid->post('usuarios_id');
+```
+```haml
+<input type='ext' name="usuarios_id" >
+
+```
+
+
+public val( callback $name, int length  ) 
+
+Details
+
+public val( string $input  )  
+Parameters
+
+string Calback : maxlength our minlength func for char
+int lengt
+
+```php
+
+    $valid->post('usuarios_id')->val('maxlength', 500)->post('message'))->val('minlength', 10);
+
+```
+
+public getPostDate( array $data optional )
+```php
+
+$valid->getPostDate();
+```
+return array
+
+
+ ```php
+ 
+    $valid = new Validate();
+         $valid->getMethod('POST');
+         $valid->post('usuarios_id')->val('maxlength', 500)->post('message'))->val('minlength', 10);
+ 
+         $this->model->insertMural($valid->getPostDate());
+
+ 
+ ```
+ValidateTypes
+
+ class ValidateTypes
+ 
+Methods
+
+static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "")
+ description 
+ 
+ faz a validaçao de um dado de cada vez, expecificando o seu tipo
+ 
+
+Details
+
+ static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "")
+
+Parameters
+
+ string $theValue
+ string $theType : string, int, long, double email, date, defined
+ $theDefinedValue = ""
+ $theNotDefinedValue = ""
+ 
+ ```php
+ 
+ $val = ValidateTypes::getSQLValueSInputString("firstname", 'string');
+ $val = ValidateTypes::getSQLValueSInputString("age", 'int');
+ 
+ ```
+
+
+
+Upload
+
+ class Uploads
+ 
+     public $width = 2000 ( Width for image);
+     public $height = 2000 ( height for image);
+     public $quality = 10; ( quality for image);
+     public $option = "perfil"; ( Width for image);
+ 
+Methods
+
+static function file($dir_name= null)
+ description 
+ 
+carrega imagens para uma pasa com o nome do usario se estiver logado.
+ 
+ if not exst is created a user path default
+
+Details
+
+static function file($dir_name = null)
+
+Parameters
+
+ string $dir_name
+ 
+ exemplo:
+ 
+ ```html
+ 
+ <input type"text" name="archive[]" multiple>
+ ```
+ 
+ ```php
+ 
+     public $width = 2000;
+     public $height = 2000;
+     public $quality = 10;
+     public $option = "perfil";
+     
+     
+  $image = new ImageUpload();
+         $image->setName($this->imagem->name);
+         $image->setType($this->imagem->type);
+         $image->setPath($this->imagem->path);
+         $image->setSize($this->imagem->size);
+         $image->setId(Session::get('ID'));
+ 
+         $data['type'] = $image->getType();
+         $data['size'] = $image->getSize();
+         $data['path'] = $image->getPath();
+         $data['name'] = $image->getName();
+         $data['usuarios_id'] = $image->getId();
+         $this->model->insertImageUser($data);
+         
+ ```
+
+
+
 
 
 
