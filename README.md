@@ -48,7 +48,7 @@ A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC) 
 PHP v7.x
 Conhecimentos básicos de php
 Do resto é moleza.
-Link pra contribuições e Download : https://github.com/aphra-frameworkaphra-framework
+Link pra contribuições e Download : https://github.com/knut7/knut7
 
 
 
