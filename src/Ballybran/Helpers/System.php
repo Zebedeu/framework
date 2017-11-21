@@ -15,43 +15,17 @@
  */
 
 namespace Ballybran\Helpers;
+use Ballybran\Helpers\{
+    Http\Http
+};
 
 
 /**
  * Class System
  * @package Ballybran\Helpers
  */
-class System
+class System extends Http
 {
-
-    /**
-     * @var string
-     */
-    private  static $OS_UNKNOWN = "NÃO ENCONTRADO";
-    /**
-     * @var string
-     */
-    private  static $OS_WIN = "WIN";
-    /**
-     * @var string
-     */
-    private  static $OS_LINUX = "LINUX";
-    /**
-     * @var string
-     */
-    private  static $OS_OSX = "MAC OSX";
-
-    /**
-     * @return int
-     */
-    static public function getOS(): string {
-        switch (true) {
-            case stristr(PHP_OS, 'DAR'): return self::$OS_OSX;
-            case stristr(PHP_OS, 'WIN'): return self::$OS_WIN;
-            case stristr(PHP_OS, 'LINUX'): return self::$OS_LINUX;
-            default : return self::$OS_UNKNOWN;
-        }
-    }
 
     /**
      * @return float

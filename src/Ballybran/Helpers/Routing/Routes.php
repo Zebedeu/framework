@@ -91,13 +91,13 @@ class Routes
     }
 
     public static function route() {
-//        if( 7.1 >= phpversion()  ) {
+        if( 7.1 >= phpversion()  ) {
             $bootstrap = new Bootstrap();
             $bootstrap->init();
-//        }else {
-//            $lang = new Language();
-//            $lang->Load('welcome');
-//            Exception::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
-//        }
+        }else {
+            $lang = new Language();
+            $lang->Load('welcome');
+            Exception::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
+        }
     }
 }
