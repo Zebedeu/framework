@@ -173,7 +173,7 @@ class Uploads implements UploadsInterface
      */
     public function file($dir_name = null)
     {
-        $this->dir = $dir;
+        $this->dir = $dir_name;
 
         $this->make();
     }

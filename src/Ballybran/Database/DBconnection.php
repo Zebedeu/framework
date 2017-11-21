@@ -50,7 +50,8 @@ class DBconnection extends PDOStatement {
      public function connection() {
 
             try {
-                $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass']);
+                $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass'],
+                    [\PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8']);
 
                 $attributes = array(
                     "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
