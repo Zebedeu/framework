@@ -16,7 +16,6 @@
  */
 
 namespace Ballybran\Helpers\Copyright;
-use Ballybran\Exception\ClassNotFoundException;
 use Ballybran\Helpers\Security\ValidateTypes;
 
 class Copyright extends ValidateTypes implements CopyrightInterface {
