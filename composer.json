@@ -16,7 +16,10 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "phpunit/phpunit": "6.3.*",
+        "phpunit/phpunit": "6.3.*"
+
+    },
+    "require-dev": {
         "knut7/php-graphic": "0.1"
 
     },
