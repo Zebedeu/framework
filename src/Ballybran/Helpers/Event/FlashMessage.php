@@ -16,24 +16,39 @@
 
 /**
  * Created by PhpStorm.
- * User: artphotografie
- * Date: 17/10/17
- * Time: 11:08
+ * User: macbookpro
+ * Date: 22/11/17
+ * Time: 02:23
  */
 
-use Ballybran\Database\Drives\AbstractDatabaseInterface;
-use Ballybran\Database\Drives\AbstractDatabasePDO;
-use PHPUnit\Framework\TestCase;
+namespace Ballybran\Helpers\Event;
 
-class DatabasePDOTest extends TestCase
+
+class FlashMessage
 {
 
+    private $flash;
 
-    public function testInsertData() {
-        $D = [1,2,3,4];
-
-    $this->assertEquals([1,2,3,4], $D);
-
+    public function __construct()
+    {
     }
 
+    public static function sucess($suucsss) {
+
+        return $suucsss;
+    }
+
+    public static function Warning($suucsss) {
+
+        return $suucsss;
+    }
+
+    public static function display( $closure, $message) {
+        return call_user_func(array(self::class, $closure), $message);
+    }
+
+    public function sendMessage() {
+
+//        return  $this->display($this->sucess(), "Please!! data invaid");
+    }
 }

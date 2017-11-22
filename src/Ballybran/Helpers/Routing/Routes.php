@@ -91,7 +91,7 @@ class Routes
     }
 
     public static function route() {
-        if( 7.1 >= phpversion()  ) {
+        if( phpversion() > 7.0  ) {
             $bootstrap = new Bootstrap();
             $bootstrap->init();
         }else {
