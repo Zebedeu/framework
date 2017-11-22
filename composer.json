@@ -20,7 +20,7 @@
 
     },
     "require-dev": {
-        "knut7/php-graphic": "0.1"
+        "knut7/php-graphic": "v0.1"
 
     },
 
