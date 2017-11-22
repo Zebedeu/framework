@@ -17,7 +17,7 @@
     "require": {
         "php": ">=7.0.0",
         "phpunit/phpunit": "6.3.*",
-        "knut7/php-graphic": "dev-master"
+        "knut7/php-graphic": "0.1"
 
     },
 
