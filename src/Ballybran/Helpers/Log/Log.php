@@ -61,63 +61,59 @@ class Log  {
      * @param type $message
      * @param null $type
      */
-    public function write($message, $type = null)
-    {
-        if ($this->handle = fopen($this->filename, 'a')) {
+    public function write($message, $type = null) {
+        if($this->handle = fopen( $this->filename, 'a')) {
             if (is_array($message) && $type === 'A') {
                 foreach ($message as $key => $value) {
                     fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value, true) . "\n");
 
                 }
-            } else {
+            }
+            if(!empty($message )){
+                fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
 
-                if (!empty($message)) {
-                    fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
+            }
+            // to use for get data
+
+             if(is_array($message) && $type == 'F') {
+                foreach ($message as $key => $value) {
+                    fwrite($this->handle, date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value, true) . "\n")."<br>";
 
                 }
             }
-        }
-        // to use for get data
-
-        if (is_array($message) && $type == 'F') {
-            foreach ($message as $key => $value) {
-                fwrite($this->handle, date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value, true) . "\n") . "<br>";
-
             }
-        }
-
-        fclose($this->handle);
-        if ($this->filename == true) {
-            chmod($this->filename, 0755);
-        }
+            fclose($this->handle);
+            if($this->filename == true) {
+                chmod($this->filename, 0755);
+            }
     }
+
     /**
      *
      */
-    public function open()
-    {
-        if (file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename, 'r')) {
-            require_once DIR_FILE . 'View/header.phtml';
-            ?>
-            <div class="info">
-                <ul>
-                    <?php
-                    while (!feof($this->handles)) {
-                        $content = fgets($this->handles);
+    public function open() {
+       if(file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename, 'r')) {
+           require_once DIR_FILE . 'View/header.phtml';
+           ?>
+           <div class="well" >
+           <ul>
+<?php
+           while (!feof($this->handles)) {
+              $content = fgets($this->handles);
 
-                        if (trim($content) != "") {
-                            echo "<li style='color: blue'>$content</li>";
-                        }
-                    } ?>
+              if(trim($content) != ""){
+                  echo "<li style='color: blue'>$content</li>";
+              }
+           } ?>
 
-                </ul>
-            </div>
-            <?php
-            fclose($this->handles);
+           </ul>
+           </div>
+           <?php
+           fclose($this->handles);
 
-        } else {
-            echo "Could not read from {$this->filename}";
-        }
+       } else {
+           echo "Could not read from {$this->filename}";
+       }
     }
 
     /**

@@ -28,11 +28,11 @@ public static function error( $params = null){ ?>
 <head>
     <meta charset="UTF-8">
     <title>404</title>
-    <link rel="stylesheet" href="<?php echo URL; ?>Public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo URL; ?>Public/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>Public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>Public/bootstrap/css/bootstrap-theme.min.css">
 
 </head>
-<script src="<?php echo URL; ?>Public/jquery.js"></script>
+<script src="<?php echo URL; ?>Public/bootstrap/jQuery.js"></script>
 
 
 <body>
