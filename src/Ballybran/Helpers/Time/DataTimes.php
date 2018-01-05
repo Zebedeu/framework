@@ -21,7 +21,7 @@ use DateInterval;
 use DateTimeInterface;
 use DateTimeZone;
 
-class DataTimes implements DateTimeInterface
+class DataTimes
 {
 
     /**
