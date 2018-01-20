@@ -76,5 +76,8 @@ class AbstractDatabasePDOO
         echo "$table";
         return $this;
     }
+    public function Backup($localation){
+
+    }
 
 }

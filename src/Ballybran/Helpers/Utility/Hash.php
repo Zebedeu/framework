@@ -24,8 +24,6 @@ use function random_int;
 class Hash {
     private $key;
 
-
-
     /**
      * @param $algo
      * @param $data
@@ -62,4 +60,26 @@ class Hash {
         return $token;
     }
 
+    public static function hash_password($string, $const = PASSWORD_DEFAULT, $cust = null) {
+
+        if(! is_null($cust) ) {
+
+            return password_hash($string, $const,  ['cost' => $cust]);
+        }
+            return password_hash($string, $const);
+
+
+    }
+
+    public static  function verify_password($string, $hash)
+    {
+
+        if ( password_verify($string, $hash)) {
+                    return true;
+
+        } else {
+            return false;
+        }
+
+    }
 }

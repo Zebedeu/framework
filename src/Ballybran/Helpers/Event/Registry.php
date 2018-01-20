@@ -33,6 +33,8 @@ class Registry
     private $method = array();
     private $_object = [];
 
+
+
     /**
      *
      */

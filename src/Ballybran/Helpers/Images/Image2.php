@@ -17,15 +17,22 @@ namespace  Ballybran\Helpers\Images;
 
 class Image2 {
 
-    public function resize($filename, $width, $height) {
-        if (!is_file(DIR_FILE . $filename)) {
+    private $filename;
+
+    public function __construct($file)
+    {
+        $this->filename = $file;
+    }
+
+    public function resize($width, $height) {
+        if (!is_file(DIR_FILE . $this->filename)) {
             return;
         }
 
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $extension = pathinfo($this->filename, PATHINFO_EXTENSION);
 
-        $old_image = $filename;
-        $new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
+        $old_image = $this->filename;
+        $new_image = 'cache/' . utf8_substr($this->filename, 0, utf8_strrpos($this->filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
         if (!is_file(DIR_FILE . $new_image) || (filectime(DIR_FILE . $old_image) > filectime(DIR_FILE . $new_image))) {
             $path = '';
@@ -43,9 +50,8 @@ class Image2 {
             list($width_orig, $height_orig) = getimagesize(DIR_FILE . $old_image);
 
             if ($width_orig != $width || $height_orig != $height) {
-                $image = new Image(DIR_FILE . $old_image);
-                $image->resize($width, $height);
-                $image->save(DIR_FILE . $new_image);
+                $image = new Image(DIR_FILE . $old_image, $width, $height);
+                $image->saveImage(DIR_FILE . $new_image);
             } else {
                 copy(DIR_FILE . $old_image, DIR_FILE . $new_image);
             }

@@ -46,29 +46,17 @@ use mysqli;
     public function selectManager($sql, $array = array (), $fetchMode = MYSQLI_ASSOC)
     {
 
-        if ($this->result = $this->mysqli->query($sql))
-            ;
-//            $this->message();
+         if($result = mysqli_query($this->mysqli, $sql) ) {
+             while($row = mysqli_fetch_array($result) ) {
+                 return  $row;
+             }
+             mysqli_free_result($result);
 
-        while ($this->myrow = $this->result->fetch_array()) {
-            return $this->myrow;
-        }
-        $this->result->close();
+         }
+//
     }
 
     public function insert($table,array $data)
-    {
-
-        ksort($data);
-
-        $fieldName = implode(', ', array_keys($data));
-        $fieldValues = implode("', '", array_values($data));
-
-        $this->result = $this->mysqli->query("INSERT INTO $table ($fieldName) VALUES ('$fieldValues')");
-        $this->mysqli->close();
-    }
-
-    public function insert2($table, array $data)
     {
 
         $fieldName = implode(',', array_keys($data));
@@ -86,7 +74,7 @@ use mysqli;
         $fieldetail = Null;
 
         foreach ($data as $key => $value) {
-            $fieldetail .= "$key= $$key, ";
+            $fieldetail .= "`$key`=:$key,";
         }
 
         $fieldetail = trim($fieldetail, ',');
@@ -129,7 +117,7 @@ use mysqli;
       * @param constant $fetchMode A PDO Fetch mode
       * @return mixed
       */
-     public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode)
+     public function find( $table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array (), $fetchMode = \PDO::FETCH_ASSOC )
      {
          // TODO: Implement find() method.
      }
@@ -144,4 +132,8 @@ use mysqli;
      {
          // TODO: Implement save() method.
      }
+     public function Backup($localation){
+
+     }
+
  }
