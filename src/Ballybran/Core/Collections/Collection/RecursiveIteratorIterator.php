@@ -24,14 +24,15 @@ namespace Ballybran\Core\Collections\Collection;
  */
 class RecursiveIteratorIterator {
 
+
+    //put your code here
+
     /**
      * @var array
      */
     private $elements;
 
-    //put your code here
-
-    public function __construct($elements) {
+    public function __construct(array $elements) {
 
         $this->elements = $elements;
     }

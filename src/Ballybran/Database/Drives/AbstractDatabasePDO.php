@@ -17,7 +17,11 @@
 
 namespace Ballybran\Database\Drives;
 
+use Ballybran\Database\Backup;
+use Ballybran\Database\DatabaseDump;
 use Ballybran\Database\DBconnection;
+use Ballybran\Database\MySQLDump;
+use Ballybran\Helpers\vardump\BaseVarDumper;
 use PHPUnit\Runner\Exception;
 
 /**
@@ -31,6 +35,10 @@ use PHPUnit\Runner\Exception;
      * @var mixed
      */
     private $conn;
+     /**
+      * @var array
+      */
+     private $param = [];
 
      /**
      * AbstractDatabasePDO constructor.
@@ -43,6 +51,7 @@ use PHPUnit\Runner\Exception;
         parent::__construct($param);
 
         $this->conn = $this->connection();
+        $this->param = $param;
     }
 
      /**

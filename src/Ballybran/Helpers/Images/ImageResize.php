@@ -17,79 +17,162 @@
 namespace  Ballybran\Helpers\Images;
 
 
- class ImageResize  {
+ use Ballybran\Helpers\Images\ImageInterface\ResizeInterface;
 
-    private $file;
+ class ImageResize implements ResizeInterface {
+
+     use Rotate;
+
+     private $file;
     private $image;
     private $width;
+
+     /**
+      * @return mixed
+      */
+     public function getFile()
+     {
+         return $this->file;
+     }
+
+     /**
+      * @return resource
+      */
+     public function getImage()
+     {
+         return $this->image;
+     }
+
+     /**
+      * @return mixed
+      */
+     public function getWidth()
+     {
+         return $this->width;
+     }
+
+     /**
+      * @return mixed
+      */
+     public function getHeight()
+     {
+         return $this->height;
+     }
+
+     /**
+      * @return mixed
+      */
+     public function getBits()
+     {
+         return $this->bits;
+     }
+
+     /**
+      * @return mixed
+      */
+     public function getMime()
+     {
+         return $this->mime;
+     }
+
+     /**
+      * @param mixed $file
+      */
+     public function setFile($file)
+     {
+         $this->file = $file;
+     }
+
+     /**
+      * @param resource $image
+      */
+     public function setImage( $image)
+     {
+         $this->image = $image;
+     }
+
+     /**
+      * @param mixed $width
+      */
+     public function setWidth($width)
+     {
+         $this->width = $width;
+     }
+
+     /**
+      * @param mixed $height
+      */
+     public function setHeight($height)
+     {
+         $this->height = $height;
+     }
+
+     /**
+      * @param string $bits
+      */
+     public function setBits(string $bits)
+     {
+         $this->bits = $bits;
+     }
+
+     /**
+      * @param string $mime
+      */
+     public function setMime(string $mime)
+     {
+         $this->mime = $mime;
+     }
     private $height;
     private $bits;
     private $mime;
 
-    public function __construct($file) {
+    public function upload($file) {
         if (file_exists($file)) {
             $this->file = $file;
 
             $info = getimagesize($file);
 
-            $this->width = $info[0];
-            $this->height = $info[1];
-            $this->bits = isset($info['bits']) ? $info['bits'] : '';
-            $this->mime = isset($info['mime']) ? $info['mime'] : '';
+            $this->setWidth( $info[0]);
+            $this->setHeight($info[1]);
+            $this->setBits(isset($info['bits']) ? $info['bits'] : '');
+            $this->setMime(isset($info['mime']) ? $info['mime'] : '');
 
-            if ($this->mime == 'image/gif') {
+            if ($this->getMime() == 'image/gif') {
                 $this->image = imagecreatefromgif($file);
+                $this->setImage($this->image);
             } elseif ($this->mime == 'image/png') {
                 $this->image = imagecreatefrompng($file);
+                $this->setImage($this->image);
+
             } elseif ($this->mime == 'image/jpeg') {
                 $this->image = imagecreatefromjpeg($file);
+                $this->setImage($this->image);
+
             }
         } else {
             exit('Error: Could not load image ' . $file . '!');
         }
     }
 
-    private function getFile() {
-        return $this->file;
-    }
 
-    private function getImage() {
-        return $this->image;
-    }
-
-    private function getWidth() {
-        return $this->width;
-    }
-
-    private function getHeight() {
-        return $this->height;
-    }
-
-    private function getBits() {
-        return $this->bits;
-    }
-
-    private function getMime() {
-        return $this->mime;
-    }
     /**
-     * 
-     * @param type $file Inser you file 
-     * @param type $quality Isert optional quality for image 
+     *
+     * @param type $file Inser you file
+     * @param type $quality Isert optional quality for image
      * Exemple save('exemple.jpg, 100);
      */
-    public function save($file, $quality = 90) {
-        $info = pathinfo($file);
+    public function save(string $savePath, int $imageQuality = 100) {
+        $info = pathinfo($savePath);
 
         $extension = strtolower($info['extension']);
 
         if (is_resource($this->image)) {
             if ($extension == 'jpeg' || $extension == 'jpg') {
-                imagejpeg($this->image, $file, $quality);
+                imagejpeg($this->image, $savePath, $imageQuality);
             } elseif ($extension == 'png') {
-                imagepng($this->image, $file);
+                imagepng($this->image, $savePath);
             } elseif ($extension == 'gif') {
-                imagegif($this->image, $file);
+                imagegif($this->image, $savePath);
             }
 
             imagedestroy($this->image);
@@ -97,14 +180,14 @@ namespace  Ballybran\Helpers\Images;
     }
 
     /**
-     * 
+     *
      * @param type $width Inser Width for you image
      * @param type $height Inser height for you image
      * @param type $default nser you scale (where w = width end h = height)
      * @return type
      * Exemplae: resize(800, 600, 'w');
      */
-    public function resize($width = 0, $height = 0, $default = '') {
+    public function resize($width = 0, $height = 0, $option = 'auto') {
         if (!$this->width || !$this->height) {
             return;
         }
@@ -116,9 +199,9 @@ namespace  Ballybran\Helpers\Images;
         $scale_w = $width / $this->width;
         $scale_h = $height / $this->height;
 
-        if ($default == 'w') {
+        if ($option == 'w') {
             $scale = $scale_w;
-        } elseif ($default == 'h') {
+        } elseif ($option == 'h') {
             $scale = $scale_h;
         } else {
             $scale = min($scale_w, $scale_h);
@@ -154,35 +237,8 @@ namespace  Ballybran\Helpers\Images;
         $this->height = $height;
     }
 
-    /**
-     * 
-     * @param type $watermark 
-     * @param type $position
-     */
-    public function watermark($watermark, $position = 'bottomright') {
-        switch ($position) {
-            case 'topleft':
-                $watermark_pos_x = 0;
-                $watermark_pos_y = 0;
-                break;
-            case 'topright':
-                $watermark_pos_x = $this->width - $watermark->getWidth();
-                $watermark_pos_y = 0;
-                break;
-            case 'bottomleft':
-                $watermark_pos_x = 0;
-                $watermark_pos_y = $this->height - $watermark->getHeight();
-                break;
-            case 'bottomright':
-                $watermark_pos_x = $this->width - $watermark->getWidth();
-                $watermark_pos_y = $this->height - $watermark->getHeight();
-                break;
-        }
 
-        imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
 
-        imagedestroy($watermark->getImage());
-    }
 
     public function crop($top_x, $top_y, $bottom_x, $bottom_y) {
         $image_old = $this->image;
@@ -204,7 +260,40 @@ namespace  Ballybran\Helpers\Images;
         $this->height = imagesy($this->image);
     }
 
-    private function filter() {
+
+     /**
+      *
+      * @param type $watermark
+      * @param type $position
+      */
+     public function watermark($watermark, $position = 'bottomright') {
+         $watermark = imagecreatefromjpeg('DDDDD');
+
+         switch ($position) {
+             case 'topleft':
+                 $watermark_pos_x = 0;
+                 $watermark_pos_y = 0;
+                 break;
+             case 'topright':
+                 $watermark_pos_x = $this->width - 10;
+                 $watermark_pos_y = 0;
+                 break;
+             case 'bottomleft':
+                 $watermark_pos_x = 0;
+                 $watermark_pos_y = $this->height - 10;
+                 break;
+             case 'bottomright':
+                 $watermark_pos_x = $this->width - 5;
+                 $watermark_pos_y = $this->height - 5;
+                 break;
+         }
+
+         imagecopy($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, $this->getWidth(), $this->getHeight());
+
+         imagedestroy($watermark);
+     }
+
+     private function filter() {
         $args = func_get_args();
 
         call_user_func_array('imagefilter', $args);
@@ -217,7 +306,7 @@ namespace  Ballybran\Helpers\Images;
     }
 
     private function merge($merge, $x = 0, $y = 0, $opacity = 100) {
-        imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
+        imagecopymerge($this->image, $this->getImage(), $x, $y, 0, 0, $this->getWidth(), $this->getHeight(), $opacity);
     }
 
     private function html2rgb($color) {

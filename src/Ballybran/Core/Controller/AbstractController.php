@@ -23,7 +23,7 @@ namespace Ballybran\Core\Controller;
 use Ballybran\Core\Model\Model;
 use Ballybran\Core\View\View;
 use Ballybran\Helpers\Language;
-use Ballybran\Helpers\Uploads;
+use Ballybran\Helpers\FileSystem;
 use Ballybran\Helpers\Security\Session;
 
 /**
@@ -35,11 +35,6 @@ use Ballybran\Helpers\Security\Session;
        * @var View
        */
       protected $view;
-      /**
-       * @var Uploads
-       */
-      protected $imagem;
-
 
        /**
         * @var
@@ -67,23 +62,12 @@ use Ballybran\Helpers\Security\Session;
        * call method LoadeModel();
        */
         public function __construct()
-      {
+        {
 
-          parent::__construct();
-          Session::init();
+            parent::__construct();
+            Session::init();
 
-          $this->view = new View();
-          $this->imagem = new Uploads();
-          $this->language = new Language();
-          $this->demensionOfImage();
-
-      }
-
-       public function demensionOfImage() {
-          $this->imagem->setWidth($this->width);
-          $this->imagem->setHeight($this->height);
-          $this->imagem->setQuality($this->quality);
-          $this->imagem->setOption($this->option);
-      }
-
+            $this->view = new View();
+            $this->language = new Language();
+        }
   }

@@ -158,4 +158,10 @@ class Timestamp {
         return 'over ' . round(floatval($distanceInMinutes) / 525600) . ' years';
     }
 
+    public static function dataTime($format = "Y-m-d H:i:s") {
+        $data = new \DateTime();
+        return $data->format($format);
+
+    }
+
 }

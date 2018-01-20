@@ -111,5 +111,7 @@ interface AbstractDatabaseInterface {
      */
     public function createTable(String $table, array $fileds);
 
+//    public function Backup($localation);
+
 
 }

@@ -18,7 +18,10 @@ namespace Ballybran\Helpers\Images\ImageInterface;
 
 interface ResizeInterface {
 
-     public function saveImage(string $savePath, string $imageQuality = "100");
+    public function upload($file);
+    public function resizes($width, $height, $option = "auto");
+    public function imageRotate(int $degree,   $colorHexType = '000000');
+    public function save(string $savePath, int $imageQuality = 100);
  
 
 }

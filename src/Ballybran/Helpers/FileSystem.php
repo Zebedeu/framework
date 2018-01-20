@@ -19,14 +19,19 @@ namespace Ballybran\Helpers;
 
 
 use Ballybran\Helpers\Images\Image;
+use Ballybran\Helpers\Images\ImageInterface\ImageInterface;
+use Ballybran\Helpers\Images\ImageInterface\ResizeInterface;
+use Ballybran\Helpers\Images\Resize;
 use Ballybran\Helpers\Security\Session;
+use Ballybran\Helpers\vardump\Vardump;
 
 /**
  * Class Uploads
  * @package Ballybran\Helpers
  */
-class Uploads implements UploadsInterface
+class FileSystem
 {
+
 
 
     /**
@@ -81,9 +86,49 @@ class Uploads implements UploadsInterface
      */
     private $dir;
 
+
+    /**
+     * @var
+     */
+    private $degree= 0;
+
+    private $color;
+    /**
+     * @var Image
+     */
+    private $image;
+
     /**
      * @return mixed
      */
+    public function getDegree() : int
+    {
+        return $this->degree;
+    }
+
+    /**
+     * @param mixed $degree
+     */
+    public function setDegree(int $degree)
+    {
+        $this->degree = $degree;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param mixed $color
+     */
+    public function setColor( $color =  "000000")
+    {
+        $this->color = $color;
+    }
     public function getWidth()
     {
         return $this->width;
@@ -149,11 +194,14 @@ class Uploads implements UploadsInterface
 
     /**
      * Uploads constructor.
+     * @param ImageInterface $image
      */
-    function __construct()
+    function __construct(ResizeInterface $image)
     {
 
-        if (isset($_FILES['archive'])) {
+        var_dump($_FILES['archive']);
+
+        if (!empty($_FILES['archive'])) {
 
             foreach ($_FILES['archive']['name'] as $i => $name) {
                 $this->name = $_FILES['archive']['name'][$i];
@@ -161,10 +209,12 @@ class Uploads implements UploadsInterface
                 $this->type = $_FILES['archive']['type'][$i];
                 $this->tmp = $_FILES['archive']['tmp_name'][$i];
 
-                $this->explode = explode('.', $name);
-
+                $this->explode = explode('.', $this->name);
             }
         }
+
+
+        $this->image = $image;
     }
 
 
@@ -188,12 +238,12 @@ class Uploads implements UploadsInterface
 
             $this->makeDefaultPath();
             $this->makePathDirIfDefaultFileNotExist();
-            return $this->move_upload();
+            return $this->moveUploadedFile();
         }
 
         $this->makePathBayUserName();
         $this->makePathDirIfUserExist();
-        return $this->move_upload();
+        return $this->moveUploadedFile();
 
     }
 
@@ -214,26 +264,30 @@ class Uploads implements UploadsInterface
         }
     }
 
+
     private function getObjectImage()
     {
 
-        $img = new Image($this->path, $this->getWidth(), $this->getHeight(), $this->getOption());
-        $img->saveImage($this->path, $this->getQuality());
+        $this->image->upload($this->path);
+        $this->image->imageRotate($this->getDegree(), $this->getColor());
+        $this->image->resizes($this->getWidth(), $this->getHeight(), $this->getOption());
+        $this->image->save($this->path, $this->getQuality());
+
     }
-
-
-    private function move_upload()
+    private function moveUploadedFile()
     {
-        if (move_uploaded_file($this->tmp, $this->path)) {
-            $this->getObjectImage();
+        if(empty($this->tmp)) {
+            throw new NoFilesException('No uploaded files were found. Did you specify "enctype" in your &lt;form&gt; tag?');
         }
+       if(move_uploaded_file($this->tmp, $this->path)) {
+        $this->getObjectImage();
+       }
 
     }
 
     private function makeDefaultPath()
     {
         $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
-
     }
 
     private function makePathBayUserName()
