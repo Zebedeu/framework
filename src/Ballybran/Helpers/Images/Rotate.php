@@ -9,10 +9,34 @@
 namespace Ballybran\Helpers\Images;
 
 
- class Rotate {
+ use Ballybran\Helpers\Images\ImageInterface\ResizeInterface;
+ use Ballybran\Helpers\Images\ImageInterface\RotateImage;
 
 
-    public function imageRotate($degree, $color = '000000')
+ class Rotate implements RotateImage {
+
+
+     /**
+      * @var int
+      */
+     private $degree;
+     /**
+      * @var string
+      */
+     private $color;
+
+
+
+     function __construct(int $degree, $color = '000000')
+    {
+
+        $this->degree = $degree;
+        $this->color = $color;
+        $this->imageRotate($degree, $color);
+
+    }
+
+     public function imageRotate(int $degree, $color = '000000')
     {
         $rgb = $this->html2rgb($color);
 
@@ -23,7 +47,7 @@ namespace Ballybran\Helpers\Images;
 
     }
 
-        public function html2rgb($color) {
+        private function html2rgb($color) {
         if ($color[0] == '#') {
             $color = substr($color, 1);
         }
@@ -43,10 +67,11 @@ namespace Ballybran\Helpers\Images;
         return array($r, $g, $b);
     }
 
-    public function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {
+    private function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {
         $rgb = $this->html2rgb($color);
 
         imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
     }
 
-}
+
+ }

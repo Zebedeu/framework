@@ -21,7 +21,6 @@ namespace  Ballybran\Helpers\Images;
 
  class ImageResize implements ResizeInterface {
 
-     use Rotate;
 
      private $file;
     private $image;
@@ -187,7 +186,7 @@ namespace  Ballybran\Helpers\Images;
      * @return type
      * Exemplae: resize(800, 600, 'w');
      */
-    public function resize($width = 0, $height = 0, $option = 'auto') {
+    public function resizeImage($width = 0, $height = 0, $option = 'auto') {
         if (!$this->width || !$this->height) {
             return;
         }
@@ -251,7 +250,8 @@ namespace  Ballybran\Helpers\Images;
         $this->height = $bottom_y - $top_y;
     }
 
-    public function rotate($degree, $color = 'FFFFFF') {
+     public function imageRotate(int $degree, $color = '000000'){
+
         $rgb = $this->html2rgb($color);
 
         $this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
@@ -329,4 +329,4 @@ namespace  Ballybran\Helpers\Images;
         return array($r, $g, $b);
     }
 
-}
+ }
