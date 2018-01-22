@@ -15,7 +15,7 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Helpers;
+namespace Ballybran\Helpers\Http;
 
 
 use Ballybran\Helpers\Images\Image;
@@ -199,8 +199,6 @@ class FileSystem
     function __construct(ResizeInterface $image)
     {
 
-        var_dump($_FILES['archive']);
-
         if (!empty($_FILES['archive'])) {
 
             foreach ($_FILES['archive']['name'] as $i => $name) {
@@ -270,7 +268,7 @@ class FileSystem
 
         $this->image->upload($this->path);
         $this->image->imageRotate($this->getDegree(), $this->getColor());
-        $this->image->resizes($this->getWidth(), $this->getHeight(), $this->getOption());
+        $this->image->resizeImage($this->getWidth(), $this->getHeight(), $this->getOption());
         $this->image->save($this->path, $this->getQuality());
 
     }

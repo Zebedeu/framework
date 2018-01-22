@@ -6,7 +6,7 @@
  * Time: 09:27
  */
 
-namespace Ballybran\Helpers;
+namespace Ballybran\Helpers\Http;
 
 
 class NoFilesException extends \RuntimeException{

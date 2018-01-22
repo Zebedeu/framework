@@ -18,156 +18,165 @@ namespace  Ballybran\Helpers\Images;
 
  use Ballybran\Helpers\Images\ImageInterface\ResizeInterface;
 
- class Resize implements ResizeInterface {
+ class Resize implements ResizeInterface
+ {
 
 
-    private $image;
-    private $width;
-    private $height;
-    private $imageResized;
+     private $image;
+     private $width;
+     private $height;
+     private $imageResized;
 
-    public function upload($file) {
+     public function upload($file)
+     {
 
-        // *** Open up the file
-        $this->image = $this->openImage($file);
+         // *** Open up the file
+         $this->image = $this->openImage($file);
 
-        // Get Width  and Height
-        $this->width = imagesx($this->image);
-        $this->height = imagesy($this->image);
-    }
+         // Get Width  and Height
+         $this->width = imagesx($this->image);
+         $this->height = imagesy($this->image);
+     }
 
-    private function openImage($file) {
-        //*** get extendsion
-        $extension = strtolower(strrchr($file, '.'));
+     private function openImage($file)
+     {
+         //*** get extendsion
+         $extension = strtolower(strrchr($file, '.'));
 
-        switch ($extension) {
-            case '.jpg':
-            case '.jpeg':
-                $img = imagecreatefromjpeg($file);
-                break;
-            case '.gif':
-                $img = imagecreatefromgif($file);
-                break;
-            case '.png':
-                $img = imagecreatefrompng($file);
-                break;
+         switch ($extension) {
+             case '.jpg':
+             case '.jpeg':
+                 $img = imagecreatefromjpeg($file);
+                 break;
+             case '.gif':
+                 $img = imagecreatefromgif($file);
+                 break;
+             case '.png':
+                 $img = imagecreatefrompng($file);
+                 break;
 
-            default:
-                $img = false;
-                break;
-        }
+             default:
+                 $img = false;
+                 break;
+         }
 
-        return $img;
-    }
+         return $img;
+     }
 
-     public function resizes($width = 0, $height = 0, $option = 'auto') {
-        $optionaArray = $this->getDimensions($width, $height, strtolower($option));
+     public function resizeImage($width, $height, $option = "auto")
+     {
+         $optionaArray = $this->getDimensions($width, $height, strtolower($option));
 
-        // *** Get optional witdth and height - based on option
-        $optionalWidth = $optionaArray['optionalWidth'];
-        $optionalHeight = $optionaArray['optionalHeight'];
+         // *** Get optional witdth and height - based on option
+         $optionalWidth = $optionaArray['optionalWidth'];
+         $optionalHeight = $optionaArray['optionalHeight'];
 
-        $this->imageResized = imagecreatetruecolor($optionalWidth, $optionalHeight);
+         $this->imageResized = imagecreatetruecolor($optionalWidth, $optionalHeight);
 
-        // ***  Resample - create image canvas of x, y size
+         // ***  Resample - create image canvas of x, y size
 
-        imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optionalWidth, $optionalHeight, $this->width, $this->height);
+         imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optionalWidth, $optionalHeight, $this->width, $this->height);
 
-        if ($option == 'crop') {
-            $this->crop($optionalWidth, $optionalHeight, $width, $height);
-        }
-    }
+         if ($option == 'crop') {
+             $this->crop($optionalWidth, $optionalHeight, $width, $height);
+         }
+     }
 
-    private function getDimensions($new_width, $new_height, $option) {
-        $optionalWidth = "";
-        $optionalHeight = "";
+     private function getDimensions($new_width, $new_height, $option)
+     {
+         $optionalWidth = "";
+         $optionalHeight = "";
 
-        switch ($option) {
-            case 'exact':
-                $optionalWidth = $new_width;
-                $optionalHeight = $new_height;
-                break;
-            case 'portrait':
-                $optionalWidth = $this->getSizeByFixedHeight($new_height);
-                $optionalHeight = $new_width;
-                break;
-            case 'lendscape':
-                $optionalWidth = $new_width;
-                $optionalHeight = $this->getSizeByFixedWidth($new_width);
-                break;
-            case 'auto':
-                $optionaArray = $this->getSizeByAuto($new_width, $new_height);
-                $optionalWidth = $optionaArray['optionalWidth'];
-                $optionalHeight = $optionaArray['optionalHeight'];
-                break;
-            case 'crop':
-                $optionaArray = $this->getOptionalCrop($new_width, $new_height);
-                $optionalWidth = $optionaArray['optionalWidth'];
-                $optionalHeight = $optionaArray['optionalHeight'];
-                break;
-            case 'perfil':
-                $optionaArray = $this->getOptionalPerfil($new_width, $new_height);
-                $optionalWidth = $optionaArray['optionalWidth'];
-                $optionalHeight = $optionaArray['optionalHeight'];
-        }
+         switch ($option) {
+             case 'exact':
+                 $optionalWidth = $new_width;
+                 $optionalHeight = $new_height;
+                 break;
+             case 'portrait':
+                 $optionalWidth = $this->getSizeByFixedHeight($new_height);
+                 $optionalHeight = $new_width;
+                 break;
+             case 'lendscape':
+                 $optionalWidth = $new_width;
+                 $optionalHeight = $this->getSizeByFixedWidth($new_width);
+                 break;
+             case 'auto':
+                 $optionaArray = $this->getSizeByAuto($new_width, $new_height);
+                 $optionalWidth = $optionaArray['optionalWidth'];
+                 $optionalHeight = $optionaArray['optionalHeight'];
+                 break;
+             case 'crop':
+                 $optionaArray = $this->getOptionalCrop($new_width, $new_height);
+                 $optionalWidth = $optionaArray['optionalWidth'];
+                 $optionalHeight = $optionaArray['optionalHeight'];
+                 break;
+             case 'perfil':
+                 $optionaArray = $this->getOptionalPerfil($new_width, $new_height);
+                 $optionalWidth = $optionaArray['optionalWidth'];
+                 $optionalHeight = $optionaArray['optionalHeight'];
+         }
 
-        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
-    }
+         return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+     }
 
-    private function getOptionalPerfil($new_width, $new_height) {
-        $heightRatio = $new_height;
-        $widthRatio = $new_width;
+     private function getOptionalPerfil($new_width, $new_height)
+     {
+         $heightRatio = $new_height;
+         $widthRatio = $new_width;
 
-        if (! $heightRatio < $widthRatio) {
-            $optionalRatio = $heightRatio;
-        }
-        $optionalRatio = $widthRatio;
-        $optionalHeight =  $optionalRatio;
-        $optionalWidth = $heightRatio;
-        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+         if (!$heightRatio < $widthRatio) {
+             $optionalRatio = $heightRatio;
+         }
+         $optionalRatio = $widthRatio;
+         $optionalHeight = $optionalRatio;
+         $optionalWidth = $heightRatio;
+         return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
 
-    }
+     }
 
-    private function getSizeByFixedHeight($new_height) {
-        $ratio = $this->width / $this->height;
-        $new_width = $new_height * $ratio;
-        return $new_width;
-    }
+     private function getSizeByFixedHeight($new_height)
+     {
+         $ratio = $this->width / $this->height;
+         $new_width = $new_height * $ratio;
+         return $new_width;
+     }
 
-    private function getSizeByFixedWidth($new_width) {
-        $ratio = $this->height / $this->width;
-        $new_height = $new_width * $ratio;
-        return $new_height;
-    }
+     private function getSizeByFixedWidth($new_width)
+     {
+         $ratio = $this->height / $this->width;
+         $new_height = $new_width * $ratio;
+         return $new_height;
+     }
 
-    private function getSizeByAuto($new_width, $new_height) {
+     private function getSizeByAuto($new_width, $new_height)
+     {
 
-        if ($this->height < $this->width) {
-            // *** image to be resized is taller (landscap)
+         if ($this->height < $this->width) {
+             // *** image to be resized is taller (landscap)
 
-            $optionalWidth = $new_width;
-            $optionalHeight = $this->getSizeByFixedWidth($new_width);
-        } elseif ($this->height > $this->width) {
-            // *** image to be resized is taller (portrait)
+             $optionalWidth = $new_width;
+             $optionalHeight = $this->getSizeByFixedWidth($new_width);
+         } elseif ($this->height > $this->width) {
+             // *** image to be resized is taller (portrait)
 
-            $optionalWidth = $this->getSizeByFixedHeight($new_height);
-            $optionalHeight = $new_height;
-        } else {
+             $optionalWidth = $this->getSizeByFixedHeight($new_height);
+             $optionalHeight = $new_height;
+         } else {
 
-            // *** image to be Resized is a square
-            if ($new_height < $new_width) {
-                $optionalWidth = $new_width;
-                $optionalHeight = $this->getSizeByFixedWidth($new_width);
-            } else if ($new_height > $new_width) {
-                $optionalWidth = $this->getSizeByFixedHeight($new_height);
-                $optionalHeight = $new_height;
-            } else {
-                $optionalWidth = $new_width;
-                $optionalHeight = $new_height;
-            }
-        }
-        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
-    }
+             // *** image to be Resized is a square
+             if ($new_height < $new_width) {
+                 $optionalWidth = $new_width;
+                 $optionalHeight = $this->getSizeByFixedWidth($new_width);
+             } else if ($new_height > $new_width) {
+                 $optionalWidth = $this->getSizeByFixedHeight($new_height);
+                 $optionalHeight = $new_height;
+             } else {
+                 $optionalWidth = $new_width;
+                 $optionalHeight = $new_height;
+             }
+         }
+         return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+     }
 
      /**
       * @param $new_width
@@ -175,75 +184,78 @@ namespace  Ballybran\Helpers\Images;
       * @return array
       *  example  w = 512, h = 720 if 720 / 200 < 512 / 400
       */
-     private function getOptionalCrop(int $new_width, int $new_height) : array{
-        $heightRatio = $this->height / $new_height;
-        $widthRatio = $this->width / $new_width;
+     private function getOptionalCrop(int $new_width, int $new_height): array
+     {
+         $heightRatio = $this->height / $new_height;
+         $widthRatio = $this->width / $new_width;
 
-        if (! $heightRatio < $widthRatio) {
-            $optionalRatio = $heightRatio;
-        }
-        $optionalRatio = $widthRatio;
-        $optionalHeight = $this->height / $optionalRatio;
-        $optionalWidth = $this->width / $optionalRatio;
-        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
-    }
+         if (!$heightRatio < $widthRatio) {
+             $optionalRatio = $heightRatio;
+         }
+         $optionalRatio = $widthRatio;
+         $optionalHeight = $this->height / $optionalRatio;
+         $optionalWidth = $this->width / $optionalRatio;
+         return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
+     }
 
-    private function crop($optionalWidth, $optionalHeight, $new_width, $new_height) {
+     private function crop($optionalWidth, $optionalHeight, $new_width, $new_height)
+     {
 // *** find center - this will be used for the crop
-        $cropStartX = ($optionalWidth / 2) - ($new_width / 2);
-        $cropStartY = ($optionalHeight / 2) - ($new_height / 2);
+         $cropStartX = ($optionalWidth / 2) - ($new_width / 2);
+         $cropStartY = ($optionalHeight / 2) - ($new_height / 2);
 
-        $crop = $this->imageResized;
-        // imageDestroy($this->imageResçized);
-        // *** Now crop from center to exact requested size
+         $crop = $this->imageResized;
+         // imageDestroy($this->imageResçized);
+         // *** Now crop from center to exact requested size
 
-        $this->imageResized = imagecreatetruecolor($new_width, $new_height);
-        imagecopyresampled($this->imageResized, $crop, 0, 0, $cropStartX, $cropStartY, $new_width, $new_height, $new_width, $new_height);
-    }
+         $this->imageResized = imagecreatetruecolor($new_width, $new_height);
+         imagecopyresampled($this->imageResized, $crop, 0, 0, $cropStartX, $cropStartY, $new_width, $new_height, $new_width, $new_height);
+     }
 
-    public function save(string $savePath, int $imageQuality = 100) {
-        // *** Get extension
+     public function save(string $savePath, int $imageQuality = 100)
+     {
+         // *** Get extension
 
-        $extension = strrchr($savePath, '.');
-        $extension = strtolower($extension);
+         $extension = strrchr($savePath, '.');
+         $extension = strtolower($extension);
 
-        switch ($extension) {
-            case '.jpg':
-            case '.jpeg':
-                if (imagetypes() & IMG_JPG) {
-                    imagejpeg($this->imageResized,  $savePath, $imageQuality);
-                }
-                break;
+         switch ($extension) {
+             case '.jpg':
+             case '.jpeg':
+                 if (imagetypes() & IMG_JPG) {
+                     imagejpeg($this->imageResized, $savePath, $imageQuality);
+                 }
+                 break;
 
-            case '.gif':
-                if (imagetypes() & IMG_GIF) {
-                    imagegif($this->imageResized,  $savePath);
-                }
-                break;
+             case '.gif':
+                 if (imagetypes() & IMG_GIF) {
+                     imagegif($this->imageResized, $savePath);
+                 }
+                 break;
 
-            case '.png':
+             case '.png':
 
-                // *** scale quality from 0-100 to 0-9
-                $scaleQuality = round(($imageQuality / 100) * 9);
+                 // *** scale quality from 0-100 to 0-9
+                 $scaleQuality = round(($imageQuality / 100) * 9);
 
-                $invertScaleQuality = 9 - $scaleQuality;
+                 $invertScaleQuality = 9 - $scaleQuality;
 
-                if (imagetypes() & IMG_PNG) {
+                 if (imagetypes() & IMG_PNG) {
 
-                    imagepng($this->imageResized,  $savePath, $invertScaleQuality);
-                }
-                break;
+                     imagepng($this->imageResized, $savePath, $invertScaleQuality);
+                 }
+                 break;
 
-            // .... etc
-            default:
-                // *** No extension - No Save
-            echo "no save";
-                break;
-        }
-        imagedestroy($this->imageResized);
-    }
+             // .... etc
+             default:
+                 // *** No extension - No Save
+                 echo "no save";
+                 break;
+         }
+         imagedestroy($this->imageResized);
+     }
 
-     public function imageRotate(int $degree,   $colorHexType = '000000')
+     public function imageRotate(int $degree, $colorHexType = '000000')
      {
          $rgb = $this->html2rgb($colorHexType);
 
@@ -254,7 +266,8 @@ namespace  Ballybran\Helpers\Images;
 
      }
 
-     public function html2rgb($color) {
+     public function html2rgb($color)
+     {
          if ($color[0] == '#') {
              $color = substr($color, 1);
          }
@@ -274,11 +287,11 @@ namespace  Ballybran\Helpers\Images;
          return array($r, $g, $b);
      }
 
-     public function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {
+     public function text($text, $x = 0, $y = 0, $size = 5, $color = '000000')
+     {
          $rgb = $this->html2rgb($color);
 
          imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
      }
-
 
  }

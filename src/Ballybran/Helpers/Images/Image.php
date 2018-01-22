@@ -1,4 +1,5 @@
 <?php
+
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
  * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
@@ -13,15 +14,7 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
+namespace  Ballybran\Helpers\Images;
 
-namespace Ballybran\Helpers\Images\ImageInterface;
 
-interface ResizeInterface {
 
-    public function upload($file);
-    public function resizeImage($width, $height, $option = "auto");
-    public function imageRotate(int $degree,   $colorHexType = '000000');
-    public function save(string $savePath, int $imageQuality = 100);
- 
-
-}

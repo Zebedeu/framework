@@ -1,4 +1,5 @@
 <?php
+
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
  * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
@@ -14,34 +15,10 @@
  * @version   1.0.2
  */
 
-/**
- * Created by PhpStorm.
- * User: artphotografie
- * Date: 11/08/17
- * Time: 14:11
- */
+namespace Ballybran\Helpers\Http;
 
-namespace Ballybran\Helpers;
+interface UploadSystem {
 
-
-use Ballybran\Helpers\Event\Registry;
-use function count;
-use function var_dump;
-
-class FileExtension
-{
-    private $extension = array ('.php', '.phtml', 'html', 'inc', '.js', 'css');
-    private $ex;
-
-    public function __construct()
-    {
-
-        for ($i = 0; $i > count($this->extension); $i++) {
-            $total = $this->extension[$i];
-            echo $total;
-        }
-    }
-
+    public function file($dir = null);
 
 }
-

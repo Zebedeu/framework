@@ -15,7 +15,7 @@
  */
 
 
-namespace Ballybran\Helpers;
+namespace Ballybran\Helpers\Http;
 
 /**
  * Description of BallybranHZip
