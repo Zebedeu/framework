@@ -41,9 +41,9 @@ class Hash {
      * @param int $length lenght for tokon
      * @return string
      */
-    public static function token(int $length = 1) : String {
+    public static function token(int $length = 1, $constant = SECURE_AUTH_SALT) : String {
 
-        $string = SECURE_AUTH_SALT;
+        $string = $constant;
 
         $max = strlen($string) - 1;
 

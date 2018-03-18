@@ -136,4 +136,8 @@ use mysqli;
 
      }
 
+     public function colum($table, $column, $varchar, $null)
+     {
+         // TODO: Implement colum() method.
+     }
  }

@@ -24,6 +24,7 @@ class RestUtilities
     public static function processRequest()
     {
         $req_method = strtolower($_SERVER['REQUEST_METHOD']);
+
         $obj = new RestRequest();
         $data = array ();
         switch ($req_method) {
@@ -32,7 +33,7 @@ class RestUtilities
                 $data = $_GET;
                 break;
             case 'post':
-                $data = $_POST;
+                $data = $_GET;
                 break;
             case 'put':
                 parse_str(file_get_contents('php://input'), $put_vars);

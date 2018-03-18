@@ -33,7 +33,6 @@ class FileSystem
 {
 
 
-
     /**
      * @var
      */
@@ -199,6 +198,7 @@ class FileSystem
     function __construct(ResizeInterface $image)
     {
 
+
         if (!empty($_FILES['archive'])) {
 
             foreach ($_FILES['archive']['name'] as $i => $name) {
@@ -210,6 +210,7 @@ class FileSystem
                 $this->explode = explode('.', $this->name);
             }
         }
+
 
 
         $this->image = $image;
@@ -294,5 +295,7 @@ class FileSystem
         $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
         $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
     }
+
+
 
 }

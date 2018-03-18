@@ -14,11 +14,11 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Helpers\Utility;
+namespace Ballybran\Exception;
 
 use Ballybran\Core\Language\Language;
 
-class Auth extends Language
+class PageError extends Language
 {
 
     public static function no($mensagem)

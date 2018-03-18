@@ -215,6 +215,11 @@ use PHPUnit\Runner\Exception;
         return $this->conn->exec("DELETE FROM $table WHERE $where LIMIT $limit");
     }
 
+     public function colum( $table, $column, $varchar = 45, $val )
+     {
+         return $this->conn->exec("ALTER TABLE $table ADD  $column VARCHAR ($varchar)  $val");
+     }
+
     /**
      * @param $db
      * @return array

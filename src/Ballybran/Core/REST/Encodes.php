@@ -17,7 +17,7 @@
 
 namespace Ballybran\Core\REST;
 
- class Encodes{ 
+ class Encodes implements EncodeText{ 
 
  private static $version = '1.0';
  private static $encode = 'UTF-8';
@@ -29,6 +29,7 @@ namespace Ballybran\Core\REST;
         self::recursiveParser($dom,$arr,$dom);
         return $dom->saveXML();
     }
+    
     private static function recursiveParser(&$root, $arr, &$dom){
          foreach($arr as $key => $item){
             if(is_array($item) && !is_numeric($key)){

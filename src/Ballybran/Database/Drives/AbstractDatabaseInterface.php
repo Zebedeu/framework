@@ -113,5 +113,6 @@ interface AbstractDatabaseInterface {
 
 //    public function Backup($localation);
 
+public function colum($table, $column, $varchar, $null);
 
 }

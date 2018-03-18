@@ -51,12 +51,12 @@ class ImportClass
      */
     function Imports($object )
     {
-        $new_imports = new $object();
+        $new_imports = $object;
         $imports_name = get_class($new_imports);
         array_push($this->__imported, Array ($imports_name, $new_imports));
-        $imports_function = get_class_methods($new_imports);
+         $imports_function = get_class_methods($new_imports);
         foreach ($imports_function as $i => $function_name) {
-            $this->__imported_functions[$function_name] = &$new_imports;
+             $this->__imported_functions[$function_name] = &$new_imports;
         }
     }
 

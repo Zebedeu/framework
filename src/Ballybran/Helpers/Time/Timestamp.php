@@ -24,7 +24,6 @@ class Timestamp {
     private static function inserir_tempo(int $tempo_da_sessao): int {
         date_default_timezone_set('UTC');
 
-        // new \DateTimeZone();
 
         $diferenca_tempo = time() - $tempo_da_sessao;
         $segundos = $diferenca_tempo;
@@ -100,11 +99,11 @@ class Timestamp {
 
     public static function _getDataTime_stemp(string $data) : string {
         self::$tempo_da_sessao = strtotime($data);
-        return ( self::inserir_tempo(self::$tempo_da_sessao));
+         return self::inserir_tempo(self::$tempo_da_sessao);
     }
 
-    private static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false) {
-        $distanceInSeconds = round(abs($toTime - $fromTime));
+    public static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false) {
+        $distanceInSeconds = round(abs($toTime - strtotime($fromTime)));
         $distanceInMinutes = round($distanceInSeconds / 60);
 
         if ($distanceInMinutes <= 1) {
