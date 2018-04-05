@@ -28,8 +28,8 @@ class Hook {
     private static $header;
     private $url;
 
-    public static function Header($header) {
-        return self::$header = header('Location: ' . URL . "$header");
+    public static function Header(String $header = "") {
+        return self::$header = header('Location: ' . URL . $header);
         exit();
     }
 

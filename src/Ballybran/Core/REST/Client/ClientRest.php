@@ -22,73 +22,90 @@ use \Ballybran\Core\REST\Encodes;
 class ClientRest extends Encodes
 {
 
-    public function get($argm)
+    private $cookies;
+    private $headers;
+    private $user_agent;
+    private $compression;
+    private $cookie_file;
+    private $proxy;
+
+    function __construct($cookies = TRUE, $cookie = 'cookies.txt', $compression = 'gzip', $proxy = '')
     {
+        $this->headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
+        $this->headers[] = 'Connection: Keep-Alive';
+        $this->headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
+        $this->user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
+        $this->compression = $compression;
+        $this->proxy = $proxy;
+        $this->cookies = $cookies;
+        if ($this->cookies == TRUE) $this->cookie($cookie);
+    }
 
-        $ch = curl_init();
+    public function cookie($cookie_file)
+    {
+        if (file_exists($cookie_file)) {
+            $this->cookie_file = $cookie_file;
+        } else {
+            fopen($cookie_file, 'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
+            $this->cookie_file = $cookie_file;
+            fclose($this->cookie_file);
+        }
+    }
 
-        // Now set some options (most are optional)
+    function get($url)
+    {
+        $process = curl_init($url);
+        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($process, CURLOPT_HEADER, 0);
+        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
+        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        curl_setopt($process, CURLOPT_ENCODING, $this->compression);
+        curl_setopt($process, CURLOPT_TIMEOUT, 30);
+        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
+        $return = curl_exec($process);
 
-        // Set URL to download
-        curl_setopt($ch, CURLOPT_URL, $argm);
-
-        // Set a referer
-        curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
-
-        // User agent
-        curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
-
-        // Include header in result? (0 = yes, 1 = no)
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        // Should cURL return or print out the data? (true = return, false = print)
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Timeout in seconds
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-        // Download the given URL, and return output
-        $output = curl_exec($ch);
 
         // Close the cURL resource, and free system resources
-        curl_close($ch);
-        $decoded = json_decode($output);
+        curl_close($process);
+        $decoded = json_decode($return);
 
         if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
             die('error occured: ' . $decoded->response->errormessage);
         }
         if (json_last_error() === JSON_ERROR_NONE) {
             //if not joson, is xml'
-            return (($decoded));
+            return ($decoded);
 
         } else {
             // if json true, return json
-            return (($output));
+            return ($return);
 
         }
+
+        return $return;
     }
 
-
-    public function post($url, $filds)
+    function post($url, $data)
     {
-        $service_url = $url;
-        $curl = curl_init($service_url);
-        $curl_post_data = $filds;
-
-
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-        $curl_response = curl_exec($curl);
-        if ($curl_response === false) {
-            $info = curl_getinfo($curl);
-            curl_close($curl);
-            die('error occured during curl exec. Additioanl info: ' . var_export($info));
-        }
-        curl_close($curl);
-
-        echo 'response ok!';
-        var_export($curl_response);
+        $process = curl_init($url);
+        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($process, CURLOPT_HEADER, 1);
+        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
+        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        curl_setopt($process, CURLOPT_ENCODING, $this->compression);
+        curl_setopt($process, CURLOPT_TIMEOUT, 30);
+        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        curl_setopt($process, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($process, CURLOPT_POST, 1);
+        $return = curl_exec($process);
+        curl_close($process);
+        return $return;
     }
 
     public function put($value = '')
@@ -142,5 +159,11 @@ class ClientRest extends Encodes
         }
         echo 'response ok!';
         var_export($decoded->response);
+    }
+
+    function error($error)
+    {
+        echo "<center><div style='width:500px;border: 3px solid #FFEEFF; padding: 3px; background-color: #FFDDFF;font-family: verdana; font-size: 10px'><b>cURL Error</b><br>$error</div></center>";
+        die;
     }
 }

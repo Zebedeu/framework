@@ -18,9 +18,9 @@
 
 namespace Ballybran\Core\REST;
 
-class RestUtilities
+final class RestUtilities
 {
-    private static $httpVersion = 'HTTP/1.1 ';
+    private static $httpVersion = 'HTTP/1.1';
     public static function processRequest()
     {
         $req_method = strtolower($_SERVER['REQUEST_METHOD']);
@@ -29,11 +29,12 @@ class RestUtilities
         $data = array ();
         switch ($req_method) {
             case 'get':
-            case 'DELETE':
                 $data = $_GET;
                 break;
+            case 'DELETE':
+                break;
             case 'post':
-                $data = $_GET;
+                $data = $_POST;
                 break;
             case 'put':
                 parse_str(file_get_contents('php://input'), $put_vars);
@@ -52,7 +53,7 @@ class RestUtilities
     }
 
     public static function sendResponse($status = 200, $body = '', $content_type =
-    'text/xml')
+    'text/html')
     {
         $status_header = self::$httpVersion . $status . ' '
             .RestUtilities::getStatusCodeMessage($status);
@@ -62,7 +63,7 @@ class RestUtilities
         header( 'Content-length: ' . strlen( $body ) );
         if($body != '')
         {
-            echo $body;
+            return $body;
             exit;
         }
             $msg = '';
@@ -82,15 +83,18 @@ class RestUtilities
 
                     break;
             }
-            $body = '<html><head>
-                        <title>' . $status . ' ' .
-                RestUtilities::getStatusCodeMessage($status) . '</title>
+        $body = "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                       <meta charset='utf-8'>
+                        <title>" . $status . ' ' .
+            RestUtilities::getStatusCodeMessage($status). "</title>
                         </head>
                         <body>
-                        <h1>' . RestUtilities::getStatusCodeMessage($status) . '</h1>
-                        <p>' . $msg . '</p>
-                        </body></html>';
-            echo $body;
+                        <h1>" . RestUtilities::getStatusCodeMessage($status) . "</h1>
+                        <p>" . $msg . "</p>
+                        </body></html>";
+        return $body;
             exit;
     }
     

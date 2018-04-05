@@ -21,6 +21,7 @@ namespace Ballybran\Core\Collections\Collection;
 
 use Ballybran\Core\Variables\Variable;
 use Closure;
+use Phpml\Exception\InvalidArgumentException;
 
 /**
  * Class IteratorCollection
@@ -43,12 +44,17 @@ class IteratorCollection extends Variable implements \ArrayAccess {
      * IteratorCollection constructor.
      * @param array $elements
      */
-    public function __construct(array $elements) {
+    public function __construct(array $elements = array() ) {
 
         parent::__construct($elements);
 
         $this->elements = $elements;
     }
+    protected function setElementsFromTrustedSource(array $elements)
+    {
+        $this->elements = $elements;
+    }
+
 
     /**
      * @return array
@@ -179,7 +185,11 @@ class IteratorCollection extends Variable implements \ArrayAccess {
         return false;
     }
 
-    public function indexOf($element) {
+    /**
+    *@return int
+    * return the position of the  element
+    */
+    public function indexOf($element): Int {
         return array_search($element, $this->elements, true);
     }
 
@@ -199,5 +209,46 @@ class IteratorCollection extends Variable implements \ArrayAccess {
     public function get($key) {
         return isset($this->elements[$key]) ? $this->elements[$key] : null;
     }
+
+
+    public function slice($start, $end)
+    {
+        if($start < 0 || !is_int($start)) {
+            throw new InvalidArgumentException("Start must be a no-negative integer");
+        }
+
+        if($end < 0 || !is_int($end)) {
+            throw new InvalidArgumentException("End must be a positive integer");
+        }
+
+        if($start  > $end ) {
+            throw new InvalidArgumentException("End must be geater than start");
+        }
+
+        if($end  > $this->count() + 1 ) {
+            throw new InvalidArgumentException("End must be less than the count of the items in the Collection");
+        }
+
+        $length = $end - $start + 1;
+
+        $subsetItems = array_slice($this->elements, $start, $length);
+
+
+        return $this->setElementsFromTrustedSource($subsetItems);
+
+    }
+
+    public function reverse()
+    {
+        $item =  array_reverse($this->elements);
+        return $this->setElementsFromTrustedSource($item);
+
+    }
+
+    public function find($value)
+    {
+        $this->get($value);
+    }
+
 
 }

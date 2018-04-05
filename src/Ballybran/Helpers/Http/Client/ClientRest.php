@@ -66,7 +66,12 @@ class ClientRest extends Encodes{
     }
 
 
-	public function post($url, $filds)
+    /**
+    *@param $url String
+    *@param $fields array  ["id" => 1, "name"=> "Joe Doe"]
+    */
+
+	public function post(string $url, array $filds)
 	{
 		$service_url = $url;
 		$curl = curl_init($service_url);

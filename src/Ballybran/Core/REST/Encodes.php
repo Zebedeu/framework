@@ -17,15 +17,11 @@
 
 namespace Ballybran\Core\REST;
 
- class Encodes implements EncodeText{ 
+ class Encodes extends  EncodeText{ 
 
- private static $version = '1.0';
- private static $encode = 'UTF-8';
- 	public function __construct() {
 
-    }
  static function parse($arr){
-        $dom = new \DOMDocument('1.0');
+        $dom = new \DOMDocument(self::$version);
         self::recursiveParser($dom,$arr,$dom);
         return $dom->saveXML();
     }
@@ -45,35 +41,4 @@ namespace Ballybran\Core\REST;
         }
     }
 
-
- 	public static function encodeHtml($responseData) {
-    
-        $htmlResponse = "<table border='1'>";
-        foreach($responseData as $key=>$value) {
-                $htmlResponse .= "<tr><td>". $key. "</td><td>". $value. "</td></tr>";
-        }
-        $htmlResponse .= "</table>";
-        return $htmlResponse;       
-    }
-    
-    public static function  encodeJson($responseData) {
-        $jsonResponse = json_encode($responseData);
-        return $jsonResponse;       
-    }
-    
-    public static function encodeXml($responseData) {
-        // creating object of SimpleXMLElement
-        $version = self::$version;
-        $encoding = self::$encode;
-        $xml = new \SimpleXMLElement("<?xml version='$version' encoding='$encoding' ?>\n<mobile></mobile>");
-       
-            foreach($responseData as $key=>$variable) {
-           
-            foreach ($variable as $k => $v) {
-            $xml->addChild($k, $v);
-            }
-
-            }
-        return $xml->asXML();
-    }
  } 

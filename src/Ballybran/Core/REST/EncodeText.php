@@ -17,13 +17,41 @@
 
 namespace Ballybran\Core\REST;
 
- interface EncodeText{ 
+ class EncodeText{ 
 
-
- 	public static function encodeHtml($responseData);
+ private static $version = '1.0';
+ private static $encode = 'UTF-8';
+ 	
     
-    public static function  encodeJson($responseData);
 
-    public static function encodeXml($responseData);
+ 	public static function encodeHtml($responseData) {
+    
+        $htmlResponse = "<table border='1'>";
+        foreach($responseData as $key=>$value) {
+                $htmlResponse .= "<tr><td>". $key. "</td><td>". $value. "</td></tr>";
+        }
+        $htmlResponse .= "</table>";
+        return $htmlResponse;       
+    }
+    
+    public static function  encodeJson($responseData) {
+        $jsonResponse = json_encode($responseData);
+        return $jsonResponse;       
+    }
+    
+    public static function encodeXml($responseData) {
+        // creating object of SimpleXMLElement
+        $version = self::$version;
+        $encoding = self::$encode;
+        $xml = new \SimpleXMLElement("<?xml version='$version' encoding='$encoding' ?>\n<mobile></mobile>");
+       
+            foreach($responseData as $key=>$variable) {
+           
+            foreach ($variable as $k => $v) {
+            $xml->addChild($k, $v);
+            }
 
+            }
+        return $xml->asXML();
+    }
  } 

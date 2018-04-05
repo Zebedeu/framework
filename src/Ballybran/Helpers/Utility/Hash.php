@@ -37,6 +37,19 @@ class Hash {
         return hash_final($context);
     }
 
+
+    public static function simpleToken(int $length = 31, $string= '' ){
+         $max = strlen($string) - 1;
+
+         $token = '';
+
+         for ($i = 0; $i < $length; $i++) {
+            $token .= $string[random_int(0, $max)];
+        }
+
+        return $token;
+    }
+
     /**
      * @param int $length lenght for tokon
      * @return string
@@ -53,6 +66,7 @@ class Hash {
             throw new  InvalidArgumentException('tripleInteger function only accepts integers. Input was: '.$length);
 
         }
+
         for ($i = 0; $i < $length; $i++) {
             $token .= self::Create(ALGO,  uniqid($string[random_int(0, $max)]), SECURE_AUTH_KEY);
         }

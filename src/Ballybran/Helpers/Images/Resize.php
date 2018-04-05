@@ -266,7 +266,7 @@ namespace  Ballybran\Helpers\Images;
 
      }
 
-     public function html2rgb($color)
+     private function html2rgb($color) : array
      {
          if ($color[0] == '#') {
              $color = substr($color, 1);
@@ -291,7 +291,7 @@ namespace  Ballybran\Helpers\Images;
      {
          $rgb = $this->html2rgb($color);
 
-         imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
+          imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
      }
 
  }

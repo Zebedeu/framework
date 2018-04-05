@@ -29,7 +29,7 @@ use Ballybran\Helpers\vardump\Vardump;
  * Class Uploads
  * @package Ballybran\Helpers
  */
-class FileSystem
+class FileSystem extends ImageProperties
 {
 
 
@@ -57,25 +57,7 @@ class FileSystem
      * @var array
      */
     private $explode;
-    /**
-     * @var
-     */
-    private $width;
-    /**
-     * @var
-     */
-    private $height;
 
-    /**
-     * @var
-     */
-    private $quality;
-
-
-    /**
-     * @var
-     */
-    private $option;
     /**
      * @var
      */
@@ -85,13 +67,6 @@ class FileSystem
      */
     private $dir;
 
-
-    /**
-     * @var
-     */
-    private $degree= 0;
-
-    private $color;
     /**
      * @var Image
      */
@@ -100,96 +75,7 @@ class FileSystem
     /**
      * @return mixed
      */
-    public function getDegree() : int
-    {
-        return $this->degree;
-    }
-
-    /**
-     * @param mixed $degree
-     */
-    public function setDegree(int $degree)
-    {
-        $this->degree = $degree;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    /**
-     * @param mixed $color
-     */
-    public function setColor( $color =  "000000")
-    {
-        $this->color = $color;
-    }
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @param mixed $width
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * @param mixed $height
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuality()
-    {
-        return $this->quality;
-    }
-
-    /**
-     * @param mixed $quality
-     */
-    public function setQuality($quality)
-    {
-        $this->quality = $quality;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getOption()
-    {
-        return $this->option;
-    }
-
-    /**
-     * @param mixed $option
-     */
-    public function setOption($option)
-    {
-        $this->option = $option;
-    }
-
+   
 
     /**
      * Uploads constructor.
@@ -263,7 +149,6 @@ class FileSystem
         }
     }
 
-
     private function getObjectImage()
     {
 
@@ -284,16 +169,17 @@ class FileSystem
 
     }
 
-    private function makeDefaultPath()
+    private function makeDefaultPath() : String
     {
-        $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
+        echo $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
     }
 
-    private function makePathBayUserName()
+    private function makePathBayUserName() : String
     {
         $this->ext = end($this->explode);
         $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
         $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
+        return $this->path;
     }
 
 

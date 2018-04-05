@@ -73,7 +73,8 @@ class Model
         $registry = RegistryDatabase::getInstance();
         $obj = $registry->get(TYPE);
         $className = str_replace('/', '\\', $this->modelClass);
-        return $this->model = new $className($obj);
+        $this->model = new $className($obj);
+        return($this->model);
     }
 
 }

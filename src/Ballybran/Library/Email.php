@@ -424,7 +424,7 @@ class Email
             //Definir assunto do e-mail
             $this->mail->Subject = $this->getAssunto();
             //Definir versÃ£o HTML do e-mail
-            $this->mail->Body = "<br><br>" . $this->getMessage() . " </p><p>Mensagem enviada atravÃ©s do seu site - </p>";
+            $this->mail->Body = "<br><br>" . $this->getMessage() . " </p><p>Mensagem enviada atravavés do seu site -" . URL." </p>";
             //Definir versÃ£o alternativa do e-mail apenas em plain text
             $this->mail->AltBody = "
                  E-mail: {$this->getEmail()}
