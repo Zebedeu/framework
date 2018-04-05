@@ -16,7 +16,7 @@ class RecursiveDirectoryIteratorTest extends TestCase {
 
     public function setUp()
     {
-        $file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('Dir', FilesystemIterator::CURRENT_AS_FILEINFO);
+        $file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests', FilesystemIterator::CURRENT_AS_FILEINFO);
 
 
             return $this->file = $file->current();
@@ -25,7 +25,7 @@ class RecursiveDirectoryIteratorTest extends TestCase {
 
     public function testOpenFile()
     {
-        $t  = 'Dir';
+        $t  = 'tests';
         $this->assertFileExists($t, $this->file);
     }
 }
