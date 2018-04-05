@@ -35,5 +35,5 @@ interface ValInterface
 
     public function __call(string $name, $arguments);
 
-    public function isValideLenght(string $lenght, string $data, int $arg);
+    public function isValidLenght(string $lenght, string $data, int $arg);
 }

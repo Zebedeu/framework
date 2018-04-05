@@ -192,7 +192,7 @@ use PHPUnit\Runner\Exception;
             }
 
             $fielDetail = trim($fielDetail, ',');
-            $stmt = $this->conn->prepare("UPDATE $table SET $fielDetail WHERE $where ");
+            $stmt = $this->conn->prepare("UPDATE $table SET  $fielDetail WHERE $where ");
             foreach ($data as $key => $values) {
                 $stmt->bindValue(":$key", $values);
             }
@@ -215,55 +215,6 @@ use PHPUnit\Runner\Exception;
         return $this->conn->exec("DELETE FROM $table WHERE $where LIMIT $limit");
     }
 
-     public function colum( $table, $column, $varchar = 45, $val )
-     {
-         return $this->conn->exec("ALTER TABLE $table ADD  $column VARCHAR ($varchar)  $val");
-     }
-
-    /**
-     * @param $db
-     * @return array
-     */
-    public function get_Data_definition( $db )
-    {
-
-        $stmt = $this->conn->prepare("SHOW COLUMNS FROM $db");
-
-        if ($stmt->execute()) {
-            while ($row = $stmt->fetch()) {
-                return $this->columns[$row['Field']] = array ('allow_null' => $row['Null'],
-                    'decimal' => NULL,
-                    'default' => $row['Default'],
-                    'extra' => $row['Extra'],
-                    'key' => $row['Key'],
-                    'length' => NULL,
-                    'name' => $row['Field'],
-                    'text' => NULL,
-                    'type' => $row['Type']);
-            }
-        }
-        ksort($this->columns);
-    }
-
-    /**
-     * @param String $table
-     * @param array $fileds
-     */
-    public function createTable( String $table, array $fileds )
-    {
-        ksort($fileds);
-
-        $fieldNme = implode('`,', array_keys($fileds));
-        $fieldValues = implode(', ', array_values($fileds[$fieldNme]));
-        echo $fieldNme . ' ' . $fieldValues;
-
-        $sql = "CREATE TABLE IF NOT EXISTS  clinica.$table ($fieldNme  $fieldValues)";
-        var_dump($sql);
-
-        $c = $this->conn->exec($sql);
-        var_dump($c);
-
-    }
 
 
 }

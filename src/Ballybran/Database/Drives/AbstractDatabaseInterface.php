@@ -98,21 +98,5 @@ interface AbstractDatabaseInterface {
      */
     public function delete($table, $where, $limit);
 
-    /**
-     * @param $db
-     * @return mixed
-     */
-    public function get_Data_definition($db);
-
-    /**
-     * @param String $table
-     * @param array $fileds
-     * @return mixed
-     */
-    public function createTable(String $table, array $fileds);
-
-//    public function Backup($localation);
-
-public function colum($table, $column, $varchar, $null);
 
 }

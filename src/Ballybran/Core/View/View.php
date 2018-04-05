@@ -25,12 +25,7 @@ use Ballybran\Exception\Exception;
 use Ballybran\Helpers\Security\RenderFilesrInterface;
 use Ballybran\Helpers\Security\RenderFiles;
 use Ballybran\Helpers\vardump\Vardump;
-use function extract;
-use function get_class;
-use function get_class_methods;
-use function is_array;
-use function str_replace;
-use function str_split;
+
 
 class View extends RenderFiles implements ViewrInterface
 {

@@ -144,7 +144,7 @@ class Validate extends ValidateTypes
         $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
 
         if ($error)
-            $this->_error[$this->_currentItem] = $error;
+             $this->_error[$this->_currentItem] = $error;
 
         return $this;
     }
@@ -154,7 +154,6 @@ class Validate extends ValidateTypes
      *
      * @return boolean
      *
-     * @throws Exception
      */
     public function is_validLength() : bool {
 
@@ -168,9 +167,8 @@ class Validate extends ValidateTypes
     /**
      * submit - Handles the form, and throws an exception upon error.
      *
-     * @return boolean
+     * @return true
      *
-     * @throws Exception
      */
 
     public function submit()
@@ -179,17 +177,16 @@ class Validate extends ValidateTypes
         {
             return true;
         }
-        else
-        {
+
             $str = '';
             foreach ($this->_error as $key => $value)
             {
                 $str .= $key . ' => ' . $value . "\n" . "<br>";
             }
 
-            echo("Error Processing Request $str");
+            echo ("Error Processing Request $str");
 
-        }
+
     }
 
 }

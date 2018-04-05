@@ -89,7 +89,7 @@ class Hash {
     {
 
         if ( password_verify($string, $hash)) {
-                    return true;
+            return true;
 
         } else {
             return false;

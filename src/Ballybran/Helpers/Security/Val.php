@@ -41,7 +41,7 @@ namespace Ballybran\Helpers\Security;
 
     public function digit(string $data)
     {
-        if (ctype_digit($data) == false) {
+        if (ctype_digit($data) == false ) {
             return "Your string must be a digit";
         }
     }
@@ -51,13 +51,12 @@ namespace Ballybran\Helpers\Security;
         throw new \Exception("$name does not exist inside of: " . __CLASS__);
     }
 
-    public function isValideLenght(string $lenght, string $data, int $arg)
+    public function isValidLenght(string $lenght, string $data, int $arg)
     {
         if($this->{$lenght}($data, $arg)) {
-            var_export($this->{$lenght}($data, $arg));
+            return $this->{$lenght}($data, $arg);
           }
 
-            return false;
       }
 
 }
