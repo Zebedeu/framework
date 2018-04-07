@@ -53,6 +53,8 @@ Link pra contribuições e Download : https://github.com/knut7/knut7
 
 
 
+composer create-project --prefer-dist knut7/knut7 site
+
 
 #Criando o Projecto
 
