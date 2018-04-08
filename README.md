@@ -7,7 +7,7 @@
  * knut7 Framework (http://framework.artphoweb.com/)
  *
  * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
- * @copyright (c) 2016.  knut7 Technologies AO Inc. (http://www.artphoweb.com)
+ * @copyright (c) 2016.  MACHIZE Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  */
 
@@ -35,7 +35,7 @@ Session	24
 
 
 ## Introdução
-A Knut7 é um framework criado e mantida pelo Artphoweb para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
+A Knut7 é um framework criado e mantida pelo MACHIZE para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!
 Um framework para aplicações web é um framework de software designado para suportar o desenvolvimento de sites web dinâmicos, aplicações Web e serviços Web. O framework destina-se a aliviar a sobrecarga associada a atividades comuns realizadas em desenvolvimento Web.
 
 Fonte: wikipedia
