@@ -39,28 +39,6 @@ class View extends RenderFiles implements ViewrInterface
      * @param $view Index responsavel em pegar  os arquivos Index da pasta do Controller
      */
     private $controllers;
-    /**
-     * @var array
-     */
-    public $data;
-
-
-    public function __construct($key= null, $value = null)
-    {
-
-        $this->data;
-        if (!is_null($key)) {
-            if (is_array($key)) {
-                extract($key, EXTR_PREFIX_SAME, "");
-            } else {
-                ${$key} = $value;
-                return $this->data = ${$key};
-            }
-
-        }
-
-        return $this;
-    }
 
     /**
      * @param $Controller

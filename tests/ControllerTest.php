@@ -41,6 +41,13 @@ class ControllerTest extends PHPUnit {
 
     }
 
+    public function testReturnToHashTokenClass() {
+
+        $token = Hash::token( 233);
+
+        $this->assertNotFalse($token);
+    }
+
     public function testCreateHashCript(){
 
         $string = "test1234";

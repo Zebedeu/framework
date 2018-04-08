@@ -27,10 +27,22 @@ class RenderFiles
     private $header = "header";
     private $footer = "footer";
     private $ex = ".phtml";
+    public $data =[];
+
+
 
     public function __construct()
     {
         $this->ex;
+    }
+
+
+
+    public function assign($key= null, $value = null)
+    {
+
+        $this->data[$key] = $value;
+
     }
 
     protected function isViewPath($controller)
@@ -68,12 +80,20 @@ class RenderFiles
 
     protected function isIndex($controller, $view)
     {
+        $contents =  file_get_contents( VIEW . $controller . DS . $view . $this->ex);
 
         if (!is_readable(VIEW . $controller . DS . $view . $this->ex) || !file_exists(VIEW . $controller . DS . $view . $this->ex)) {
 
             return Exception::notIndex($controller);
         }
-        require_once VIEW . $controller . DS . $view . $this->ex;
+        foreach ($this->data as $key => $value) {
+
+            $contents = preg_replace('/\[' . $key . '\]/', $value, $contents);
+
+        }
+
+
+        eval(' ?>'. $contents .'<?php ');
     }
 
 }

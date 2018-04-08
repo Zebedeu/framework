@@ -109,6 +109,7 @@ use PHPUnit\Runner\Exception;
             return $stmt->fetchAll($fetchMode);
         } while (
             $stmt->nextRowset());
+        $stmt->close();
 
     }
 

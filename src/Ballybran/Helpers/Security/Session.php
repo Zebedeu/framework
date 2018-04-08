@@ -31,53 +31,13 @@ class Session {
      */
     private static  $expire;
 
-    /**
-     * Session constructor.
-     * @param AbstractModel $model
-     */
-    function __construct()
-    {
-//        register_shutdown_function('session_write_close');
-//        self::$expire = ini_get('session.gc_maxlifetime');
-    }
 
     /**
      *  init Sessin our Session Start
      * É usado para ativar o incio de sassão do usuário.
      */
-    public static function init($name = 'knut7_session') {
-
-//        @session_start();
-       static $create_sessions= array();
+    public static function init() {
        @session_start();
-//       if(session_id() != '') {
-//           session_write_close();
-//       }
-//       session_name($name);
-//       if(isset($_COOKIE[$name])) {
-//           $create_sessions[$name] =$_COOKIE[$name];
-//       }
-//       if(isset($create_sessions[$name])) {
-//           session_id($create_sessions[$name]);
-//           @session_start(
-//               [
-//                   'cookie_lifetime' => 86400,
-////                   'cache_limiter' => 'private',
-//                   'read_and_close'  => false,
-//               ]
-//           );
-//       } else {
-//           session_start(
-//               [
-//                   'cookie_lifetime' => 86400,
-////                   'cache_limiter' => 'private',
-//                   'read_and_close'  => false,
-//               ]
-//           );
-//           $_SESSION = array();
-//           session_regenerate_id(empty($create_sessions));
-//           $create_sessions[$name] = session_id();
-//       }
     }
 
     /**
@@ -103,7 +63,7 @@ class Session {
      *  exxemplo de uso:: public function DestruirSessao(){ Session::Destroy() }
      */
     public static function Destroy() {
-            session_destroy();
+            @session_destroy();
 
     }
 
@@ -142,18 +102,6 @@ class Session {
             return false;
         }
     }
-
-//    public static function handleLogin() {
-//        @session_start();
-//        Session::init();
-//        $logged = Session::get('U_NAME');
-//        $role = Session::get('role');
-//        if ($logged == false || $role != 'owner') {
-//            session_destroy();
-//            \Ballybran\Helpers\Http\Hook::Header('login');
-//            exit;
-//        }
-//    }
 
 
 }

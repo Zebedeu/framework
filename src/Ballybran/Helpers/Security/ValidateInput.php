@@ -20,7 +20,9 @@ namespace Ballybran\Helpers\Security;
 /**
  * Class ValidateInput
  * @package Ballybran\Helpers\Security
+ * @deprecated
  */
+
 
 class ValidateInput
 {
@@ -41,45 +43,46 @@ class ValidateInput
                     ${$key} = NULL;
                     continue;
                 }
-            }
-            switch ($type) {
-                case 'string' :
-                    if (is_string($_GET[$key]) && strlen($_GET[$key]) < 256) {
-                        echo "ola mundo";
-                    }
-                    break;
-                case 'int' :
-                    if (is_int($_GET[$key])) {
-                        ${$key} = $_GET[$key];
-                    }
-                    break;
-                case "double":
-                    if (is_double($_GET[$key])) {
-                        ${$key} = $_GET[$key];
 
-                    }
-                    break;
-
-                case "long":
-                    if (is_long($_GET[$key])) {
-                        ${$key} = $_GET[$key];
-                    }
-                    break;
-
-                case 'filename' :
-                    // limit filenames to 64 characters
-                    if (is_string($_GET[$key]) && strlen($_GET[$key]) < 64) {
-                        // escape any non-ASCII
-                        ${$key} = str_replace('%', '_', rawurlencode($_GET[$key]));
-                        // disallow double dots
-                        if (strpos(${$key}, '..') === TRUE) {
-                            ${$key} = NULL;
+                switch ($type) {
+                    case 'string' :
+                        if (is_string($_GET[$key]) && strlen($_GET[$key]) < 256) {
+                            echo "ola mundo";
                         }
-                    }
-                    break;
-            }
-            if (!isset(${$key})) {
-                ${$key} = NULL;
+                        break;
+                    case 'int' :
+                        if (is_int($_GET[$key])) {
+                            ${$key} = $_GET[$key];
+                        }
+                        break;
+                    case "double":
+                        if (is_double($_GET[$key])) {
+                            ${$key} = $_GET[$key];
+
+                        }
+                        break;
+
+                    case "long":
+                        if (is_long($_GET[$key])) {
+                            ${$key} = $_GET[$key];
+                        }
+                        break;
+
+                    case 'filename' :
+                        // limit filenames to 64 characters
+                        if (is_string($_GET[$key]) && strlen($_GET[$key]) < 64) {
+                            // escape any non-ASCII
+                            ${$key} = str_replace('%', '_', rawurlencode($_GET[$key]));
+                            // disallow double dots
+                            if (strpos(${$key}, '..') === TRUE) {
+                                ${$key} = NULL;
+                            }
+                        }
+                        break;
+                }
+                if (!isset(${$key})) {
+                    ${$key} = NULL;
+                }
             }
         }
 

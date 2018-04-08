@@ -110,12 +110,13 @@ class Validate extends ValidateTypes
     public function getPostData($fieldName = false)
     {
         if( $this->is_validLength() ) {
-            return false;
+            return true;
         }
         if ($fieldName)
         {
             if (isset($this->_postData[$fieldName]))
                 return $this->_postData[$fieldName];
+
 
             else
                 return false;

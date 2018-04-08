@@ -52,7 +52,6 @@ class Assets {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
                 static::resource($value, 'js');
-                break;
             }
         }
          static::resource($files, 'js');

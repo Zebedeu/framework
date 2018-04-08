@@ -57,11 +57,11 @@ class ValidateTypes
                 if(! is_double($theValue)) {
                     return null;
                 }
-                return doubleval($theValue);
+                return floatval($theValue);
                 break;
             case "date":
 
-                $theValue = ($theValue != "") ? "'" . $theValue . "'" : null;
+                $theValue = ($theValue != "") ? "" . $theValue . "" : null;
                 break;
             case "defined":
                 $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
