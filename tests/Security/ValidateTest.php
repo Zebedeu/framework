@@ -45,27 +45,38 @@ class ValidateTest extends PHPUnit
 
     public function testValidInputPost()
     {
-        $_POST["nome"] = "John Doe";
+        $_POST["firstname"] = "John";
+        $_POST["lastname"] = "Doe";
+        $_POST["email"] = "johnDoe@gmail.com";
+        $_POST["telephone"] = 244913750140;
+
         $this->valid->setMethod("POST");
-        echo $this->valid->getMethod();
-        $this->valid->post('nome')->val("maxlength", 10)->submit();
-        $this->assertEquals(["nome" => "John Doe"], $this->valid->getPostData());
+        $this->valid->getMethod();
 
+        $this->valid->post('firstname')->val("maxlength", 12)
+            ->post('lastname')->val('maxlength', 20)
+            ->post('email')->val('minlength', 5)
+            ->post('telephone')->val('digit')->submit();
+        $this->assertEquals(["firstname" => "John", "lastname" => "Doe", "email" => "johnDoe@gmail.com", "telephone" => 244913750140], $this->valid->getPostData());
 
-//        $this->assertEquals([], $this->valid->getPostData());
 
     }
 
     public function testValidInputGet()
     {
-        $_GET["nome"] = "John Doe";
+        $_GET["firstname"] = "John";
+        $_GET["lastname"] = "Doe";
+        $_GET["email"] = "johnDoe@gmail.com";
+        $_GET["telephone"] = 244913750140;
 
-        if (!empty($_GET['nome'])) {
-            $this->valid->setMethod("GET");
-            echo $this->valid->getMethod();
-            $this->valid->post('nome')->val("maxlength", 8)->submit();
-            $this->assertEquals(["nome" => "John Doe"], $this->valid->getPostData());
-        }
+        $this->valid->setMethod("GET");
+        $this->valid->getMethod();
+
+        $this->valid->post('firstname')->val("maxlength", 12)
+            ->post('lastname')->val('maxlength', 20)
+            ->post('email')->val('minlength', 17)
+            ->post('telephone')->val('digit')->submit();
+        $this->assertEquals(["firstname" => "John", "lastname" => "Doe", "email" => "johnDoe@gmail.com", "telephone" => 244913750140], $this->valid->getPostData());
 
     }
 
