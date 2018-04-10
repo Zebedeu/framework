@@ -29,7 +29,6 @@ class Session {
     /**
      * @var string
      */
-    private static  $expire;
 
 
     /**

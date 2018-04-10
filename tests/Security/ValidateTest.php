@@ -63,8 +63,39 @@ class ValidateTest extends PHPUnit
         $this->valid->post('firstname')->val("maxlength", 12)
             ->post('lastname')->val('maxlength', 20)
             ->post('email')->val('minlength', 5)
-            ->post('telephone')->val('digit')->submit();
+
+            ->post('telephone')->val('digit')->numeric()->submit();
         $this->assertEquals(["firstname" => "John", "lastname" => "Doe", "email" => "johnDoe@gmail.com", "telephone" => 244913750140], $this->valid->getPostData());
+
+
+    }
+
+    public function testValidFields()
+    {
+        $_POST["firstname"] = "John";
+        $_POST["lastname"] = "Doe";
+        $_POST["email"] = "johnDoe!@gmail.com";
+        $_POST["url"] = "http://google.com";
+        $_POST["domain"] = "google.com";
+        $_POST["ip"] = "123.43.54.56";
+        $_POST["date"] = "2018-04-18";
+        $_POST["valor"] = 244913750140;
+        $_POST["telephone"] = 244913750140;
+
+        $this->valid->setMethod("POST");
+        $this->valid->getMethod();
+
+        $this->valid->post('firstname')->val("maxlength", 12)->string()
+            ->post('lastname')->val('maxlength', 20)->string()
+            ->post('valor')->val('minlength', 5)->int()
+            ->post('valor')->val('minlength', 5)->long()
+            ->post('ip')->val('minlength', 5)->ip()
+            ->post('domain')->val('minlength', 5)->domain()
+            ->post('url')->val('minlength', 5)->url()
+            ->post('date')->val('minlength', 5)->date()
+            ->post('email')->val('minlength', 5)->email()
+            ->post('telephone')->val('digit')->numeric()->submit();
+        $this->assertEquals($this->valid->getPostData(), ["firstname" => "John", "lastname" => "Doe", "email" => "johnDoe@gmail.com", "telephone" => 244913750140, "url" => "http://google.com", "domain" => "google.com", "ip" => "123.43.54.56", "date" => "2018-04-18", "valor" => 244913750140]);
 
 
     }
@@ -75,6 +106,7 @@ class ValidateTest extends PHPUnit
         $_GET["lastname"] = "Doe";
         $_GET["email"] = "johnDoe@gmail.com";
         $_GET["telephone"] = 244913750140;
+        $_GET["password"] = 1234;
 
         $this->valid->setMethod("GET");
         $this->valid->getMethod();
