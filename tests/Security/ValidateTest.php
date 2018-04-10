@@ -74,7 +74,7 @@ class ValidateTest extends PHPUnit
     {
         $_POST["firstname"] = "John";
         $_POST["lastname"] = "Doe";
-        $_POST["email"] = "johnDoe!@gmail.com";
+        $_POST["email"] = "johnDoe@gmail.com";
         $_POST["url"] = "http://google.com";
         $_POST["domain"] = "google.com";
         $_POST["ip"] = "123.43.54.56";
