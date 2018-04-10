@@ -50,7 +50,12 @@ class Validate
      */
     public function __construct($validationFields)
     {
-        $this->_val = $validationFields;
+
+       if(! is_object($validationFields)){
+           throw new \InvalidArgumentException("past argument is not an instance");
+       }
+           $this->_val = $validationFields;
+
 
     }
 
@@ -59,22 +64,14 @@ class Validate
         return  $this->_method;
     }
 
-    /**
-     * @param mixed $method
-     * @return Validate
-     */
+
     public function setMethod($method)
     {
         $this->_method = $method;
         return $this;
     }
 
-    /**
-     * post - This is to run $_POST or GET
-     *
-     * @param string $field - The HTML fieldname to post
-     * @return $this
-     */
+
     public function post($field)
     {
 
@@ -99,19 +96,10 @@ class Validate
         return $this;
     }
 
-    /**
-     * getPostDate - Return the posted data
-     *
-     * @param mixed $fieldName
-     *
-     * @return mixed String or array
-     */
 
     public function getPostData($fieldName = false)
     {
-        if( $this->is_validLength() ) {
-            return true;
-        }
+
         if ($fieldName)
         {
             if (isset($this->_postData[$fieldName]))
@@ -129,13 +117,7 @@ class Validate
 
     }
 
-    /**
-     * val - This is to validate
-     *
-     * @param string $typeOfValidator A method from the Form/Val class
-     * @param string $arg A property to validate against
-     * @return $this
-     */
+
     public function val($typeOfValidator, $arg = null)
     {
 
@@ -150,27 +132,81 @@ class Validate
         return $this;
     }
 
-     /**
-     * is_valid method
-     *
-     * @return boolean
-     *
-     */
-    public function is_validLength() : bool {
 
-        if(! empty($this->_error)) {
-            return true;
-        }else {
-            return false;
+    public function string()
+    {
+        if(!is_string($this->_postData[$this->_currentItem])){
+            throw new \InvalidArgumentException("the value entered must have a String");
+        }
+        return $this;
+    }
+    public function email()
+    {
+        $email = filter_var($this->_postData[$this->_currentItem], FILTER_SANITIZE_EMAIL);
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            throw new \InvalidArgumentException("the value entered must have a Email");
         }
 
+        return $this;
     }
-    /**
-     * submit - Handles the form, and throws an exception upon error.
-     *
-     * @return true
-     *
-     */
+    public function numeric()
+    {
+        if(!is_numeric($this->_postData[$this->_currentItem])){
+            throw new \InvalidArgumentException("the value entered must have a Numeric");
+        }
+        return $this;
+    }
+    public function int()
+    {
+        if(!is_int($this->_postData[$this->_currentItem])){
+            throw new \InvalidArgumentException("the value entered must have a Int");
+        }
+        return $this;
+    }
+
+    public function long()
+    {
+        if(!is_long($this->_postData[$this->_currentItem])){
+            throw new \InvalidArgumentException("the value entered must have a Long");
+        }
+
+        return $this;
+    }
+
+    public function domain()
+    {
+        if(!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_DOMAIN)){
+            throw new \InvalidArgumentException("the value entered must have a Domain");
+        }
+
+        return $this;
+    }
+
+    public function url()
+    {
+        if(!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_URL)){
+            throw new \InvalidArgumentException("the value entered must have a Url");
+        }
+        return $this;
+    }
+
+
+    public function ip()
+    {
+        if(!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_IP)){
+            throw new \InvalidArgumentException("the value entered must have a Ip");
+        }
+        return $this;
+    }
+
+    public function date()
+    {
+
+        if(!is_string($this->_postData[$this->_currentItem])){
+            throw new \InvalidArgumentException("the value entered must have a Date");
+        }
+        return $this;
+    }
 
     public function submit()
     {
@@ -186,8 +222,6 @@ class Validate
             }
 
             echo ("Error Processing Request $str");
-
-
     }
 
 }
