@@ -24,7 +24,7 @@ use Ballybran\Exception\Exception;
  * Class Validate
  * @package Ballybran\Helpers\Security
  */
-class Validate extends ValidateTypes
+class Validate
 {
 
 
@@ -48,9 +48,9 @@ class Validate extends ValidateTypes
      * __construct - Instantiates the validator class
      *
      */
-    public function __construct()
+    public function __construct($validationFields)
     {
-        $this->_val = new Val();
+        $this->_val = $validationFields;
 
     }
 
@@ -139,7 +139,7 @@ class Validate extends ValidateTypes
     public function val($typeOfValidator, $arg = null)
     {
 
-        if (! $arg == null && $this->_val instanceof val )
+        if (! $arg == null )
             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
         else
         $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);

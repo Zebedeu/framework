@@ -17,26 +17,26 @@
 
 namespace Ballybran\Core\REST;
 
- class Encodes extends  EncodeText{ 
+ class Encodes extends  EncodeText{
 
 
- static function parse($arr){
+ public static function parse($arr){
         $dom = new \DOMDocument(self::$version);
         self::recursiveParser($dom,$arr,$dom);
         return $dom->saveXML();
     }
-    
+
     private static function recursiveParser(&$root, $arr, &$dom){
          foreach($arr as $key => $item){
             if(is_array($item) && !is_numeric($key)){
                 $node = $dom->createElement($key);
                 self::recursiveParser($node,$item,$dom);
-                $root->appendChild($node);
+                return $root->appendChild($node);
             }elseif(is_array($item) && is_numeric($key)){
-                self::recursiveParser($root,$item,$dom);
+                return self::recursiveParser($root,$item,$dom);
             }else{
                 $node = $dom->createElement($key, $item);
-                $root->appendChild($node);
+                return $root->appendChild($node);
             }
         }
     }

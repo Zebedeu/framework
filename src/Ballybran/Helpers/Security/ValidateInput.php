@@ -47,7 +47,7 @@ class ValidateInput
                 switch ($type) {
                     case 'string' :
                         if (is_string($_GET[$key]) && strlen($_GET[$key]) < 256) {
-                            echo "ola mundo";
+                            ${$key} = $_GET[$key];
                         }
                         break;
                     case 'int' :
