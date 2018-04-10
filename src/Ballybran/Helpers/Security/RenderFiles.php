@@ -81,6 +81,7 @@ class RenderFiles
     protected function isIndex($controller, $view)
     {
         require_once VIEW . $controller . DS . $view . $this->ex;
+
     }
 
 }

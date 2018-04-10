@@ -38,7 +38,7 @@ class ValidateTypes
                 if(! is_string($theValue)) {
                     return null;
                 }
-                return "$theValue";
+                return strip_tags("$theVal");
                 break;
             case "email":
                 if(! is_string($theValue)) {
@@ -62,6 +62,24 @@ class ValidateTypes
             case "date":
 
                 $theValue = ($theValue != "") ? "" . $theValue . "" : null;
+                break;
+            case "url":
+                if(! is_string($theValue)) {
+                    return null;
+                }
+                return filter_var($theValue,    FILTER_VALIDATE_URL);
+                break;
+            case "domain":
+                if(! is_string($theValue)) {
+                    return null;
+                }
+                return filter_var($theValue,    FILTER_VALIDATE_DOMAIN);
+                break;
+            case "ip":
+                if(! is_double($theValue)) {
+                    return null;
+                }
+                return filter_var($theValue,    FILTER_VALIDATE_IP);
                 break;
             case "defined":
                 $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;

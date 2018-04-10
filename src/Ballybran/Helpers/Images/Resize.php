@@ -46,6 +46,7 @@ namespace  Ballybran\Helpers\Images;
          switch ($extension) {
              case '.jpg':
              case '.jpeg':
+
                  $img = imagecreatefromjpeg($file);
                  break;
              case '.gif':
@@ -222,13 +223,13 @@ namespace  Ballybran\Helpers\Images;
          switch ($extension) {
              case '.jpg':
              case '.jpeg':
-                 if (imagetypes() & IMG_JPG) {
+                 if (exif_imagetype($savePath) && imagetypes() & IMG_JPG) {
                      imagejpeg($this->imageResized, $savePath, $imageQuality);
                  }
                  break;
 
              case '.gif':
-                 if (imagetypes() & IMG_GIF) {
+                 if (exif_imagetype($savePath) && imagetypes() & IMG_GIF) {
                      imagegif($this->imageResized, $savePath);
                  }
                  break;
@@ -240,7 +241,7 @@ namespace  Ballybran\Helpers\Images;
 
                  $invertScaleQuality = 9 - $scaleQuality;
 
-                 if (imagetypes() & IMG_PNG) {
+                 if (exif_imagetype($savePath) && imagetypes() & IMG_PNG) {
 
                      imagepng($this->imageResized, $savePath, $invertScaleQuality);
                  }

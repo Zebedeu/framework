@@ -59,7 +59,7 @@ class IteratorCollection extends Variable implements \ArrayAccess {
     /**
      * @return array
      */
-    public function toArray() {
+    public function toArray() : array {
         return $this->elements;
     }
 
@@ -131,7 +131,7 @@ class IteratorCollection extends Variable implements \ArrayAccess {
         return $this->containsKey($offset);
     }
 
-    public function remove($key) {
+    public function remove($key) : string {
         if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
             return null;
         } else {
@@ -190,7 +190,7 @@ class IteratorCollection extends Variable implements \ArrayAccess {
     * return the position of the  element
     */
     public function indexOf($element): Int {
-        return array_search($element, $this->elements, true);
+        return array_search($element, $this->elements);
     }
 
     public function isEmpty() {

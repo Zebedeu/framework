@@ -36,6 +36,11 @@ class Form {
      * @return  string
      */
     public static function open($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
         $o = '<form';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -70,6 +75,11 @@ class Form {
      * @return  string
      */
     public static function textBox($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
         $o = '<textarea';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -98,6 +108,12 @@ class Form {
      * @return  string
      */
     public static function input($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = '<input ';
         $o .= (isset($params['type'])) ? " type='{$params['type']}'" : 'type="text"';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
@@ -133,6 +149,12 @@ class Form {
      * @return  string
      */
     public static function select($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = "<select";
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -152,6 +174,8 @@ class Form {
                     $o .= "<option value='{$k}'>{$v}</option>\n";
                 }
             }
+            throw new \InvalidArgumentException("Arguments is not valid ". print_r($params, true));
+
         }
         $o .= "</select>\n";
         return $o;
@@ -169,8 +193,12 @@ class Form {
      * @return  string
      */
     public static function checkbox($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
         $o = '';
-        if (!empty($params)) {
             $x = 0;
             foreach ($params as $k => $v) {
                 $v['id'] = (isset($v['id'])) ? $v['id'] : "cb_id_{$x}_" . rand(1000, 9999);
@@ -186,7 +214,7 @@ class Form {
                 $o .= (isset($v['label'])) ? "<label for='{$v['id']}'>{$v['label']}</label> " : '';
                 $x++;
             }
-        }
+
         return $o;
     }
 
@@ -202,8 +230,13 @@ class Form {
      * @return  string
      */
     public static function radio($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = '';
-        if (!empty($params)) {
             $x = 0;
             foreach ($params as $k => $v) {
                 $v['id'] = (isset($v['id'])) ? $v['id'] : "rd_id_{$x}_" . rand(1000, 9999);
@@ -219,7 +252,7 @@ class Form {
                 $o .= (isset($v['label'])) ? "<label for='{$v['id']}'>{$v['label']}</label> " : '';
                 $x++;
             }
-        }
+
         return $o;
     }
 
@@ -231,6 +264,12 @@ class Form {
      * @return  string
      */
     public static function button($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = "<button type='submit'";
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -253,6 +292,12 @@ class Form {
      * @return  string
      */
     public static function submit($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = '<input type="submit"';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -273,6 +318,12 @@ class Form {
      * @return  string
      */
     public static function hidden($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = '<input type="hidden"';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
@@ -290,6 +341,12 @@ class Form {
      * @return  string
      */
     public static function table($params = array()) {
+
+        if( !is_array($params) )
+        {
+            throw new \InvalidArgumentException("Arguments is not a Array". print_r($params, true));
+        }
+
         $o = "<table ";
         $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
         $o .= ">";

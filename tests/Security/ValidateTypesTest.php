@@ -11,11 +11,17 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class ValidateTypesTest extends PHPUnit{
 
 
+    protected function assertPreConditions()
+    {
+       $this->assertTrue(class_exists($class = '\Ballybran\Helpers\Security\ValidateTypes'), 'Classe Not Faund');
+    }
+
     public function testValidateTypesStringReturn()
     {
         $val = \Ballybran\Helpers\Security\ValidateTypes::getSQLValueString('IT IS A TEST', 'text', '0');
 
         $this->assertEquals('IT IS A TEST', $val);
+
 
     }
 
