@@ -21,8 +21,14 @@ use const ALGO;
 use Prophecy\Exception\InvalidArgumentException;
 use function random_int;
 
-class Hash {
+class Hash implements HashInterface {
     private $key;
+
+
+
+    public function __construct()
+    {
+    }
 
     /**
      * @param $algo

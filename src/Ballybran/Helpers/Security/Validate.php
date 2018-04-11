@@ -18,7 +18,10 @@
 namespace Ballybran\Helpers\Security;
 
 
+use Ballybran\Core\Collections\Collection\IteratorCollection;
 use Ballybran\Exception\Exception;
+use Ballybran\Helpers\Utility\Hash;
+use Ballybran\Helpers\Utility\HashInterface;
 
 /**
  * Class Validate
@@ -96,6 +99,23 @@ class Validate
         return $this;
     }
 
+    public function getPostDataForHash($fieldName= null, HashInterface $hashObject = null)
+    {
+        $it = new IteratorCollection($this->_postData);
+        if(isset($fieldName) && is_object($hashObject)) {
+            if (isset($this->_postData[$fieldName])) {
+                $this->_postData[$this->_currentItem];
+
+                $securityHash = $hashObject::hash_password($this->_postData[$fieldName]);
+                $it->set($fieldName, $securityHash) ;
+            }
+            return $it->toArray();
+
+        }
+        return $this->_postData;
+
+
+    }
 
     public function getPostData($fieldName = false)
     {
@@ -111,7 +131,6 @@ class Validate
         }
         else
         {
-
             return $this->_postData;
         }
 
@@ -133,10 +152,10 @@ class Validate
     }
 
 
-    public function string()
+    public function text()
     {
         if(!is_string($this->_postData[$this->_currentItem])){
-            throw new \InvalidArgumentException("the value entered must have a String");
+            throw new \InvalidArgumentException("the value entered must have a Text");
         }
         return $this;
     }
@@ -166,7 +185,7 @@ class Validate
 
     public function long()
     {
-        if(!is_long($this->_postData[$this->_currentItem])){
+        if(!floatval($this->_postData[$this->_currentItem])){
             throw new \InvalidArgumentException("the value entered must have a Long");
         }
 
