@@ -15,12 +15,13 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "phpunit/phpunit": "6.3.*"
+        "php": ">=7.0.0"
 
     },
     "require-dev": {
-        "knut7/php-graphic": "v0.1"
+        "knut7/php-graphic": "v0.1",
+        "phpunit/phpunit": "6.3.*"
+
 
     },
 
