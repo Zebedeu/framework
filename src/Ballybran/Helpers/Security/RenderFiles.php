@@ -27,8 +27,7 @@ class RenderFiles
     private $header = "header";
     private $footer = "footer";
     private $ex = ".phtml";
-    public $data =[];
-
+    public $data = [];
 
 
     public function __construct()
@@ -37,8 +36,7 @@ class RenderFiles
     }
 
 
-
-    public function assign($key= null, $value = null)
+    public function assign($key = null, $value = null)
     {
 
         $this->data[$key] = $value;
@@ -59,7 +57,6 @@ class RenderFiles
 
     protected function isHeader()
     {
-
 
         if (!file_exists(VIEW . $this->header . $this->ex) || !is_readable(VIEW . $this->header . $this->ex)) {
             return Exception::notHeader();

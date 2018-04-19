@@ -26,45 +26,27 @@ abstract class Postgroul implements AbstractDatabaseInterface {
         
     }
 
-    /**
-     * @param $sql
-     * @param array $array
-     * @param int $fetchMode
-     * @return mixed
-     */
-    public function selectManager($sql, $array = array (), $fetchMode = PDO::FETCH_ASSOC)
+
+    public function selectManager($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
     {
         // TODO: Implement selectManager() method.
     }
 
-    /**
-     * select
-     * @param string $sql An SQL string
-     * @param array $array Paramters to bind
-     * @param constant $fetchMode A PDO Fetch mode
-     * @return mixed
-     */
-    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array (), $fetchMode)
+    public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode)
     {
-        // TODO: Implement select() method.
+        // TODO: Implement find() method.
     }
 
-    /**
-     * @param $table da base de dados
-     * @param $data recebido do array
-     * @return bool
-     */
+    public function save($table, $data, $where = null)
+    {
+        // TODO: Implement save() method.
+    }
+
     public function insert($table, array $data)
     {
         // TODO: Implement insert() method.
     }
 
-    /**
-     * @param $table
-     * @param $data
-     * @param $where
-     * @return bool
-     */
     public function update($table, $data, $where)
     {
         // TODO: Implement update() method.
@@ -73,15 +55,5 @@ abstract class Postgroul implements AbstractDatabaseInterface {
     public function delete($table, $where, $limit)
     {
         // TODO: Implement delete() method.
-    }
-
-    public function get_Data_definition($db)
-    {
-        // TODO: Implement get_Data_definitin() method.
-    }
-
-    public function createTable(String $table, array $fileds)
-    {
-        // TODO: Implement createTable() method.
     }
 }

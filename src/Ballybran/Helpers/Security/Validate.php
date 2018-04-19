@@ -70,6 +70,10 @@ class Validate
 
     public function setMethod($method)
     {
+        if (empty($method)) {
+            throw new \InvalidArgumentException("argument can not be empty");
+
+        }
         $this->_method = $method;
         return $this;
     }
@@ -120,20 +124,14 @@ class Validate
     public function getPostData($fieldName = false)
     {
 
-        if ($fieldName)
-        {
+        if ($fieldName) {
             if (isset($this->_postData[$fieldName]))
                 return $this->_postData[$fieldName];
-
-
             else
                 return false;
-        }
-        else
-        {
+        } else {
             return $this->_postData;
         }
-
     }
 
 
