@@ -240,10 +240,15 @@ class IteratorCollection extends Variable implements \ArrayAccess {
 
     public function reverse()
     {
-
         $item =  array_reverse($this->elements);
         return $this->setElementsFromTrustedSource($item);
 
     }
+
+    public function find($value)
+    {
+        $this->get($value);
+    }
+
 
 }

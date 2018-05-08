@@ -17,6 +17,7 @@
 namespace Ballybran\Helpers\Routing;
 
 use Ballybran\Exception\Exception;
+use Ballybran\Exception\KException;
 use Ballybran\Helpers\Language;
 
 /**
@@ -97,7 +98,7 @@ class Routes
         }else {
             $lang = new Language();
             $lang->Load('welcome');
-            Exception::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
+             KException::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
         }
     }
 }

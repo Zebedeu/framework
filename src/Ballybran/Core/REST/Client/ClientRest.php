@@ -38,10 +38,7 @@ class ClientRest extends Encodes
         $this->compression = $compression;
         $this->proxy = $proxy;
         $this->cookies = $cookies;
-        if ($this->cookies == TRUE)
-        {
-            $this->cookie($cookie);
-        }
+        if ($this->cookies == TRUE) $this->cookie($cookie);
     }
 
     public function cookie($cookie_file)
@@ -148,7 +145,7 @@ class ClientRest extends Encodes
             'useridentifier' => 'agent@example.com',
             'apikey' => 'key001'
         );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $service_url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
         $curl_response = curl_exec($ch);
         if ($curl_response === false) {
             $info = curl_getinfo($ch);

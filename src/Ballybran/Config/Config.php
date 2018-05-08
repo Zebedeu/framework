@@ -142,3 +142,8 @@ define('DIR_LOGS', 'Log/storage/');
  */
 define('VIEW', PV . APP . DS . 'View' . DS);
 
+
+class Config {
+
+    public static $project = "apweb";
+}

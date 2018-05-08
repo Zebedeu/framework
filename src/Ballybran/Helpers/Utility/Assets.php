@@ -21,7 +21,8 @@ namespace Ballybran\Helpers\Utility;
  * Class Assets
  * @package Ballybran\Helpers\Utility
  */
-class Assets {
+class Assets
+{
 
     /**
      * @var array
@@ -35,7 +36,8 @@ class Assets {
      * @param $files
      * @param $template
      */
-    protected static function resource($files, $template)  {
+    protected static function resource($files, $template)
+    {
 
         $template = self::$templates[$template];
 
@@ -44,27 +46,32 @@ class Assets {
                 echo sprintf($template, $file) . "\n";
             }
         } else {
-            echo sprintf($template, $files) . "\n";
+              echo( sprintf($template, $files) . "\n");
         }
     }
 
-    public static function js(Array $files)  {
+    public static function js(Array $files)
+    {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
                 static::resource($value, 'js');
             }
+        } else {
+            static::resource($files, 'js');
+
         }
-         static::resource($files, 'js');
     }
 
 
-    public static function css(Array $files)  {
+    public static function css(Array $files)
+    {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
-               static::resource($value, 'css');
+                static::resource($value, 'css');
             }
+        } else {
+            static::resource($files, 'css');
         }
-         static::resource($files, 'css');
     }
 
 }

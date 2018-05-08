@@ -171,7 +171,7 @@ class FileSystem extends ImageProperties
 
     private function makeDefaultPath() : String
     {
-        echo $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
+        return $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
     }
 
     private function makePathBayUserName() : String

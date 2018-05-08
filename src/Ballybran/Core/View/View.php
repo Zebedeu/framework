@@ -46,15 +46,13 @@ class View extends RenderFiles implements ViewrInterface
      * @return bool|void
      */
 
+
     public function render($controller, String $view)
     {
         $this->view = $view;
        $remove_namespace = explode( '\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
         $this->init();
-
-
-
 
     }
 

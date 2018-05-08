@@ -18,6 +18,7 @@
 namespace Ballybran\Helpers\Routing;
 
 use \Ballybran\Exception\Exception;
+use Ballybran\Exception\KException;
 
 /**
  * Class Bootstrap
@@ -197,7 +198,7 @@ final class Bootstrap
      */
     private function _error()
     {
-        Exception::notFound();
+        KException::notFound();
 
         exit;
     }
