@@ -132,7 +132,7 @@ final class Bootstrap
         require($file);
 
         $namespace = str_replace('/', '\\', $this->_controllerPath);
-        $className = $namespace . $this->_url[0];
+        $className = $namespace .  $this->_url[0];
 
         $this->_controller = new $className;
         return true;

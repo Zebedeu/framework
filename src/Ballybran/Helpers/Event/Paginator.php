@@ -39,7 +39,7 @@ class Paginator extends DBconnection
 
     }
 
-    public function getcolum()
+    public function getColum()
     {
 
         if (!isset($_GET['page'])) {
@@ -61,6 +61,7 @@ class Paginator extends DBconnection
                 <?php for ($this->page = 1; $this->page <= $this->total_page; $this->page++): ?>
                     <li class="page-item"><a class="pagination" href='<?php echo "?page=$this->page"; ?>'
                                              class="pagination fade in active" aria-hidden="true"><?php echo $this->page; ?></a></li>
+                                             <!-- return $this->page -->
                 <?php endfor; ?>
 
     <?php }

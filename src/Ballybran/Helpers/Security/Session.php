@@ -86,16 +86,6 @@ class Session {
      */
     public static function exist() {
         if (sizeof($_SESSION) > 0) {
-            ini_set('session.use_only_cookies', 'Off');
-            ini_set('session.use_cookies', 'On');
-            ini_set('session.cookie_httponly', 'On');
-
-
-            if (isset($_COOKIE[session_name()]) && !preg_match('/^[a-zA-Z0-9,\-]{22,52}$/', $_COOKIE[session_name()])) {
-                exit('Error: Invalid session ID!');
-            }
-
-            session_set_cookie_params(0, '/');
             return true;
         } else {
             return false;

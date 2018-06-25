@@ -24,42 +24,76 @@ use Ballybran\Helpers\vardump\Vardump;
  */
 class Map
 {
-    private static $url, $var, $callback;
+    private  $url, $callable, $routes=[], $nameRoute;
 
-    public static function add($url, $var, $callback)
+
+    public function __construct(){
+
+        $url = $_GET['url'] ?? "index";
+        $this->url = $url;
+    }
+
+    public  function get($path, $callable, $name = null)
     {
-        self::$url[] = $url;
-        self::$var[] = $var;
-        self::$callback[] = $callback;
-
-        return new Map();
+       
+       return $this->add($path, $callable, $name, 'GET');
 
     }
 
-    public static function exe()
+     public  function post($path, $callable, $name = null)
     {
-        $url = explode('/', Routes::getURI() );
-
-//
-        foreach (self::$url as $key => $value) {
+       
+    return $this->add($path, $callable, $name, 'POST');
 
 
-            $value = explode('/', $value);
+    }
 
+     public  function add($path, $callable, $name, $method)
+    {
+       
+        $route = new Routes($path, $callable);
+        $this->routes[$method][] = $route;
 
-            foreach ($value as $k => $v)
-                $map[] = $v == '*' ? isset($url[$k]) ? $url[$k] : null : $v;
+        if(is_string($callable) && $name = null ) {
 
-//
-            $map = implode('/', $map);
-            Vardump::dump($map);
-
-//
-            if ($map == Routes::getURI() || $map == Routes::$type . '/' || $map == Routes::$type . '')
-                return call_user_func(self::$callback[$key], self::$var[$key]);
-            unset($map);
+          $name = $callable;
         }
-//        Router::__404();
+          if($name) {
+            $this->nameRoute[$name] = $route;
+          }
+        return $route;
+
     }
+
+    public function run()
+    {
+       if( !isset($this->routes[$_SERVER['REQUEST_METHOD']])){
+        throw new \Exception(' REQUEST_METHOD does not exists', 1);
+        
+       }
+
+       foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+          
+          if($route->match($this->url)) {
+
+            return $route->call();
+          }
+       }
+
+               throw new \Exception("No  matching routes", 1);
+
+    }
+
+    public function url($name, $params= [])
+    {
+      if( !isset($this->nameRoute[$name])) {
+
+        throw new \Exception("No route match this name", 1);
+        
+      }
+
+      return $this->nameRoute[$name]->getUrl($params);
+    }
+
 
 }
