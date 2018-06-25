@@ -292,7 +292,7 @@ namespace  Ballybran\Helpers\Images;
      {
          $rgb = $this->html2rgb($color);
 
-          imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
+          return imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
      }
 
  }

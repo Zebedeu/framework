@@ -54,7 +54,7 @@ class Variable extends ArrayObject {
         return $this;
     }
 
-    public function import($input) {
+    public function import(array $input) {
         $this->exchangeArray($input);
         return $this;
     }

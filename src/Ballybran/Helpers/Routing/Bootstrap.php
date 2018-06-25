@@ -18,6 +18,7 @@
 namespace Ballybran\Helpers\Routing;
 
 use \Ballybran\Exception\Exception;
+use Ballybran\Exception\KException;
 
 /**
  * Class Bootstrap
@@ -131,7 +132,7 @@ final class Bootstrap
         require($file);
 
         $namespace = str_replace('/', '\\', $this->_controllerPath);
-        $className = $namespace . $this->_url[0];
+        $className = $namespace .  $this->_url[0];
 
         $this->_controller = new $className;
         return true;
@@ -197,7 +198,7 @@ final class Bootstrap
      */
     private function _error()
     {
-        Exception::notFound();
+        KException::notFound();
 
         exit;
     }

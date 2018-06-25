@@ -75,7 +75,24 @@ class FileSystem extends ImageProperties
     /**
      * @return mixed
      */
-   
+
+    private $text;
+
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param mixed $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 
     /**
      * Uploads constructor.
@@ -171,7 +188,7 @@ class FileSystem extends ImageProperties
 
     private function makeDefaultPath() : String
     {
-        echo $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
+        return $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
     }
 
     private function makePathBayUserName() : String

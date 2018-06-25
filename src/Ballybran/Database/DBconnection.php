@@ -101,4 +101,10 @@ class DBconnection extends PDOStatement {
         }
     }
 
+
+    public function __destruct()
+    {
+        $this->_instances = null;
+    }
+
 }

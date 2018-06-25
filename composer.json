@@ -19,7 +19,7 @@
 
     },
     "require-dev": {
-        "knut7/php-graphic": "v0.1",
+        "knut7/php-graphic": "v0.2",
         "phpunit/phpunit": "6.3.*"
 
 

@@ -27,7 +27,6 @@ class RenderFiles
     private $header = "header";
     private $footer = "footer";
     private $ex = ".phtml";
-    public $data =[];
 
 
 

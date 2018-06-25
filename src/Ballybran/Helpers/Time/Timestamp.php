@@ -16,13 +16,13 @@
  */
 
 namespace Ballybran\Helpers\Time;
+date_default_timezone_set('UTC');
 
 class Timestamp {
 
     private static $tempo_da_sessao;
 
     private static function inserir_tempo(int $tempo_da_sessao): int {
-        date_default_timezone_set('UTC');
 
 
         $diferenca_tempo = time() - $tempo_da_sessao;

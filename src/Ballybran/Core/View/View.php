@@ -33,6 +33,7 @@ class View extends RenderFiles implements ViewrInterface
     private $view;
 
     public $title;
+    public $data;
 
     /**
      * @param $Controller $this responsavel para pegar a pasta da View
@@ -46,19 +47,19 @@ class View extends RenderFiles implements ViewrInterface
      * @return bool|void
      */
 
+
     public function render($controller, String $view)
     {
         $this->view = $view;
-       $remove_namespace = explode( '\\', get_class($controller));
+        $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
         $this->init();
-
-
+        return $this;
 
 
     }
 
-    private function init() : bool
+    private function init(): bool
     {
 
         $this->isViewPath($this->controllers);
@@ -68,9 +69,6 @@ class View extends RenderFiles implements ViewrInterface
 
         return true;
 
-
     }
-
-   }
-
+}
 
