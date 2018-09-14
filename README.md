@@ -58,10 +58,7 @@ Pra configurar a framework é simples. Vai ate ao Diretório Config (1) e altera
 	•	Idioma do projecto (Padrão Inglês)
 
 
-A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC), logo, a estrutura do teu projecto devera ficar da seguinte forma:
-
-
-
+A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC)
 
 
 
