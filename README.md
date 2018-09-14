@@ -65,4 +65,7 @@ A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC),
 
 
 
+## License
+
+The Knut7 framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
