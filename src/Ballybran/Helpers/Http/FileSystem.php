@@ -145,7 +145,7 @@ class FileSystem extends ImageProperties
 
         $this->makePathBayUserName();
         $this->makePathDirIfUserExist();
-        return $this->moveUploadedFile();
+         $this->moveUploadedFile();
 
     }
 

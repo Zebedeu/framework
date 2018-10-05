@@ -138,4 +138,9 @@ class RecursiveDirectoryIterator extends FilesystemIterator implements \Recursiv
         return @mkdir($path, $mode);
     }
 
+
+    public function remove($path) {
+         return rmdir($path);
+    }
+
 }

@@ -140,7 +140,7 @@ define('DIR_LOGS', 'Log/storage/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-define('VIEW', PV . APP . DS . 'View' . DS);
+define('VIEW', PV . APP . DS . 'Views' . DS);
 
 
 class Config {

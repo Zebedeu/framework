@@ -27,16 +27,28 @@ namespace Ballybran\Helpers\Http;
 
 class FileExtension
 {
-    private $extension = array ('.php', '.phtml', 'html', 'inc', '.js', 'css');
+    private $extension = array ('php', 'phtml',  'html', 'inc', 'js', 'css');
     private $ex;
 
-    public function __construct()
+    public function __construct( $obj)
     {
 
-        for ($i = 0; $i > count($this->extension); $i++) {
-            $total = $this->extension[$i];
-            echo $total;
+        $this->obj = $obj;
+    }
+
+    public function isIstension(){
+
+        $extension= $this->obj->getExtension();
+
+        foreach ($this->extension as $key => $value) {
+
+            if($value == $extension){
+                return true;
+            }
+            return false;
         }
+
+
     }
 
 

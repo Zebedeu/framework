@@ -51,11 +51,11 @@ class Validate
      * __construct - Instantiates the validator class
      *
      */
-    public function __construct($validationFields)
+    public function __construct($validationFields = null)
     {
 
-       if(! is_object($validationFields)){
-           throw new \InvalidArgumentException("past argument is not an instance");
+       if(is_null($validationFields)){
+           $this->_val = $validationFields =  new Val();
        }
            $this->_val = $validationFields;
 
@@ -99,6 +99,19 @@ class Validate
         return $this;
     }
 
+    public function any($field)
+    {
+        $req_method = strtolower($_SERVER['REQUEST_METHOD']);
+
+        if($req_method == true) {
+            $this->_postData[$field] = $req_method[$field];
+            $this->_currentItem = $field;
+        }
+
+
+        return $this;
+    }
+
     public function getPostDataForHash($fieldName= null, HashInterface $hashObject = null)
     {
         $it = new IteratorCollection($this->_postData);
@@ -120,33 +133,33 @@ class Validate
     public function getPostData($fieldName = false)
     {
 
-        if ($fieldName)
-        {
-            if (isset($this->_postData[$fieldName]))
-                return $this->_postData[$fieldName];
-
-
-            else
-                return false;
-        }
-        else
-        {
+        if ($fieldName == false) {
             return $this->_postData;
         }
+        if ($fieldName && isset($this->_postData[$fieldName])) {
+            return $this->_postData[$fieldName];
+        }
+            return false;
+
 
     }
 
 
-    public function val($typeOfValidator, $arg = null)
+    /**
+     * @param string $typeOfValidator |maxlength|minlength|digit|isValidLenght
+     * @param int $arg
+     * @return $this
+     */
+    public function val(string $typeOfValidator, int $length )
     {
+        $error = "";
 
-        if (! $arg == null )
-            $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $arg);
-        else
-        $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
-
-        if ($error)
-             $this->_error[$this->_currentItem] = $error;
+        if (! empty($length) ) {
+             $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $length);
+        }
+        if ($error) {
+            $this->_error[$this->_currentItem] = $error;
+        }
 
         return $this;
     }

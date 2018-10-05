@@ -99,9 +99,10 @@ final class Bootstrap
      */
     private function _getUrl()
     {
+
         $url = $_GET['url'] ?? "index";
         $url = rtrim($url, '/');
-//        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $url = filter_var($url, FILTER_SANITIZE_URL);
         $this->_url = explode('/', $url);
 
     }
@@ -154,10 +155,9 @@ final class Bootstrap
         $length = count($this->_url);
 
         // Make sure the method we are calling exists
-        if ($length > 1) {
-            if (!method_exists($this->_controller, $this->_url[1])) {
+        if ($length > 1 && !method_exists($this->_controller, $this->_url[1])) {
                 $this->_error();
-            }
+
         }
 
         // Determine what to load

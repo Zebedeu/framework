@@ -33,14 +33,6 @@ class RenderFiles
     public function __construct()
     {
         $this->ex;
-    }
-
-
-
-    public function assign($key= null, $value = null)
-    {
-
-        $this->data[$key] = $value;
 
     }
 

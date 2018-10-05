@@ -25,24 +25,26 @@ namespace Ballybran\Helpers\Security;
 {
 
 
-    public function minlength(string $data, int $arg)
+    public function minlength(string $data, int $length)
     {
-        if (strlen($data) < $arg) {
-            return "Your string can only be $arg long";
+        if ( strlen($data) < $length) {
+            return " (** minlength **) Your string " .$data . " can only be ".$length." long";
         }
     }
 
-    public function maxlength(string $data, int $arg)
+    public function maxlength(string $data, int $length)
     {
-        if (strlen($data) > $arg) {
-            return "Your string can only be $arg long";
+
+        if (strlen($data) > $length) {
+
+            return " (** maxlength **) Your string " .$data . " can only be ".$length." long";
         }
     }
 
     public function digit(string $data)
     {
         if (ctype_digit($data) == false ) {
-            return "Your string must be a digit";
+            return "Your string ".$data." must be a digit";
         }
     }
 
@@ -51,10 +53,10 @@ namespace Ballybran\Helpers\Security;
         throw new \Exception("$name does not exist inside of: " . __CLASS__);
     }
 
-    public function isValidLenght(string $lenght, string $data, int $arg)
+    public function isValidLenght(string $lenght, string $data, int $length)
     {
-        if($this->{$lenght}($data, $arg)) {
-            return $this->{$lenght}($data, $arg);
+        if($this->{$lenght}($data, $length)) {
+            return $this->{$lenght}($data, $length);
           }
 
       }

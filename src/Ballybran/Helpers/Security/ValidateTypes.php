@@ -31,14 +31,12 @@ class ValidateTypes
 
         $theValue = function_exists("htmlspecialchars") ? htmlspecialchars($theValue) : htmlspecialchars($theValue);
 
-
-
         switch ($theType) {
             case "string":
                 if(! is_string($theValue)) {
                     return null;
                 }
-                return strip_tags("$theVal");
+                return strip_tags("$theValue");
                 break;
             case "email":
                 if(! is_string($theValue)) {
