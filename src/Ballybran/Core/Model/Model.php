@@ -58,7 +58,7 @@ class Model
         $className = str_replace('\\', '/', get_class($this));
         $classModel = str_replace('Controllers', 'Models', $className);
         $this->modelClass = $classModel . 'Model';
-        $path = $this->modelClass . '.php';
+        $path = 'Module/' .$this->modelClass . '.php';
 
         if (file_exists($path) || is_readable($path)) {
             require_once $path;

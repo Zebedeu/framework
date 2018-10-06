@@ -33,7 +33,6 @@ class View extends RenderFiles implements ViewrInterface
     private $view;
 
     public $title;
-    public $data;
 
     /**
      * @param $Controller $this responsavel para pegar a pasta da View
@@ -52,10 +51,10 @@ class View extends RenderFiles implements ViewrInterface
     {
         $this->view = $view;
         $remove_namespace = explode('\\', get_class($controller));
-        $this->controllers = $remove_namespace[3];
+        $this->controllers = $remove_namespace[2];
+
         $this->init();
         return $this;
-
 
     }
 
