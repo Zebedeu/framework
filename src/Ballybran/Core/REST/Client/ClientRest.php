@@ -18,6 +18,7 @@
 namespace Ballybran\Core\REST\Client;
 
 use \Ballybran\Core\REST\Encodes;
+use Ballybran\Helpers\Http\Http;
 
 class ClientRest extends Encodes
 {
@@ -29,19 +30,20 @@ class ClientRest extends Encodes
     private $cookie_file;
     private $proxy;
 
-    function __construct($cookies = TRUE, $cookie = 'cookies.txt', $compression = 'gzip', $proxy = '')
+    function __construct($cookies = TRUE, $cookie = "", $compression = 'gzip', $proxy = '')
     {
         $this->headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
         $this->headers[] = 'Connection: Keep-Alive';
         $this->headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';
-        $this->user_agent = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.0.3705; .NET CLR 1.1.4322; Media Center PC 4.0)';
+        $this->user_agent = Http::http_user_agent();
         $this->compression = $compression;
         $this->proxy = $proxy;
         $this->cookies = $cookies;
         if ($this->cookies == TRUE) $this->cookie($cookie);
+
     }
 
-    public function cookie($cookie_file)
+    private function cookie($cookie_file)
     {
         if (file_exists($cookie_file)) {
             $this->cookie_file = $cookie_file;
@@ -52,7 +54,7 @@ class ClientRest extends Encodes
         }
     }
 
-    function get($url)
+    public function get($url)
     {
         $process = curl_init($url);
         curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
@@ -85,10 +87,9 @@ class ClientRest extends Encodes
 
         }
 
-        return $return;
     }
 
-    function post($url, $data)
+    public function post($url, $data)
     {
         $process = curl_init($url);
         curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);

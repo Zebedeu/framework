@@ -62,7 +62,6 @@ class Cookie
         if (is_array($name)) {
             foreach ($name as $k => $v) {
 
-
                 header('Set-Cookie: ' . $k . '=' . rawurlencode($v)
                     . (empty($domain) ? '' : '; Domain=' . $domain)
                     . (empty($maxage) ? '' : '; Max-Age=' . $maxage)

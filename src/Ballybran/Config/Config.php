@@ -142,6 +142,10 @@ define('DIR_LOGS', 'Log/storage/');
  */
 define('VIEW', PV . APP . DS . 'Views' . DS);
 
+if(! defined('VERSION')){
+    define('VERSION', '1.0.4');
+}
+
 
 class Config {
 
