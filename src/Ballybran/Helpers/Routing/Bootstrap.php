@@ -18,7 +18,6 @@
 namespace Ballybran\Helpers\Routing;
 
 use \Ballybran\Exception\Exception;
-use Ballybran\Exception\KException;
 
 /**
  * Class Bootstrap
@@ -99,10 +98,9 @@ final class Bootstrap
      */
     private function _getUrl()
     {
-
         $url = $_GET['url'] ?? "index";
         $url = rtrim($url, '/');
-        $url = filter_var($url, FILTER_SANITIZE_URL);
+//        $url = filter_var($url, FILTER_SANITIZE_URL);
         $this->_url = explode('/', $url);
 
     }
@@ -132,9 +130,9 @@ final class Bootstrap
         }
         require($file);
 
-        $namespace = str_replace('/', '\\', $this->_controllerPath);
-        $replace_module = $namespace .  $this->_url[0];
-        $className = str_replace('Module\\','', $replace_module);
+        $namespace = str_replace('/', '\\', APP. '/Controllers/');
+        $className = $namespace . $this->_url[0];
+
         $this->_controller = new $className;
         return true;
 
@@ -155,9 +153,10 @@ final class Bootstrap
         $length = count($this->_url);
 
         // Make sure the method we are calling exists
-        if ($length > 1 && !method_exists($this->_controller, $this->_url[1])) {
+        if ($length > 1) {
+            if (!method_exists($this->_controller, $this->_url[1])) {
                 $this->_error();
-
+            }
         }
 
         // Determine what to load
@@ -198,7 +197,7 @@ final class Bootstrap
      */
     private function _error()
     {
-        KException::notFound();
+        Exception::notFound();
 
         exit;
     }
