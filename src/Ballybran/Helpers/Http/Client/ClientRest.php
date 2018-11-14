@@ -90,7 +90,7 @@ class ClientRest extends Encodes{
 		curl_close($curl);
 		
 		echo 'response ok!';
-		var_export($curl_response);
+		return ($curl_response);
 	}
 
 	public function put($value='')

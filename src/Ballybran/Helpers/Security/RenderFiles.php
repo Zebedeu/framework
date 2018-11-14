@@ -19,7 +19,7 @@
 namespace Ballybran\Helpers\Security;
 
 
-use Ballybran\Exception\KException;
+use Ballybran\Exception\Exception;
 
 class RenderFiles
 {
@@ -39,11 +39,11 @@ class RenderFiles
     protected function isViewPath($controller)
     {
         if (!file_exists(VIEW) || !is_readable(VIEW)) {
-            return KException::noPathView();
+            return Exception::noPathView();
         }
 
         if (!is_readable(VIEW . $controller) || !file_exists(VIEW . $controller)) {
-            return KException::noPathinView($controller);
+            return Exception::noPathinView($controller);
         }
 
     }
@@ -53,7 +53,7 @@ class RenderFiles
 
 
         if (!file_exists(VIEW . $this->header . $this->ex) || !is_readable(VIEW . $this->header . $this->ex)) {
-            return KException::notHeader();
+            return Exception::notHeader();
         }
         require_once VIEW . $this->header . $this->ex;
 
@@ -63,7 +63,7 @@ class RenderFiles
     {
 
         if (!is_readable(VIEW . $this->footer . $this->ex) || !file_exists(VIEW . $this->footer . $this->ex)) {
-            return KException::notFooter();
+            return Exception::notFooter();
         }
 
         require_once VIEW . $this->footer . $this->ex;

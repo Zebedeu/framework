@@ -183,7 +183,7 @@ final class Bootstrap
                 break;
 
             default:
-//                var_dump($this->_controller->index()); die;
+//                $this->_controller->index();
                 $this->_controller->index();
 
                 break;

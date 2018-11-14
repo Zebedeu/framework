@@ -24,13 +24,13 @@ class ClientRest extends Encodes
 {
 
     private $cookies;
-    private $headers;
+    private $headers =[];
     private $user_agent;
     private $compression;
     private $cookie_file;
     private $proxy;
 
-    function __construct($cookies = TRUE, $cookie = "", $compression = 'gzip', $proxy = '')
+    function __construct($cookies = true, $cookie = "", $compression = 'gzip', $proxy = '')
     {
         $this->headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
         $this->headers[] = 'Connection: Keep-Alive';
@@ -39,14 +39,14 @@ class ClientRest extends Encodes
         $this->compression = $compression;
         $this->proxy = $proxy;
         $this->cookies = $cookies;
-        if ($this->cookies == TRUE) $this->cookie($cookie);
+        if ($this->cookies == true) $this->cookie($cookie);
 
     }
 
     private function cookie($cookie_file)
     {
         if (file_exists($cookie_file)) {
-            $this->cookie_file = $cookie_file;
+            echo $this->cookie_file = $cookie_file;
         } else {
             fopen($cookie_file, 'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
             $this->cookie_file = $cookie_file;
@@ -54,14 +54,14 @@ class ClientRest extends Encodes
         }
     }
 
-    public function get($url)
+    public function get($url, $fields = null)
     {
         $process = curl_init($url);
         curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($process, CURLOPT_HEADER, 0);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
         curl_setopt($process, CURLOPT_ENCODING, $this->compression);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);
         if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
@@ -92,74 +92,73 @@ class ClientRest extends Encodes
     public function post($url, $data)
     {
         $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
+        // curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($process, CURLOPT_HEADER, 1);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == TRUE) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
         curl_setopt($process, CURLOPT_ENCODING, $this->compression);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);
         if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        curl_setopt($process, CURLOPT_POST, 1);
         curl_setopt($process, CURLOPT_POSTFIELDS, $data);
         curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($process, CURLOPT_POST, 1);
         $return = curl_exec($process);
         curl_close($process);
         return $return;
     }
 
-    public function put($value = '')
+    public function put($url = '', array $data)
     {
 //        'http://example.com/api/conversations/cid123/status'
-        $service_url = $value;
-        $ch = curl_init($service_url);
+        $process = curl_init($url);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         $data = array("status" => 'R');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        $response = curl_exec($ch);
+        curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($data));
+        $response = curl_exec($process);
         if ($response === false) {
-            $info = curl_getinfo($ch);
-            curl_close($ch);
+            $info = curl_getinfo($process);
+            curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
         }
-        curl_close($ch);
+        curl_close($process);
         $decoded = json_decode($response);
         if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
             die('error occured: ' . $decoded->response->errormessage);
         }
         echo 'response ok!';
-        var_export($decoded->response);
+        return($decoded->response);
     }
 
     public function delete($value = '')
     {
 //        'http://example.com/api/conversations/[CONVERSATION_ID]'
         $service_url = $value;
-        $ch = curl_init($service_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        $process = curl_init($service_url);
+        curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($process, CURLOPT_CUSTOMREQUEST, "DELETE");
         $curl_post_data = array(
             'note' => 'this is spam!',
             'useridentifier' => 'agent@example.com',
             'apikey' => 'key001'
         );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
-        $curl_response = curl_exec($ch);
+        curl_setopt($process, CURLOPT_POSTFIELDS, $curl_post_data);
+        $curl_response = curl_exec($process);
         if ($curl_response === false) {
-            $info = curl_getinfo($ch);
-            curl_close($ch);
+            $info = curl_getinfo($process);
+            curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
         }
-        curl_close($ch);
+        curl_close($process);
         $decoded = json_decode($curl_response);
         if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
             die('error occured: ' . $decoded->response->errormessage);
         }
         echo 'response ok!';
-        var_export($decoded->response);
+        return($decoded->response);
     }
 
     function error($error)

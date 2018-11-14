@@ -135,7 +135,7 @@ use PHPUnit\Runner\Exception;
                 $stmt->bindValue(":$key", $values);
             }
             $this->_commit();
-            return $stmt->execute();
+            $stmt->execute();
             unset($stmt);
         } catch (Exception $e) {
             $this->_Rollback();
