@@ -133,13 +133,17 @@ class Validate
     public function getPostData($fieldName = false)
     {
 
+
         if ($fieldName == false) {
             return $this->_postData;
         }
+          if($this->submit() == true ) {
+        
         if ($fieldName && isset($this->_postData[$fieldName])) {
             return $this->_postData[$fieldName];
         }
             return false;
+        }
 
 
     }
@@ -252,8 +256,10 @@ class Validate
             {
                 $str .= $key . ' => ' . $value . "\n" . "<br>";
             }
+                echo ("Error Processing Request $str");
+    return false;
 
-            echo ("Error Processing Request $str");
+
     }
 
 }
