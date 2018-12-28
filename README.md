@@ -420,6 +420,16 @@ Returns all the stored items as JSON:
 echo $dot->toJson();
 ```
 
+## Painator
+Using The Paginator
+```php
+$page = new Paginator('PDO', "SELECT * FROM category inner join article on category.id_cat = article.id_cat WHERE category.name ='$this->nameOfTheCategorie' ORDER BY category.name DESC", 6);
+```
+show Pagination Links
+```php
+echo $page->createLinks('pagination' ); 
+```
+
 ## License
 
 [MIT license](LICENSE.md)
