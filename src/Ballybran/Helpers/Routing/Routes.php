@@ -88,7 +88,6 @@ class Routes
             $className = $namespace .  $params[0];
 
             $controller = new $className;
-            // $controller = new $controller();
 
             return call_user_func_array([$controller, $params[1]], $this->matches);
 
@@ -114,7 +113,7 @@ class Routes
 
 
     public static function route() {
-        if( phpversion() > 7.0  ) {
+        if( phpversion() >= 7.0  ) {
             $bootstrap = new Bootstrap();
             $bootstrap->init();
         }else {

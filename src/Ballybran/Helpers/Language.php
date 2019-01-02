@@ -17,7 +17,7 @@
 
 namespace Ballybran\Helpers;
 
-use Ballybran\Exception\Exception;
+use Ballybran\Exception\KException;
 use Ballybran\Helpers\vardump\Vardump;
 
 /**
@@ -51,7 +51,7 @@ class Language
             $array = include($file);
         } else {
             /** display error */
-            echo Exception::langNotLoad();
+            echo KException::langNotLoad();
         }
 
         if (!empty($array[$value])) {
@@ -98,7 +98,7 @@ class Language
 //            $array = include($file);
         } else {
             /** display error */
-           echo Exception::langNotLoad();
+           echo KException::langNotLoad();
         }
 
         if (!empty($array[$value])) {

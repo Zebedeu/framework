@@ -54,7 +54,7 @@ class Paginator extends DBconnection
 
         $last = $this->totalpage;
 
-        $start = (($this->page - $links) > 0) ? $this : 1;
+        $start = (($this->page - $links) > 0) ? $this->page - $links : 1;
         $end = (($this->page + $links) < $last) ? $this->page + $links : $last;
 
         $html = '<ul class="' . $list_class . '">';
