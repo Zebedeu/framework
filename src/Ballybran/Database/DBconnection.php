@@ -39,7 +39,7 @@ class DBconnection extends PDOStatement {
      * */
     private $beginTransactioncount = 0;
 
-    function __construct($params) {
+    function __construct(array$params) {
         $this->params = $params;
     }
 

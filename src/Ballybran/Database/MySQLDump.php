@@ -36,7 +36,7 @@ class MySQLDump
 	public function __construct($charset = 'utf8')
 	{
 	    $params['dbname'] = DB_NAME;
-            $this->connection = new mysqli('localhost', 'root', 'root', 'apweb');
+            $this->connection = new mysqli('localhost', 'root', 'root', $params['dbname']);
 	}
 
 
@@ -60,7 +60,7 @@ class MySQLDump
 	 * @param  resource
 	 * @return void
 	 */
-	public function write($handle = NULL)
+	private function write($handle = NULL)
 	{
 		if ($handle === NULL) {
 			$handle = fopen('php://output', 'wb');
@@ -110,7 +110,7 @@ class MySQLDump
 	 * @param  resource
 	 * @return void
 	 */
-	public function dumpTable($handle, $table)
+	private function dumpTable($handle, $table)
 	{
 		$delTable = $this->delimite($table);
 		$res = $this->connection->query("SHOW CREATE TABLE $delTable");
