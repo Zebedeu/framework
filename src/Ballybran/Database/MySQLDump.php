@@ -4,9 +4,6 @@ use mysqli;
 /**
  * MySQL database dump.
  *
- * @author     David Grudl (http://davidgrudl.com)
- * @copyright  Copyright (c) 2008 David Grudl
- * @license    New BSD License
  * @version    1.0
  */
 class MySQLDump
@@ -21,9 +18,9 @@ class MySQLDump
 	const ALL = 15; // DROP | CREATE | DATA | TRIGGERS
 
 	/** @var array */
-	public $tables = array(
+	public $tables = [
 		'*' => self::ALL,
-	);
+	];
 
 	/** @var mysqli */
 	private $connection;
@@ -33,10 +30,16 @@ class MySQLDump
 	 * Connects to database.
 	 * @param  mysqli connection
 	 */
-	public function __construct($charset = 'utf8')
+	public function __construct(mysqli $connection, $charset = 'utf8')
 	{
-	    $params['dbname'] = DB_NAME;
-            $this->connection = new mysqli('localhost', 'root', 'root', $params['dbname']);
+		$this->connection = $connection;
+
+		if ($connection->connect_errno) {
+			throw new Exception($connection->connect_error);
+
+		} elseif (!$connection->set_charset($charset)) { // was added in MySQL 5.0.7 and PHP 5.0.5, fixed in PHP 5.1.5)
+			throw new Exception($connection->error);
+		}
 	}
 
 
@@ -49,7 +52,7 @@ class MySQLDump
 	{
 		$handle = strcasecmp(substr($file, -3), '.gz') ? fopen($file, 'wb') : gzopen($file, 'wb');
 		if (!$handle) {
-			throw new \Exception("ERROR: Cannot write file '$file'.");
+			throw new Exception("ERROR: Cannot write file '$file'.");
 		}
 		$this->write($handle);
 	}
@@ -60,15 +63,15 @@ class MySQLDump
 	 * @param  resource
 	 * @return void
 	 */
-	private function write($handle = NULL)
+	public function write($handle = null)
 	{
-		if ($handle === NULL) {
+		if ($handle === null) {
 			$handle = fopen('php://output', 'wb');
 		} elseif (!is_resource($handle) || get_resource_type($handle) !== 'stream') {
-			throw new \Exception('Argument must be stream resource.');
+			throw new Exception('Argument must be stream resource.');
 		}
 
-		$tables = $views = array();
+		$tables = $views = [];
 
 		$res = $this->connection->query('SHOW FULL TABLES');
 		while ($row = $res->fetch_row()) {
@@ -85,20 +88,23 @@ class MySQLDump
 		$this->connection->query('LOCK TABLES `' . implode('` READ, `', $tables) . '` READ');
 
 		$db = $this->connection->query('SELECT DATABASE()')->fetch_row();
-		fwrite($handle, "-- Created at " . date('j.n.Y G:i') . " using David Grudl MySQL Dump Utility\n"
+		fwrite($handle, '-- Created at ' . date('j.n.Y G:i') . " using David Grudl MySQL Dump Utility\n"
 			. (isset($_SERVER['HTTP_HOST']) ? "-- Host: $_SERVER[HTTP_HOST]\n" : '')
-			. "-- MySQL Server: " . $this->connection->server_info . "\n"
-			. "-- Database: " . $db[0] . "\n"
+			. '-- MySQL Server: ' . $this->connection->server_info . "\n"
+			. '-- Database: ' . $db[0] . "\n"
 			. "\n"
 			. "SET NAMES utf8;\n"
 			. "SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';\n"
 			. "SET FOREIGN_KEY_CHECKS=0;\n"
+			. "SET UNIQUE_CHECKS=0;\n"
+			. "SET AUTOCOMMIT=0;\n"
 		);
 
 		foreach ($tables as $table) {
 			$this->dumpTable($handle, $table);
 		}
 
+		fwrite($handle, "COMMIT;\n");
 		fwrite($handle, "-- THE END\n");
 
 		$this->connection->query('UNLOCK TABLES');
@@ -110,7 +116,7 @@ class MySQLDump
 	 * @param  resource
 	 * @return void
 	 */
-	private function dumpTable($handle, $table)
+	public function dumpTable($handle, $table)
 	{
 		$delTable = $this->delimite($table);
 		$res = $this->connection->query("SHOW CREATE TABLE $delTable");
@@ -131,9 +137,10 @@ class MySQLDump
 		}
 
 		if (!$view && ($mode & self::DATA)) {
-			$numeric = array();
+			fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " DISABLE KEYS;\n\n");
+			$numeric = [];
 			$res = $this->connection->query("SHOW COLUMNS FROM $delTable");
-			$cols = array();
+			$cols = [];
 			while ($row = $res->fetch_assoc()) {
 				$col = $row['Field'];
 				$cols[] = $this->delimite($col);
@@ -148,7 +155,7 @@ class MySQLDump
 			while ($row = $res->fetch_assoc()) {
 				$s = '(';
 				foreach ($row as $key => $value) {
-					if ($value === NULL) {
+					if ($value === null) {
 						$s .= "NULL,\t";
 					} elseif ($numeric[$key]) {
 						$s .= $value . ",\t";
@@ -178,6 +185,7 @@ class MySQLDump
 			if ($size) {
 				fwrite($handle, ";\n");
 			}
+			fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " ENABLE KEYS;\n\n");
 			fwrite($handle, "\n");
 		}
 
@@ -201,5 +209,4 @@ class MySQLDump
 	{
 		return '`' . str_replace('`', '``', $s) . '`';
 	}
-
 }

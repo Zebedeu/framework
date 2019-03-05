@@ -2,16 +2,18 @@
 
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
- * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
+ * @see      http://github.com/zebedeu/artphoweb for the canonical source repository
+ *
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ *
  * @version   1.0.2
  */
 
@@ -19,92 +21,104 @@ namespace Ballybran\Database;
 
 use PDO;
 
-class DBconnection extends PDOStatement {
-
+class DBconnection extends PDOStatement
+{
     /**
-     *
      * @params array
      * */
     private $params = array();
 
     /**
-     *
      * @_instances array
      * */
     private $_instances = array();
 
     /**
-     *
      * @var string
      * */
     private $beginTransactioncount = 0;
 
-    function __construct(array$params) {
+    public function __construct(array $params)
+    {
         $this->params = $params;
     }
 
-     /**
-      * @return mixed
-      * @throws \Exception
-      */
-     public function connection() {
-
-            try {
-                $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass'],
+    /**
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function connection()
+    {
+        try {
+            $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass'],
                     [\PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8']);
 
-                $attributes = array(
-                    "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
-                    "ORACLE_NULLS", "PERSISTENT", "SERVER_INFO", "SERVER_VERSION"
+            $attributes = array(
+                    'AUTOCOMMIT', 'ERRMODE', 'CASE', 'CLIENT_VERSION', 'CONNECTION_STATUS',
+                    'ORACLE_NULLS', 'PERSISTENT', 'SERVER_INFO', 'SERVER_VERSION',
                 );
-                foreach ($attributes as $value) {
-                    $this->_instances->getAttribute(constant("PDO::ATTR_$value")). "\n";
-                }
-            } catch (\PDOException $exc) {
-                throw new \Exception('Failed to connect to database. Reason: ' . $exc->getMessage());
+            foreach ($attributes as $value) {
+                $this->_instances->getAttribute(constant("PDO::ATTR_$value"))."\n";
+            }
+        } catch (\PDOException $exc) {
+            throw new \Exception('Failed to connect to database. Reason: '.$exc->getMessage());
         }
 
         return $this->_instances;
     }
 
     /**
-     *
      * @return bool
      * */
-    protected function _beginTransaction() {
+    protected function _beginTransaction()
+    {
         if (!$this->beginTransactioncount && $this->beginTransactioncount++) {
             return parent::beginTransaction();
         }
+
         return $this->beginTransactioncount >= 0;
     }
 
     /**
-     *
      * @return bool
      * */
-    protected function _commit() {
-        $beginTransactioncount =0;
+    protected function _commit()
+    {
+        $beginTransactioncount = 0;
         if (!++$beginTransactioncount) {
             return parent::commit();
         }
+
         return $this->beginTransactioncount >= 0;
     }
 
     /**
-     *
      * @return bool
      * */
-    protected function _Rollback() {
+    protected function _Rollback()
+    {
         if ($this->beginTransactioncount >= 0) {
             $this->beginTransactioncount = 0;
+
             return parent::rollBack();
         }
     }
-
 
     public function __destruct()
     {
         $this->_instances = null;
     }
 
+    /**
+     * Return last inserted id.
+     *
+     * @param string|null $sequence
+     *
+     * @return string
+     */
+    public function lastInsertId($sequence = null)
+    {
+        return $this->_instances->lastInsertId($sequence);
+    }
 }
