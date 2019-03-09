@@ -25,9 +25,9 @@ class EventHandlerTest extends TestCase
         $observer->method('getEventName');
         // Create a EventHandler object and getEventName the mocked
         $obj = new EventHandler(new Event('onEvent'), 'data');
-        $c = $obj->getEventName();
+        $eventName = $obj->getEventName();
 
-        $this->assertEquals('onEvent', $c);
+        $this->assertEquals('onEvent', $eventName);
     }
 
     /*
@@ -47,8 +47,8 @@ class EventHandlerTest extends TestCase
         // Create a EventHandler object and getEventName the mocked
         $args = ['args' => 7];
         $obj = new EventHandler(new Event('onEvent'), 'EventHandlerTest::TestData');
-        $c = $obj->raise('onEvent', $args);
-        $this->assertEquals($args, $c);
+        $eventName = $obj->raise('onEvent', $args);
+        $this->assertEquals($args, $eventName);
     }
 
     public static function TestData($sender, $args)
