@@ -177,7 +177,7 @@ class Timestamp
     /**
      * dataTime.
      *
-     * @param mixed $format
+     * @param string $format
      *
      * @return string
      */
@@ -186,5 +186,19 @@ class Timestamp
         $data = new \DateTime();
 
         return $data->format($format);
+    }
+
+    public static function setDataTime(string $format = 'Y-m-d H:i:s')
+    {
+        $data = new \DateTime();
+        $data_f = $data->format($format);
+
+        // setlocale() used with strftime().
+        $my_locale = setlocale(LC_ALL, MY_LOCALE);
+        if (MY_LOCALE == true) {
+            return $data_inicial = strftime('%d %B %Y', strtotime(trim($data_f)));
+        } else {
+            return $data_f = $data->format($format);
+        }
     }
 }

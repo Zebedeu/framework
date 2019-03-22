@@ -2,31 +2,31 @@
 
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
- * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @link      http://github.com/zebedeu/artphoweb for the canonical source repository
+ * @see      http://github.com/zebedeu/artphoweb for the canonical source repository
+ *
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ *
  * @version   1.0.2
  */
 
 /**
- *
  * The sitewide hashkey, do not change this because its used for passwords!
- * This is for other hash keys... Not sure yet
- *
+ * This is for other hash keys... Not sure yet.
  */
-namespace Ballybran\Config;
 
+namespace Ballybran\Config;
 
 require './Config/Config.php';
 
-/**
+/*
  *
  * This is for database passwords only
  *
@@ -42,32 +42,29 @@ define('SECURE_AUTH_SALT', '!=oLUTXh,QW=H `}`L|9/^4-3 STz},T(w}W<I`.JjPi)<Bmf1v,
 define('LOGGED_IN_SALT', '+XSqHc;@Q*K_b|Z?NC[3H!!EONbh.n<+=uKR:>*c(u`g~EJBf#8u#R{mUEZrozmm');
 define('NONCE_SALT', 'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{%^VyKT');
 
-/**
+/*
  * prefix to cache
  */
-define("Ballybran_CACHE", "cache_");
+define('Ballybran_CACHE', 'cache_');
 
-
-/**
+/*
  *
  *
  */
 define('ALGO', 'md5');
 
-
-
 // DIR
 define('DS', DIRECTORY_SEPARATOR);
-/**
+/*
  *
  * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
  *
  */
 // require_once PV . 'Config/config_module.php';
 
-define('PV', 'Module' . DS);
+define('PV', 'Module'.DS);
 
-/**
+/*
  * APP é a costante responsavel pela criacao da tua applicação.
  * Por padradao o nome da tua applicacao é Applications.
  * Você pode renomear o nome da tua applicacao aqui alterando o seu nome.
@@ -80,18 +77,26 @@ if (!empty($MY_PROJECT_NAME)) {
 } else {
     define('APP', 'Applications');
 }
+
+global $MY_LOCALE;
+if (!empty($MY_LOCALE)) {
+    define('MY_LOCALE', $MY_LOCALE);
+} else {
+    define('MY_LOCALE', 'Applications');
+}
+
 global $HEADER_TITLE;
-	if (!empty($HEADER_TITLE)) {
-    define('HEADER_TITLE', $HEADER_TITLE);
-} else {
-    define('HEADER_TITLE', 'knut7');
-}
+    if (!empty($HEADER_TITLE)) {
+        define('HEADER_TITLE', $HEADER_TITLE);
+    } else {
+        define('HEADER_TITLE', 'knut7');
+    }
 global $HEADER_DESCRIPTION;
-	if (!empty($HEADER_DESCRIPTION)) {
-    define('HEADER_DESCRIPTION', $HEADER_DESCRIPTION);
-} else {
-    define('HEADER_DESCRIPTION', 'knut7');
-}
+    if (!empty($HEADER_DESCRIPTION)) {
+        define('HEADER_DESCRIPTION', $HEADER_DESCRIPTION);
+    } else {
+        define('HEADER_DESCRIPTION', 'knut7');
+    }
 
 global $code;
 
@@ -101,30 +106,27 @@ if (!empty($code)) {
     define('LANGUAGE_CODE', 'en');
 }
 
-
-/**
+/*
  *
  *  O URL base do sistema
  */
 //define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DS);
 
-
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . DS);
+define('URL', 'http://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/.\\').DS);
 //define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
 
 define('ROOT', dirname(__FILE__));
 
-/**
+/*
  *
  *
  */
 //define('DIR_Ballybran', URL . PV . APP . DS);
 
-
-/**
+/*
  *   Module/YourProject/
  */
-define('DIR_FILE', PV . APP . DS);
+define('DIR_FILE', PV.APP.DS);
 
 // define('DIR_FILES', PV . APP . '/class/');
 
@@ -132,22 +134,19 @@ define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
 
 define('DIR_LOGS', 'Log/storage/');
 
-
-
-/**
+/*
  *
  * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-define('VIEW', PV . APP . DS . 'Views' . DS);
+define('VIEW', PV.APP.DS.'Views'.DS);
 
-if(! defined('VERSION')){
+if (!defined('VERSION')) {
     define('VERSION', '1.0.4');
 }
 
-
-class Config {
-
-    public static $project = "apweb";
+class Config
+{
+    public static $project = 'apweb';
 }
