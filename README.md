@@ -90,6 +90,13 @@ $dot['info.home.address'] = 'Kings Square';
 echo $dot['info.home.address'];
 ```
 
+## Install
+
+Install the latest version using [Composer](https://getcomposer.org/):
+
+```
+$ composer require adbario/php-dot-notation
+```
 
 ## Usage
 
