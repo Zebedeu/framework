@@ -463,7 +463,7 @@ class MyEventClass
         }
     }
 
-  public function notity($listEventName)
+  public function notify($listEventName)
     {
         if (is_array($listEventName)) {
             foreach ($listEventName as $eventName) {
@@ -515,7 +515,7 @@ class MyEventClass2 implements InterfaceEventClass
         }
     }
 
-    public function notity($listEventName)
+    public function notify($listEventName)
     {
         if (is_array($listEventName)) {
             foreach ($listEventName as $eventName) {
@@ -536,7 +536,7 @@ $args);
 $handlers2 = new EventHandlerCollection();
 echo $handlers2->add(new EventHandler(new Event('onLoad'), 'handleLoad'));
 $obj2 = new MyEventClass2(new EventCollection(), $handlers2);
-echo $obj2->notity(['onLoad']);
+echo $obj2->notify(['onLoad']);
 echo $obj2->triggerEvent('onLoad', ['args3' => 43]);
 
 function handleLoad($sender, $args)

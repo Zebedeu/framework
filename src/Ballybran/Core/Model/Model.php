@@ -40,6 +40,11 @@ class Model
     public $modelPath = '/Models/';
 
     /**
+     * @var string
+     */
+    private $obj_ip;
+
+    /**
      * Model constructor.
      */
     public function __construct()
@@ -70,10 +75,11 @@ class Model
     private function dbObject()
     {
         $registry = RegistryDatabase::getInstance();
-        $obj = $registry->get(TYPE);
+        $this->obj = $registry->get(TYPE);
         $className = str_replace('/', '\\', $this->modelClass);
-        $this->model = new $className($obj);
+        $this->model = new $className($this->obj);
 
         return $this->model;
     }
+
 }

@@ -91,7 +91,12 @@ class Hash implements HashInterface {
 
     }
 
-    public static  function verify_password($string, $hash)
+    /**
+    * @param string $string  for password
+    * @param string $hash password
+    * @return bool
+    */
+    public static  function verify_password( string $string, string $hash) : bool
     {
 
         if ( password_verify($string, $hash)) {

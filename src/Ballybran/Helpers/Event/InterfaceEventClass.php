@@ -6,7 +6,7 @@ interface InterfaceEventClass
 {
     public function __construct(InterfaceEventCollection $events, InterfaceEventHandlerCollection $handlers = null);
 
-    public function notity($listEventName);
+    public function notify($listEventName);
 
     public function triggerEvent($eventName, $args);
 }

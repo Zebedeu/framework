@@ -114,6 +114,7 @@ class Routes
 
 
     public static function route() {
+
         if( phpversion() > 7.0  ) {
             $bootstrap = new Bootstrap();
             $bootstrap->init();
@@ -122,5 +123,6 @@ class Routes
             $lang->Load('welcome');
              KException::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
         }
+
     }
 }

@@ -106,6 +106,14 @@ if (!empty($code)) {
     define('LANGUAGE_CODE', 'en');
 }
 
+if(!empty($country_utc)) {
+    define('DEFAULT_UTC', $country_utc);
+}else{
+    define('DEFAULT_UTC', 'UTC');
+
+}
+
+
 /*
  *
  *  O URL base do sistema

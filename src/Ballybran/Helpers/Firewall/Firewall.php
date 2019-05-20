@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marciozebedeu
- * Date: 15/09/18
- * Time: 10:41
- */
+
 
 namespace Ballybran\Helpers\Firewall;
 
@@ -16,6 +11,7 @@ class Firewall
     private static $_IP_TYPE_WILDCARD = 'wildcard';
     private static $_IP_TYPE_MASK = 'mask';
     private static $_IP_TYPE_SECTION = 'section';
+    private $lacklists;
     private $_allowed_ips = array();
     private $add = [];
 
@@ -41,9 +37,24 @@ class Firewall
 
     }
 
+    public function blackList(  $lacklists  = null )
+    {
+        if($lacklists){
+
+            if (is_array( $lacklists )) {
+                
+                foreach ($lacklists as $key => $lacklist) {
+                   return $this->_allowed_ips = $lacklist;
+                }
+            }
+            return $this->lac_allowed_ipsklist = $lacklists;
+
+        }
+    }
+
     public function check($allowed_ips = null)
     {
-        $allowed_ips = $allowed_ips ? $allowed_ips : $this->_allowed_ips;
+        $allowed_ips = $allowed_ips ?? $this->_allowed_ips;
 
         foreach ($allowed_ips as $allowed_ip) {
             $type = $this->_judge_ip_type($allowed_ip);
@@ -117,7 +128,7 @@ class Firewall
         return ($ip >= $begin && $ip <= $end);
     }
 
-    function find_net($host, $mask)
+    public function find_net($host, $mask)
     {
         $broadcast = "";
         ### Function to determine network characteristics
@@ -154,7 +165,7 @@ class Firewall
         return $net;
     }
 
-    function ipToHex($ipAddress)
+    public function ipToHex($ipAddress)
     {
         $hex = '';
         if (strpos($ipAddress, ',') !== false) {
@@ -217,7 +228,7 @@ class Firewall
         return strtolower(str_pad($hex, 32, '0', STR_PAD_LEFT));
     }
 
-    function CalculateIPRange($iprange)
+    public function CalculateIPRange($iprange)
     {
         // Daevid Vincent [daevid@daevid.com] 10.13.03
         //  This function will return an array of either a negative error code

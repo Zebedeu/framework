@@ -397,4 +397,24 @@ class Form {
         return $o;
     }
 
+    /**
+    *  
+    *@since 1.0.6
+    *
+    *@param [ 'for' => 'exemplo-title' ], ['title' => 'Example Title' ];   
+    *
+    * @return  string
+    */
+
+    public static function label($params = array() )
+    {
+        $o = "<label";
+        $o .= (isset($params['for'])) ? " for='{$params['for']}'" : '';
+        $o .= '>';
+        $o .= (isset( $params['title']) ? $params['title'] : " ");
+        $o .= '</label>';
+
+        return $o;
+    }
+
 }
