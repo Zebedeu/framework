@@ -25,16 +25,20 @@ use Ballybran\Helpers\Security\Http;
  * Class Url
  * @package Ballybran\Helpers
  */
-class Url extends Http {
+class Url extends Http
+{
 
     private $url;
-    public function __construct( bool $url = false){
+
+    public function __construct(bool $url = false)
+    {
         //$this->url = $url;
         parent::__construct($url);
 
     }
 
-    public function getUrl(){
+    public function getUrl()
+    {
         return $this->url();
 
     }

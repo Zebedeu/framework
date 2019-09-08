@@ -13,12 +13,17 @@ class EventCollection implements InterfaceEventCollection
     public function add($event)
     {
         if (!$this->contains($event)) {
-            $this->events[] = $event;
+            echo $this->events[] = $event;
         }
     }
 
+    /**
+     * @param $handler ->getEventName
+     * @return bool|mixed
+     */
     public function contains($event)
     {
+        echo $event;
         foreach ($this->events as $e) {
             if ($e->getName() == $event) {
                 return true;

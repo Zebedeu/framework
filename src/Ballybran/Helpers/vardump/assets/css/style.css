@@ -13,18 +13,19 @@
  * @version   1.0.2
  */
 
-
 .xdebug-var-dump {
 
-    background :red;
+    background: red;
     color: #ffffff;
 }
+
 .details pre.xdebug-var-dump {
     white-space: pre;
     word-wrap: inherit;
 }
+
 small {
-    color:forestgreen;
+    color: forestgreen;
 }
 
 font {

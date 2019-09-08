@@ -21,7 +21,7 @@ namespace Ballybran\Database;
 class Query
 {
 
-    private static $fields ="";
+    private static $fields = "";
     private static $table;
     private static $where = "";
     private static $limit = 1;
@@ -126,8 +126,7 @@ class Query
     }
 
 
-
-     public function Table()
+    public function Table()
     {
         $sql = ' SELECT ' . ((self::getFields()) ?? "*") . ' FROM ' . ((self::getTable())) . ((self::getWhere()) ? ' WHERE ' . self::getWhere() : " ")
             . ((self::getLimit()) ? ' LIMIT ' . self::getLimit() : " ")

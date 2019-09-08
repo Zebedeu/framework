@@ -14,6 +14,7 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
+
 /**
  * Language - simple language handler.
  *
@@ -32,28 +33,31 @@ use Ballybran\Helpers\vardump\Vardump;
 /**
  * Language class to load the requested language file.
  */
-class Language implements LanguageInterface {
+class Language implements LanguageInterface
+{
 
 
     private $default = 'en';
     private $data = array();
 
-    public function get($key) {
+    public function get($key)
+    {
         return (isset($this->data[$key]) ? $this->data[$key] : $key);
     }
 
-    public function set($filename, $Language = null) {
+    public function set($filename , $Language = null)
+    {
         $_ = array();
 
 
-        $file =  __DIR__.'/../../'. DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+        $file = __DIR__ . '/../../' . DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
 
 
         if (is_file($file)) {
             require($file);
         }
 
-        $file =  __DIR__.'/../../'. DIR_LANGUAGE . $Language . '/' . $filename . '.php';
+        $file = __DIR__ . '/../../' . DIR_LANGUAGE . $Language . '/' . $filename . '.php';
 //        Vardump::dumpColor($file);
 
 
@@ -61,7 +65,7 @@ class Language implements LanguageInterface {
             require($file);
         }
 
-        $this->data = array_merge($this->data, $_);
+        $this->data = array_merge($this->data , $_);
 
         return $this->data;
     }

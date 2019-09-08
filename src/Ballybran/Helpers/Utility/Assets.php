@@ -28,7 +28,7 @@ class Assets
      * @var array
      */
     protected static $templates = array(
-        'js' => '<script src="%s" type="text/javascript"></script>',
+        'js' => '<script src="%s" type="text/javascript"></script>' ,
         'css' => '<link href="%s" rel="stylesheet" type="text/css">'
     );
 
@@ -36,17 +36,17 @@ class Assets
      * @param $files
      * @param $template
      */
-    protected static function resource($files, $template)
+    protected static function resource($files , $template)
     {
 
         $template = self::$templates[$template];
 
         if (is_array($files)) {
             foreach ($files as $file) {
-                echo sprintf($template, $file) . "\n";
+                echo sprintf($template , $file) . "\n";
             }
         } else {
-              echo( sprintf($template, $files) . "\n");
+            echo(sprintf($template , $files) . "\n");
         }
     }
 
@@ -54,10 +54,10 @@ class Assets
     {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
-                static::resource($value, 'js');
+                static::resource($value , 'js');
             }
         } else {
-            static::resource($files, 'js');
+            static::resource($files , 'js');
 
         }
     }
@@ -67,10 +67,10 @@ class Assets
     {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
-                static::resource($value, 'css');
+                static::resource($value , 'css');
             }
         } else {
-            static::resource($files, 'css');
+            static::resource($files , 'css');
         }
     }
 

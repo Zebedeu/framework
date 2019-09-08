@@ -51,18 +51,25 @@ class DBconnection extends PDOStatement
     public function connection()
     {
         try {
-            $this->_instances = new PDO($this->params['dns'], $this->params['users'], $this->params['pass'],
-                    [\PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8']);
+            $this->_instances = new PDO($this->params['dns'] , $this->params['users'] , $this->params['pass'] ,
+                [\PDO::MYSQL_ATTR_INIT_COMMAND , 'SET NAMES utf8']);
 
             $attributes = array(
-                    'AUTOCOMMIT', 'ERRMODE', 'CASE', 'CLIENT_VERSION', 'CONNECTION_STATUS',
-                    'ORACLE_NULLS', 'PERSISTENT', 'SERVER_INFO', 'SERVER_VERSION',
-                );
+                'AUTOCOMMIT' , 'ERRMODE' , 'CASE' , 'CLIENT_VERSION' , 'CONNECTION_STATUS' ,
+                'ORACLE_NULLS' , 'PERSISTENT' , 'SERVER_INFO' , 'SERVER_VERSION' ,
+            );
             foreach ($attributes as $value) {
-                $this->_instances->getAttribute(constant("PDO::ATTR_$value"))."\n";
+                $this->_instances->getAttribute(constant("PDO::ATTR_$value")) . "\n";
             }
         } catch (\PDOException $exc) {
-            throw new \Exception('Failed to connect to database. Reason: '.$exc->getMessage());
+
+            if (_ERROR_ == "dev") {
+                throw new \Exception('Failed to connect to database. Reason: ' . $exc->getMessage());
+
+            } else {
+                echo "<h1>Error establishing a database connection</h1>";
+                exit;
+            }
         }
 
         return $this->_instances;

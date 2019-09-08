@@ -23,7 +23,8 @@ use Module\Service\AbstractModel;
  * Class Session
  * @package Ballybran\Helpers\Security
  */
-class Session {
+class Session
+{
 
 
     /**
@@ -35,8 +36,9 @@ class Session {
      *  init Sessin our Session Start
      * É usado para ativar o incio de sassão do usuário.
      */
-    public static function init() {
-       @session_start();
+    public static function init()
+    {
+        @session_start();
     }
 
     /**
@@ -44,7 +46,8 @@ class Session {
      * @param $value
      * @return mixed
      */
-    public static function set($key, $value) {
+    public static function set($key , $value)
+    {
         return $_SESSION[$key] = $value;
     }
 
@@ -52,7 +55,8 @@ class Session {
      * @param $key
      * @return mixed
      */
-    public static function get($key) {
+    public static function get($key)
+    {
 
         return $_SESSION[$key];
     }
@@ -61,15 +65,17 @@ class Session {
      * funtion usado para destruir a sessao
      *  exxemplo de uso:: public function DestruirSessao(){ Session::Destroy() }
      */
-    public static function Destroy() {
-            @session_destroy();
+    public static function Destroy()
+    {
+        @session_destroy();
 
     }
 
     /**
      * @param $key
      */
-    public static function unsetValue($key) {
+    public static function unsetValue($key)
+    {
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
@@ -84,7 +90,8 @@ class Session {
      * }
      * @return bool
      */
-    public static function exist() {
+    public static function exist()
+    {
         if (sizeof($_SESSION) > 0) {
             return true;
         } else {

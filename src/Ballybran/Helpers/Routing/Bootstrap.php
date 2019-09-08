@@ -27,8 +27,8 @@ use Ballybran\Exception\KException;
 final class Bootstrap
 {
     private $_url = null;
-    private $_controller = '';
-    private $_controllerPath = PV.APP.DS.'Controllers/';
+    private $_controller;
+    public $_controllerPath = PV . APP . DS . 'Controllers/';
     private $_modelPath = 'Models';
     private $_errorFile = 'Error.php';
     private $_defaultFile = 'Index.php';
@@ -64,7 +64,10 @@ final class Bootstrap
      */
     public function setControllerPath($path)
     {
-        $this->_controllerPath = trim($path, '/').'/';
+        if (empty($path)) {
+            throw new \Exception("Directory $path Not Found" , 1);
+        }
+        $this->_controllerPath = PV . APP . DS . trim($path , '/') . '/';
     }
 
     /**
@@ -74,7 +77,7 @@ final class Bootstrap
      */
     public function setModelPath($path)
     {
-        $this->_modelPath = trim($path, '/').'/';
+        $this->_modelPath = trim($path , '/') . '/';
     }
 
     /**
@@ -84,7 +87,11 @@ final class Bootstrap
      */
     public function setErrorFile($path)
     {
-        $this->_errorFile = trim($path, '/');
+        if (empty($path)) {
+            throw new \Exception("Directory $path Not Found" , 1);
+        }
+
+        $this->_errorFile = trim($path , '/');
     }
 
     /**
@@ -94,7 +101,11 @@ final class Bootstrap
      */
     public function setDefaultFile($path)
     {
-        $this->_defaultFile = trim($path, '/');
+        if (empty($path)) {
+            throw new \Exception("Directory $path Not Found" , 1);
+        }
+
+        $this->_defaultFile = trim($path , '/');
     }
 
     /**
@@ -103,9 +114,9 @@ final class Bootstrap
     private function _getUrl()
     {
         $url = $_GET['url'] ?? 'index';
-        $url = rtrim($url, '/');
+        $url = rtrim($url , '/');
 //        $url = filter_var($url, FILTER_SANITIZE_URL);
-        $this->_url = explode('/', $url);
+        $this->_url = explode('/' , $url);
     }
 
     /**
@@ -113,7 +124,7 @@ final class Bootstrap
      */
     private function _loadDefaultController()
     {
-        require_once $this->_controllerPath.$this->_defaultFile;
+        require_once $this->_controllerPath . $this->_defaultFile;
 
         return $this->_controller->index();
     }
@@ -125,7 +136,7 @@ final class Bootstrap
      */
     private function _loadExistingController()
     {
-        $file = $this->_controllerPath.ucfirst($this->_url[0]).'.php';
+        $file = $this->_controllerPath . ucfirst($this->_url[0]) . '.php';
 
         if (!file_exists($file)) {
             $this->_error();
@@ -134,8 +145,8 @@ final class Bootstrap
         }
         require $file;
 
-        $namespace = str_replace('/', '\\', APP.'/Controllers/');
-        $className = $namespace.$this->_url[0];
+        $namespace = str_replace('/' , '\\' , APP . '/Controllers/');
+        $className = $namespace . $this->_url[0];
 
         $this->_controller = new $className();
 
@@ -158,7 +169,7 @@ final class Bootstrap
 
         // Make sure the method we are calling exists
         if ($length > 1) {
-            if (!method_exists($this->_controller, $this->_url[1])) {
+            if (!method_exists($this->_controller , $this->_url[1])) {
                 $this->_error();
             }
         }
@@ -167,12 +178,12 @@ final class Bootstrap
         switch ($length) {
             case 5:
                 //controller->Method(Param1, Param2, Param3)
-                $this->_controller->{strtolower($this->_url[1])}(strtolower($this->_url[2], $this->_url[3], $this->_url[4]));
+                $this->_controller->{strtolower($this->_url[1])}(strtolower($this->_url[2] , $this->_url[3] , $this->_url[4]));
                 break;
 
             case 4:
                 //controller->Method(Param1, Param2)
-                $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
+                $this->_controller->{$this->_url[1]}($this->_url[2] , $this->_url[3]);
                 break;
 
             case 3:

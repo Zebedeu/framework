@@ -35,154 +35,154 @@ abstract class Http extends \ArrayObject
 
 
     private static $_arguments = array(
-        'browser' => NULL,
-        'platform' => NULL,
-        'robot' => NULL,
-        'mobile' => NULL,
-        'version' => NULL,
+        'browser' => NULL ,
+        'platform' => NULL ,
+        'robot' => NULL ,
+        'mobile' => NULL ,
+        'version' => NULL ,
         'languages' => NULL
     );
 
 
     private static $_is = array(
-        'browser' => FALSE,
-        'robot' => FALSE,
+        'browser' => FALSE ,
+        'robot' => FALSE ,
         'mobile' => FALSE
     );
 
 
     private static $_browsers = array(
-        '/(amaya)[ \/]([\w.]+)/' => 'Amaya',
-        '/(Camino)[ \/]([\w.]+)/' => 'Camino',
-        '/(Chimera)[ \/]([\w.]+)/' => 'Chimera',
-        '/(Chrome)[ \/]([\w.]+)/' => 'Chrome',
-        '/(Firebird)[ \/]([\w.]+)/' => 'Firebird',
-        '/(Firefox)[ \/]([\w.]+)/' => 'Firefox',
-        '/(Flock)[ \/]([\w.]+)/' => 'Flock',
-        '/(hotjava)[ \/]([\w.]+)/' => 'HotJava',
-        '/(IBrowse)[ \/]([\w.]+)/' => 'IBrowse',
-        '/(Internet Explorer)[ \/]([\w.]+)/' => 'Internet Explorer',
-        '/(MSIE)[ \/]([\w.]+)/' => 'Internet Explorer',
-        '/(Konqueror)[ \/]([\w.]+)/' => 'Konqueror',
-        '/(Links)[ \/]([\w.]+)/' => 'Links',
-        '/(Lynx)[ \/]([\w.]+)/' => 'Lynx',
-        '/(Mozilla)[ \/]([\w.]+)/' => 'Mozilla',
-        '/(Netscape)[ \/]([\w.]+)/' => 'Netscape',
-        '/(OmniWeb)[ \/]([\w.]+)/' => 'OmniWeb',
-        '/(Opera)[ \/]([\w.]+)/' => 'Opera',
-        '/(Phoenix)[ \/]([\w.]+)/' => 'Phoenix',
-        '/(Safar)[ \/]([\w.]+)/' => 'Safari',
-        '/(Shiira)[ \/]([\w.]+)/' => 'Shiira',
+        '/(amaya)[ \/]([\w.]+)/' => 'Amaya' ,
+        '/(Camino)[ \/]([\w.]+)/' => 'Camino' ,
+        '/(Chimera)[ \/]([\w.]+)/' => 'Chimera' ,
+        '/(Chrome)[ \/]([\w.]+)/' => 'Chrome' ,
+        '/(Firebird)[ \/]([\w.]+)/' => 'Firebird' ,
+        '/(Firefox)[ \/]([\w.]+)/' => 'Firefox' ,
+        '/(Flock)[ \/]([\w.]+)/' => 'Flock' ,
+        '/(hotjava)[ \/]([\w.]+)/' => 'HotJava' ,
+        '/(IBrowse)[ \/]([\w.]+)/' => 'IBrowse' ,
+        '/(Internet Explorer)[ \/]([\w.]+)/' => 'Internet Explorer' ,
+        '/(MSIE)[ \/]([\w.]+)/' => 'Internet Explorer' ,
+        '/(Konqueror)[ \/]([\w.]+)/' => 'Konqueror' ,
+        '/(Links)[ \/]([\w.]+)/' => 'Links' ,
+        '/(Lynx)[ \/]([\w.]+)/' => 'Lynx' ,
+        '/(Mozilla)[ \/]([\w.]+)/' => 'Mozilla' ,
+        '/(Netscape)[ \/]([\w.]+)/' => 'Netscape' ,
+        '/(OmniWeb)[ \/]([\w.]+)/' => 'OmniWeb' ,
+        '/(Opera)[ \/]([\w.]+)/' => 'Opera' ,
+        '/(Phoenix)[ \/]([\w.]+)/' => 'Phoenix' ,
+        '/(Safar)[ \/]([\w.]+)/' => 'Safari' ,
+        '/(Shiira)[ \/]([\w.]+)/' => 'Shiira' ,
         '/(icab)[ \/]([\w.]+)/' => 'iCab');
 
 
     private static $_platforms = array(
-        '/windows nt 6.2/i' => 'Windows 8',
-        '/windows nt 6.1/i' => 'Windows 7',
-        '/windows nt 6.0/i' => 'Windows Vista',
-        '/windows nt 5.2/i' => 'Windows Server 2003/XP x64',
-        '/windows nt 5.1/i' => 'Windows XP',
-        '/windows xp/i' => 'Windows XP',
-        '/windows nt 5.0/i' => 'Windows 2000',
-        '/windows me/i' => 'Windows ME',
-        '/win98/i' => 'Windows 98',
-        '/win95/i' => 'Windows 95',
-        '/win16/i' => 'Windows 3.11',
-        '/macintosh|mac os x/i' => 'Mac OS X',
-        '/mac_powerpc/i' => 'Mac OS 9',
-        '/linux/i' => 'Linux',
-        '/ubuntu/i' => 'Ubuntu',
-        '/iphone/i' => 'iPhone',
-        '/ipod/i' => 'iPod',
-        '/ipad/i' => 'iPad',
-        '/android/i' => 'Android',
-        '/blackberry/i' => 'BlackBerry',
+        '/windows nt 6.2/i' => 'Windows 8' ,
+        '/windows nt 6.1/i' => 'Windows 7' ,
+        '/windows nt 6.0/i' => 'Windows Vista' ,
+        '/windows nt 5.2/i' => 'Windows Server 2003/XP x64' ,
+        '/windows nt 5.1/i' => 'Windows XP' ,
+        '/windows xp/i' => 'Windows XP' ,
+        '/windows nt 5.0/i' => 'Windows 2000' ,
+        '/windows me/i' => 'Windows ME' ,
+        '/win98/i' => 'Windows 98' ,
+        '/win95/i' => 'Windows 95' ,
+        '/win16/i' => 'Windows 3.11' ,
+        '/macintosh|mac os x/i' => 'Mac OS X' ,
+        '/mac_powerpc/i' => 'Mac OS 9' ,
+        '/linux/i' => 'Linux' ,
+        '/ubuntu/i' => 'Ubuntu' ,
+        '/iphone/i' => 'iPhone' ,
+        '/ipod/i' => 'iPod' ,
+        '/ipad/i' => 'iPad' ,
+        '/android/i' => 'Android' ,
+        '/blackberry/i' => 'BlackBerry' ,
         '/webos/i' => 'Mobile'
     );
 
 
     private static $_robots = array(
-        "askjeeves" => "AskJeeves",
-        "fastcrawler" => "FastCrawler",
-        "googlebot" => "Googlebot",
-        "infoseek" => "InfoSeek Robot 1.0",
-        "slurp" => "Inktomi Slurp",
-        "lycos" => "Lycos",
-        "msnbot" => "MSNBot",
+        "askjeeves" => "AskJeeves" ,
+        "fastcrawler" => "FastCrawler" ,
+        "googlebot" => "Googlebot" ,
+        "infoseek" => "InfoSeek Robot 1.0" ,
+        "slurp" => "Inktomi Slurp" ,
+        "lycos" => "Lycos" ,
+        "msnbot" => "MSNBot" ,
         "yahoo" => "Yahoo"
     );
 
 
     private static $_mobiles = array(
-        "alcatel" => "Alcatel",
-        "amoi" => "Amoi",
-        "iphone" => "Apple iPhone",
-        "ipod" => "Apple iPod Touch",
-        "avantgo" => "AvantGo",
-        "benq" => "BenQ",
-        "blackberry" => "BlackBerry",
-        "hiptop" => "Danger Hiptop",
-        "digital paths" => "Digital Paths",
-        "cldc" => "Generic Mobile",
-        "mobile" => "Generic Mobile",
-        "wireless" => "Generic Mobile",
-        "midp" => "Generic Mobile",
-        "j2me" => "Generic Mobile",
-        "smartphone" => "Generic Mobile",
-        "up.browser" => "Generic Mobile",
-        "cellphone" => "Generic Mobile",
-        "up.link" => "Generic Mobile",
-        "ipaq" => "HP iPaq",
-        "htc" => "HTC",
-        "lg" => "LG",
-        "mda" => "MDA",
-        "mobileexplorer" => "Mobile Explorer",
-        "mobilexplorer" => "Mobile Explorer",
-        "motorola" => "Motorola",
-        "mot-" => "Motorola",
-        "nec-" => "NEC",
-        "docomo" => "NTT DoCoMo",
-        "netfront" => "Netfront Browser",
-        "nokia" => "Nokia",
-        "novarra" => "Novarra Transcoder",
-        "o2" => "O2",
-        "cocoon" => "O2 Cocoon",
-        "obigo" => "Obigo",
-        "openwave" => "Openwave Browser",
-        "operamini" => "Opera Mini",
-        "opera mini" => "Opera Mini",
-        "palm" => "Palm",
-        "elaine" => "Palm",
-        "palmsource" => "Palm",
-        "palmscape" => "Palmscape",
-        "panasonic" => "Panasonic",
-        "philips" => "Philips",
-        "playstation portable" => "PlayStation Portable",
-        "spv" => "SPV",
-        "sagem" => "Sagem",
-        "samsung" => "Samsung",
-        "sanyo" => "Sanyo",
-        "sendo" => "Sendo",
-        "sharp" => "Sharp",
-        "sie-" => "Siemens",
-        "ericsson" => "Sony Ericsson",
-        "sony" => "Sony Ericsson",
-        "symbian" => "Symbian",
-        "series60" => "Symbian S60",
-        "SymbianOS" => "SymbianOS",
-        "blazer" => "Treo",
-        "vario" => "Vario",
-        "vodafone" => "Vodafone",
-        "windows ce" => "Windows CE",
-        "xda" => "XDA",
-        "xiino" => "Xiino",
-        "zte" => "ZTE",
+        "alcatel" => "Alcatel" ,
+        "amoi" => "Amoi" ,
+        "iphone" => "Apple iPhone" ,
+        "ipod" => "Apple iPod Touch" ,
+        "avantgo" => "AvantGo" ,
+        "benq" => "BenQ" ,
+        "blackberry" => "BlackBerry" ,
+        "hiptop" => "Danger Hiptop" ,
+        "digital paths" => "Digital Paths" ,
+        "cldc" => "Generic Mobile" ,
+        "mobile" => "Generic Mobile" ,
+        "wireless" => "Generic Mobile" ,
+        "midp" => "Generic Mobile" ,
+        "j2me" => "Generic Mobile" ,
+        "smartphone" => "Generic Mobile" ,
+        "up.browser" => "Generic Mobile" ,
+        "cellphone" => "Generic Mobile" ,
+        "up.link" => "Generic Mobile" ,
+        "ipaq" => "HP iPaq" ,
+        "htc" => "HTC" ,
+        "lg" => "LG" ,
+        "mda" => "MDA" ,
+        "mobileexplorer" => "Mobile Explorer" ,
+        "mobilexplorer" => "Mobile Explorer" ,
+        "motorola" => "Motorola" ,
+        "mot-" => "Motorola" ,
+        "nec-" => "NEC" ,
+        "docomo" => "NTT DoCoMo" ,
+        "netfront" => "Netfront Browser" ,
+        "nokia" => "Nokia" ,
+        "novarra" => "Novarra Transcoder" ,
+        "o2" => "O2" ,
+        "cocoon" => "O2 Cocoon" ,
+        "obigo" => "Obigo" ,
+        "openwave" => "Openwave Browser" ,
+        "operamini" => "Opera Mini" ,
+        "opera mini" => "Opera Mini" ,
+        "palm" => "Palm" ,
+        "elaine" => "Palm" ,
+        "palmsource" => "Palm" ,
+        "palmscape" => "Palmscape" ,
+        "panasonic" => "Panasonic" ,
+        "philips" => "Philips" ,
+        "playstation portable" => "PlayStation Portable" ,
+        "spv" => "SPV" ,
+        "sagem" => "Sagem" ,
+        "samsung" => "Samsung" ,
+        "sanyo" => "Sanyo" ,
+        "sendo" => "Sendo" ,
+        "sharp" => "Sharp" ,
+        "sie-" => "Siemens" ,
+        "ericsson" => "Sony Ericsson" ,
+        "sony" => "Sony Ericsson" ,
+        "symbian" => "Symbian" ,
+        "series60" => "Symbian S60" ,
+        "SymbianOS" => "SymbianOS" ,
+        "blazer" => "Treo" ,
+        "vario" => "Vario" ,
+        "vodafone" => "Vodafone" ,
+        "windows ce" => "Windows CE" ,
+        "xda" => "XDA" ,
+        "xiino" => "Xiino" ,
+        "zte" => "ZTE" ,
         "ipad" => "iPad"
     );
 
-    public function __construct($input = [], $flags = 0, $iterator_class = "ArrayIterator")
+    public function __construct($input = [] , $flags = 0 , $iterator_class = "ArrayIterator")
     {
-        parent::__construct($input, $flags, $iterator_class);
+        parent::__construct($input , $flags , $iterator_class);
 
     }
 
@@ -219,7 +219,7 @@ abstract class Http extends \ArrayObject
     public static function browser()
     {
         foreach (self::$_browsers as $key => $value) {
-            if (preg_match($key, self::http_user_agent())) {
+            if (preg_match($key , self::http_user_agent())) {
                 self::$_arguments['browser'] = $value;
 
                 self::$_is['browser'] = TRUE;
@@ -242,7 +242,7 @@ abstract class Http extends \ArrayObject
     {
         foreach (self::$_platforms as $key => $platform) {
 
-            if (preg_match($key, self::http_user_agent())) {
+            if (preg_match($key , self::http_user_agent())) {
 
                 self::$_arguments['platform'] = $platform;
 
@@ -274,7 +274,7 @@ abstract class Http extends \ArrayObject
     public static function robot()
     {
         foreach (self::$_robots as $key => $value) {
-            if (preg_match("|" . preg_quote($key) . "|i", self::$agent)) {
+            if (preg_match("|" . preg_quote($key) . "|i" , self::$agent)) {
                 self::$_is['robot'] = TRUE;
                 self::$_arguments['robot'] = $value;
                 break;
@@ -291,7 +291,7 @@ abstract class Http extends \ArrayObject
     public static function mobile()
     {
         foreach (self::$_mobiles as $key => $value) {
-            if (FALSE !== (strpos(mb_strtolower(self::http_user_agent()), $key))) {
+            if (FALSE !== (strpos(mb_strtolower(self::http_user_agent()) , $key))) {
                 self::$_is['mobile'] = TRUE;
                 return self::$_arguments['mobile'] = $value;
             }
@@ -307,9 +307,9 @@ abstract class Http extends \ArrayObject
     public static function isEmptyLanguage()
     {
         if ((count(self::$_arguments['languages']) == 0) && self::accept_language() != '') {
-            $languages = preg_replace('/(;q=[0-9\.]+)/i', '', mb_strtolower(self::accept_language()));
+            $languages = preg_replace('/(;q=[0-9\.]+)/i' , '' , mb_strtolower(self::accept_language()));
 
-            self::$_arguments['languages'] = explode(',', $languages);
+            self::$_arguments['languages'] = explode(',' , $languages);
         }
         self::$_arguments['languages'] = array('Undefined');
 
@@ -324,7 +324,7 @@ abstract class Http extends \ArrayObject
     public static function version()
     {
         foreach (self::$_browsers as $key => $value) {
-            if (preg_match($key, self::http_user_agent(), $math)) {
+            if (preg_match($key , self::http_user_agent() , $math)) {
                 self::$_arguments['version'] = $math[2];
                 self::mobile();
                 break;

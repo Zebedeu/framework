@@ -23,7 +23,7 @@ use BadMethodCallException;
 class InvalidCallException extends BadMethodCallException
 {
 
-    public function flashMessageError(  )
+    public function flashMessageError()
     {
         return "Invalid Call";
     }

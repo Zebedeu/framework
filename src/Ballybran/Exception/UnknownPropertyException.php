@@ -22,7 +22,7 @@ use BadMethodCallException;
 class UnknownPropertyException extends BadMethodCallException
 {
 
-    public function flashMessageError(  )
+    public function flashMessageError()
     {
         return "Invalid Call";
     }

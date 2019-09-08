@@ -23,20 +23,21 @@ use PDO;
  * ImageInterface AbstractDatabaseInterface
  * @package Ballybran\Database\Drives
  */
-interface AbstractDatabaseInterface {
+interface AbstractDatabaseInterface
+{
 
     /**
      *
      */
-    const HOST ="localhost";
+    const HOST = "localhost";
     /**
      *
      */
-    const UNAME ="root";
+    const UNAME = "root";
     /**
      *
      */
-    const PW ="root";
+    const PW = "root";
     /**
      *
      */
@@ -49,7 +50,7 @@ interface AbstractDatabaseInterface {
      * @param int $fetchMode
      * @return mixed
      */
-    public function selectManager($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC);
+    public function selectManager($sql , $array = array() , $fetchMode = PDO::FETCH_ASSOC);
 
 
     /**
@@ -63,7 +64,7 @@ interface AbstractDatabaseInterface {
      * @param $fetchMode
      * @return mixed
      */
-    public function find($table, $fields = null, $where = null, $order= null , $limit=null, $offset=null, $array = array(), $fetchMode );
+    public function find($table , $fields = null , $where = null , $order = null , $limit = null , $offset = null , $array = array() , $fetchMode);
 
 
     /**
@@ -72,7 +73,7 @@ interface AbstractDatabaseInterface {
      * @param null $where
      * @return mixed
      */
-    public function save( $table, $data, $where= null);
+    public function save($table , $data , $where = null);
 
 
     /**
@@ -80,7 +81,7 @@ interface AbstractDatabaseInterface {
      * @param array $data
      * @return mixed
      */
-    public function insert($table, array $data);
+    public function insert($table , array $data);
 
     /**
      * @param $table
@@ -88,7 +89,7 @@ interface AbstractDatabaseInterface {
      * @param $where
      * @return bool
      */
-    public function update($table, $data, $where);
+    public function update($table , $data , $where);
 
     /**
      * @param $table
@@ -96,7 +97,7 @@ interface AbstractDatabaseInterface {
      * @param $limit
      * @return mixed
      */
-    public function delete($table, $where, $limit);
+    public function delete($table , $where , $limit);
 
 
 }

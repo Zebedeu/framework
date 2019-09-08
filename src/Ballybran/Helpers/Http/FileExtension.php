@@ -24,25 +24,25 @@
 namespace Ballybran\Helpers\Http;
 
 
-
 class FileExtension
 {
-    private $extension = array ('php', 'phtml',  'html', 'inc', 'js', 'css');
+    private $extension = array('php' , 'phtml' , 'html' , 'inc' , 'js' , 'css');
     private $ex;
 
-    public function __construct( $obj)
+    public function __construct($obj)
     {
 
         $this->obj = $obj;
     }
 
-    public function isIstension(){
+    public function isIstension()
+    {
 
-        $extension= $this->obj->getExtension();
+        $extension = $this->obj->getExtension();
 
         foreach ($this->extension as $key => $value) {
 
-            if($value == $extension){
+            if ($value == $extension) {
                 return true;
             }
             return false;

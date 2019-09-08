@@ -18,12 +18,12 @@
 namespace Ballybran\Helpers\Log;
 
 
-
 /**
  * Class Log
  * @package Ballybran\Helpers\Log
  */
-class Log  {
+class Log
+{
 
     /**
      * @var
@@ -43,10 +43,10 @@ class Log  {
      * @param type $filename
      * @param null $dir
      */
-    public function __construct($filename, $dir = null)
+    public function __construct($filename , $dir = null)
     {
 
-        if($dir != null) {
+        if ($dir != null) {
 
             $this->filename = $dir . $filename;
 
@@ -61,73 +61,78 @@ class Log  {
      * @param type $message
      * @param null $type
      */
-    public function write($message, $type = null) {
-        if($this->handle = fopen( $this->filename, 'a')) {
+    public function write($message , $type = null)
+    {
+        if ($this->handle = fopen($this->filename , 'a')) {
             if (is_array($message) && $type === 'A') {
                 foreach ($message as $key => $value) {
-                    fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value, true) . "\n");
+                    fwrite($this->handle , date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value , true) . "\n");
 
                 }
             }
-            if(!empty($message )){
-                fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
+            if (!empty($message)) {
+                fwrite($this->handle , date('Y-m-d G:i:s') . ' - ' . print_r($message , true) . "\n");
 
             }
             // to use for get data
 
-             if(is_array($message) && $type == 'F') {
+            if (is_array($message) && $type == 'F') {
                 foreach ($message as $key => $value) {
-                    fwrite($this->handle, date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value, true) . "\n")."<br>";
+                    fwrite($this->handle , date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value , true) . "\n") . "<br>";
 
                 }
             }
-            }
-            fclose($this->handle);
-            if($this->filename == true) {
-                chmod($this->filename, 0755);
-            }
+        }
+        fclose($this->handle);
+        if ($this->filename == true) {
+            chmod($this->filename , 0755);
+        }
     }
 
     /**
      *
      */
-    public function open() {
-       if(file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename, 'r')) {
-           require_once DIR_FILE . 'View/header.phtml';
-           ?>
-           <div class="well" >
-           <ul>
-<?php
-           while (!feof($this->handles)) {
-              $content = fgets($this->handles);
+    public function open()
+    {
+        if (file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename , 'r')) {
+            require_once DIR_FILE . 'View/header.phtml';
+            ?>
+            <div class="well">
+                <ul>
+                    <?php
+                    while (!feof($this->handles)) {
+                        $content = fgets($this->handles);
 
-              if(trim($content) != ""){
-                  echo "<li style='color: blue'>$content</li>";
-              }
-           } ?>
+                        if (trim($content) != "") {
+                            echo "<li style='color: blue'>$content</li>";
+                        }
+                    } ?>
 
-           </ul>
-           </div>
-           <?php
-           fclose($this->handles);
+                </ul>
+            </div>
+            <?php
+            fclose($this->handles);
 
-       } else {
-           echo "Could not read from {$this->filename}";
-       }
+        } else {
+            echo "Could not read from {$this->filename}";
+        }
     }
 
     /**
      *
      */
-    public function __destruct() {
-       $this->filename;
+    public function __destruct()
+    {
+        $this->filename;
     }
+
     /**
-     * 
+     *
      * @param type $files
      * @return type
      */
-    public function Files($files) {
+    public function Files($files)
+    {
         return $this->files = $files;
     }
 

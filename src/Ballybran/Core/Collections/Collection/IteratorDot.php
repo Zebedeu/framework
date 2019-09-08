@@ -7,6 +7,7 @@
  * @link    https://github.com/adbario/php-dot-notation
  * @license https://github.com/adbario/php-dot-notation/blob/2.x/LICENSE.md (MIT License)
  */
+
 namespace Ballybran\Core\Collections\Collection;
 
 use Countable;
@@ -14,13 +15,14 @@ use ArrayAccess;
 use ArrayIterator;
 use JsonSerializable;
 use IteratorAggregate;
+
 /**
  * Dot
  *
  * This class provides a dot notation access and helper functions for
  * working with arrays of data. Inspired by Laravel Collection.
  */
-class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
+class IteratorDot implements ArrayAccess , Countable , IteratorAggregate , JsonSerializable
 {
     /**
      * The stored items
@@ -28,6 +30,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
      * @var array
      */
     protected $items = [];
+
     /**
      * Create a new Dot instance
      *
@@ -37,23 +40,25 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         $this->elements = $this->getArrayItems($items);
     }
+
     /**
      * Set a given key / value pair or pairs
      * if the key doesn't exist already
      *
      * @param array|int|string $keys
-     * @param mixed            $value
+     * @param mixed $value
      */
-    public function add($keys, $value = null)
+    public function add($keys , $value = null)
     {
         if (is_array($keys)) {
             foreach ($keys as $key => $value) {
-                $this->add($key, $value);
+                $this->add($key , $value);
             }
         } elseif (is_null($this->get($keys))) {
-            $this->set($keys, $value);
+            $this->set($keys , $value);
         }
     }
+
     /**
      * Return all the stored items
      *
@@ -63,6 +68,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         return $this->elements;
     }
+
     /**
      * Delete the contents of a given key or keys
      *
@@ -74,11 +80,12 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
             $this->elements = [];
             return;
         }
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         foreach ($keys as $key) {
-            $this->set($key, []);
+            $this->set($key , []);
         }
     }
+
     /**
      * Delete the given key or keys
      *
@@ -86,14 +93,14 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
      */
     public function delete($keys)
     {
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         foreach ($keys as $key) {
-            if ($this->exists($this->elements, $key)) {
+            if ($this->exists($this->elements , $key)) {
                 unset($this->elements[$key]);
                 continue;
             }
             $items = &$this->elements;
-            $segments = explode('.', $key);
+            $segments = explode('.' , $key);
             $lastSegment = array_pop($segments);
             foreach ($segments as $segment) {
                 if (!isset($items[$segment]) || !is_array($items[$segment])) {
@@ -104,27 +111,29 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
             unset($items[$lastSegment]);
         }
     }
+
     /**
      * Checks if the given key exists in the provided array.
      *
-     * @param  array      $array Array to validate
-     * @param  int|string $key   The key to look for
+     * @param  array $array Array to validate
+     * @param  int|string $key The key to look for
      *
      * @return bool
      */
-    protected function exists($array, $key)
+    protected function exists($array , $key)
     {
-        return array_key_exists($key, $array);
+        return array_key_exists($key , $array);
     }
+
     /**
      * Flatten an array with the given character as a key delimiter
      *
-     * @param  string     $delimiter
+     * @param  string $delimiter
      * @param  array|null $items
-     * @param  string     $prepend
+     * @param  string $prepend
      * @return array
      */
-    public function flatten($delimiter = '.', $items = null, $prepend = '')
+    public function flatten($delimiter = '.' , $items = null , $prepend = '')
     {
         $flatten = [];
         if (is_null($items)) {
@@ -133,42 +142,44 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         foreach ($items as $key => $value) {
             if (is_array($value) && !empty($value)) {
                 $flatten = array_merge(
-                    $flatten,
-                    $this->flatten($delimiter, $value, $prepend.$key.$delimiter)
+                    $flatten ,
+                    $this->flatten($delimiter , $value , $prepend . $key . $delimiter)
                 );
             } else {
-                $flatten[$prepend.$key] = $value;
+                $flatten[$prepend . $key] = $value;
             }
         }
         return $flatten;
     }
+
     /**
      * Return the value of a given key
      *
      * @param  int|string|null $key
-     * @param  mixed           $default
+     * @param  mixed $default
      * @return mixed
      */
-    public function get($key = null, $default = null)
+    public function get($key = null , $default = null)
     {
         if (is_null($key)) {
             return $this->elements;
         }
-        if ($this->exists($this->elements, $key)) {
+        if ($this->exists($this->elements , $key)) {
             return $this->elements[$key];
         }
-        if (strpos($key, '.') === false) {
+        if (strpos($key , '.') === false) {
             return $default;
         }
         $items = $this->elements;
-        foreach (explode('.', $key) as $segment) {
-            if (!is_array($items) || !$this->exists($items, $segment)) {
+        foreach (explode('.' , $key) as $segment) {
+            if (!is_array($items) || !$this->exists($items , $segment)) {
                 return $default;
             }
             $items = &$items[$segment];
         }
         return $items;
     }
+
     /**
      * Return the given items as an array
      *
@@ -182,8 +193,9 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         } elseif ($items instanceof self) {
             return $items->all();
         }
-        return (array) $items;
+        return (array)$items;
     }
+
     /**
      * Check if a given key or keys exists
      *
@@ -192,17 +204,17 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
      */
     public function has($keys)
     {
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         if (!$this->elements || $keys === []) {
             return false;
         }
         foreach ($keys as $key) {
             $items = $this->elements;
-            if ($this->exists($items, $key)) {
+            if ($this->exists($items , $key)) {
                 continue;
             }
-            foreach (explode('.', $key) as $segment) {
-                if (!is_array($items) || !$this->exists($items, $segment)) {
+            foreach (explode('.' , $key) as $segment) {
+                if (!is_array($items) || !$this->exists($items , $segment)) {
                     return false;
                 }
                 $items = $items[$segment];
@@ -210,6 +222,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         }
         return true;
     }
+
     /**
      * Check if a given key or keys are empty
      *
@@ -221,7 +234,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         if (is_null($keys)) {
             return empty($this->elements);
         }
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         foreach ($keys as $key) {
             if (!empty($this->get($key))) {
                 return false;
@@ -229,44 +242,47 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         }
         return true;
     }
+
     /**
      * Merge a given array or a Dot object with the given key
      * or with the whole Dot object
      *
      * @param array|string|self $key
-     * @param array             $value
+     * @param array $value
      */
-    public function merge($key, $value = null)
+    public function merge($key , $value = null)
     {
         if (is_array($key)) {
-            $this->elements = array_merge($this->elements, $key);
+            $this->elements = array_merge($this->elements , $key);
         } elseif (is_string($key)) {
-            $items = (array) $this->get($key);
-            $value = array_merge($items, $this->getArrayItems($value));
-            $this->set($key, $value);
+            $items = (array)$this->get($key);
+            $value = array_merge($items , $this->getArrayItems($value));
+            $this->set($key , $value);
         } elseif ($key instanceof self) {
-            $this->elements = array_merge($this->elements, $key->all());
+            $this->elements = array_merge($this->elements , $key->all());
         }
     }
+
     /**
      * Return the value of a given key and
      * delete the key
      *
      * @param  int|string|null $key
-     * @param  mixed           $default
+     * @param  mixed $default
      * @return mixed
      */
-    public function pull($key = null, $default = null)
+    public function pull($key = null , $default = null)
     {
         if (is_null($key)) {
             $value = $this->all();
             $this->clear();
             return $value;
         }
-        $value = $this->get($key, $default);
+        $value = $this->get($key , $default);
         $this->delete($key);
         return $value;
     }
+
     /**
      * Push a given value to the end of the array
      * in a given key
@@ -274,7 +290,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
      * @param mixed $key
      * @param mixed $value
      */
-    public function push($key, $value = null)
+    public function push($key , $value = null)
     {
         if (is_null($value)) {
             $this->elements[] = $key;
@@ -283,25 +299,26 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         $items = $this->get($key);
         if (is_array($items) || is_null($items)) {
             $items[] = $value;
-            $this->set($key, $items);
+            $this->set($key , $items);
         }
     }
+
     /**
      * Set a given key / value pair or pairs
      *
      * @param array|int|string $keys
-     * @param mixed            $value
+     * @param mixed $value
      */
-    public function set($keys, $value = null)
+    public function set($keys , $value = null)
     {
         if (is_array($keys)) {
             foreach ($keys as $key => $value) {
-                $this->set($key, $value);
+                $this->set($key , $value);
             }
             return;
         }
         $items = &$this->elements;
-        foreach (explode('.', $keys) as $key) {
+        foreach (explode('.' , $keys) as $key) {
             if (!isset($items[$key]) || !is_array($items[$key])) {
                 $items[$key] = [];
             }
@@ -309,6 +326,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         }
         $items = $value;
     }
+
     /**
      * Replace all items with a given array
      *
@@ -318,6 +336,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         $this->elements = $this->getArrayItems($items);
     }
+
     /**
      * Replace all items with a given array as a reference
      *
@@ -327,20 +346,21 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         $this->elements = &$items;
     }
+
     /**
      * Return the value of a given key or all the values as JSON
      *
-     * @param  mixed  $key
-     * @param  int    $options
+     * @param  mixed $key
+     * @param  int $options
      * @return string
      */
-    public function toJson($key = null, $options = 0)
+    public function toJson($key = null , $options = 0)
     {
         if (is_string($key)) {
-            return json_encode($this->get($key), $options);
+            return json_encode($this->get($key) , $options);
         }
         $options = $key === null ? 0 : $key;
-        return json_encode($this->elements, $options);
+        return json_encode($this->elements , $options);
     }
     /*
      * --------------------------------------------------------------
@@ -357,6 +377,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         return $this->has($key);
     }
+
     /**
      * Return the value of a given key
      *
@@ -367,20 +388,22 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     {
         return $this->get($key);
     }
+
     /**
      * Set a given value to the given key
      *
      * @param int|string|null $key
-     * @param mixed           $value
+     * @param mixed $value
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key , $value)
     {
         if (is_null($key)) {
             $this->elements[] = $value;
             return;
         }
-        $this->set($key, $value);
+        $this->set($key , $value);
     }
+
     /**
      * Delete the given key
      *
@@ -410,7 +433,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
      * IteratorAggregate interface
      * --------------------------------------------------------------
      */
-     /**
+    /**
      * Get an iterator for the stored items
      *
      * @return \ArrayIterator

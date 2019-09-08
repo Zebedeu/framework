@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
@@ -17,28 +17,31 @@
 
 namespace Ballybran\Core\REST;
 
- class Encodes extends  EncodeText{
+class Encodes extends EncodeText
+{
 
 
- public static function parse($arr){
+    public static function parse($arr)
+    {
         $dom = new \DOMDocument(self::$version);
-        self::recursiveParser($dom,$arr,$dom);
+        self::recursiveParser($dom , $arr , $dom);
         return $dom->saveXML();
     }
 
-    private static function recursiveParser(&$root, $arr, &$dom){
-         foreach($arr as $key => $item){
-            if(is_array($item) && !is_numeric($key)){
+    private static function recursiveParser(&$root , $arr , &$dom)
+    {
+        foreach ($arr as $key => $item) {
+            if (is_array($item) && !is_numeric($key)) {
                 $node = $dom->createElement($key);
-                self::recursiveParser($node,$item,$dom);
+                self::recursiveParser($node , $item , $dom);
                 return $root->appendChild($node);
-            }elseif(is_array($item) && is_numeric($key)){
-                return self::recursiveParser($root,$item,$dom);
-            }else{
-                $node = $dom->createElement($key, $item);
+            } elseif (is_array($item) && is_numeric($key)) {
+                return self::recursiveParser($root , $item , $dom);
+            } else {
+                $node = $dom->createElement($key , $item);
                 return $root->appendChild($node);
             }
         }
     }
 
- } 
+}

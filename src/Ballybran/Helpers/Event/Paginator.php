@@ -19,7 +19,7 @@ class Paginator extends DBconnection
     private $total_result;
 
 
-    public function __construct($dbType, $query, $limit)
+    public function __construct($dbType , $query , $limit)
     {
         $reg = new RegistryDatabase();
         $this->stmt = $reg->get($dbType);
@@ -36,8 +36,7 @@ class Paginator extends DBconnection
     {
 
 
-
-            $this->page =( isset( $_GET['page']) ) ? $_GET['page'] : 1;
+        $this->page = (isset($_GET['page'])) ? $_GET['page'] : 1;
 
         $this->starringlimit = ($this->page - 1) * $this->limit;
 

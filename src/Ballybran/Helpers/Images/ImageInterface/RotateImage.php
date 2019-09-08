@@ -11,7 +11,7 @@ namespace Ballybran\Helpers\Images\ImageInterface;
 
 interface RotateImage
 {
-    public function imageRotate(int $degree,   $colorHexType = '000000');
+    public function imageRotate(int $degree , $colorHexType = '000000');
 
 
 }

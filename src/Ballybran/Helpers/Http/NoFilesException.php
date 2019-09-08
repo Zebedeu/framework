@@ -9,7 +9,8 @@
 namespace Ballybran\Helpers\Http;
 
 
-class NoFilesException extends \RuntimeException{
+class NoFilesException extends \RuntimeException
+{
 
 
     public function __construct(string $d)

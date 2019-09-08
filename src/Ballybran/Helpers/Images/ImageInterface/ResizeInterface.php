@@ -16,13 +16,18 @@
 
 namespace Ballybran\Helpers\Images\ImageInterface;
 
-interface ResizeInterface {
+interface ResizeInterface
+{
 
     public function upload($file);
-    public function resizeImage($width, $height, $option = "auto");
-    public function imageRotate(int $degree,   $colorHexType = '000000');
-    public function save(string $savePath, int $imageQuality = 100);
-    public function text($text, $x = 0, $y = 0, $size = 5, $color = '000000');
+
+    public function resizeImage($width , $height , $option = "auto");
+
+    public function imageRotate(int $degree , $colorHexType = '000000');
+
+    public function save(string $savePath , int $imageQuality = 100);
+
+    public function text($text , $x = 0 , $y = 0 , $size = 5 , $color = '000000');
 
 
 }

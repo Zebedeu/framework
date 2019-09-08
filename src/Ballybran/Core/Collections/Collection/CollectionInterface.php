@@ -14,7 +14,9 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
+
 namespace Ballybran\Core\Collections\Collection;
+
 use Traversable;
 
 /**
@@ -34,26 +36,26 @@ interface CollectionInterface extends Traversable
      * @param $offset
      * @return mixed
      */
-    public function offsetExists( $offset);
+    public function offsetExists($offset);
 
     /**
      * @param $offset
      * @return mixed
      */
-    public function offsetGet( $offset);
+    public function offsetGet($offset);
 
     /**
      * @param $offset
      * @param $value
      * @return mixed
      */
-    public function offsetSet( $offset, $value);
+    public function offsetSet($offset , $value);
 
     /**
      * @param $offset
      * @return mixed
      */
-    public function offsetUnset( $offset);
+    public function offsetUnset($offset);
 
 //put your code here
 }

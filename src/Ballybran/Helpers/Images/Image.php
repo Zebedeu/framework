@@ -14,7 +14,8 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
-namespace  Ballybran\Helpers\Images;
+
+namespace Ballybran\Helpers\Images;
 
 
 

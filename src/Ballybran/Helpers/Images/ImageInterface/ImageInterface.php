@@ -16,9 +16,10 @@
 
 namespace Ballybran\Helpers\Images\ImageInterface;
 
-interface ImageInterface  extends ResizeInterface {
+interface ImageInterface extends ResizeInterface
+{
 
-    public function save($file, $quality);
+    public function save($file , $quality);
 
-    public function resize($width = 0, $heigth = 0, $default = '');
+    public function resize($width = 0 , $heigth = 0 , $default = '');
 }

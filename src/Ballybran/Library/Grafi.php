@@ -5,9 +5,9 @@ namespace Ballybran\Library;
 
 
 /**
- * 
+ *
  */
-class Grafi 
+class Grafi
 {
 
 

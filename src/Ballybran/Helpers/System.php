@@ -15,6 +15,7 @@
  */
 
 namespace Ballybran\Helpers;
+
 use Ballybran\Helpers\{
     Http\Http
 };
@@ -32,7 +33,7 @@ class System extends Http
      */
     private static function microtime_float()
     {
-        $time = explode(" ", microtime());
+        $time = explode(" " , microtime());
         foreach ($time as $item => $value) {
             return ((float)$item + (float)$value);
         }
@@ -43,7 +44,7 @@ class System extends Http
     /**
      * @return string
      */
-    public static function time_start() : string
+    public static function time_start(): string
     {
 
         $time_start = self::microtime_float();

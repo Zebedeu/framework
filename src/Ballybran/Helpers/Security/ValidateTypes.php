@@ -26,33 +26,33 @@ namespace Ballybran\Helpers\Security;
 class ValidateTypes
 {
 
-    public static function getSQLValueString( $theValue , $theType, $theDefinedValue = "", $theNotDefinedValue = "")
+    public static function getSQLValueString($theValue , $theType , $theDefinedValue = "" , $theNotDefinedValue = "")
     {
 
         $theValue = function_exists("htmlspecialchars") ? htmlspecialchars($theValue) : htmlspecialchars($theValue);
 
         switch ($theType) {
             case "string":
-                if(! is_string($theValue)) {
+                if (!is_string($theValue)) {
                     return null;
                 }
                 return strip_tags("$theValue");
                 break;
             case "email":
-                if(! is_string($theValue)) {
+                if (!is_string($theValue)) {
                     return null;
                 }
-            return filter_var($theValue, FILTER_VALIDATE_EMAIL);
-            break;
+                return filter_var($theValue , FILTER_VALIDATE_EMAIL);
+                break;
             case "long":
             case "int":
-                if(! is_numeric($theValue) ) {
-                   return null;
+                if (!is_numeric($theValue)) {
+                    return null;
                 }
-           return intval($theValue);
-            break;
+                return intval($theValue);
+                break;
             case "double":
-                if(! is_double($theValue)) {
+                if (!is_double($theValue)) {
                     return null;
                 }
                 return floatval($theValue);
@@ -62,22 +62,22 @@ class ValidateTypes
                 $theValue = ($theValue != "") ? "" . $theValue . "" : null;
                 break;
             case "url":
-                if(! is_string($theValue)) {
+                if (!is_string($theValue)) {
                     return null;
                 }
-                return filter_var($theValue,    FILTER_VALIDATE_URL);
+                return filter_var($theValue , FILTER_VALIDATE_URL);
                 break;
             case "domain":
-                if(! is_string($theValue)) {
+                if (!is_string($theValue)) {
                     return null;
                 }
-                return filter_var($theValue,    FILTER_VALIDATE_DOMAIN);
+                return filter_var($theValue , FILTER_VALIDATE_DOMAIN);
                 break;
             case "ip":
-                if(! is_double($theValue)) {
+                if (!is_double($theValue)) {
                     return null;
                 }
-                return filter_var($theValue,    FILTER_VALIDATE_IP);
+                return filter_var($theValue , FILTER_VALIDATE_IP);
                 break;
             case "defined":
                 $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
@@ -85,9 +85,6 @@ class ValidateTypes
         }
         return $theValue;
     }
-
-
-
 
 
 }

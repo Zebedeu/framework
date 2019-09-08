@@ -11,11 +11,11 @@ namespace Ballybran\Helpers\Firewall;
 class Lista
 {
 
-    public function rules( $rules)
+    public function rules($rules)
     {
         $_POST['nome'] = "bgsound";
         foreach ($_POST as $value) {
-            $check = str_replace($rules, '*', $value);
+            $check = str_replace($rules , '*' , $value);
             if ($value != $check) {
                 die('Cookie protect');
                 unset($value);
@@ -25,10 +25,10 @@ class Lista
     }
 
 
-    public function addList( $list, $value)
+    public function addList($list , $value)
     {
         return $list = $value;
-        
+
     }
 
 

@@ -19,17 +19,17 @@ namespace Ballybran\Database\Drives;
 
 use mysqli;
 
- class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
+class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
 {
 
     private $mysqli;
     private $limit;
-    private $table = array ();
+    private $table = array();
     private $result;
 
     public function __construct()
     {
-        $this->mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+        $this->mysqli = new mysqli(DB_HOST , DB_USER , DB_PASS , DB_NAME , DB_PORT);
         $this->conexao();
     }
 
@@ -43,23 +43,23 @@ use mysqli;
         }
     }
 
-    public function selectManager($sql, $array = array (), $fetchMode = MYSQLI_ASSOC)
+    public function selectManager($sql , $array = array() , $fetchMode = MYSQLI_ASSOC)
     {
 
-         if($result = mysqli_query($this->mysqli, $sql) ) {
-             while($row = mysqli_fetch_array($result) ) {
-                 return  $row;
-             }
-             mysqli_free_result($result);
+        if ($result = mysqli_query($this->mysqli , $sql)) {
+            while ($row = mysqli_fetch_array($result)) {
+                return $row;
+            }
+            mysqli_free_result($result);
 
-         }
+        }
 //
     }
 
-    public function insert($table,array $data)
+    public function insert($table , array $data)
     {
 
-        $fieldName = implode(',', array_keys($data));
+        $fieldName = implode(',' , array_keys($data));
         foreach (array_values($data) as $value) {
 
             isset($fieldva) ? $fieldva .= ',' : $fieldva = '';
@@ -69,7 +69,7 @@ use mysqli;
         $this->mysqli->close();
     }
 
-    public function update($table, $data, $where)
+    public function update($table , $data , $where)
     {
         $fieldetail = Null;
 
@@ -77,7 +77,7 @@ use mysqli;
             $fieldetail .= "`$key`=:$key,";
         }
 
-        $fieldetail = trim($fieldetail, ',');
+        $fieldetail = trim($fieldetail , ',');
         $this->mysqli->real_query("UPDATE $table SET $fieldetail WHERE $where");
 
         $this->mysqli->close();
@@ -90,12 +90,12 @@ use mysqli;
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array (), $fetchMode)
+    public function select($table , $fields = "*" , $where = ' ' , $order = '' , $limit = null , $offset = null , $array = array() , $fetchMode)
     {
         // TODO: Implement select() method.
     }
 
-    public function delete($table, $where, $limit)
+    public function delete($table , $where , $limit)
     {
         // TODO: Implement delete() method.
     }
@@ -105,39 +105,41 @@ use mysqli;
         // TODO: Implement get_Data_definitin() method.
     }
 
-    public function createTable(String $table, array $fileds)
+    public function createTable(String $table , array $fileds)
     {
         // TODO: Implement createTable() method.
     }
 
-     /**
-      * select
-      * @param string $sql An SQL string
-      * @param array $array Paramters to bind
-      * @param constant $fetchMode A PDO Fetch mode
-      * @return mixed
-      */
-     public function find( $table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array (), $fetchMode = \PDO::FETCH_ASSOC )
-     {
-         // TODO: Implement find() method.
-     }
+    /**
+     * select
+     * @param string $sql An SQL string
+     * @param array $array Paramters to bind
+     * @param constant $fetchMode A PDO Fetch mode
+     * @return mixed
+     */
+    public function find($table , $fields = null , $where = null , $order = null , $limit = null , $offset = null , $array = array() , $fetchMode = \PDO::FETCH_ASSOC)
+    {
+        // TODO: Implement find() method.
+    }
 
-     /**
-      * @param $table
-      * @param $data
-      * @param null $where
-      * @return mixed
-      */
-     public function save($table, $data, $where = null)
-     {
-         // TODO: Implement save() method.
-     }
-     public function Backup($localation){
+    /**
+     * @param $table
+     * @param $data
+     * @param null $where
+     * @return mixed
+     */
+    public function save($table , $data , $where = null)
+    {
+        // TODO: Implement save() method.
+    }
 
-     }
+    public function Backup($localation)
+    {
 
-     public function colum($table, $column, $varchar, $null)
-     {
-         // TODO: Implement colum() method.
-     }
- }
+    }
+
+    public function colum($table , $column , $varchar , $null)
+    {
+        // TODO: Implement colum() method.
+    }
+}

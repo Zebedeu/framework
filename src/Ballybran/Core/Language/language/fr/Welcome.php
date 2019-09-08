@@ -19,24 +19,24 @@
  */
 return array(
     // Index method
-    'welcome_text' => 'Bienvenue knut7 Framework',
+    'welcome_text' => 'Bienvenue knut7 Framework' ,
     'welcome_message' => '
 		Bonjour, bienvenue dans le contrôleur de bienvenue ! <br/>
-	',
+	' ,
     // Subpage method
-    'subpage_text' => 'Sous-page',
+    'subpage_text' => 'Sous-page' ,
     'subpage_message' => '
 		Bonjour, bienvenue dans le contrôleur de bienvenue et sa sous-page ! <br/>
-	',
+	' ,
     // Buttons
-    'open_subpage' => 'Ouvrir la sous-page',
-    'back_home' => 'Accueil',
-    'ficheiro' => 'A extensao do ficheiro nao foi permitido',
-    'inf_1' => 'What is the knut7?',
-    'r_1' => 'The knut7 is a framework created and maintained by Artphoweb to facilitate the rapid development of Ballybrans for any developer experienced or not!',
-    'inf_2' => 'Why Use!',
-    'r_2' => 'It is modular. Everything goes in the folder module. The great benefit in knut7 is because it be fully modular. You can install a module in MVC by the composer or even remove it without that there complications!!. The modules are fully substitutable!',
-    'inf_3' => 'News',
-    'r_3' => '........!',
-    'pic_empty' => 'Please, choose 1 file to be loaded!',
+    'open_subpage' => 'Ouvrir la sous-page' ,
+    'back_home' => 'Accueil' ,
+    'ficheiro' => 'A extensao do ficheiro nao foi permitido' ,
+    'inf_1' => 'What is the knut7?' ,
+    'r_1' => 'The knut7 is a framework created and maintained by Artphoweb to facilitate the rapid development of Ballybrans for any developer experienced or not!' ,
+    'inf_2' => 'Why Use!' ,
+    'r_2' => 'It is modular. Everything goes in the folder module. The great benefit in knut7 is because it be fully modular. You can install a module in MVC by the composer or even remove it without that there complications!!. The modules are fully substitutable!' ,
+    'inf_3' => 'News' ,
+    'r_3' => '........!' ,
+    'pic_empty' => 'Please, choose 1 file to be loaded!' ,
 );

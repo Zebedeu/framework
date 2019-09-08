@@ -27,34 +27,36 @@ class Value
 
     function __construct()
     {
-         $this->_teste = new ClassHtml();
+        $this->_teste = new ClassHtml();
 
 
     }
 
-    public function value($string){
-
-         $this->_value = $string;
-        return $this;
-    }
-    public function getValue(){
-
-        echo  "value=".$this->_value.">";
-        return $this;
-    }
-
-    public function openForm($action, $method = "get")
+    public function value($string)
     {
-        echo "<form action=" .$action ."  enctype='multipart/form-data' method='". $method ."' >";
+
+        $this->_value = $string;
+        return $this;
+    }
+
+    public function getValue()
+    {
+
+        echo "value=" . $this->_value . ">";
+        return $this;
+    }
+
+    public function openForm($action , $method = "get")
+    {
+        echo "<form action=" . $action . "  enctype='multipart/form-data' method='" . $method . "' >";
         return $this;
     }
 
     public function closeForm()
     {
-        echo "</form>" ;
+        echo "</form>";
 
     }
-
 
 
 }

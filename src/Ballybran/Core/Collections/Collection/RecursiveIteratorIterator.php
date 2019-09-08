@@ -22,7 +22,8 @@ namespace Ballybran\Core\Collections\Collection;
  *
  * @author artphotografie
  */
-class RecursiveIteratorIterator {
+class RecursiveIteratorIterator
+{
 
 
     //put your code here
@@ -32,12 +33,14 @@ class RecursiveIteratorIterator {
      */
     private $elements;
 
-    public function __construct(array $elements) {
+    public function __construct(array $elements)
+    {
 
         $this->elements = $elements;
     }
 
-    public function recursiveIteratorIterator() {
+    public function recursiveIteratorIterator()
+    {
 
         $obj = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->elements));
 

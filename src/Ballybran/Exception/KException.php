@@ -16,13 +16,15 @@
  */
 
 namespace Ballybran\Exception;
+
 use Ballybran\Helpers\Utility\Assets;
 
 
 class KException {
 
 
-public static function createPathInModelo() {
+public static function createPathInModelo()
+{
 
     PageError::Auth("Se estas a ver esta mensagem é sinal de que o directório padrão <code>Applications</code> não se encontra dentro do <code>Module</code>. Para corrigir este erro faça o seguinte: <br/><br/>1 . A pasta para a aplicação por padrão é o <code>Applications</code>. Se não existe ou se quer criar uma  <br/>
   pasta  nova para a tua aplicação então você pode cria uma pasta para a tua aplicação em <code>" . PV . "</code><br/>
@@ -33,54 +35,64 @@ public static function createPathInModelo() {
   <code>$<en>MY_PROJECT_NAME = 'MINHA APLICACÃO';</code><br/><br/> ");
 }
 
-public static function createController($classFile, $controllerPath) {
+public static function createController($classFile , $controllerPath)
+{
 
     PageError::Auth("3 . O Controllador <code>$classFile.php</code>  nao existe. Cria um novo directorio e nomeie por <code>Controllers</code>.<br/><br/> Em seguida dentro deste novo directório <code>Controllers</code> insere o controllador <code>$classFile.php</code>. E por ultimo,  cole o codigo de baixo no <code>$classFile.php</code><br/>
        exemplo:<br/><code>$controllerPath</code><br/>
         ----------<br/><code><? php <br/>class $classFile { <br/><br/>public function __construct()\n{<br/><br/># code...<br/>}<br/><br/>public function Index(){<br/><br/>}<br/>}</code><br/>----------");
 }
 
-public static function controller($classFile) {
+public static function controller($classFile)
+{
 
     PageError::Auth("<p class='btn btn-danger>' 3 . A class nao exise. Você deve criar em primeiro lugar uma classe em <code>$classFile</code>.'</p>' ");
 }
 
-public static function indexController($classFile) {
+public static function indexController($classFile)
+{
 
     PageError::Auth("<br/> 4 Você deve criar uma propriedade Index na tua classe <code>$classFile </code>");
 }
 
-public static function noPathView() {
+public static function noPathView()
+{
 
     PageError::Auth("<br/>Não foi criado A pasta View em <code>" . APP . "</code> ");
 }
 
-public static function noPathinView($viewPath) {
+public static function noPathinView($viewPath)
+{
 
     PageError::Auth("<br/> Não foi criado o <code>directório $viewPath</code>  dentro da pasta View em <code>" . APP . "</code> ");
 }
 
-public static function notHeader() {
+public static function notHeader()
+{
 
     PageError::no("<br/>Não foi criado o arquivo <code>header.phtml</code> na pasta View ");
 }
 
-public static function notFooter() {
+public static function notFooter()
+{
 
     PageError::no("<br/>Não foi criado o arquivo <code>footer.phtml</code> na pasta view");
 }
 
-public static function notIndex($viewPath) {
+public static function notIndex($viewPath)
+{
 
     PageError::no("<br/>Não foi criado o arquivo <code>Index.phtml</code> no <code>directório $viewPath em View</code>");
 }
 
-public static function notFound() {
+public static function notFound()
+{
 
     self::error();
 }
 
-public static function langNotLoad() {
+public static function langNotLoad()
+{
     echo "Could not load language file";
 }
 
@@ -88,14 +100,14 @@ public static function getMessage($message)
 {
     echo $message;
 }
-public static function error( $params = null){ ?>
+public static function error($params = null){ ?>
 
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <title>404</title>
-    <link rel="stylesheet" href="<?php echo URL; ?>Public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?php echo URL; ?>Public/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo URL; ?>Public/css/bootstrap-theme.min.css"/>
 
 </head>
@@ -118,7 +130,7 @@ public static function error( $params = null){ ?>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
 
-            <ul class="nav navbar-nav" >
+            <ul class="nav navbar-nav">
                 <!-- <li><a href="<?php /* echo URL; */ ?>index">HOME</a> </li> -->
 
             </ul>
@@ -134,11 +146,11 @@ public static function error( $params = null){ ?>
             <h1>404</h1>
 
 
-
-            <hr />
+            <hr/>
 
             <h3>The page you were looking for could not be found</h3>
-            <p>This could be the result of the page being removed, the name being changed or the page being temporarily unavailable</p>
+            <p>This could be the result of the page being removed, the name being changed or the page being temporarily
+                unavailable</p>
             <h3>Troubleshooting</h3>
 
             <ul>
@@ -150,22 +162,22 @@ public static function error( $params = null){ ?>
 
             <?php
 
-            if(is_array($params)) {
-                echo"<div class=\"well\">";
+            if (is_array($params)) {
+                echo "<div class=\"well\">";
                 foreach ($params as $k => $v) {
                     echo "<ul>";
-                    echo "<li>" .$k . " :::::::::::: ". $v . "</li>";
+                    echo "<li>" . $k . " :::::::::::: " . $v . "</li>";
                     echo "</ul>";
 
                 }
                 echo "</div>";
 
-            }else if($params){
-                echo"<div class=\"well\">";
+            } else if ($params) {
+                echo "<div class=\"well\">";
                 echo $params;
                 echo "</div>";
 
-            } else if(class_exists($params)){
+            } else if (class_exists($params)) {
 
             } ?>
 

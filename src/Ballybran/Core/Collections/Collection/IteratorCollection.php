@@ -18,7 +18,6 @@
 namespace Ballybran\Core\Collections\Collection;
 
 
-
 use Ballybran\Core\Variables\Variable;
 use Closure;
 use Phpml\Exception\InvalidArgumentException;
@@ -27,7 +26,8 @@ use Phpml\Exception\InvalidArgumentException;
  * Class IteratorCollection
  * @package Ballybran\Core\Collections\Collection
  */
-class IteratorCollection extends Variable implements \ArrayAccess {
+class IteratorCollection extends Variable implements \ArrayAccess
+{
 
     /**
      * @var array
@@ -44,12 +44,14 @@ class IteratorCollection extends Variable implements \ArrayAccess {
      * IteratorCollection constructor.
      * @param array $elements
      */
-    public function __construct(array $elements = array() ) {
+    public function __construct(array $elements = array())
+    {
 
         parent::__construct($elements);
 
         $this->elements = $elements;
     }
+
     protected function setElementsFromTrustedSource(array $elements)
     {
         $this->elements = $elements;
@@ -59,80 +61,96 @@ class IteratorCollection extends Variable implements \ArrayAccess {
     /**
      * @return array
      */
-    public function toArray() : array {
+    public function toArray(): array
+    {
         return $this->elements;
     }
 
     /**
      * @return \ArrayObject
      */
-    public function getIterator() {
+    public function getIterator()
+    {
 
         return new \ArrayObject($this->elements);
     }
 
-    public function count() {
+    public function count()
+    {
         return count($this->elements);
     }
 
-    public function current() {
+    public function current()
+    {
         return current($this->elements);
     }
 
-    public function contains($element) {
-        return in_array($element, $this->elements, true);
+    public function contains($element)
+    {
+        return in_array($element , $this->elements , true);
     }
 
     /**
      * @return mixed
      */
-    public function next() {
+    public function next()
+    {
         return next($this->elements);
     }
 
-    public function last() {
+    public function last()
+    {
         return end($this->elements);
     }
 
-    public function first() {
+    public function first()
+    {
         return reset($this->elements);
     }
 
-    public function key() {
+    public function key()
+    {
         return key($this->elements);
     }
 
-    public function valid() {
+    public function valid()
+    {
         // return isset($this->elements[$this->position]);
         return $this->offsetExists($this->elements);
 
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset , $value)
+    {
         if (!isset($offset)) {
-            return $this->set($offset, $value);
+            return $this->set($offset , $value);
         }
-        return $this->set($offset, $value);
+        return $this->set($offset , $value);
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         return $this->remove($offset);
     }
 
-    public function containsKey($key) {
-        return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
+    public function containsKey($key)
+    {
+        return isset($this->elements[$key]) || array_key_exists($key , $this->elements);
     }
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return $this->containsKey($offset);
     }
 
-    public function remove($key) : string {
-        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
+    public function remove($key): string
+    {
+        if (!isset($this->elements[$key]) && !array_key_exists($key , $this->elements)) {
             return null;
         } else {
             $removed = $this->elements[$key];
@@ -142,8 +160,9 @@ class IteratorCollection extends Variable implements \ArrayAccess {
         }
     }
 
-    public function removeEleme($element) {
-        $key = array_search($element, $this->elements, true);
+    public function removeEleme($element)
+    {
+        $key = array_search($element , $this->elements , true);
         if ($key == false) {
             return false;
         }
@@ -151,34 +170,40 @@ class IteratorCollection extends Variable implements \ArrayAccess {
         return true;
     }
 
-    public function add($value) {
+    public function add($value)
+    {
         $this->elements[] = $value;
 
         return $this;
     }
 
-    public function set($key, $value) {
+    public function set($key , $value)
+    {
         $this->elements[$key] = $value;
 
         return true;
     }
 
-    public function ksort() {
+    public function ksort()
+    {
 
         return ksort($this->elements);
     }
 
-    public function natSort() {
+    public function natSort()
+    {
         return natsort($this->elements);
     }
 
-    public function natcasesort() {
+    public function natcasesort()
+    {
         return natcasesort($this->elements);
     }
 
-    public function exists(Closure $p) {
+    public function exists(Closure $p)
+    {
         foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
+            if ($p($key , $element)) {
                 return true;
             }
         }
@@ -186,52 +211,57 @@ class IteratorCollection extends Variable implements \ArrayAccess {
     }
 
     /**
-    *@return int
-    * return the position of the  element
-    */
-    public function indexOf($element): Int {
-        return array_search($element, $this->elements);
+     * @return int
+     * return the position of the  element
+     */
+    public function indexOf($element): Int
+    {
+        return array_search($element , $this->elements);
     }
 
-    public function isEmpty() {
+    public function isEmpty()
+    {
         return empty($this->elements);
     }
 
-    public function getValues() {
+    public function getValues()
+    {
 
         return array_values($this->elements);
     }
 
-    public function getKey() {
+    public function getKey()
+    {
         return array_keys($this->elements);
     }
 
-    public function get($key) {
+    public function get($key)
+    {
         return isset($this->elements[$key]) ? $this->elements[$key] : null;
     }
 
 
-    public function slice($start, $end)
+    public function slice($start , $end)
     {
-        if($start < 0 || !is_int($start)) {
+        if ($start < 0 || !is_int($start)) {
             throw new InvalidArgumentException("Start must be a no-negative integer");
         }
 
-        if($end < 0 || !is_int($end)) {
+        if ($end < 0 || !is_int($end)) {
             throw new InvalidArgumentException("End must be a positive integer");
         }
 
-        if($start  > $end ) {
+        if ($start > $end) {
             throw new InvalidArgumentException("End must be geater than start");
         }
 
-        if($end  > $this->count() + 1 ) {
+        if ($end > $this->count() + 1) {
             throw new InvalidArgumentException("End must be less than the count of the items in the Collection");
         }
 
         $length = $end - $start + 1;
 
-        $subsetItems = array_slice($this->elements, $start, $length);
+        $subsetItems = array_slice($this->elements , $start , $length);
 
 
         return $this->setElementsFromTrustedSource($subsetItems);
@@ -240,7 +270,7 @@ class IteratorCollection extends Variable implements \ArrayAccess {
 
     public function reverse()
     {
-        $item =  array_reverse($this->elements);
+        $item = array_reverse($this->elements);
         return $this->setElementsFromTrustedSource($item);
 
     }

@@ -2,18 +2,21 @@
 
 namespace Ballybran\Core\REST;
 
-class EncodeContainer {
+class EncodeContainer
+{
 
-	private $encode;
-	public function __construct(EncodeText $encode)
-	{
-		$this->encode = $encode;
-	}
+    private $encode;
+
+    public function __construct(EncodeText $encode)
+    {
+        $this->encode = $encode;
+    }
 
 
-	public function getEnodeType($text) {
+    public function getEnodeType($text)
+    {
 
-		$this->encode->encodeXml($text);
-	}
+        $this->encode->encodeXml($text);
+    }
 
 }

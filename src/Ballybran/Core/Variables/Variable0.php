@@ -14,6 +14,7 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
+
 /**
  * Created by PhpStorm.
  * User: artphotografie
@@ -25,33 +26,39 @@ namespace Ballybran\Core\Variablesssss;
 
 use ArrayObject;
 
-class Variable extends ArrayObject {
+class Variable extends ArrayObject
+{
 
     private $___class = null;
 
-    public function __construct(array $variables = array()) {
+    public function __construct(array $variables = array())
+    {
         parent::__construct(
-                $variables, ArrayObject::ARRAY_AS_PROPS, 'ArrayIterator'
+            $variables , ArrayObject::ARRAY_AS_PROPS , 'ArrayIterator'
         );
 //        $this->importObj($user, $variables);
     }
 
-    public function __get($key) {
+    public function __get($key)
+    {
         return $this[$key];
     }
 
-    public function __set($key, $value) {
+    public function __set($key , $value)
+    {
         $this[$key] = $value;
     }
 
-    public function __call($key, $args) {
-        if (is_object($this->___class) && is_callable([$this->___class, $key])) {
-            return call_user_func_array([$this->___class, $key], $args);
+    public function __call($key , $args)
+    {
+        if (is_object($this->___class) && is_callable([$this->___class , $key])) {
+            return call_user_func_array([$this->___class , $key] , $args);
         }
-        return is_callable($c = $this->__get($key)) ? call_user_func_array($c, $args) : null;
+        return is_callable($c = $this->__get($key)) ? call_user_func_array($c , $args) : null;
     }
 
-    public function importObj($class = null, $array = []) {
+    public function importObj($class = null , $array = [])
+    {
         $this->___class = $class;
         if (count($array) > 0) {
             $this->import($array);
@@ -59,19 +66,22 @@ class Variable extends ArrayObject {
         return $this;
     }
 
-    public function import($input) {
+    public function import($input)
+    {
         $this->exchangeArray($input);
         return $this;
     }
 
-    public function export() {
+    public function export()
+    {
         return $this->objectToArray($this->getArrayCopy());
     }
 
-    public function objectToArray($object) {
+    public function objectToArray($object)
+    {
         $o = [];
         foreach ($object as $key => $value) {
-            $o[$key] = is_object($value) ? (array) $value : $value;
+            $o[$key] = is_object($value) ? (array)$value : $value;
         }
         return $o;
     }

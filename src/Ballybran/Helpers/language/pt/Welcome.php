@@ -19,29 +19,29 @@
  */
 return array(
     // Index method
-    'contri' => 'CONTRIBUTE',
-    'dow' => 'DOWLOADS',
-    'face' => 'FACEBOOK',
-    'welcome_text' => 'Bem-Vindo ao knut7 Framework',
+    'contri' => 'CONTRIBUTE' ,
+    'dow' => 'DOWLOADS' ,
+    'face' => 'FACEBOOK' ,
+    'welcome_text' => 'Bem-Vindo ao knut7 Framework' ,
     'welcome_message' => '
 		Olá, Seja bem vindo ao Controller de Boas Vindas! <br/>
-	',
-    'version'=> "A versão do teu PHP é  " . phpversion() . ". Por favor para rodar este aplicativo precisa atualize o PHP para uma versão PHP7.1 ou superior",
+	' ,
+    'version' => "A versão do teu PHP é  " . phpversion() . ". Por favor para rodar este aplicativo precisa atualize o PHP para uma versão PHP7.1 ou superior" ,
     // Subpage method
-    'subpage_text' => 'Subpagina',
+    'subpage_text' => 'Subpagina' ,
     'subpage_message' => '
 		Olá, Seja bem vindo ao Controller de Boas Vindas e Method da Subpagina! <br/>
-	',
+	' ,
     // Buttons
-    'open_subpage' => 'Open subpage',
-    'back_home' => 'Home',
-    'inf_1' => 'O que é a knut7?',
-    'r_1' => 'A knut7 é um framework criado e mantida pelo Artphoweb  para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!',
-    'inf_2' => 'Porque Usar!',
-    'r_2' => 'Ele é  modular. Tudo se passa na pasta módulo. O grande benefício no knut7 é pelo facto dele ser totalmente modular. Você pode instalar um módulo em MVC pelo composer ou ainda mesmo remove-lo sem que haja complicações!!. Os módulos são totalmente substituíveis.!',
-    'inf_3' => 'Novidades',
-    'r_3' => 'Why Use!',
-    'pic_empty' => 'Please, choose 1 file to be loaded!',
+    'open_subpage' => 'Open subpage' ,
+    'back_home' => 'Home' ,
+    'inf_1' => 'O que é a knut7?' ,
+    'r_1' => 'A knut7 é um framework criado e mantida pelo Artphoweb  para facilitar o rápido desenvolvimento de sistemas para qualquer desenvolvedor experiente ou não!!' ,
+    'inf_2' => 'Porque Usar!' ,
+    'r_2' => 'Ele é  modular. Tudo se passa na pasta módulo. O grande benefício no knut7 é pelo facto dele ser totalmente modular. Você pode instalar um módulo em MVC pelo composer ou ainda mesmo remove-lo sem que haja complicações!!. Os módulos são totalmente substituíveis.!' ,
+    'inf_3' => 'Novidades' ,
+    'r_3' => 'Why Use!' ,
+    'pic_empty' => 'Please, choose 1 file to be loaded!' ,
 );
 
-$_['u'] =  'welcome_text';
+$_['u'] = 'welcome_text';

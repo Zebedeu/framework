@@ -103,7 +103,7 @@ class FileSystem extends ImageProperties
                 $this->type = $_FILES['archive']['type'][$i];
                 $this->tmp = $_FILES['archive']['tmp_name'][$i];
 
-                $this->explode = explode('.', $this->name);
+                $this->explode = explode('.' , $this->name);
             }
         }
 
@@ -139,46 +139,59 @@ class FileSystem extends ImageProperties
 
     private function makePathDirIfUserExist()
     {
-        if (!file_exists(DIR_FILE.'Upload'.DS.Session::get('U_NAME').DS.$this->dir.DS)) {
-            mkdir(DIR_FILE.'Upload'.DS.Session::get('U_NAME').DS.$this->dir.DS, 0777, true);
+        if (!file_exists(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS , 0777 , true);
         }
     }
 
     private function makePathDirIfDefaultFileNotExist()
     {
-        if (!file_exists(DIR_FILE.'Upload'.DS.'Default'.DS.$this->dir.DS)) {
-            mkdir(DIR_FILE.'Upload'.DS.'Default'.DS.$this->dir.DS, 0777, true);
+        if (!file_exists(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS , 0777 , true);
         }
     }
 
     private function getObjectImage()
     {
         $this->image->upload($this->path);
-        $this->image->imageRotate($this->getDegree(), $this->getColor());
-        $this->image->resizeImage($this->getWidth(), $this->getHeight(), $this->getOption());
-        $this->image->save($this->path, $this->getQuality());
+        $this->image->imageRotate($this->getDegree() , $this->getColor());
+        $this->image->resizeImage($this->getWidth() , $this->getHeight() , $this->getOption());
+        $this->image->save($this->path , $this->getQuality());
     }
 
+    /**
+     * Move Upload File
+     * @return void
+     */
     private function moveUploadedFile()
     {
         if (empty($this->tmp)) {
             throw new NoFilesException('No uploaded files were found. Did you specify "enctype" in your &lt;form&gt; tag?');
         }
-        if (move_uploaded_file($this->tmp, $this->path)) {
-            $this->getObjectImage();
+        if (move_uploaded_file($this->tmp , $this->path)) {
+            echo $this->getObjectImage();
         }
     }
 
+    /**
+     * Make Defaukt Path
+     * @return string - upload archive
+     *
+     */
     private function makeDefaultPath(): String
     {
-        return $this->path = DIR_FILE.'Upload'.DS.'Default'.DS.$this->dir.DS;
+        return $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
     }
 
+    /**
+     * make Path Bay User Name
+     * @return string -
+     */
     private function makePathBayUserName(): String
     {
         $this->ext = end($this->explode);
-        $this->path = DIR_FILE.'Upload'.DS.Session::get('U_NAME').DS.$this->dir.DS;
-        $this->path .= basename($this->explode[0].time().'.'.$this->ext);
+        $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
+        $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
 
         return $this->path;
     }

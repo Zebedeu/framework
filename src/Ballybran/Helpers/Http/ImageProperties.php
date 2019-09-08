@@ -22,11 +22,10 @@ namespace Ballybran\Helpers\Http;
  * Class Uploads
  * @package Ballybran\Helpers
  */
- abstract class ImageProperties
+abstract class ImageProperties
 {
 
 
- 
     private $width;
     /**
      * @var
@@ -47,14 +46,14 @@ namespace Ballybran\Helpers\Http;
     /**
      * @var
      */
-    private $degree= 0;
+    private $degree = 0;
 
     private $color;
 
     /**
      * @return mixed
      */
-    public function getDegree() : int
+    public function getDegree(): int
     {
         return $this->degree;
     }
@@ -78,10 +77,11 @@ namespace Ballybran\Helpers\Http;
     /**
      * @param mixed $color
      */
-    public function setColor( $color =  "000000")
+    public function setColor($color = "000000")
     {
         $this->color = $color;
     }
+
     public function getWidth()
     {
         return $this->width;

@@ -26,22 +26,24 @@ class Rute
     //metodo que nos permite ingresar controladores con sus
     //respectivas rutas.
     private $_controladores = array();
+
     public function controladores($controlador)
     {
         $this->_controladores = $controlador;
         //llamada al metodo que hace el proceso de rutas
         self::submit();
     }
+
     //funcion o metodo que se ejecuta cada vez que se envia la peticion en la url
     public function submit()
     {
-        $uri   = isset($_GET["uri"]) ? $_GET["uri"] : "/"; //recupera la url del proyecto
-        $paths = explode("/", $uri); // divide la url en partes y forma un array
+        $uri = isset($_GET["uri"]) ? $_GET["uri"] : "/"; //recupera la url del proyecto
+        $paths = explode("/" , $uri); // divide la url en partes y forma un array
         // hacer consdicional para saber si esta en un
         //controllador o en la ruta principal
         if ($uri == "/") {
             //principal
-            $res = array_key_exists("/", $this->_controladores); // buscando si existe la ruta (/) en el array de _controladores
+            $res = array_key_exists("/" , $this->_controladores); // buscando si existe la ruta (/) en el array de _controladores
             if ($res != "" && $res == 1) {
                 // comprobando
                 foreach ($this->_controladores as $ruta => $controller) {
@@ -50,27 +52,27 @@ class Rute
                         $controlador = $controller; // asignamos a una variable el controlador
                     }
                 }
-                $this->getController("index", $controlador); // llamamos al metodo que nos recupera el controlador
+                $this->getController("index" , $controlador); // llamamos al metodo que nos recupera el controlador
             }
         } else {
             //controladores y metodos
-            echo "<b>Url:</b> ".$uri."<br><hr>";
+            echo "<b>Url:</b> " . $uri . "<br><hr>";
             $estado = false;
             foreach ($this->_controladores as $ruta => $cont) {
                 //echo "<br><b>Ruta:</b> ".$ruta."<br>";
-                if (trim($ruta, "/") != "") {
-                    $pos = strpos($uri, trim($ruta, "/"));
+                if (trim($ruta , "/") != "") {
+                    $pos = strpos($uri , trim($ruta , "/"));
 
                     if ($pos === false) {
                         //echo "<small style='color:red;'>no se encontro</small><br>";
                     } else {
                         //echo "<small style='color:green;'>se econtro </small><br>";
-                        $arrayParams  = array(); //array donde se guardaran los parametros de la web
-                        $estado       = true; // estado de ruta
-                        $controlador  = $cont;
-                        $metodo       = "";
-                        $cantidadRuta = count(explode("/", trim($ruta, "/")));
-                        $cantidad     = count($paths);
+                        $arrayParams = array(); //array donde se guardaran los parametros de la web
+                        $estado = true; // estado de ruta
+                        $controlador = $cont;
+                        $metodo = "";
+                        $cantidadRuta = count(explode("/" , trim($ruta , "/")));
+                        $cantidad = count($paths);
                         if ($cantidad > $cantidadRuta) {
                             $metodo = $paths[$cantidadRuta];
                             for ($i = 0; $i < count($paths); $i++) {
@@ -85,7 +87,7 @@ class Rute
                         /*if(count($paths) > 1){
                         $metodo = $paths[1];
                         }*/
-                        $this->getController($metodo, $controlador, $arrayParams);
+                        $this->getController($metodo , $controlador , $arrayParams);
 
                     }
                 }
@@ -98,7 +100,8 @@ class Rute
 
         }
     }
-    public function getController($metodo, $controlador, $params = null)
+
+    public function getController($metodo , $controlador , $params = null)
     {
         $metodoController = ""; // metodo
         // comprobamos si es index o no el metodo o funcion del controlador
@@ -116,7 +119,7 @@ class Rute
             // $clase = new WelcomeController();
             $ClaseTemp = new $controlador();
             //comprobamos si se puede llamar a la funcion o metodo de esa clase
-            if (is_callable(array($ClaseTemp, $metodoController))) {
+            if (is_callable(array($ClaseTemp , $metodoController))) {
                 //hacemos una llamada al metodo de esa clase
                 //Clase->index();
                 // $ClaseTemp->$metodoController();
@@ -127,7 +130,7 @@ class Rute
                         die("error en parametros");
                     }
                 } else {
-                    call_user_func_array(array($ClaseTemp, $metodoController), $params);
+                    call_user_func_array(array($ClaseTemp , $metodoController) , $params);
                 }
             } else {
                 die(" no existe el metodo");
@@ -137,10 +140,11 @@ class Rute
         }
 
     }
+
     public function incluirControlador($controlador)
     {
         // validando si existe el archivo o no
-        if (file_exists( "Module/Clinica/Controllers/" . $controlador . ".php")) {
+        if (file_exists("Module/Clinica/Controllers/" . $controlador . ".php")) {
             // si existe lo incluimos
             $c = include "Module/Clinica/Controllers/" . $controlador . ".php";
 

@@ -33,21 +33,25 @@ class FlashMessage
     {
     }
 
-    public static function sucess($suucsss) {
+    public static function sucess($suucsss)
+    {
 
         return $suucsss;
     }
 
-    public static function Warning($suucsss) {
+    public static function Warning($suucsss)
+    {
 
         return $suucsss;
     }
 
-    public static function display( $closure, $message) {
-        return call_user_func(array(self::class, $closure), $message);
+    public static function display($closure , $message)
+    {
+        return call_user_func(array(self::class , $closure) , $message);
     }
 
-    public function sendMessage() {
+    public function sendMessage()
+    {
 
 //        return  $this->display($this->sucess(), "Please!! data invaid");
     }

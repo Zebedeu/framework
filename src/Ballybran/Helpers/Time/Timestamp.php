@@ -46,53 +46,42 @@ class Timestamp
 
         if ($segundos <= 60) {
             echo " $segundos segundos agora<br/>";
-        }
-        //minutos
+        } //minutos
         elseif ($minutos <= 60) {
             if ($minutos == 1) {
                 echo "one minuto  e $segundos agora <br/>";
             } else {
                 echo "$minutos minutos agora<br/>";
             }
-        }
-
-        //horas
+        } //horas
         elseif ($horas <= 24) {
             if ($horas == 1) {
                 echo "uma hora agora e $minutos minutos e $segundos segundos<br/>";
             } else {
                 echo "$horas horas agora<br/>";
             }
-        }
-
-        // dias
+        } // dias
         elseif ($dia <= 7) {
             if ($dia == 1) {
                 echo 'um dia agora <br/>';
             } else {
                 echo "$dia dias agora<br/>";
             }
-        }
-
-        //semanas
+        } //semanas
         elseif ($semana <= 4) {
             if ($semana == 1) {
                 echo 'uma semana agora<br/>';
             } else {
                 echo "$semana semanas agora<br/>";
             }
-        }
-
-        //mes
+        } //mes
         elseif ($mes <= 12) {
             if ($mes == 1) {
                 echo 'um mes agora<br/>';
             } else {
                 echo "$mes meses agora<br/>";
             }
-        }
-
-        //semanas
+        } //semanas
         else {
             if ($ano == 1) {
                 echo 'um ano agora<br/>';
@@ -118,7 +107,7 @@ class Timestamp
         return self::inserir_tempo(self::$tempo_da_sessao);
     }
 
-    public static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false)
+    public static function distanceOfTimeInWords($fromTime , $toTime = 0 , $showLessThanAMinute = false)
     {
         $distanceInSeconds = round(abs($toTime - strtotime($fromTime)));
         $distanceInMinutes = round($distanceInSeconds / 60);
@@ -147,31 +136,31 @@ class Timestamp
             }
         }
         if ($distanceInMinutes < 45) {
-            return $distanceInMinutes.' minutes';
+            return $distanceInMinutes . ' minutes';
         }
         if ($distanceInMinutes < 90) {
             return 'about 1 hour';
         }
         if ($distanceInMinutes < 1440) {
-            return 'about '.round(floatval($distanceInMinutes) / 60.0).' hours';
+            return 'about ' . round(floatval($distanceInMinutes) / 60.0) . ' hours';
         }
         if ($distanceInMinutes < 2880) {
             return '1 day';
         }
         if ($distanceInMinutes < 43200) {
-            return 'about '.round(floatval($distanceInMinutes) / 1440).' days';
+            return 'about ' . round(floatval($distanceInMinutes) / 1440) . ' days';
         }
         if ($distanceInMinutes < 86400) {
             return 'about 1 month';
         }
         if ($distanceInMinutes < 525600) {
-            return round(floatval($distanceInMinutes) / 43200).' months';
+            return round(floatval($distanceInMinutes) / 43200) . ' months';
         }
         if ($distanceInMinutes < 1051199) {
             return 'about 1 year';
         }
 
-        return 'over '.round(floatval($distanceInMinutes) / 525600).' years';
+        return 'over ' . round(floatval($distanceInMinutes) / 525600) . ' years';
     }
 
     /**
@@ -194,9 +183,9 @@ class Timestamp
         $data_f = $data->format($format);
 
         // setlocale() used with strftime().
-        $my_locale = setlocale(LC_ALL, MY_LOCALE);
+        $my_locale = setlocale(LC_ALL , MY_LOCALE);
         if (MY_LOCALE == true) {
-            return $data_inicial = strftime('%d %B %Y', strtotime(trim($data_f)));
+            return $data_inicial = strftime('%d %B %Y' , strtotime(trim($data_f)));
         } else {
             return $data_f = $data->format($format);
         }

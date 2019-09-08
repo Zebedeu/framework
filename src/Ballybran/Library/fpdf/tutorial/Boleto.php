@@ -27,25 +27,27 @@ class Boleto extends FPDF
 {
 
     // Load data
-    function LoadData($file) {
+    function LoadData($file)
+    {
         // Read file lines
         $lines = file($file);
         $data = array();
         foreach ($lines as $line)
-            $data[] = explode(';', trim($line));
+            $data[] = explode(';' , trim($line));
         return $data;
     }
 
 // Simple table
-    function BasicTable($header, $data) {
+    function BasicTable($header , $data)
+    {
         // Header
         foreach ($data as $col)
-            $this->Cell(72, 7, $col, 1);
+            $this->Cell(72 , 7 , $col , 1);
         $this->Ln();
         // Data
         foreach ($header as $row) {
             foreach ($row as $col)
-                $this->Cell(72, 6, $col, 1);
+                $this->Cell(72 , 6 , $col , 1);
             $this->Ln();
         }
     }
@@ -53,10 +55,10 @@ class Boleto extends FPDF
 }
 
 $pdf = new Boleto('L');
-$header = array('Data de entrada   Data de saida', ' Item      ', 'Valor    ');
+$header = array('Data de entrada   Data de saida' , ' Item      ' , 'Valor    ');
 $data = $pdf->LoadData('countries.txt');
-$pdf->SetFont('Arial', '', 14);
+$pdf->SetFont('Arial' , '' , 14);
 $pdf->AddPage();
-$pdf->BasicTable($header, $data);
+$pdf->BasicTable($header , $data);
 $pdf->AddPage();
 $pdf->Output();

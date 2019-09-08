@@ -16,6 +16,7 @@
  *
  * @version   1.0.2
  */
+
 /**
  * @property  UserData propriedade gerada e usada para pegar dados do model
  */
@@ -24,21 +25,28 @@ namespace Ballybran\Core\View;
 
 use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
+use Ballybran\Library\Form;
+use Ballybran\Library\interfaceForm;
 
-class View extends RenderFiles implements ViewrInterface, \ArrayAccess
+class View extends RenderFiles implements ViewrInterface , \ArrayAccess
 {
     public $view;
     public $data = array();
     public $layout;
-    /**
-     * @param $Controller $this responsavel para pegar a pasta da View
-     * @param $view Index responsavel em pegar  os arquivos Index da pasta do Controller
-     */
     private $controllers;
+    public $form;
+    public $reg;
 
-    public function set($id)
+    public function __construct(interfaceForm $form = null)
     {
-        $this->data[] = \array_merge($this->data, $id);
+        $this->reg = \Ballybran\Helpers\Event\Registry::getInstance();
+
+        if ($this->form != null && $this->form instanceof $form) {
+            $this->form = $form;
+        } else {
+            $this->form = new Form();
+        }
+        $this->data;
     }
 
     /**
@@ -50,18 +58,19 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      *
      * @return string
      */
-    public function render(object $controller, String $view, array $data = null): string
+    public function render(object $controller , String $view , array $data = null): string
     {
         $this->dot = new IteratorDot($data);
 
-        $this->data[] = (null === $data) ? array() : $data;
+        $data = (null === $data) ? array() : $data;
         $this->view = $view;
-        $remove_namespace = explode('\\', get_class($controller));
+        $remove_namespace = explode('\\' , get_class($controller));
         $this->controllers = $remove_namespace[2];
-        extract($this->data);
+
+        extract($this->data = $data);
         ob_start();
         $this->isHeader();
-        include $this->file = DIR_FILE.'Views/'.$this->controllers.DS.$this->view.$this->ex;
+        include $this->file = DIR_FILE . 'Views/' . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
         if (null === $this->layout) {
             ob_end_flush();
@@ -77,7 +86,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     public function fetch($data = null)
     {
         ob_start();
-        $this->render($this->controllers, $this->view, $data);
+        $this->render($this->controllers , $this->view , $data);
 
         return ob_get_clean();
     }
@@ -87,10 +96,21 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return $this->data;
     }
 
+    /**
+     * @param $ Controller $ this responsible to get View's folder
+     *     * @param $ view Index responsible for getting Index files from the Controller folder
+     */
+
+    public function set($id)
+    {
+        $this->data[] = \array_merge($this->data , $id);
+
+    }
+
     protected function include_file($file)
     {
         $view = new View($file);
-        $view->render($this->controllers, $this->view, $this->data);
+        $view->render($this->controllers , $this->view , $this->data);
         $this->data[] = $view->get_data();
     }
 
@@ -112,7 +132,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     private function init(): bool
     {
         $this->isViewPath($this->controllers);
-        $this->isIndex($this->controllers, $this->view);
+        $this->isIndex($this->controllers , $this->view);
 
         return true;
     }
@@ -127,7 +147,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return $this->data[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset , $value)
     {
         $this->data[$offset] = $value;
     }

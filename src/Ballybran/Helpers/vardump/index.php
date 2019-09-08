@@ -23,9 +23,11 @@ namespace Ballybran\Helpers\vardump;
  * Time: 22:03
  */
 
-class Vardump {
+class Vardump
+{
 
-    public static function dump($var){
+    public static function dump($var)
+    {
         new Footer();
         foreach (func_get_args() as $var) {
             var_dump($var);

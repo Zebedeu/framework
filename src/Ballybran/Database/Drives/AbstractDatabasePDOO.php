@@ -16,6 +16,7 @@
  */
 
 namespace Ballybran\Database\Drives;
+
 use Ballybran\Database\DBconnection;
 use Ballybran\Helpers\vardump\Vardump;
 use PDO;
@@ -44,14 +45,14 @@ class AbstractDatabasePDOO
         try {
 
 
-            $this->_instances = new PDO("mysql:host=localhost;port=8889;dbname=apweb", "root",  "root"  );
+            $this->_instances = new PDO("mysql:host=localhost;port=8889;dbname=apweb" , "root" , "root");
 
             $attributes = array(
-                "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
-                "ORACLE_NULLS", "PERSISTENT", "SERVER_INFO", "SERVER_VERSION"
+                "AUTOCOMMIT" , "ERRMODE" , "CASE" , "CLIENT_VERSION" , "CONNECTION_STATUS" ,
+                "ORACLE_NULLS" , "PERSISTENT" , "SERVER_INFO" , "SERVER_VERSION"
             );
             foreach ($attributes as $value) {
-                $this->_instances->getAttribute(constant("PDO::ATTR_$value")). "\n";
+                $this->_instances->getAttribute(constant("PDO::ATTR_$value")) . "\n";
             }
         } catch (\PDOException $exc) {
             throw new \Exception('Failed to connect to database. Reason: ' . $exc->getMessage());
@@ -60,23 +61,27 @@ class AbstractDatabasePDOO
         return $this->_instances;
     }
 
-    public function select($select) {
+    public function select($select)
+    {
 
 
-      $stmt =  $this->_instances->prepare("SELECT * FROM $select");
-      $stmt->execute();
-      $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $stmt = $this->_instances->prepare("SELECT * FROM $select");
+        $stmt->execute();
+        $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 
-         return $this;
+        return $this;
 
     }
 
-    public function table($table) {
+    public function table($table)
+    {
         echo "$table";
         return $this;
     }
-    public function Backup($localation){
+
+    public function Backup($localation)
+    {
 
     }
 

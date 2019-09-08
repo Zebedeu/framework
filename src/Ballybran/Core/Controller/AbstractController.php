@@ -17,6 +17,7 @@
  *
  * @version   1.0.2
  */
+
 /**
  * @property
  */
@@ -52,6 +53,7 @@ class AbstractController extends Model implements AbstractControllerInterface
      */
     protected $option;
     public $language;
+    protected $reg;
 
     /**
      * AbstractController constructor.
@@ -66,5 +68,7 @@ class AbstractController extends Model implements AbstractControllerInterface
 
         $this->view = new View();
         $this->language = new Language();
+        $this->reg = \Ballybran\Helpers\Event\Registry::getInstance();
+
     }
 }

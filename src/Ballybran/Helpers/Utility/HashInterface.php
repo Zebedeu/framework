@@ -21,21 +21,22 @@ interface HashInterface
 {
 
     public function __construct();
-    public static function Create(String $algo, String $data, String $salt) : String;
+
+    public static function Create(String $algo , String $data , String $salt): String;
 
     /**
      * @param int $length lenght for tokon
      * @return string
      */
-    public static function token(int $length = 1, $constant = SECURE_AUTH_SALT) : String;
+    public static function token(int $length = 1 , $constant = SECURE_AUTH_SALT): String;
 
-    public static function hash_password($string, $const = PASSWORD_DEFAULT, $cust = null);
-    
+    public static function hash_password($string , $const = PASSWORD_DEFAULT , $cust = null);
+
     /**
-    * @param string $string  for password
-    * @param string $hash password
-    * @return bool
-    */
-    public static  function verify_password( string $string, string $hash) : bool;
+     * @param string $string for password
+     * @param string $hash password
+     * @return bool
+     */
+    public static function verify_password(string $string , string $hash): bool;
 
 }

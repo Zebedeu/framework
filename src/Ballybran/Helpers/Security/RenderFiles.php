@@ -18,6 +18,7 @@
 
 namespace Ballybran\Helpers\Security;
 
+use Closure;
 use Ballybran\Exception\KException;
 
 class RenderFiles
@@ -38,30 +39,32 @@ class RenderFiles
             return KException::noPathView();
         }
 
-        if (!is_readable(VIEW.$controller) || !file_exists(VIEW.$controller)) {
+        if (!is_readable(VIEW . $controller) || !file_exists(VIEW . $controller)) {
             return KException::noPathinView($controller);
         }
     }
 
     protected function isHeader()
     {
-        if (!file_exists(VIEW.$this->header.$this->ex) || !is_readable(VIEW.$this->header.$this->ex)) {
+        if (!file_exists(VIEW . $this->header . $this->ex) || !is_readable(VIEW . $this->header . $this->ex)) {
             return KException::notHeader();
         }
-        require_once VIEW.$this->header.$this->ex;
+        require_once VIEW . $this->header . $this->ex;
     }
 
     protected function isFooter()
     {
-        if (!is_readable(VIEW.$this->footer.$this->ex) || !file_exists(VIEW.$this->footer.$this->ex)) {
+        if (!is_readable(VIEW . $this->footer . $this->ex) || !file_exists(VIEW . $this->footer . $this->ex)) {
             return KException::notFooter();
         }
 
-        require_once VIEW.$this->footer.$this->ex;
+        require_once VIEW . $this->footer . $this->ex;
     }
 
-    protected function isIndex($controller, $view)
+    public function isIndex($controller , $view, $data = null)
     {
-        require_once VIEW.$controller.DS.$view.$this->ex;
+        $data = new \Ballybran\Core\Variables\Variable($data);
+        require_once VIEW . $controller . DS . $view . $this->ex;
+
     }
 }

@@ -1,5 +1,6 @@
 <?php
 /**
+ *
  * KNUT7 K7F (http://framework.artphoweb.com/)
  * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
@@ -11,9 +12,10 @@
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- * @version   1.0.2
+ * @version   1.0.7
+ *
+ *
  */
-
 
 
 namespace Ballybran\Helpers\Log;
@@ -49,7 +51,7 @@ class Logger
     /**
      * @var
      */
-    private  $newRow;
+    private $newRow;
 
 
     /**
@@ -58,28 +60,27 @@ class Logger
      * @param string $endRow
      * @param int $writeFlag
      */
-    public function __construct($file, $endRow="\n", $writeFlag=FILE_APPEND) {
+    public function __construct($file , $endRow = "\n" , $writeFlag = FILE_APPEND)
+    {
 
-        $this->file= DIR_LOGS. $file;
+        $this->file = DIR_LOGS . $file;
 
-        $this->writeFlag=$writeFlag;
+        $this->writeFlag = $writeFlag;
 
-        $this->endRow=$endRow;
+        $this->endRow = $endRow;
         $this->newRow;
 
     }
-
 
     /**
      * @param string $content
      * @param int $newLines
      * @return $this
      */
-    public function AddRow($content="", $newLines=1){
+    public function AddRow($content = "" , $newLines = 1)
+    {
 
-        for ( $m=0; $m < $newLines; $m++ )
-        {
-
+        for ($m = 0; $m < $newLines; $m++) {
             $this->newRow .= $this->endRow;
 
         }
@@ -93,23 +94,21 @@ class Logger
     /**
      * @return $this
      */
-    public function Commit(){
+    public function Commit()
+    {
+        file_put_contents($this->file , $this->content , $this->writeFlag);
 
-         file_put_contents($this->file,$this->content,$this->writeFlag);
-
-         return $this;
-
+        return $this;
     }
 
     /**
      * @return $this
      */
-    public function getCommit(){
+    public function getCommit()
+    {
+        file_get_contents($this->file , $this->content);
 
-         file_get_contents($this->file,$this->content);
-
-         return $this;
-
+        return $this;
 
     }
 
@@ -117,11 +116,11 @@ class Logger
      * @param $error
      * @param int $newLines
      */
-    public function LogError($error, $newLines=1)
+    public function LogError($error , $newLines = 1)
     {
-        if ($error!=""){
+        if ($error != "") {
 
-            $this->AddRow($error,$newLines);
+            $this->AddRow($error , $newLines);
             echo $error;
 
         }

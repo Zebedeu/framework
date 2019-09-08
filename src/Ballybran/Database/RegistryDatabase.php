@@ -42,7 +42,7 @@ class RegistryDatabase extends \ArrayObject
     {
         $instance = self::getInstance();
         if (!$instance->offsetExists($name)) {
-            throw new \RuntimeException(sprintf('Class %s Not Found', $name));
+            throw new \RuntimeException(sprintf('Class %s Not Found' , $name));
         }
 
         return $instance->offsetGet($name);
@@ -64,10 +64,10 @@ class RegistryDatabase extends \ArrayObject
      * @param $name
      * @param $value
      */
-    public function set($name, $value)
+    public function set($name , $value)
     {
         $instance = self::getInstance();
-        $instance->offsetSet($name, $value);
+        $instance->offsetSet($name , $value);
     }
 
     /**
@@ -94,12 +94,12 @@ class RegistryDatabase extends \ArrayObject
     /**
      * RegistryDatabase constructor.
      *
-     * @param array  $input
-     * @param int    $flags
+     * @param array $input
+     * @param int $flags
      * @param string $iterator_class
      */
-    public function __construct($input = [], $flags = 0, $iterator_class = 'ArrayIterator')
+    public function __construct($input = [] , $flags = 0 , $iterator_class = 'ArrayIterator')
     {
-        parent::__construct($input, $flags);
+        parent::__construct($input , $flags);
     }
 }

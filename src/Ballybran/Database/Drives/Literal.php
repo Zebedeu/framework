@@ -33,7 +33,8 @@ class Literal
      */
 
 
-    function __construct( $value ) {
+    function __construct($value)
+    {
 
         $this->value = $value;
 
@@ -44,7 +45,8 @@ class Literal
      *
      * @return string
      */
-    function __toString() {
+    function __toString()
+    {
 
         return $this->value;
 

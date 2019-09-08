@@ -57,10 +57,10 @@ class Model
      */
     public function getLoadModel()
     {
-        $className = str_replace('\\', '/', get_class($this));
-        $classModel = str_replace('Controllers', 'Models', $className);
-        $this->modelClass = $classModel.'Model';
-        $path = 'Module/'.$this->modelClass.'.php';
+        $className = str_replace('\\' , '/' , get_class($this));
+        $classModel = str_replace('Controllers' , 'Models' , $className);
+        $this->modelClass = $classModel . 'Model';
+        $path = 'Module/' . $this->modelClass . '.php';
 
         if (file_exists($path) || is_readable($path)) {
             require_once $path;
@@ -72,11 +72,12 @@ class Model
     /**
      * @return mixed
      */
-    private function dbObject()
+    public function dbObject()
     {
         $registry = RegistryDatabase::getInstance();
         $this->obj = $registry->get(TYPE);
-        $className = str_replace('/', '\\', $this->modelClass);
+        $className = str_replace('/' , '\\' , $this->modelClass);
+
         $this->model = new $className($this->obj);
 
         return $this->model;

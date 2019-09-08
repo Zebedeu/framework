@@ -17,7 +17,8 @@
 
 namespace Ballybran\Helpers\Http;
 
-interface UploadSystem {
+interface UploadSystem
+{
 
     public function file($dir = null);
 

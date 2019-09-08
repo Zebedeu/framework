@@ -17,9 +17,10 @@
 
 namespace Ballybran\Core\Language;
 
-interface LanguageInterface {
+interface LanguageInterface
+{
 
-    public function set($key, $value);
+    public function set($key , $value);
 
     public function get($key);
 

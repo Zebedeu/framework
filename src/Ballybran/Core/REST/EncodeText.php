@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * KNUT7 K7F (http://framework.artphoweb.com/)
@@ -17,41 +17,44 @@
 
 namespace Ballybran\Core\REST;
 
- class EncodeText{
+class EncodeText
+{
 
- protected static $version = '1.0';
- private static $encode = 'UTF-8';
- 	
-    
+    protected static $version = '1.0';
+    private static $encode = 'UTF-8';
 
- 	public static function encodeHtml($responseData) :string {
-    
+
+    public static function encodeHtml($responseData): string
+    {
+
         $htmlResponse = "<table border='1'>";
-        foreach($responseData as $key=>$value) {
-                $htmlResponse .= "<tr><td>". $key. "</td><td>". $value. "</td></tr>";
+        foreach ($responseData as $key => $value) {
+            $htmlResponse .= "<tr><td>" . $key . "</td><td>" . $value . "</td></tr>";
         }
         $htmlResponse .= "</table>";
-        return $htmlResponse;       
+        return $htmlResponse;
     }
-    
-    public static function  encodeJson($responseData) : string {
+
+    public static function encodeJson($responseData): string
+    {
         $jsonResponse = json_encode($responseData);
-        return $jsonResponse;       
+        return $jsonResponse;
     }
-    
-    public static function encodeXml($responseData) : string {
+
+    public static function encodeXml($responseData): string
+    {
         // creating object of SimpleXMLElement
         $version = self::$version;
         $encoding = self::$encode;
         $xml = new \SimpleXMLElement("<?xml version='$version' encoding='$encoding' ?>\n<mobile></mobile>");
 
-            foreach($responseData as $key=>$variable) {
+        foreach ($responseData as $key => $variable) {
 
             foreach ($variable as $k => $v) {
-            $xml->addChild($k, $v);
+                $xml->addChild($k , $v);
             }
 
-            }
+        }
         return $xml->asXML();
     }
- } 
+}

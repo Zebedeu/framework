@@ -29,13 +29,13 @@ class Hook
 
     public static function Header(String $header = '')
     {
-        return self::$header = header('Location: '.URL.$header);
+        return self::$header = header('Location: ' . URL . $header);
         exit();
     }
 
-    public static function redirect($url, $status = 302)
+    public static function redirect($url , $status = 302)
     {
-        return self::$header = header('Location:'.str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
+        return self::$header = header('Location:' . str_replace(array('&amp;' , "\n" , "\r") , array('&' , '' , '') , $url) , true , $status);
         exit();
     }
 }

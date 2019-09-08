@@ -24,38 +24,38 @@ use Ballybran\Helpers\Language;
  * Class Routes
  * @package Ballybran\Helpers\Routing
  */
-class Routes 
+class Routes
 {
-       private  $path, $callable, $routes=[], $matches = [], $params = [];
+    private $path , $callable , $routes = [] , $matches = [] , $params = [];
     protected $_controllerPath = PV . APP . DS . "Controllers/";
 
 
-    public function __construct($path, $callable)
+    public function __construct($path , $callable)
     {
-        $this->path = trim($path, '/');
+        $this->path = trim($path , '/');
         $this->callable = $callable;
 
     }
 
 
-    public function with($params, $regex)
+    public function with($params , $regex)
     {
-        $this->params[$params] = str_replace('(', '(?:', $regex);
+        $this->params[$params] = str_replace('(' , '(?:' , $regex);
         return $this;
     }
 
     public function match($url)
     {
-        $url = trim($url, '/');
-        $path = preg_replace_callback('#:([\w]+)#',[$this, 'paramMatch'], $this->path);
+        $url = trim($url , '/');
+        $path = preg_replace_callback('#:([\w]+)#' , [$this , 'paramMatch'] , $this->path);
         $regex = "#^$path$#i";
 
-        if( !preg_match($regex, $url, $matches)) {
+        if (!preg_match($regex , $url , $matches)) {
 
             return false;
         }
-            array_shift($matches);
-            $this->matches = $matches;
+        array_shift($matches);
+        $this->matches = $matches;
 
         return true;
     }
@@ -63,19 +63,19 @@ class Routes
 
     public function paramMatch($match)
     {
-       if (isset($this->params[$match[1]])) {
-          return '('.$this->params[$match[1]] . ')';
-       }
+        if (isset($this->params[$match[1]])) {
+            return '(' . $this->params[$match[1]] . ')';
+        }
 
-       return '([^/]+)';
+        return '([^/]+)';
     }
 
 
     public function call()
     {
-        if(is_string($this->callable)) {
+        if (is_string($this->callable)) {
 
-            $params = explode('#', $this->callable);
+            $params = explode('#' , $this->callable);
 
             $file = $this->_controllerPath . $params[0] . '.php';
 
@@ -84,44 +84,44 @@ class Routes
             $controller = $this->_controllerPath . $params[0] . '.php';
 
 
-            $namespace = str_replace('/', '\\', $this->_controllerPath);
-            $className = $namespace .  $params[0];
+            $namespace = str_replace('/' , '\\' , $this->_controllerPath);
+            $className = $namespace . $params[0];
 
             $controller = new $className;
             // $controller = new $controller();
 
-            return call_user_func_array([$controller, $params[1]], $this->matches);
+            return call_user_func_array([$controller , $params[1]] , $this->matches);
 
-        }else {
+        } else {
 
-                return call_user_func_array($this->callable, $this->matches);
+            return call_user_func_array($this->callable , $this->matches);
 
         }
-    
+
     }
 
-     public function getUrl($params)
+    public function getUrl($params)
     {
-      $path = $this->path;
+        $path = $this->path;
 
-      foreach ($params as $key => $value) {
-        $path  = str_replace(":$key", $value, $path);
+        foreach ($params as $key => $value) {
+            $path = str_replace(":$key" , $value , $path);
 
-      }
-      return $path;
+        }
+        return $path;
     }
 
 
+    public static function route()
+    {
 
-    public static function route() {
-
-        if( phpversion() > 7.0  ) {
+        if (phpversion() > 7.0) {
             $bootstrap = new Bootstrap();
             $bootstrap->init();
-        }else {
+        } else {
             $lang = new Language();
             $lang->Load('welcome');
-             KException::error("<p class='btn btn-warning'>".$lang->get("version")."</p>");
+            KException::error("<p class='btn btn-warning'>" . $lang->get("version") . "</p>");
         }
 
     }
