@@ -15,7 +15,8 @@
  */
 
 use \Ballybran\Helpers\Event\FlashMessage;
-use PHPUnit\Framework\TestCase  as PHPUnit;
+use PHPUnit\Framework\TestCase as PHPUnit;
+
 class FlashMessageTest extends PHPUnit
 {
 
@@ -24,30 +25,32 @@ class FlashMessageTest extends PHPUnit
 
     protected function setUp()
     {
-        $this->registry =  \Ballybran\Helpers\Event\Registry::getInstance();
+        $this->registry = \Ballybran\Helpers\Event\Registry::getInstance();
     }
 
-    public function testDisplayMessageWarnning() {
+    public function testDisplayMessageWarnning()
+    {
 
-      $callback =   FlashMessage::display("Warning", "Please!! data invaid");
+        $callback = FlashMessage::display("Warning" , "Please!! data invaid");
 
-        $this->assertEquals("Please!! data invaid", $callback);
+        $this->assertEquals("Please!! data invaid" , $callback);
 
     }
 
-    public function testDisplayMessageSucess() {
+    public function testDisplayMessageSucess()
+    {
 
-        $callback =   FlashMessage::display("sucess", "win!! data is valid");
+        $callback = FlashMessage::display("sucess" , "win!! data is valid");
 
-        $this->assertEquals("win!! data is valid", $callback);
+        $this->assertEquals("win!! data is valid" , $callback);
 
     }
 
     public function testRegistryMessage()
     {
-       $veriry = $this->registry->set("sucess", str);
+        $veriry = $this->registry->set("sucess" , str);
 
-       $this->assertTrue($this->registry->isValid("sucess"));
+        $this->assertTrue($this->registry->isValid("sucess"));
     }
 
 }

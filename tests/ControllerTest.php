@@ -19,32 +19,36 @@ use Ballybran\Helpers\Utility\Hash;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
 
-class ControllerTest extends PHPUnit {
+class ControllerTest extends PHPUnit
+{
 
     private $objController;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->objController = new \Ballybran\Core\Controller\AbstractController();
 
     }
 
-    public function testIfControllerIsInstanciOf(){
+    public function testIfControllerIsInstanciOf()
+    {
 
 
-       $this->assertInstanceOf(AbstractControllerInterface::class, $this->objController);
+        $this->assertInstanceOf(AbstractControllerInterface::class , $this->objController);
     }
 
     public function testClassInstance()
     {
 
-        $this->assertInstanceOf('\Ballybran\Core\Model\Model', $this->objController);
+        $this->assertInstanceOf('\Ballybran\Core\Model\Model' , $this->objController);
 
     }
 
-    public function testCreateHashCript(){
+    public function testCreateHashCript()
+    {
 
         $string = "test1234";
-        $hash = Hash::Create(ALGO, $string, HASH_KEY);
+        $hash = Hash::Create(ALGO , $string , HASH_KEY);
 
         $this->assertNotFalse($hash);
 

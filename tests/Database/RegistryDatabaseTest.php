@@ -31,30 +31,33 @@ class RegistryDatabaseTest extends PHPUnit
 
     }
 
-    public function testRegistryIsSingleton() {
+    public function testRegistryIsSingleton()
+    {
 
-        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase', $this->registry );
+        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase' , $this->registry);
         $this->returnSelf();
 
     }
 
     public function testIfGetInstanceReturnInstance()
     {
-        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase', $this->registry );
+        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase' , $this->registry);
 
         $this->returnCallback($this->registry->getInstance());
     }
 
-    public function testIRegistryClassValid() {
+    public function testIRegistryClassValid()
+    {
 
-        $this->registry->set("PDO", str );
+        $this->registry->set("PDO" , str);
         $this->assertTrue($this->registry->isRegistered("PDO"));
 
     }
 
-    public function testIunRegistryClassValid() {
+    public function testIunRegistryClassValid()
+    {
 
-        $this->registry->set("PDO", str);
+        $this->registry->set("PDO" , str);
 
         $this->assertNull($this->registry->unRegistered("PDO"));
     }

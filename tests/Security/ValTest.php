@@ -27,6 +27,7 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class ValTest extends PHPUnit
 {
     private $val;
+
     public function setUp()
     {
         $this->val = new Val();
@@ -34,20 +35,20 @@ class ValTest extends PHPUnit
 
     public function testValMaxLength()
     {
-        $max = $this->val->maxlength("IT IS A TEST", 12);
+        $max = $this->val->maxlength("IT IS A TEST" , 12);
         $val = strlen("IT IS A TEST") > 12;
 
 
-        $this->assertEquals($val, $max);
+        $this->assertEquals($val , $max);
 
     }
 
     public function testValMinLength()
     {
-        $max = $this->val->minlength("IT IS A TEST", 12);
+        $max = $this->val->minlength("IT IS A TEST" , 12);
         $val = strlen("IT IS A TESTES") < 12;
 
-        $this->assertEquals($val, $max);
+        $this->assertEquals($val , $max);
 
     }
 
@@ -57,7 +58,7 @@ class ValTest extends PHPUnit
         $max = $this->val->digit('1');
         $val = strlen("IT IS A TESTES") < 12;
 
-        $this->assertEquals($val, $max);
+        $this->assertEquals($val , $max);
 
     }
 }
