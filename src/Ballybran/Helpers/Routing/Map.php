@@ -16,14 +16,15 @@
 
 namespace Ballybran\Helpers\Routing;
 
-use Ballybran\Helpers\Routing\Routes;
+use Ballybran\Core\Http\RestUtilities;
+use Ballybran\Exception\KException;
 use Ballybran\Helpers\vardump\Vardump;
 
 /**
  * Class Map
  * @package Ballybran\Helpers\Routing
  */
-class Map
+class Map extends Bootstrap
 {
     private $url , $callable , $routes = [] , $nameRoute;
 
@@ -31,7 +32,7 @@ class Map
     public function __construct()
     {
 
-        $url = $_GET['url'] ?? "index";
+        $url = $_GET['url'] ?? "/";
         $this->url = $url;
     }
 
@@ -52,13 +53,13 @@ class Map
 
     public function add($path , $callable , $name , $method)
     {
-
         $route = new Routes($path , $callable);
         $this->routes[$method][] = $route;
 
-        if (is_string($callable) && $name = null) {
+        if (is_string($callable) && $name === null) {
 
             $name = $callable;
+
         }
         if ($name) {
             $this->nameRoute[$name] = $route;
@@ -82,7 +83,8 @@ class Map
             }
         }
 
-        throw new \Exception("No  matching routes" , 1);
+            RestUtilities::sendResponse(200);
+            KException::notFound();
 
     }
 

@@ -48,6 +48,7 @@ class Routes
     {
         $url = trim($url , '/');
         $path = preg_replace_callback('#:([\w]+)#' , [$this , 'paramMatch'] , $this->path);
+
         $regex = "#^$path$#i";
 
         if (!preg_match($regex , $url , $matches)) {
@@ -61,7 +62,7 @@ class Routes
     }
 
 
-    public function paramMatch($match)
+    private function paramMatch($match)
     {
         if (isset($this->params[$match[1]])) {
             return '(' . $this->params[$match[1]] . ')';
@@ -71,32 +72,33 @@ class Routes
     }
 
 
-    public function call()
+     function call()
     {
-        if (is_string($this->callable)) {
 
-            $params = explode('#' , $this->callable);
+            if (is_string($this->callable)) {
 
-            $file = $this->_controllerPath . $params[0] . '.php';
+                $params = explode('#' , $this->callable);
 
-            require_once($file);
+                $file = $this->_controllerPath . $params[0] . '.php';
 
-            $controller = $this->_controllerPath . $params[0] . '.php';
+                require_once($file);
+
+                $controller = $this->_controllerPath . $params[0] . '.php';
 
 
-            $namespace = str_replace('/' , '\\' , $this->_controllerPath);
-            $className = $namespace . $params[0];
+                $namespace = str_replace('/' , '\\' , $this->_controllerPath);
+                $className = $namespace . $params[0];
 
-            $controller = new $className;
-            // $controller = new $controller();
+                $controller = new $className;
+                // $controller = new $controller();
 
-            return call_user_func_array([$controller , $params[1]] , $this->matches);
+                return call_user_func_array([$controller , $params[1]] , $this->matches);
 
-        } else {
+            } else {
 
-            return call_user_func_array($this->callable , $this->matches);
+                return call_user_func_array($this->callable , $this->matches);
 
-        }
+            }
 
     }
 

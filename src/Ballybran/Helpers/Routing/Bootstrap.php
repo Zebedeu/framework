@@ -19,19 +19,23 @@
 
 namespace Ballybran\Helpers\Routing;
 
+use Ballybran\Core\Http\RestRequest;
+use Ballybran\Core\Http\RestUtilities;
 use Ballybran\Exception\KException;
+use Ballybran\Helpers\Language;
 
 /**
  * Class Bootstrap.
  */
-final class Bootstrap
+class Bootstrap extends RestRequest
 {
-    private $_url = null;
     private $_controller;
     public $_controllerPath = PV . APP . DS . 'Controllers/';
     private $_modelPath = 'Models';
     private $_errorFile = 'Error.php';
     private $_defaultFile = 'Index.php';
+
+
 
     /**
      * Starts the Bootstrap.
@@ -41,7 +45,7 @@ final class Bootstrap
     public function init(): bool
     {
         // Sets the protected $_url
-        $this->_getUrl();
+        $this->getUri();
 
         // Load the default Controller if no URL is set
         // eg: Visit http://localhost it loads Default Controller
@@ -108,16 +112,7 @@ final class Bootstrap
         $this->_defaultFile = trim($path , '/');
     }
 
-    /**
-     * Fetches the $_GET from 'url'.
-     */
-    private function _getUrl()
-    {
-        $url = $_GET['url'] ?? 'index';
-        $url = rtrim($url , '/');
-//        $url = filter_var($url, FILTER_SANITIZE_URL);
-        $this->_url = explode('/' , $url);
-    }
+
 
     /**
      * This loads if there is no GET parameter passed.
@@ -148,7 +143,7 @@ final class Bootstrap
         $namespace = str_replace('/' , '\\' , APP . '/Controllers/');
         $className = $namespace . $this->_url[0];
 
-        $this->_controller = new $className();
+        $this->_controller = new $className( );
 
         return true;
     }
@@ -200,9 +195,23 @@ final class Bootstrap
             default:
 //                $this->_controller->index();
                 $this->_controller->index();
-
                 break;
         }
+
+    }
+
+    public static function route()
+    {
+
+        if (phpversion() > 7.0) {
+            $bootstrap = new self();
+            $bootstrap->init();
+        } else {
+            $lang = new Language();
+            $lang->Load('welcome');
+            KException::error("<p class='btn btn-warning'>" . $lang->get("version") . "</p>");
+        }
+
     }
 
     /**
@@ -212,8 +221,8 @@ final class Bootstrap
      */
     private function _error()
     {
+        RestUtilities::sendResponse(404);
         KException::notFound();
-
         exit;
     }
 }
