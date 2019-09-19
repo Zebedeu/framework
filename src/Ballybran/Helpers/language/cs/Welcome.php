@@ -19,23 +19,23 @@
  */
 return array(
     // Index method
-    'welcome_text' => 'Vítejte knut7 Framework' ,
+    'welcome_text' => 'Vítejte knut7 Framework',
     'welcome_message' => '
 		Dobrý den, vítá Vás úvodní kontroler! <br/>
-	' ,
+	',
     // Subpage method
-    'subpage_text' => 'Podstránka' ,
+    'subpage_text' => 'Podstránka',
     'subpage_message' => '
 		Dobrý den, vítá Vás úvodní kontroler a metoda podstránka! <br/>
-	' ,
+	',
     // Buttons
-    'open_subpage' => 'Otevřít podstránku' ,
-    'back_home' => 'Domů' ,
-    'inf_1' => 'What is the knut7?' ,
-    'r_1' => 'The knut7 is a framework created and maintained by Artphoweb to facilitate the rapid development of Ballybrans for any developer experienced or not!' ,
-    'inf_2' => 'Why Use!' ,
-    'r_2' => 'It is modular. Everything goes in the folder module. The great benefit in knut7 is because it be fully modular. You can install a module in MVC by the composer or even remove it without that there complications!!. The modules are fully substitutable!' ,
-    'inf_3' => 'News' ,
-    'r_3' => '........!' ,
-    'pic_empty' => 'Please, choose 1 file to be loaded!' ,
+    'open_subpage' => 'Otevřít podstránku',
+    'back_home' => 'Domů',
+    'inf_1' => 'What is the knut7?',
+    'r_1' => 'The knut7 is a framework created and maintained by Artphoweb to facilitate the rapid development of Ballybrans for any developer experienced or not!',
+    'inf_2' => 'Why Use!',
+    'r_2' => 'It is modular. Everything goes in the folder module. The great benefit in knut7 is because it be fully modular. You can install a module in MVC by the composer or even remove it without that there complications!!. The modules are fully substitutable!',
+    'inf_3' => 'News',
+    'r_3' => '........!',
+    'pic_empty' => 'Please, choose 1 file to be loaded!',
 );

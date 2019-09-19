@@ -39,7 +39,7 @@ class Database
     {
 
         // required for safety
-        $pdo->setAttribute(\PDO::ATTR_ERRMODE , \PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->pdo = $pdo;
 
     }
@@ -56,12 +56,12 @@ class Database
      * @param array $args
      * @return Result|Row|null
      */
-    function __call($name , $args)
+    function __call($name, $args)
     {
 
-        array_unshift($args , $name);
+        array_unshift($args, $name);
 
-        return call_user_func_array(array($this , 'table') , $args);
+        return call_user_func_array(array($this, 'table'), $args);
 
     }
 
@@ -73,15 +73,15 @@ class Database
      * @param int|null $id
      * @return Result|Row|null
      */
-    function table($name , $id = null)
+    function table($name, $id = null)
     {
 
         // ignore List suffix
-        $name = preg_replace('/List$/' , '' , $name);
+        $name = preg_replace('/List$/', '', $name);
 
         if ($id !== null) {
 
-            $result = $this->createResult($this , $name);
+            $result = $this->createResult($this, $name);
 
             if (!is_array($id)) {
 
@@ -95,7 +95,7 @@ class Database
 
         }
 
-        return $this->createResult($this , $name);
+        return $this->createResult($this, $name);
 
     }
 
@@ -110,10 +110,10 @@ class Database
      * @param Result|null $result
      * @return Row
      */
-    function createRow($name , $properties = array() , $result = null)
+    function createRow($name, $properties = array(), $result = null)
     {
 
-        return new Row($this , $name , $properties , $result);
+        return new Row($this, $name, $properties, $result);
 
     }
 
@@ -125,10 +125,10 @@ class Database
      * @param string $name
      * @return Result
      */
-    function createResult($parent , $name)
+    function createResult($parent, $name)
     {
 
-        return new Result($parent , $name);
+        return new Result($parent, $name);
 
     }
 
@@ -241,7 +241,7 @@ class Database
      * @param string|array $key
      * @return $this
      */
-    function setPrimary($table , $key)
+    function setPrimary($table, $key)
     {
 
         $this->primary[$table] = $key;
@@ -252,7 +252,7 @@ class Database
 
             foreach ($key as $k) {
 
-                $this->setRequired($table , $k);
+                $this->setRequired($table, $k);
 
             }
 
@@ -273,7 +273,7 @@ class Database
      * @param string $name
      * @return string
      */
-    function getReference($table , $name)
+    function getReference($table, $name)
     {
 
         if (isset($this->references[$table][$name])) {
@@ -294,7 +294,7 @@ class Database
      * @param string $key
      * @return $this
      */
-    function setReference($table , $name , $key)
+    function setReference($table, $name, $key)
     {
 
         $this->references[$table][$name] = $key;
@@ -314,7 +314,7 @@ class Database
      * @param string $name
      * @return string
      */
-    function getBackReference($table , $name)
+    function getBackReference($table, $name)
     {
 
         if (isset($this->backReferences[$table][$name])) {
@@ -335,7 +335,7 @@ class Database
      * @param string $key
      * @return $this
      */
-    function setBackReference($table , $name , $key)
+    function setBackReference($table, $name, $key)
     {
 
         $this->backReferences[$table][$name] = $key;
@@ -364,7 +364,7 @@ class Database
      * @param string $table
      * @return $this
      */
-    function setAlias($alias , $table)
+    function setAlias($alias, $table)
     {
 
         $this->aliases[$alias] = $table;
@@ -380,7 +380,7 @@ class Database
      * @param string $column
      * @return bool
      */
-    function isRequired($table , $column)
+    function isRequired($table, $column)
     {
 
         return isset($this->required[$table][$column]);
@@ -409,7 +409,7 @@ class Database
      * @param string $column
      * @return $this
      */
-    function setRequired($table , $column)
+    function setRequired($table, $column)
     {
 
         $this->required[$table][$column] = true;
@@ -452,7 +452,7 @@ class Database
      * @param string $sequence
      * @return $this
      */
-    function setSequence($table , $sequence)
+    function setSequence($table, $sequence)
     {
 
         $this->sequences[$table] = $sequence;
@@ -472,7 +472,7 @@ class Database
 
         if (is_callable($this->rewrite)) {
 
-            return call_user_func($this->rewrite , $table);
+            return call_user_func($this->rewrite, $table);
 
         }
 
@@ -541,19 +541,19 @@ class Database
      * @param array $params
      * @return \PDOStatement
      */
-    function select($table , $options = array())
+    function select($table, $options = array())
     {
 
         $options = array_merge(array(
 
-            'expr' => null ,
-            'where' => array() ,
-            'orderBy' => array() ,
-            'limitCount' => null ,
-            'limitOffset' => null ,
+            'expr' => null,
+            'where' => array(),
+            'orderBy' => array(),
+            'limitCount' => null,
+            'limitOffset' => null,
             'params' => array()
 
-        ) , $options);
+        ), $options);
 
         $query = "SELECT ";
 
@@ -563,7 +563,7 @@ class Database
 
         } else if (is_array($options['expr'])) {
 
-            $query .= implode(", " , $options['expr']);
+            $query .= implode(", ", $options['expr']);
 
         } else {
 
@@ -574,9 +574,9 @@ class Database
         $table = $this->rewriteTable($table);
         $query .= " FROM " . $this->quoteIdentifier($table);
 
-        $query .= $this->getSuffix($options['where'] , $options['orderBy'] , $options['limitCount'] , $options['limitOffset']);
+        $query .= $this->getSuffix($options['where'], $options['orderBy'], $options['limitCount'], $options['limitOffset']);
 
-        $this->onQuery($query , $options['params']);
+        $this->onQuery($query, $options['params']);
 
         $statement = $this->prepare($query);
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -605,7 +605,7 @@ class Database
      * @param string|null $method
      * @return \PDOStatement|null
      */
-    function insert($table , $rows , $method = null)
+    function insert($table, $rows, $method = null)
     {
 
         if (empty($rows)) return;
@@ -613,15 +613,15 @@ class Database
 
         if ($method === 'prepared') {
 
-            return $this->insertPrepared($table , $rows);
+            return $this->insertPrepared($table, $rows);
 
         } else if ($method === 'batch') {
 
-            return $this->insertBatch($table , $rows);
+            return $this->insertBatch($table, $rows);
 
         } else {
 
-            return $this->insertDefault($table , $rows);
+            return $this->insertDefault($table, $rows);
 
         }
 
@@ -634,14 +634,14 @@ class Database
      * @param array $rows
      * @return \PDOStatement|null
      */
-    protected function insertPrepared($table , $rows)
+    protected function insertPrepared($table, $rows)
     {
 
         $columns = $this->getColumns($rows);
         if (empty($columns)) return;
 
-        $query = $this->insertHead($table , $columns);
-        $query .= "( ?" . str_repeat(", ?" , count($columns) - 1) . " )";
+        $query = $this->insertHead($table, $columns);
+        $query .= "( ?" . str_repeat(", ?", count($columns) - 1) . " )";
 
         $statement = $this->prepare($query);
 
@@ -656,7 +656,7 @@ class Database
 
             }
 
-            $this->onQuery($query , $values);
+            $this->onQuery($query, $values);
 
             $statement->execute($values);
 
@@ -673,15 +673,15 @@ class Database
      * @param array $rows
      * @return \PDOStatement|null
      */
-    protected function insertBatch($table , $rows)
+    protected function insertBatch($table, $rows)
     {
 
         $columns = $this->getColumns($rows);
         if (empty($columns)) return;
 
-        $query = $this->insertHead($table , $columns);
-        $lists = $this->valueLists($rows , $columns);
-        $query .= implode(", " , $lists);
+        $query = $this->insertHead($table, $columns);
+        $lists = $this->valueLists($rows, $columns);
+        $query .= implode(", ", $lists);
 
         $this->onQuery($query);
 
@@ -699,14 +699,14 @@ class Database
      * @param array $rows
      * @return \PDOStatement|null
      */
-    protected function insertDefault($table , $rows)
+    protected function insertDefault($table, $rows)
     {
 
         $columns = $this->getColumns($rows);
         if (empty($columns)) return;
 
-        $query = $this->insertHead($table , $columns);
-        $lists = $this->valueLists($rows , $columns);
+        $query = $this->insertHead($table, $columns);
+        $lists = $this->valueLists($rows, $columns);
 
         foreach ($lists as $list) {
 
@@ -730,13 +730,13 @@ class Database
      * @param array $columns
      * @return string
      */
-    protected function insertHead($table , $columns)
+    protected function insertHead($table, $columns)
     {
 
-        $quotedColumns = array_map(array($this , 'quoteIdentifier') , $columns);
+        $quotedColumns = array_map(array($this, 'quoteIdentifier'), $columns);
         $table = $this->rewriteTable($table);
         $query = "INSERT INTO " . $this->quoteIdentifier($table);
-        $query .= " ( " . implode(", " , $quotedColumns) . " ) VALUES ";
+        $query .= " ( " . implode(", ", $quotedColumns) . " ) VALUES ";
 
         return $query;
 
@@ -774,7 +774,7 @@ class Database
      * @param array $columns
      * @return array
      */
-    protected function valueLists($rows , $columns)
+    protected function valueLists($rows, $columns)
     {
 
         $lists = array();
@@ -789,7 +789,7 @@ class Database
 
             }
 
-            $lists[] = "( " . implode(", " , $values) . " )";
+            $lists[] = "( " . implode(", ", $values) . " )";
 
         }
 
@@ -808,7 +808,7 @@ class Database
      * @param array $params
      * @return null|\PDOStatement
      */
-    function update($table , $data , $where = array() , $params = array())
+    function update($table, $data, $where = array(), $params = array())
     {
 
         if (empty($data)) return;
@@ -822,14 +822,14 @@ class Database
         }
 
         if (!is_array($where)) $where = array($where);
-        if (!is_array($params)) $params = array_slice(func_get_args() , 3);
+        if (!is_array($params)) $params = array_slice(func_get_args(), 3);
 
         $table = $this->rewriteTable($table);
         $query = "UPDATE " . $this->quoteIdentifier($table);
-        $query .= " SET " . implode(", " , $set);
+        $query .= " SET " . implode(", ", $set);
         $query .= $this->getSuffix($where);
 
-        $this->onQuery($query , $params);
+        $this->onQuery($query, $params);
 
         $statement = $this->prepare($query);
         $statement->execute($params);
@@ -848,17 +848,17 @@ class Database
      * @param array $params
      * @return \PDOStatement
      */
-    function delete($table , $where = array() , $params = array())
+    function delete($table, $where = array(), $params = array())
     {
 
         if (!is_array($where)) $where = array($where);
-        if (!is_array($params)) $params = array_slice(func_get_args() , 2);
+        if (!is_array($params)) $params = array_slice(func_get_args(), 2);
 
         $table = $this->rewriteTable($table);
         $query = "DELETE FROM " . $this->quoteIdentifier($table);
         $query .= $this->getSuffix($where);
 
-        $this->onQuery($query , $params);
+        $this->onQuery($query, $params);
 
         $statement = $this->prepare($query);
         $statement->execute($params);
@@ -878,20 +878,20 @@ class Database
      * @param int|null $limitOffset
      * @return string
      */
-    function getSuffix($where , $orderBy = array() , $limitCount = null , $limitOffset = null)
+    function getSuffix($where, $orderBy = array(), $limitCount = null, $limitOffset = null)
     {
 
         $suffix = "";
 
         if (!empty($where)) {
 
-            $suffix .= " WHERE " . implode(" AND " , $where);
+            $suffix .= " WHERE " . implode(" AND ", $where);
 
         }
 
         if (!empty($orderBy)) {
 
-            $suffix .= " ORDER BY " . implode(", " , $orderBy);
+            $suffix .= " ORDER BY " . implode(", ", $orderBy);
 
         }
 
@@ -921,7 +921,7 @@ class Database
      * @param bool $not
      * @return string
      */
-    function is($column , $value , $not = false)
+    function is($column, $value, $not = false)
     {
 
         $bang = $not ? "!" : "";
@@ -979,7 +979,7 @@ class Database
 
             if (!empty($values)) {
 
-                $clauses[] = $column . $not . " IN ( " . implode(", " , $values) . " )";
+                $clauses[] = $column . $not . " IN ( " . implode(", ", $values) . " )";
 
             }
 
@@ -989,7 +989,7 @@ class Database
 
             }
 
-            return implode($or , $clauses);
+            return implode($or, $clauses);
 
         }
 
@@ -1006,10 +1006,10 @@ class Database
      * @param string|array $value
      * @return string
      */
-    function isNot($column , $value)
+    function isNot($column, $value)
     {
 
-        return $this->is($column , $value , true);
+        return $this->is($column, $value, true);
 
     }
 
@@ -1050,7 +1050,7 @@ class Database
 
         if (is_float($value)) {
 
-            return "'" . sprintf("%F" , $value) . "'";
+            return "'" . sprintf("%F", $value) . "'";
 
         }
 
@@ -1096,16 +1096,16 @@ class Database
 
         if (empty($delimiter)) return $identifier;
 
-        $identifier = explode("." , $identifier);
+        $identifier = explode(".", $identifier);
 
         $identifier = array_map(
             function ($part) use ($delimiter) {
-                return $delimiter . str_replace($delimiter , $delimiter . $delimiter , $part) . $delimiter;
-            } ,
+                return $delimiter . str_replace($delimiter, $delimiter . $delimiter, $part) . $delimiter;
+            },
             $identifier
         );
 
-        return implode("." , $identifier);
+        return implode(".", $identifier);
 
     }
 
@@ -1130,12 +1130,12 @@ class Database
      * @param string $query
      * @param array $params
      */
-    function onQuery($query , $params = array())
+    function onQuery($query, $params = array())
     {
 
         if (is_callable($this->queryCallback)) {
 
-            call_user_func($this->queryCallback , $query , $params);
+            call_user_func($this->queryCallback, $query, $params);
 
         }
 

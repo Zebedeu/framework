@@ -15,7 +15,7 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Core\REST;
+namespace Ballybran\Core\Http;
 
 class EncodeText
 {
@@ -51,7 +51,7 @@ class EncodeText
         foreach ($responseData as $key => $variable) {
 
             foreach ($variable as $k => $v) {
-                $xml->addChild($k , $v);
+                $xml->addChild($k, $v);
             }
 
         }

@@ -41,7 +41,7 @@ class Resize implements ResizeInterface
     private function openImage($file)
     {
         //*** get extendsion
-        $extension = strtolower(strrchr($file , '.'));
+        $extension = strtolower(strrchr($file, '.'));
 
         switch ($extension) {
             case '.jpg':
@@ -64,26 +64,26 @@ class Resize implements ResizeInterface
         return $img;
     }
 
-    public function resizeImage($width , $height , $option = "auto")
+    public function resizeImage($width, $height, $option = "auto")
     {
-        $optionaArray = $this->getDimensions($width , $height , strtolower($option));
+        $optionaArray = $this->getDimensions($width, $height, strtolower($option));
 
         // *** Get optional witdth and height - based on option
         $optionalWidth = $optionaArray['optionalWidth'];
         $optionalHeight = $optionaArray['optionalHeight'];
 
-        $this->imageResized = imagecreatetruecolor($optionalWidth , $optionalHeight);
+        $this->imageResized = imagecreatetruecolor($optionalWidth, $optionalHeight);
 
         // ***  Resample - create image canvas of x, y size
 
-        imagecopyresampled($this->imageResized , $this->image , 0 , 0 , 0 , 0 , $optionalWidth , $optionalHeight , $this->width , $this->height);
+        imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optionalWidth, $optionalHeight, $this->width, $this->height);
 
         if ($option == 'crop') {
-            $this->crop($optionalWidth , $optionalHeight , $width , $height);
+            $this->crop($optionalWidth, $optionalHeight, $width, $height);
         }
     }
 
-    private function getDimensions($new_width , $new_height , $option)
+    private function getDimensions($new_width, $new_height, $option)
     {
         $optionalWidth = "";
         $optionalHeight = "";
@@ -102,25 +102,25 @@ class Resize implements ResizeInterface
                 $optionalHeight = $this->getSizeByFixedWidth($new_width);
                 break;
             case 'auto':
-                $optionaArray = $this->getSizeByAuto($new_width , $new_height);
+                $optionaArray = $this->getSizeByAuto($new_width, $new_height);
                 $optionalWidth = $optionaArray['optionalWidth'];
                 $optionalHeight = $optionaArray['optionalHeight'];
                 break;
             case 'crop':
-                $optionaArray = $this->getOptionalCrop($new_width , $new_height);
+                $optionaArray = $this->getOptionalCrop($new_width, $new_height);
                 $optionalWidth = $optionaArray['optionalWidth'];
                 $optionalHeight = $optionaArray['optionalHeight'];
                 break;
             case 'perfil':
-                $optionaArray = $this->getOptionalPerfil($new_width , $new_height);
+                $optionaArray = $this->getOptionalPerfil($new_width, $new_height);
                 $optionalWidth = $optionaArray['optionalWidth'];
                 $optionalHeight = $optionaArray['optionalHeight'];
         }
 
-        return array('optionalWidth' => $optionalWidth , 'optionalHeight' => $optionalHeight);
+        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
     }
 
-    private function getOptionalPerfil($new_width , $new_height)
+    private function getOptionalPerfil($new_width, $new_height)
     {
         $heightRatio = $new_height;
         $widthRatio = $new_width;
@@ -131,7 +131,7 @@ class Resize implements ResizeInterface
         $optionalRatio = $widthRatio;
         $optionalHeight = $optionalRatio;
         $optionalWidth = $heightRatio;
-        return array('optionalWidth' => $optionalWidth , 'optionalHeight' => $optionalHeight);
+        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
 
     }
 
@@ -149,7 +149,7 @@ class Resize implements ResizeInterface
         return $new_height;
     }
 
-    private function getSizeByAuto($new_width , $new_height)
+    private function getSizeByAuto($new_width, $new_height)
     {
 
         if ($this->height < $this->width) {
@@ -176,7 +176,7 @@ class Resize implements ResizeInterface
                 $optionalHeight = $new_height;
             }
         }
-        return array('optionalWidth' => $optionalWidth , 'optionalHeight' => $optionalHeight);
+        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
     }
 
     /**
@@ -185,7 +185,7 @@ class Resize implements ResizeInterface
      * @return array
      *  example  w = 512, h = 720 if 720 / 200 < 512 / 400
      */
-    private function getOptionalCrop(int $new_width , int $new_height): array
+    private function getOptionalCrop(int $new_width, int $new_height): array
     {
         $heightRatio = $this->height / $new_height;
         $widthRatio = $this->width / $new_width;
@@ -196,10 +196,10 @@ class Resize implements ResizeInterface
         $optionalRatio = $widthRatio;
         $optionalHeight = $this->height / $optionalRatio;
         $optionalWidth = $this->width / $optionalRatio;
-        return array('optionalWidth' => $optionalWidth , 'optionalHeight' => $optionalHeight);
+        return array('optionalWidth' => $optionalWidth, 'optionalHeight' => $optionalHeight);
     }
 
-    private function crop($optionalWidth , $optionalHeight , $new_width , $new_height)
+    private function crop($optionalWidth, $optionalHeight, $new_width, $new_height)
     {
 // *** find center - this will be used for the crop
         $cropStartX = ($optionalWidth / 2) - ($new_width / 2);
@@ -209,28 +209,28 @@ class Resize implements ResizeInterface
         // imageDestroy($this->imageResçized);
         // *** Now crop from center to exact requested size
 
-        $this->imageResized = imagecreatetruecolor($new_width , $new_height);
-        imagecopyresampled($this->imageResized , $crop , 0 , 0 , $cropStartX , $cropStartY , $new_width , $new_height , $new_width , $new_height);
+        $this->imageResized = imagecreatetruecolor($new_width, $new_height);
+        imagecopyresampled($this->imageResized, $crop, 0, 0, $cropStartX, $cropStartY, $new_width, $new_height, $new_width, $new_height);
     }
 
-    public function save(string $savePath , int $imageQuality = 100)
+    public function save(string $savePath, int $imageQuality = 100)
     {
         // *** Get extension
 
-        $extension = strrchr($savePath , '.');
+        $extension = strrchr($savePath, '.');
         $extension = strtolower($extension);
 
         switch ($extension) {
             case '.jpg':
             case '.jpeg':
                 if (exif_imagetype($savePath) && imagetypes() & IMG_JPG) {
-                    imagejpeg($this->imageResized , $savePath , $imageQuality);
+                    imagejpeg($this->imageResized, $savePath, $imageQuality);
                 }
                 break;
 
             case '.gif':
                 if (exif_imagetype($savePath) && imagetypes() & IMG_GIF) {
-                    imagegif($this->imageResized , $savePath);
+                    imagegif($this->imageResized, $savePath);
                 }
                 break;
 
@@ -243,7 +243,7 @@ class Resize implements ResizeInterface
 
                 if (exif_imagetype($savePath) && imagetypes() & IMG_PNG) {
 
-                    imagepng($this->imageResized , $savePath , $invertScaleQuality);
+                    imagepng($this->imageResized, $savePath, $invertScaleQuality);
                 }
                 break;
 
@@ -256,11 +256,11 @@ class Resize implements ResizeInterface
         imagedestroy($this->imageResized);
     }
 
-    public function imageRotate(int $degree , $colorHexType = '000000')
+    public function imageRotate(int $degree, $colorHexType = '000000')
     {
         $rgb = $this->html2rgb($colorHexType);
 
-        $this->image = imagerotate($this->image , $degree , imagecolorallocate($this->image , $rgb[0] , $rgb[1] , $rgb[2]));
+        $this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
 
         $this->width = imagesx($this->image);
         $this->height = imagesy($this->image);
@@ -270,13 +270,13 @@ class Resize implements ResizeInterface
     private function html2rgb($color): array
     {
         if ($color[0] == '#') {
-            $color = substr($color , 1);
+            $color = substr($color, 1);
         }
 
         if (strlen($color) == 6) {
-            list($r , $g , $b) = array($color[0] . $color[1] , $color[2] . $color[3] , $color[4] . $color[5]);
+            list($r, $g, $b) = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
         } elseif (strlen($color) == 3) {
-            list($r , $g , $b) = array($color[0] . $color[0] , $color[1] . $color[1] , $color[2] . $color[2]);
+            list($r, $g, $b) = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);
         } else {
             return false;
         }
@@ -285,14 +285,14 @@ class Resize implements ResizeInterface
         $g = hexdec($g);
         $b = hexdec($b);
 
-        return array($r , $g , $b);
+        return array($r, $g, $b);
     }
 
-    public function text($text , $x = 0 , $y = 0 , $size = 5 , $color = '000000')
+    public function text($text, $x = 0, $y = 0, $size = 5, $color = '000000')
     {
         $rgb = $this->html2rgb($color);
 
-        return imagestring($this->image , $size , $x , $y , $text , imagecolorallocate($this->image , $rgb[0] , $rgb[1] , $rgb[2]));
+        return imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
     }
 
 }

@@ -63,7 +63,7 @@ class ZipStatus
                 return 'N Entry has been deleted';
 
             default:
-                return sprintf('Unknown status %s' , $errno);
+                return sprintf('Unknown status %s', $errno);
         }
     }
 }

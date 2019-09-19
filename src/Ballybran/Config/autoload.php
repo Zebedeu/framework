@@ -24,8 +24,8 @@ namespace Ballybran\Config;
  */
 spl_autoload_register(function ($class) {
 
-    if (file_exists(str_replace('\\' , DS , $class) . '.php')) {
-        $file = str_replace('\\' , DS , $class) . '.php';
+    if (file_exists(str_replace('\\', DS, $class) . '.php')) {
+        $file = str_replace('\\', DS, $class) . '.php';
 
         require_once $file;
     }
@@ -33,19 +33,19 @@ spl_autoload_register(function ($class) {
 });
 
 
-function search_lib($lib , $file , $ds = '/')
+function search_lib($lib, $file, $ds = '/')
 {
     // Verifica se o diretório informado é válido
     if (is_dir($lib)) {
         // Verifica se o arquivo já existe neste primeiro diretório
         if (file_exists($lib . $ds . $file)) return $lib . $ds . $file;
         // Lista os subdiretórios e arquivos
-        $dirs = array_diff(scandir($lib , 1) , array('.' , '..'));
+        $dirs = array_diff(scandir($lib, 1), array('.', '..'));
         foreach ($dirs as $dir) {
             // Verifica se é um arquivo se for, pula para o próximo
             if (!is_dir($lib . $ds . $dir)) continue;
             // Se for um diretório procura dentro dele
-            $f = search_lib($lib . $ds . $dir , $file , $ds);
+            $f = search_lib($lib . $ds . $dir, $file, $ds);
             // Caso não encontre retora false
             if ($f !== false) return $f;
         }
@@ -58,7 +58,7 @@ function __autoload($class)
 {
     $libs = './';
     $ext = '.php';
-    $file = search_lib($libs , $class . $ext);
+    $file = search_lib($libs, $class . $ext);
     // Se encontrou inclui o arquivo
     if ($file !== false) require_once $file;
     // Se não encontrar o arquivo lança um erro na tela. :)

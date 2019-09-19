@@ -16,7 +16,7 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Core\REST;
+namespace Ballybran\Core\Http;
 
 class RestRequest
 {
@@ -24,6 +24,7 @@ class RestRequest
     private $data;
     private $http_accept;
     private $method;
+    protected $_url;
 
     public function __construct()
     {
@@ -66,6 +67,18 @@ class RestRequest
     public function getRequestVars()
     {
         return $this->request_vars;
+    }
+
+    /**
+     * Fetches the $_GET from 'url'.
+     */
+    public function getUri()
+    {
+
+        $url = $_GET['url'] ?? 'index';
+        $url = rtrim($url, '/');
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $this->_url = explode('/', $url);
     }
 
 

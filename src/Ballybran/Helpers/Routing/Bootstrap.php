@@ -69,9 +69,9 @@ class Bootstrap extends RestRequest
     public function setControllerPath($path)
     {
         if (empty($path)) {
-            throw new \Exception("Directory $path Not Found" , 1);
+            throw new \Exception("Directory $path Not Found", 1);
         }
-        $this->_controllerPath = PV . APP . DS . trim($path , '/') . '/';
+        $this->_controllerPath = PV . APP . DS . trim($path, '/') . '/';
     }
 
     /**
@@ -81,7 +81,7 @@ class Bootstrap extends RestRequest
      */
     public function setModelPath($path)
     {
-        $this->_modelPath = trim($path , '/') . '/';
+        $this->_modelPath = trim($path, '/') . '/';
     }
 
     /**
@@ -92,10 +92,10 @@ class Bootstrap extends RestRequest
     public function setErrorFile($path)
     {
         if (empty($path)) {
-            throw new \Exception("Directory $path Not Found" , 1);
+            throw new \Exception("Directory $path Not Found", 1);
         }
 
-        $this->_errorFile = trim($path , '/');
+        $this->_errorFile = trim($path, '/');
     }
 
     /**
@@ -106,10 +106,10 @@ class Bootstrap extends RestRequest
     public function setDefaultFile($path)
     {
         if (empty($path)) {
-            throw new \Exception("Directory $path Not Found" , 1);
+            throw new \Exception("Directory $path Not Found", 1);
         }
 
-        $this->_defaultFile = trim($path , '/');
+        $this->_defaultFile = trim($path, '/');
     }
 
 
@@ -129,7 +129,7 @@ class Bootstrap extends RestRequest
      *
      * @return bool|string
      */
-    private function _loadExistingController()
+    protected function _loadExistingController()
     {
         $file = $this->_controllerPath . ucfirst($this->_url[0]) . '.php';
 
@@ -140,7 +140,7 @@ class Bootstrap extends RestRequest
         }
         require $file;
 
-        $namespace = str_replace('/' , '\\' , APP . '/Controllers/');
+        $namespace = str_replace('/', '\\', APP . '/Controllers/');
         $className = $namespace . $this->_url[0];
 
         $this->_controller = new $className( );
@@ -164,7 +164,7 @@ class Bootstrap extends RestRequest
 
         // Make sure the method we are calling exists
         if ($length > 1) {
-            if (!method_exists($this->_controller , $this->_url[1])) {
+            if (!method_exists($this->_controller, $this->_url[1])) {
                 $this->_error();
             }
         }
@@ -173,12 +173,12 @@ class Bootstrap extends RestRequest
         switch ($length) {
             case 5:
                 //controller->Method(Param1, Param2, Param3)
-                $this->_controller->{strtolower($this->_url[1])}(strtolower($this->_url[2] , $this->_url[3] , $this->_url[4]));
+                $this->_controller->{strtolower($this->_url[1])}(strtolower($this->_url[2], $this->_url[3], $this->_url[4]));
                 break;
 
             case 4:
                 //controller->Method(Param1, Param2)
-                $this->_controller->{$this->_url[1]}($this->_url[2] , $this->_url[3]);
+                $this->_controller->{$this->_url[1]}($this->_url[2], $this->_url[3]);
                 break;
 
             case 3:

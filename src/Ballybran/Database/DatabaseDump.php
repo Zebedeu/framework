@@ -15,8 +15,8 @@ class DatabaseDump extends DBconnection
 
 
     private $db;
-    private $host , $user , $pass , $dbname;
-    private $sql , $removeAI;
+    private $host, $user, $pass, $dbname;
+    private $sql, $removeAI;
     /**
      * @var array
      */
@@ -68,13 +68,13 @@ class DatabaseDump extends DBconnection
 
             foreach ($schemas as $schema) {
                 $schema = $schema['Create Table'];
-                if ($this->removeAI) $schema = preg_replace('/AUTO_INCREMENT=([0-9]+)(\s{0,1})/' , '' , $schema);
+                if ($this->removeAI) $schema = preg_replace('/AUTO_INCREMENT=([0-9]+)(\s{0,1})/', '', $schema);
                 $this->ln($schema . ";\n\n");
             }
         }
 
 
-        file_put_contents($file , $this->sql);
+        file_put_contents($file, $this->sql);
     }
 }
 

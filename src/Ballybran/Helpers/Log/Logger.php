@@ -60,7 +60,7 @@ class Logger
      * @param string $endRow
      * @param int $writeFlag
      */
-    public function __construct($file , $endRow = "\n" , $writeFlag = FILE_APPEND)
+    public function __construct($file, $endRow = "\n", $writeFlag = FILE_APPEND)
     {
 
         $this->file = DIR_LOGS . $file;
@@ -77,7 +77,7 @@ class Logger
      * @param int $newLines
      * @return $this
      */
-    public function AddRow($content = "" , $newLines = 1)
+    public function AddRow($content = "", $newLines = 1)
     {
 
         for ($m = 0; $m < $newLines; $m++) {
@@ -96,7 +96,7 @@ class Logger
      */
     public function Commit()
     {
-        file_put_contents($this->file , $this->content , $this->writeFlag);
+        file_put_contents($this->file, $this->content, $this->writeFlag);
 
         return $this;
     }
@@ -106,7 +106,7 @@ class Logger
      */
     public function getCommit()
     {
-        file_get_contents($this->file , $this->content);
+        file_get_contents($this->file, $this->content);
 
         return $this;
 
@@ -116,11 +116,11 @@ class Logger
      * @param $error
      * @param int $newLines
      */
-    public function LogError($error , $newLines = 1)
+    public function LogError($error, $newLines = 1)
     {
         if ($error != "") {
 
-            $this->AddRow($error , $newLines);
+            $this->AddRow($error, $newLines);
             echo $error;
 
         }

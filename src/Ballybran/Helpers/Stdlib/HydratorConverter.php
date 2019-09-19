@@ -26,7 +26,7 @@ class HydratorConverter
      */
 
 
-    public static function toObject(array $array , $object): object
+    public static function toObject(array $array, $object): object
     {
         $class = get_class($object);
 
@@ -34,13 +34,13 @@ class HydratorConverter
 
         foreach ($methods as $method) {
 
-            preg_match(' /^(set)(.*?)$/i' , $method , $results);
+            preg_match(' /^(set)(.*?)$/i', $method, $results);
 
             $pre = $results[1] ?? '';
 
             $k = $results[2] ?? '';
 
-            $k = strtolower(substr($k , 0 , 1)) . substr($k , 1);
+            $k = strtolower(substr($k, 0, 1)) . substr($k, 1);
 
             if ($pre == 'set' && !empty($array[$k])) {
 
@@ -66,13 +66,13 @@ class HydratorConverter
 
         foreach ($methods as $method) {
 
-            preg_match(' /^(get)(.*?)$/i' , $method , $results);
+            preg_match(' /^(get)(.*?)$/i', $method, $results);
 
             $pre = $results[1] ?? '';
 
             $k = $results[2] ?? '';
 
-            $k = strtolower(substr($k , 0 , 1)) . substr($k , 1);
+            $k = strtolower(substr($k, 0, 1)) . substr($k, 1);
 
             if ($pre == 'get') {
 

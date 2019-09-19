@@ -26,14 +26,14 @@ class Val implements ValInterface
 {
 
 
-    public function minlength(string $data , int $length)
+    public function minlength(string $data, int $length)
     {
         if (strlen($data) < $length) {
             return " (** minlength **) Your string " . $data . " can only be " . $length . " long";
         }
     }
 
-    public function maxlength(string $data , int $length)
+    public function maxlength(string $data, int $length)
     {
 
         if (strlen($data) > $length) {
@@ -49,15 +49,15 @@ class Val implements ValInterface
         }
     }
 
-    public function __call(string $name , $arguments)
+    public function __call(string $name, $arguments)
     {
         throw new \Exception("$name does not exist inside of: " . __CLASS__);
     }
 
-    public function isValidLenght(string $lenght , string $data , int $length)
+    public function isValidLenght(string $lenght, string $data, int $length)
     {
-        if ($this->{$lenght}($data , $length)) {
-            return $this->{$lenght}($data , $length);
+        if ($this->{$lenght}($data, $length)) {
+            return $this->{$lenght}($data, $length);
         }
 
     }

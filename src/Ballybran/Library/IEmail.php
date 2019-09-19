@@ -18,7 +18,7 @@ interface IEmail
     /**
      * @param $config
      */
-    public function __construct($obj , array $paramConfigMailer);
+    public function __construct($obj, array $paramConfigMailer);
 
     /**
      * @param null $to
@@ -28,7 +28,7 @@ interface IEmail
      * @param null $file
      * @return mixed
      */
-    public function send($to = null , $from = null , $subject = null , $content = null , $file = null);
+    public function send($to = null, $from = null, $subject = null, $content = null, $file = null);
 
     /**
      * @param $subject
@@ -88,7 +88,7 @@ interface IEmail
      * @param null $name
      * @return mixed
      */
-    public function file($file , $name = null);
+    public function file($file, $name = null);
 
     /**
      * @return mixed

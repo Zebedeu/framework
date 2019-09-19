@@ -35,7 +35,7 @@ class DataTimes implements DateTimeInterface
      * difference between the two dates or <b>FALSE</b> on failure.
      *
      */
-    public function diff($datetime2 , $absolute = false)
+    public function diff($datetime2, $absolute = false)
     {
     }
 

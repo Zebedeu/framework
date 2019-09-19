@@ -26,7 +26,10 @@ use Ballybran\Helpers\vardump\Vardump;
  */
 class Map extends Bootstrap
 {
-    private $url , $callable , $routes = [] , $nameRoute;
+    private  $url;
+    private  $callable;
+    private  $routes =[];
+    private  $nameRoute;
 
 
     public function __construct()
@@ -36,24 +39,44 @@ class Map extends Bootstrap
         $this->url = $url;
     }
 
-    public function get($path , $callable , $name = null)
+    /**
+     * @param $path
+     * @param $callable
+     * @param null $name
+     * @return Routes
+     */
+    public function get($path, $callable, $name = null)
     {
 
-        return $this->add($path , $callable , $name , 'GET');
+        /** @var TYPE_NAME $callable */
+        return self::add($path, $callable, $name, 'GET');
 
     }
 
-    public function post($path , $callable , $name = null)
+    /**
+     * @param $path
+     * @param $callable
+     * @param null $name
+     * @return Routes
+     */
+    public  function post($path, $callable, $name = null)
     {
 
-        return $this->add($path , $callable , $name , 'POST');
+        return self::add($path, $callable, $name, 'POST');
 
 
     }
 
-    public function add($path , $callable , $name , $method)
+    /**
+     * @param $path
+     * @param $callable
+     * @param $name
+     * @param $method
+     * @return Routes
+     */
+    public  function add($path, $callable, $name, $method)
     {
-        $route = new Routes($path , $callable);
+        $route = new Routes($path, $callable);
         $this->routes[$method][] = $route;
 
         if (is_string($callable) && $name === null) {
@@ -68,10 +91,10 @@ class Map extends Bootstrap
 
     }
 
-    public function run()
+    public   function run()
     {
         if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
-            throw new \Exception(' REQUEST_METHOD does not exists' , 1);
+            throw new \Exception(' REQUEST_METHOD does not exists', 1);
 
         }
 
@@ -88,11 +111,11 @@ class Map extends Bootstrap
 
     }
 
-    public function url($name , $params = [])
+    public function url($name, $params = [])
     {
         if (!isset($this->nameRoute[$name])) {
 
-            throw new \Exception("No route match this name" , 1);
+            throw new \Exception("No route match this name", 1);
 
         }
 

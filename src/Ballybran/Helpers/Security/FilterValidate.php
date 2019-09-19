@@ -43,7 +43,7 @@ class FilterValidate
 
     public function setDomain($domain)
     {
-        if (!filter_var($domain , FILTER_VALIDATE_DOMAIN)) {
+        if (!filter_var($domain, FILTER_VALIDATE_DOMAIN)) {
             throw new \InvalidArgumentException("the value entered must have a Domain");
         }
         $this->domain = $domain;
@@ -52,7 +52,7 @@ class FilterValidate
 
     public function setUrl($url)
     {
-        if (!filter_var($this->url , FILTER_VALIDATE_URL)) {
+        if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException("the value entered must have a Url");
         }
         $this->url = $url;
@@ -62,7 +62,7 @@ class FilterValidate
 
     public function setIp($ip)
     {
-        if (!filter_var($ip , FILTER_VALIDATE_IP)) {
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException("the value entered must have a Ip");
         }
         $this->ip = $ip;

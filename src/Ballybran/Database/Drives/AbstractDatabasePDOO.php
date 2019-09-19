@@ -45,11 +45,11 @@ class AbstractDatabasePDOO
         try {
 
 
-            $this->_instances = new PDO("mysql:host=localhost;port=8889;dbname=apweb" , "root" , "root");
+            $this->_instances = new PDO("mysql:host=localhost;port=8889;dbname=apweb", "root", "root");
 
             $attributes = array(
-                "AUTOCOMMIT" , "ERRMODE" , "CASE" , "CLIENT_VERSION" , "CONNECTION_STATUS" ,
-                "ORACLE_NULLS" , "PERSISTENT" , "SERVER_INFO" , "SERVER_VERSION"
+                "AUTOCOMMIT", "ERRMODE", "CASE", "CLIENT_VERSION", "CONNECTION_STATUS",
+                "ORACLE_NULLS", "PERSISTENT", "SERVER_INFO", "SERVER_VERSION"
             );
             foreach ($attributes as $value) {
                 $this->_instances->getAttribute(constant("PDO::ATTR_$value")) . "\n";

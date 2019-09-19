@@ -27,7 +27,7 @@ namespace Ballybran\Database\Drives;
 use Ballybran\Database\DBconnection;
 use Ballybran\Helpers\vardump\Vardump;
 
-class Result implements \IteratorAggregate , \JsonSerializable
+class Result implements \IteratorAggregate, \JsonSerializable
 {
 
     /**
@@ -37,7 +37,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param Database|Result|Row $parent
      * @param string $name
      */
-    function __construct($parent , $name)
+    function __construct($parent, $name)
     {
 
         if ($parent instanceof Database) {
@@ -57,7 +57,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
             // determine type of reference based on conventions and user hints
 
             $fullName = $name;
-            $name = preg_replace('/List$/' , '' , $fullName);
+            $name = preg_replace('/List$/', '', $fullName);
 
             $this->table = $this->db->getAlias($name);
 
@@ -66,11 +66,11 @@ class Result implements \IteratorAggregate , \JsonSerializable
             if ($this->single) {
 
                 $this->key = $this->db->getPrimary($this->getTable());
-                $this->parentKey = $this->db->getReference($parent->getTable() , $name);
+                $this->parentKey = $this->db->getReference($parent->getTable(), $name);
 
             } else {
 
-                $this->key = $this->db->getBackReference($parent->getTable() , $name);
+                $this->key = $this->db->getBackReference($parent->getTable(), $name);
                 $this->parentKey = $this->db->getPrimary($parent->getTable());
 
             }
@@ -87,12 +87,12 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param array $args
      * @return mixed
      */
-    function __call($name , $args)
+    function __call($name, $args)
     {
 
-        array_unshift($args , $name);
+        array_unshift($args, $name);
 
-        return call_user_func_array(array($this , 'referenced') , $args);
+        return call_user_func_array(array($this, 'referenced'), $args);
 
     }
 
@@ -104,15 +104,15 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param array $params
      * @return Result
      */
-    function referenced($name , $where = null , $params = array())
+    function referenced($name, $where = null, $params = array())
     {
 
-        $result = $this->db->createResult($this , $name);
+        $result = $this->db->createResult($this, $name);
 
         if ($where !== null) {
 
-            if (!is_array($params)) $params = array_slice(func_get_args() , 2);
-            $result = $result->where($where , $params);
+            if (!is_array($params)) $params = array_slice(func_get_args(), 2);
+            $result = $result->where($where, $params);
 
         }
 
@@ -160,7 +160,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
         if ($this->parent_) {
 
             // restrict to parent
-            $this->where[] = $this->db->is($this->key , $this->parent_->getGlobalKeys($this->parentKey));
+            $this->where[] = $this->db->is($this->key, $this->parent_->getGlobalKeys($this->parentKey));
 
         }
 
@@ -172,12 +172,12 @@ class Result implements \IteratorAggregate , \JsonSerializable
         if (!$cached) {
 
             // fetch all rows
-            $statement = $this->db->select($this->table , array(
-                'expr' => $this->select ,
-                'where' => $this->where ,
-                'orderBy' => $this->orderBy ,
-                'limitCount' => $this->limitCount ,
-                'limitOffset' => $this->limitOffset ,
+            $statement = $this->db->select($this->table, array(
+                'expr' => $this->select,
+                'where' => $this->where,
+                'orderBy' => $this->orderBy,
+                'limitCount' => $this->limitCount,
+                'limitOffset' => $this->limitOffset,
                 'params' => $this->whereParams
             ));
 
@@ -194,7 +194,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
             }
 
-            $root->setCache($definition , $cached);
+            $root->setCache($definition, $cached);
 
         }
 
@@ -211,7 +211,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
             foreach ($cached as $row) {
 
-                if (in_array($row->__get($this->key) , $keys)) {
+                if (in_array($row->__get($this->key), $keys)) {
 
                     $this->rows[] = $row;
 
@@ -235,7 +235,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
     function createRow($data = array())
     {
 
-        return $this->db->createRow($this->table , $data , $this);
+        return $this->db->createRow($this->table, $data, $this);
 
     }
 
@@ -292,7 +292,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         $this->execute();
 
-        return $this->getKeys($this->rows , $key);
+        return $this->getKeys($this->rows, $key);
 
     }
 
@@ -307,7 +307,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         $this->execute();
 
-        return $this->getKeys($this->globalRows , $key);
+        return $this->getKeys($this->globalRows, $key);
 
     }
 
@@ -318,7 +318,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param string $key
      * @return array
      */
-    protected function getKeys($rows , $key)
+    protected function getKeys($rows, $key)
     {
 
         if (count($rows) > 0 && !$rows[0]->hasProperty($key)) {
@@ -363,7 +363,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param mixed $value
      * @return $this;
      */
-    function setCache($key , $value)
+    function setCache($key, $value)
     {
 
         $this->_cache[$key] = $value;
@@ -394,7 +394,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         $this->execute();
 
-        list($index , $row) = each($this->rows);
+        list($index, $row) = each($this->rows);
 
         return $row;
 
@@ -438,10 +438,10 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param string|null $method
      * @return null|\PDOStatement
      */
-    function insert($rows , $method = null)
+    function insert($rows, $method = null)
     {
 
-        return $this->db->insert($this->table , $rows , $method);
+        return $this->db->insert($this->table, $rows, $method);
 
     }
 
@@ -463,7 +463,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         }
 
-        return $this->db->update($this->table , $data , $this->where , $this->whereParams);
+        return $this->db->update($this->table, $data, $this->where, $this->whereParams);
 
     }
 
@@ -484,7 +484,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         }
 
-        return $this->db->delete($this->table , $this->where , $this->whereParams);
+        return $this->db->delete($this->table, $this->where, $this->whereParams);
 
     }
 
@@ -510,19 +510,19 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
                 foreach ($primary as $column) {
 
-                    $and[] = $this->db->is($column , $row->__get($column));
+                    $and[] = $this->db->is($column, $row->__get($column));
 
                 }
 
-                $or[] = "( " . implode(" AND " , $and) . " )";
+                $or[] = "( " . implode(" AND ", $and) . " )";
 
             }
 
-            return $result->where(implode(" OR " , $or));
+            return $result->where(implode(" OR ", $or));
 
         }
 
-        return $result->where($primary , $this->getLocalKeys($primary));
+        return $result->where($primary, $this->getLocalKeys($primary));
 
     }
 
@@ -545,7 +545,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         } else {
 
-            $clone->select = array_merge($clone->select , func_get_args());
+            $clone->select = array_merge($clone->select, func_get_args());
 
         }
 
@@ -560,7 +560,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param string|array $params
      * @return Result
      */
-    function where($condition , $params = array())
+    function where($condition, $params = array())
     {
 
         $clone = clone $this;
@@ -570,7 +570,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
             foreach ($condition as $c => $params) {
 
-                $clone = $clone->where($c , $params);
+                $clone = $clone->where($c, $params);
 
             }
 
@@ -579,9 +579,9 @@ class Result implements \IteratorAggregate , \JsonSerializable
         }
 
         // shortcut for basic "column is (in) value"
-        if (preg_match('/^[a-z0-9_.`"]+$/i' , $condition)) {
+        if (preg_match('/^[a-z0-9_.`"]+$/i', $condition)) {
 
-            $clone->where[] = $clone->db->is($condition , $params);
+            $clone->where[] = $clone->db->is($condition, $params);
 
             return $clone;
 
@@ -595,7 +595,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
         }
 
         $clone->where[] = $condition;
-        $clone->whereParams = array_merge($clone->whereParams , $params);
+        $clone->whereParams = array_merge($clone->whereParams, $params);
 
         return $clone;
 
@@ -608,7 +608,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param string|array|null $value
      * @return $this
      */
-    function whereNot($column , $value = null)
+    function whereNot($column, $value = null)
     {
 
         $clone = clone $this;
@@ -618,7 +618,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
             foreach ($column as $c => $params) {
 
-                $clone = $clone->whereNot($c , $params);
+                $clone = $clone->whereNot($c, $params);
 
             }
 
@@ -626,7 +626,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         }
 
-        $clone->where[] = $this->db->isNot($column , $value);
+        $clone->where[] = $this->db->isNot($column, $value);
 
         return $clone;
 
@@ -639,7 +639,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param string $direction
      * @return $this
      */
-    function orderBy($column , $direction = "ASC")
+    function orderBy($column, $direction = "ASC")
     {
 
         $clone = clone $this;
@@ -661,7 +661,7 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param int|null $offset
      * @return $this
      */
-    function limit($count , $offset = null)
+    function limit($count, $offset = null)
     {
 
         if ($this->parent_) {
@@ -687,10 +687,10 @@ class Result implements \IteratorAggregate , \JsonSerializable
      * @param int $page
      * @return $this
      */
-    function paged($pageSize , $page)
+    function paged($pageSize, $page)
     {
 
-        return $this->limit($pageSize , ($page - 1) * $pageSize);
+        return $this->limit($pageSize, ($page - 1) * $pageSize);
 
     }
 
@@ -764,12 +764,12 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         }
 
-        $statement = $this->db->select($this->table , array(
-            'expr' => $function ,
-            'where' => $this->where ,
-            'orderBy' => $this->orderBy ,
-            'limitCount' => $this->limitCount ,
-            'limitOffset' => $this->limitOffset ,
+        $statement = $this->db->select($this->table, array(
+            'expr' => $function,
+            'where' => $this->where,
+            'orderBy' => $this->orderBy,
+            'limitCount' => $this->limitCount,
+            'limitOffset' => $this->limitOffset,
             'params' => $this->whereParams
         ));
 
@@ -808,12 +808,12 @@ class Result implements \IteratorAggregate , \JsonSerializable
 
         return json_encode(array(
 
-            'table' => $this->table ,
-            'select' => $this->select ,
-            'where' => $this->where ,
-            'whereParams' => $this->whereParams ,
-            'orderBy' => $this->orderBy ,
-            'limitCount' => $this->limitCount ,
+            'table' => $this->table,
+            'select' => $this->select,
+            'where' => $this->where,
+            'whereParams' => $this->whereParams,
+            'orderBy' => $this->orderBy,
+            'limitCount' => $this->limitCount,
             'limitOffset' => $this->limitOffset
 
         ));

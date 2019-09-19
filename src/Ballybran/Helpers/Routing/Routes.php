@@ -26,32 +26,46 @@ use Ballybran\Helpers\Language;
  */
 class Routes
 {
-    private $path , $callable , $routes = [] , $matches = [] , $params = [];
+    private $path, $callable, $matches=[], $params=[];
     protected $_controllerPath = PV . APP . DS . "Controllers/";
 
 
-    public function __construct($path , $callable)
+    /**
+     * Routes constructor.
+     * @param string $path
+     * @param $callable
+     */
+    public function __construct(string $path, $callable)
     {
-        $this->path = trim($path , '/');
+        $this->path = trim($path, '/');
         $this->callable = $callable;
 
     }
 
 
-    public function with($params , $regex)
+    /**
+     * @param string $params
+     * @param string $regex
+     * @return Routes
+     */
+    public function with(string $params, string $regex): Routes
     {
-        $this->params[$params] = str_replace('(' , '(?:' , $regex);
+        $this->params[$params] = str_replace('(', '(?:', $regex);
         return $this;
     }
 
-    public function match($url)
+    /**
+     * @param string $url
+     * @return bool
+     */
+    public function match( $url) : bool
     {
-        $url = trim($url , '/');
-        $path = preg_replace_callback('#:([\w]+)#' , [$this , 'paramMatch'] , $this->path);
+        $url = trim($url, '/');
+        $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
 
         $regex = "#^$path$#i";
 
-        if (!preg_match($regex , $url , $matches)) {
+        if (!preg_match($regex, $url, $matches)) {
 
             return false;
         }
@@ -62,7 +76,11 @@ class Routes
     }
 
 
-    private function paramMatch($match)
+    /**
+     * @param array $match
+     * @return string
+     */
+    private function paramMatch(array $match) : string
     {
         if (isset($this->params[$match[1]])) {
             return '(' . $this->params[$match[1]] . ')';
@@ -72,42 +90,44 @@ class Routes
     }
 
 
-     function call()
+     public function call()
     {
 
             if (is_string($this->callable)) {
 
-                $params = explode('#' , $this->callable);
+                $params = explode('#', $this->callable);
 
                 $file = $this->_controllerPath . $params[0] . '.php';
-
-                require_once($file);
 
                 $controller = $this->_controllerPath . $params[0] . '.php';
 
 
-                $namespace = str_replace('/' , '\\' , $this->_controllerPath);
+                $namespace = str_replace('/', '\\', $this->_controllerPath);
                 $className = $namespace . $params[0];
 
                 $controller = new $className;
                 // $controller = new $controller();
 
-                return call_user_func_array([$controller , $params[1]] , $this->matches);
+                return call_user_func_array([$controller, $params[1]], $this->matches);
 
             } else {
 
-                return call_user_func_array($this->callable , $this->matches);
+                return call_user_func_array($this->callable, $this->matches);
 
             }
 
     }
 
-    public function getUrl($params)
+    /**
+     * @param $params
+     * @return string
+     */
+    public function getUrl($params) : string
     {
         $path = $this->path;
 
         foreach ($params as $key => $value) {
-            $path = str_replace(":$key" , $value , $path);
+            $path = str_replace(":$key", $value, $path);
 
         }
         return $path;

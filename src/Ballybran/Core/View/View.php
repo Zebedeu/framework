@@ -28,7 +28,7 @@ use Ballybran\Helpers\Security\RenderFiles;
 use Ballybran\Library\Form;
 use Ballybran\Library\interfaceForm;
 
-class View extends RenderFiles implements ViewrInterface , \ArrayAccess
+class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 {
     public $view;
     public $data = array();
@@ -58,19 +58,20 @@ class View extends RenderFiles implements ViewrInterface , \ArrayAccess
      *
      * @return string
      */
-    public function render(object $controller , String $view , array $data = null): string
+    public function render(object $controller, String $view, array $data = null): string
     {
         $this->dot = new IteratorDot($data);
 
         $data = (null === $data) ? array() : $data;
         $this->view = $view;
-        $remove_namespace = explode('\\' , get_class($controller));
-        $this->controllers = $remove_namespace[2];
+        $remove_namespace = explode('\\', get_class($controller));
+        $this->controllers = $remove_namespace[3];
 
         extract($this->data = $data);
         ob_start();
         $this->isHeader();
-        include $this->file = DIR_FILE . 'Views/' . $this->controllers . DS . $this->view . $this->ex;
+
+        include $this->file =  DIR_FILE . 'Views/' . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
         if (null === $this->layout) {
             ob_end_flush();
@@ -86,7 +87,7 @@ class View extends RenderFiles implements ViewrInterface , \ArrayAccess
     public function fetch($data = null)
     {
         ob_start();
-        $this->render($this->controllers , $this->view , $data);
+        $this->render($this->controllers, $this->view, $data);
 
         return ob_get_clean();
     }
@@ -103,14 +104,14 @@ class View extends RenderFiles implements ViewrInterface , \ArrayAccess
 
     public function set($id)
     {
-        $this->data[] = \array_merge($this->data , $id);
+        $this->data[] = \array_merge($this->data, $id);
 
     }
 
     protected function include_file($file)
     {
         $view = new View($file);
-        $view->render($this->controllers , $this->view , $this->data);
+        $view->render($this->controllers, $this->view, $this->data);
         $this->data[] = $view->get_data();
     }
 
@@ -132,7 +133,7 @@ class View extends RenderFiles implements ViewrInterface , \ArrayAccess
     private function init(): bool
     {
         $this->isViewPath($this->controllers);
-        $this->isIndex($this->controllers , $this->view);
+        $this->isIndex($this->controllers, $this->view);
 
         return true;
     }
@@ -147,7 +148,7 @@ class View extends RenderFiles implements ViewrInterface , \ArrayAccess
         return $this->data[$offset];
     }
 
-    public function offsetSet($offset , $value)
+    public function offsetSet($offset, $value)
     {
         $this->data[$offset] = $value;
     }

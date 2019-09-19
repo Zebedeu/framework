@@ -6,5 +6,5 @@ interface InterfaceEventHandlerCollection
 {
     public function add($handler);
 
-    public function raiseEvent($event , $sender , $args);
+    public function raiseEvent($event, $sender, $args);
 }
