@@ -19,17 +19,11 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=7.0.0",
-    "knut7/framework": ">=1.0.6",
-    "phpmailer/phpmailer": "~6.0",
-    "facebook/graph-sdk": "^5.7",
-    "knut7/event": "dev-master",
-    "phpclasses/oauth-api": ">=1.0.105"
+    "phpmailer/phpmailer": "~6.0"
 
   },
   "require-dev": {
     "php": ">=7.0.0",
-    "knut7/php-graphic": "dev-master",
-    "php-ai/php-ml": "^0.5.0",
     "phpmailer/phpmailer": "~6.0",
     "swiftmailer/swiftmailer": "^6.0"
   },
