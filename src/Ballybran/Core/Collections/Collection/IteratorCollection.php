@@ -87,7 +87,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     public function contains($element)
     {
-        return in_array($element , $this->elements , true);
+        return in_array($element, $this->elements, true);
     }
 
     /**
@@ -125,12 +125,12 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return $this->get($offset);
     }
 
-    public function offsetSet($offset , $value)
+    public function offsetSet($offset, $value)
     {
         if (!isset($offset)) {
-            return $this->set($offset , $value);
+            return $this->set($offset, $value);
         }
-        return $this->set($offset , $value);
+        return $this->set($offset, $value);
     }
 
     public function offsetUnset($offset)
@@ -140,7 +140,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     public function containsKey($key)
     {
-        return isset($this->elements[$key]) || array_key_exists($key , $this->elements);
+        return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
 
     public function offsetExists($offset)
@@ -150,7 +150,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     public function remove($key): string
     {
-        if (!isset($this->elements[$key]) && !array_key_exists($key , $this->elements)) {
+        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
             return null;
         } else {
             $removed = $this->elements[$key];
@@ -162,7 +162,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     public function removeEleme($element)
     {
-        $key = array_search($element , $this->elements , true);
+        $key = array_search($element, $this->elements, true);
         if ($key == false) {
             return false;
         }
@@ -177,7 +177,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return $this;
     }
 
-    public function set($key , $value)
+    public function set($key, $value)
     {
         $this->elements[$key] = $value;
 
@@ -203,7 +203,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function exists(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
-            if ($p($key , $element)) {
+            if ($p($key, $element)) {
                 return true;
             }
         }
@@ -216,7 +216,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
      */
     public function indexOf($element): Int
     {
-        return array_search($element , $this->elements);
+        return array_search($element, $this->elements);
     }
 
     public function isEmpty()
@@ -241,7 +241,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     }
 
 
-    public function slice($start , $end)
+    public function slice($start, $end)
     {
         if ($start < 0 || !is_int($start)) {
             throw new InvalidArgumentException("Start must be a no-negative integer");
@@ -261,7 +261,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
         $length = $end - $start + 1;
 
-        $subsetItems = array_slice($this->elements , $start , $length);
+        $subsetItems = array_slice($this->elements, $start, $length);
 
 
         return $this->setElementsFromTrustedSource($subsetItems);

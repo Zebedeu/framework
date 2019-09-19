@@ -40,18 +40,18 @@ class HZip extends ZipStatus
      * @param mixed $source
      * @param mixed $array
      */
-    private function _rglobRead($source , &$array = array())
+    private function _rglobRead($source, &$array = array())
     {
         if (!$source || trim($source) == '') {
             $source = '.';
         }
 
         foreach ((array)glob($source . '/*/') as $key => $value) {
-            $this->_rglobRead(str_replace('//' , '/' , $value) , $array);
+            $this->_rglobRead(str_replace('//', '/', $value), $array);
         }
 
         foreach ((array)glob($source . '*.*') as $key => $value) {
-            $array[] = str_replace('//' , '/' , $value);
+            $array[] = str_replace('//', '/', $value);
         }
     }
 
@@ -62,13 +62,13 @@ class HZip extends ZipStatus
      * @param mixed $part
      * @param mixed $destination
      */
-    private function _zip($array , $part , $destination)
+    private function _zip($array, $part, $destination)
     {
-        @mkdir($destination , 0777 , true);
+        @mkdir($destination, 0777, true);
 
-        if ($this->zip->open(str_replace('//' , '/' , "{$destination}/partz{$part}.zip") , \ZipArchive::CREATE)) {
+        if ($this->zip->open(str_replace('//', '/', "{$destination}/partz{$part}.zip"), \ZipArchive::CREATE)) {
             foreach ((array)$array as $key => $value) {
-                $this->zip->addFile($value , str_replace(array('../' , './') , null , $value));
+                $this->zip->addFile($value, str_replace(array('../', './'), null, $value));
             }
             $this->ZipStatusString($this->zip->status);
             $this->zip->close();
@@ -82,18 +82,18 @@ class HZip extends ZipStatus
      * @param mixed $source
      * @param mixed $destination
      */
-    public function create($limit = 500 , $source = null , $destination = './')
+    public function create($limit = 500, $source = null, $destination = './')
     {
         if (!$destination || trim($destination) == '') {
             $destination = './';
         }
 
-        $this->_rglobRead($source , $input);
+        $this->_rglobRead($source, $input);
         $maxinput = count($input);
-        $splitinto = (($maxinput / $limit) > round($maxinput / $limit , 0)) ? round($maxinput / $limit , 0) + 1 : round($maxinput / $limit , 0);
+        $splitinto = (($maxinput / $limit) > round($maxinput / $limit, 0)) ? round($maxinput / $limit, 0) + 1 : round($maxinput / $limit, 0);
 
         for ($i = 0; $i < $splitinto; ++$i) {
-            $this->_zip(array_slice($input , ($i * $limit) , $limit , true) , $i , $destination);
+            $this->_zip(array_slice($input, ($i * $limit), $limit, true), $i, $destination);
         }
 
         unset($input);
@@ -107,12 +107,12 @@ class HZip extends ZipStatus
      * @param mixed $source
      * @param mixed $destination
      */
-    public function unzip($source , $destination)
+    public function unzip($source, $destination)
     {
-        @mkdir($destination , 0777 , true);
+        @mkdir($destination, 0777, true);
 
         foreach ((array)glob($source . '/*.zip') as $key => $value) {
-            if ($this->zip->open(str_replace('//' , '/' , $value)) === true) {
+            if ($this->zip->open(str_replace('//', '/', $value)) === true) {
                 $this->zip->extractTo($destination);
                 echo $this->ZipStatusString($this->zip);
                 $this->zip->close();
@@ -134,7 +134,7 @@ class HZip extends ZipStatus
                 $e->getMessage();
             }
         }
-        @chmod($zipname , 0777);
+        @chmod($zipname, 0777);
 
         if (!$this->zip->open($zipname)) {
         }

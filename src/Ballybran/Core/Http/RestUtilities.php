@@ -16,9 +16,9 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Core\REST;
+namespace Ballybran\Core\Http;
 
-final class RestUtilities
+ class RestUtilities
 {
     private static $httpVersion = 'HTTP/1.1';
 
@@ -41,7 +41,7 @@ final class RestUtilities
                 $data = $_POST;
                 break;
             case 'put':
-                $data = parse_str(file_get_contents('php://input') , $put_vars);
+                $data = parse_str(file_get_contents('php://input'), $put_vars);
                 break;
             default:
             die();
@@ -55,13 +55,21 @@ final class RestUtilities
         return $obj;
     }
 
-    public static function sendResponse($status = 200 , $body = '' , $content_type =
+    public static function sendResponse(int $status = 200, $body = '', string $content_type =
     'text/html')
     {
         $status_header = self::$httpVersion . $status . ' '
             . RestUtilities::getStatusCodeMessage($status);
 
-        // header($status_header);
+
+        $ob = ini_get('output_buffering');
+
+        // Abort the method if headers have already been sent, except when output buffering has been enabled
+        if (headers_sent() && (bool)$ob === false || strtolower($ob) == 'off') {
+            return new self();
+        }
+
+        header($status_header);
         header('Access-Control-allow-Origin:*');
         header('Access-Control-allow-Methods:POST, GET, DELETE, PUT');
         header('Content-type: ' . $content_type);
@@ -71,7 +79,7 @@ final class RestUtilities
             exit;
         }
         $msg = '';
-        switch ($status) {
+        switch ($status_header) {
             case 401:
                 $msg = 'You must be authorized to view this page.';
                 break;
@@ -91,40 +99,40 @@ final class RestUtilities
                 <head>
                        <meta charset='utf-8'>
                         <title>" . $status . ' ' .
-            RestUtilities::getStatusCodeMessage($status) . "</title>
+            self::getStatusCodeMessage($status) . "</title>
                         </head>
                         <body>
-                        <h1>" . RestUtilities::getStatusCodeMessage($status) . "</h1>
+                        <h1>" . self::getStatusCodeMessage($status) . "</h1>
                         <p>" . $msg . "</p>
                         </body></html>";
         return $body;
 
     }
 
-    public static function getStatusCodeMessage($status)
+    private static function getStatusCodeMessage($status)
     {
         $codes = Array(
-            200 => 'OK' ,
-            201 => 'Created' ,
-            202 => 'Accepted' ,
-            204 => 'No Content' ,
-            301 => 'Moved Permanently' ,
-            302 => 'Found' ,
-            303 => 'See Other' ,
-            304 => 'Not Modified' ,
-            305 => 'Use Proxy' ,
-            306 => '(Unused)' ,
-            307 => 'Temporary Redirect' ,
-            400 => 'Bad Request' ,
-            401 => 'Unauthorized' ,
-            402 => 'Payment Required' ,
-            403 => 'Forbidden' ,
-            404 => 'Not Found' ,
-            500 => 'Internal Server Error' ,
-            501 => 'Not Implemented' ,
-            502 => 'Bad Gateway' ,
-            503 => 'Service Unavailable' ,
-            504 => 'Gateway Timeout' ,
+            200 => 'OK',
+            201 => 'Created',
+            202 => 'Accepted',
+            204 => 'No Content',
+            301 => 'Moved Permanently',
+            302 => 'Found',
+            303 => 'See Other',
+            304 => 'Not Modified',
+            305 => 'Use Proxy',
+            306 => '(Unused)',
+            307 => 'Temporary Redirect',
+            400 => 'Bad Request',
+            401 => 'Unauthorized',
+            402 => 'Payment Required',
+            403 => 'Forbidden',
+            404 => 'Not Found',
+            500 => 'Internal Server Error',
+            501 => 'Not Implemented',
+            502 => 'Bad Gateway',
+            503 => 'Service Unavailable',
+            504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported'
         );
         return (isset($codes[$status])) ? $codes[$status] : '';

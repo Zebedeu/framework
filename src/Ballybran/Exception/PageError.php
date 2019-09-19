@@ -48,8 +48,8 @@ class PageError extends Language
         <head>
             <meta charset="UTF-8">
             <title>404</title>
+            <link rel="stylesheet" href="<?php echo URL; ?>Public/bootstrap/css/bootstrap.css">
             <link rel="stylesheet" href="<?php echo URL; ?>Public/bootstrap/css/bootstrap.min.css">
-            <link rel="stylesheet" href="<?php echo URL; ?>Public/bootstrap/css/bootstrap-theme.min.css">
 
         </head>
         <script src="<?php echo URL; ?>Public/bootstrap/jQuery.js"></script>

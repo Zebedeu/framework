@@ -46,7 +46,7 @@ class Value
         return $this;
     }
 
-    public function openForm($action , $method = "get")
+    public function openForm($action, $method = "get")
     {
         echo "<form action=" . $action . "  enctype='multipart/form-data' method='" . $method . "' >";
         return $this;

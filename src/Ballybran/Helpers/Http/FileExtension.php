@@ -26,7 +26,7 @@ namespace Ballybran\Helpers\Http;
 
 class FileExtension
 {
-    private $extension = array('php' , 'phtml' , 'html' , 'inc' , 'js' , 'css');
+    private $extension = array('php', 'phtml', 'html', 'inc', 'js', 'css');
     private $ex;
 
     public function __construct($obj)

@@ -45,7 +45,7 @@ class Language implements LanguageInterface
         return (isset($this->data[$key]) ? $this->data[$key] : $key);
     }
 
-    public function set($filename , $Language = null)
+    public function set($filename, $Language = null)
     {
         $_ = array();
 
@@ -65,7 +65,7 @@ class Language implements LanguageInterface
             require($file);
         }
 
-        $this->data = array_merge($this->data , $_);
+        $this->data = array_merge($this->data, $_);
 
         return $this->data;
     }

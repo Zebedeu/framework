@@ -23,6 +23,6 @@ namespace Ballybran\Helpers\Security;
  */
 interface ValidateTypesInterface
 {
-    public static function getSQLValueString($theValue , $theType , $theDefinedValue = "" , $theNotDefinedValue = "");
+    public static function getSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "");
 
 }

@@ -72,9 +72,9 @@ class ValidateInput
                         // limit filenames to 64 characters
                         if (is_string($_GET[$key]) && strlen($_GET[$key]) < 64) {
                             // escape any non-ASCII
-                            ${$key} = str_replace('%' , '_' , rawurlencode($_GET[$key]));
+                            ${$key} = str_replace('%', '_', rawurlencode($_GET[$key]));
                             // disallow double dots
-                            if (strpos(${$key} , '..') === TRUE) {
+                            if (strpos(${$key}, '..') === TRUE) {
                                 ${$key} = NULL;
                             }
                         }

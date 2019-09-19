@@ -58,12 +58,12 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return mixed
      */
-    public function selectManager($sql , $array = array() , $fetchMode = \PDO::FETCH_ASSOC)
+    public function selectManager($sql, $array = array(), $fetchMode = \PDO::FETCH_ASSOC)
     {
         $stmt = $this->conn->prepare($sql);
 
         foreach ($array as $key => $values) {
-            $stmt->bindValue("$key" , $values);
+            $stmt->bindValue("$key", $values);
         }
         $stmt->execute();
 
@@ -85,7 +85,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return mixed
      */
-    public function find($table , $fields = null , $where = null , $order = null , $limit = null , $offset = null , $array = array() , $fetchMode = \PDO::FETCH_ASSOC)
+    public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode = \PDO::FETCH_ASSOC)
     {
         $sql = ' SELECT ' . (($fields) ?? '*') . ' FROM ' . (($table)) . (($where) ? ' WHERE ' . $where : ' ')
             . (($limit) ? ' LIMIT ' . $limit : ' ')
@@ -95,7 +95,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
         $stmt = $this->conn->prepare($sql);
 
         foreach ($array as $key => $values) {
-            return $stmt->bindValue("$key" , $values);
+            return $stmt->bindValue("$key", $values);
         }
         $stmt->execute();
 
@@ -112,19 +112,19 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return bool
      */
-    public function insert($table , array $data)
+    public function insert($table, array $data)
     {
         try {
             krsort($data);
 
-            $fieldNme = implode('`,`' , array_keys($data));
-            $fieldValues = ':' . implode(',:' , array_keys($data));
+            $fieldNme = implode('`,`', array_keys($data));
+            $fieldValues = ':' . implode(',:', array_keys($data));
             $this->_beginTransaction();
 
             $stmt = $this->conn->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
 
             foreach ($data as $key => $values) {
-                $stmt->bindValue(":$key" , $values);
+                $stmt->bindValue(":$key", $values);
             }
             $this->_commit();
             $stmt->execute();
@@ -142,7 +142,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return bool
      */
-    public function update($table , $data , $where)
+    public function update($table, $data, $where)
     {
         ksort($data);
 
@@ -152,10 +152,10 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
             $fielDetail .= "`$key`=:$key,";
         }
 
-        $fielDetail = trim($fielDetail , ',');
+        $fielDetail = trim($fielDetail, ',');
         $stmt = $this->conn->prepare("UPDATE $table SET $fielDetail WHERE $where ");
         foreach ($data as $key => $values) {
-            $stmt->bindValue(":$key" , $values);
+            $stmt->bindValue(":$key", $values);
         }
 
         return $stmt->execute();
@@ -168,7 +168,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return bool
      */
-    public function save($table , $data , $where = null)
+    public function save($table, $data, $where = null)
     {
         ksort($data);
 
@@ -181,15 +181,15 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
                 $fielDetail .= "`$key`=:$key,";
             }
 
-            $fielDetail = trim($fielDetail , ',');
+            $fielDetail = trim($fielDetail, ',');
             $stmt = $this->conn->prepare("UPDATE $table SET  $fielDetail WHERE $where ");
             foreach ($data as $key => $values) {
-                $stmt->bindValue(":$key" , $values);
+                $stmt->bindValue(":$key", $values);
             }
 
             return $stmt->execute();
         }
-        $this->insert($table , $data);
+        $this->insert($table, $data);
     }
 
     /**
@@ -199,7 +199,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
      *
      * @return int
      */
-    public function delete($table , $where , $limit = 1)
+    public function delete($table, $where, $limit = 1)
     {
         return $this->conn->exec("DELETE FROM $table WHERE $where LIMIT $limit");
     }
