@@ -16,7 +16,7 @@
       "role": "Developer"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": ">=7.0.0",
     "knut7/framework": ">=1.0.6",
