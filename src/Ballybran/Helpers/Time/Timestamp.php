@@ -107,7 +107,7 @@ class Timestamp
         return self::inserir_tempo(self::$tempo_da_sessao);
     }
 
-    public static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false)
+    public static function distanceOfTimeInWords($fromTime , $toTime = 0 , $showLessThanAMinute = false)
     {
         $distanceInSeconds = round(abs($toTime - strtotime($fromTime)));
         $distanceInMinutes = round($distanceInSeconds / 60);
@@ -183,9 +183,9 @@ class Timestamp
         $data_f = $data->format($format);
 
         // setlocale() used with strftime().
-        $my_locale = setlocale(LC_ALL, MY_LOCALE);
+        $my_locale = setlocale(LC_ALL , MY_LOCALE);
         if (MY_LOCALE == true) {
-            return $data_inicial = strftime('%d %B %Y', strtotime(trim($data_f)));
+            return $data_inicial = strftime('%d %B %Y' , strtotime(trim($data_f)));
         } else {
             return $data_f = $data->format($format);
         }

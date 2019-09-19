@@ -16,11 +16,11 @@ class EventHandlerCollection implements InterfaceEventHandlerCollection
         $this->handlers[] = $handler;
     }
 
-    public function raiseEvent($event, $sender, $args)
+    public function raiseEvent($event , $sender , $args)
     {
         foreach ($this->handlers as $handler) {
             if ($handler->getEventName() == $event) {
-                $handler->raise($sender, $args);
+                $handler->raise($sender , $args);
             }
         }
     }

@@ -53,7 +53,7 @@ class ImportClass
     {
         $new_imports = $object;
         $imports_name = get_class($new_imports);
-        array_push($this->__imported, Array($imports_name, $new_imports));
+        array_push($this->__imported , Array($imports_name , $new_imports));
         $imports_function = get_class_methods($new_imports);
         foreach ($imports_function as $i => $function_name) {
             $this->__imported_functions[$function_name] = &$new_imports;
@@ -66,11 +66,11 @@ class ImportClass
      * @return mixed
      * @throws ErrorException
      */
-    function __call($method, $array)
+    function __call($method , $array)
     {
-        if (array_key_exists($method, $this->__imported_functions)) {
-            return call_user_func_array(Array($this->__imported_functions[$method], $method), $array);
+        if (array_key_exists($method , $this->__imported_functions)) {
+            return call_user_func_array(Array($this->__imported_functions[$method] , $method) , $array);
         }
-        throw new ErrorException ('Call to Undefined Method/Class Function', 0, E_ERROR);
+        throw new ErrorException ('Call to Undefined Method/Class Function' , 0 , E_ERROR);
     }
 }

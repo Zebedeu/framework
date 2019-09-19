@@ -41,7 +41,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
         $o = '<form';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
@@ -81,7 +81,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
         $o = '<textarea';
         $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
@@ -114,7 +114,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = '<input ';
@@ -155,7 +155,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = "<select";
@@ -177,7 +177,7 @@ class Form implements interfaceForm
                     $o .= "<option value='{$k}'>{$v}</option>\n";
                 }
             }
-            throw new \InvalidArgumentException("Arguments is not valid " . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not valid " . print_r($params , true));
 
         }
         $o .= "</select>\n";
@@ -199,12 +199,12 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
         $o = '';
         $x = 0;
         foreach ($params as $k => $v) {
-            $v['id'] = (isset($v['id'])) ? $v['id'] : "cb_id_{$x}_" . rand(1000, 9999);
+            $v['id'] = (isset($v['id'])) ? $v['id'] : "cb_id_{$x}_" . rand(1000 , 9999);
             $o .= "<input type='checkbox'";
             $o .= (isset($v['id'])) ? " id='{$v['id']}'" : '';
             $o .= (isset($v['name'])) ? " name='{$v['name']}'" : '';
@@ -236,13 +236,13 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = '';
         $x = 0;
         foreach ($params as $k => $v) {
-            $v['id'] = (isset($v['id'])) ? $v['id'] : "rd_id_{$x}_" . rand(1000, 9999);
+            $v['id'] = (isset($v['id'])) ? $v['id'] : "rd_id_{$x}_" . rand(1000 , 9999);
             $o .= "<input type='radio'";
             $o .= (isset($v['id'])) ? " id='{$v['id']}'" : '';
             $o .= (isset($v['name'])) ? " name='{$v['name']}'" : '';
@@ -270,7 +270,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = "<button type='submit'";
@@ -298,7 +298,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = '<input type="submit"';
@@ -324,7 +324,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = '<input type="hidden"';
@@ -339,7 +339,7 @@ class Form implements interfaceForm
     /**
      * This method returns a table element given the params for settings
      *
-     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'], 'class' =>  'xxxxxx', ] ;
+     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'] , 'class' =>  'xxxxxx', ] ;
      *
      * @return  string
      */
@@ -347,7 +347,7 @@ class Form implements interfaceForm
     {
 
         if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params , true));
         }
 
         $o = "<table ";

@@ -78,9 +78,9 @@ class PHPGraphLibPie extends PHPGraphLib
 
     //default colors, in order of display on graph
     protected $pie_avail_colors = array(
-        'pastel_orange_1', 'pastel_orange_2', 'pastel_blue_1', 'pastel_green_1',
-        'clay', 'pastel_blue_2', 'pastel_yellow', 'silver', 'pastel_green_2',
-        'brown', 'gray', 'pastel_purple', 'olive', 'aqua', 'yellow', 'teal', 'lime'
+        'pastel_orange_1' , 'pastel_orange_2' , 'pastel_blue_1' , 'pastel_green_1' ,
+        'clay' , 'pastel_blue_2' , 'pastel_yellow' , 'silver' , 'pastel_green_2' ,
+        'brown' , 'gray' , 'pastel_purple' , 'olive' , 'aqua' , 'yellow' , 'teal' , 'lime'
     );
 
     protected function calcCoords()
@@ -168,11 +168,11 @@ class PHPGraphLibPie extends PHPGraphLib
         $this->pie_legend_x = $a + $c;
         $this->pie_legend_y = ($this->height - $pie_legend_height) / 2;
         //background
-        imagefilledrectangle($this->image, $this->pie_legend_x, $this->pie_legend_y, $this->pie_legend_x + $pie_legend_width,
-            $this->pie_legend_y + $pie_legend_height, $this->legend_color);
+        imagefilledrectangle($this->image , $this->pie_legend_x , $this->pie_legend_y , $this->pie_legend_x + $pie_legend_width ,
+            $this->pie_legend_y + $pie_legend_height , $this->legend_color);
         //border
-        imagerectangle($this->image, $this->pie_legend_x, $this->pie_legend_y, $this->pie_legend_x + $pie_legend_width,
-            $this->pie_legend_y + $pie_legend_height, $this->legend_outline_color);
+        imagerectangle($this->image , $this->pie_legend_x , $this->pie_legend_y , $this->pie_legend_x + $pie_legend_width ,
+            $this->pie_legend_y + $pie_legend_height , $this->legend_outline_color);
         $xValue = $this->pie_legend_x + self::PIE_LEGEND_PADDING;
         $count = 0;
         $this->resetColorPointer();
@@ -182,13 +182,13 @@ class PHPGraphLibPie extends PHPGraphLib
             $yValue = $this->pie_legend_y + self::PIE_LEGEND_TEXT_HEIGHT * $count + self::PIE_LEGEND_PADDING;
             //draw color boxes
             $color = $this->generateNextColor();
-            imagefilledrectangle($this->image, $xValue, $yValue + $swatchToTextOffset, $xValue + $swatchSize, $yValue + $swatchToTextOffset + $swatchSize, $color);
-            imagerectangle($this->image, $xValue, $yValue + $swatchToTextOffset, $xValue + $swatchSize, $yValue + $swatchToTextOffset + $swatchSize, $this->legend_swatch_outline_color);
+            imagefilledrectangle($this->image , $xValue , $yValue + $swatchToTextOffset , $xValue + $swatchSize , $yValue + $swatchToTextOffset + $swatchSize , $color);
+            imagerectangle($this->image , $xValue , $yValue + $swatchToTextOffset , $xValue + $swatchSize , $yValue + $swatchToTextOffset + $swatchSize , $this->legend_swatch_outline_color);
             //if longer than our max, trim text
             if ($maxChars) {
-                $dataText = substr($dataText, 0, $maxChars);
+                $dataText = substr($dataText , 0 , $maxChars);
             }
-            imagestring($this->image, 2, $xValue + (2 * self::PIE_LEGEND_PADDING), $yValue, $dataText, $this->legend_text_color);
+            imagestring($this->image , 2 , $xValue + (2 * self::PIE_LEGEND_PADDING) , $yValue , $dataText , $this->legend_text_color);
             $count++;
         }
     }
@@ -204,7 +204,7 @@ class PHPGraphLibPie extends PHPGraphLib
                 // generate a darker version of the indexed color
                 // do not draw if the value is zero
                 if (!$value == 0) {
-                    imagefilledarc($this->image, $this->pie_center_x, $i, $this->pie_width, $this->pie_height, $arcStart, (360 * $value) + $arcStart, $color, IMG_ARC_PIE);
+                    imagefilledarc($this->image , $this->pie_center_x , $i , $this->pie_width , $this->pie_height , $arcStart , (360 * $value) + $arcStart , $color , IMG_ARC_PIE);
                     $arcStart += 360 * $value;
                 }
             }
@@ -215,16 +215,16 @@ class PHPGraphLibPie extends PHPGraphLib
             $color = $this->generateNextColor();
             // do not draw if the value is zero
             if (!$value == 0) {
-                imagefilledarc($this->image, $this->pie_center_x, $this->pie_center_y, $this->pie_width, $this->pie_height, $arcStart, (360 * $value) + $arcStart, $color, IMG_ARC_PIE);
+                imagefilledarc($this->image , $this->pie_center_x , $this->pie_center_y , $this->pie_width , $this->pie_height , $arcStart , (360 * $value) + $arcStart , $color , IMG_ARC_PIE);
                 $arcStart += 360 * $value;
             }
             if ($this->bool_data_labels) {
-                $this->generateDataLabel($value, $arcStart);
+                $this->generateDataLabel($value , $arcStart);
             }
         }
     }
 
-    protected function generateDataLabel($value, $arcStart)
+    protected function generateDataLabel($value , $arcStart)
     {
         //midway if the mid arc angle of the wedge we just drew
         $midway = ($arcStart - (180 * $value));
@@ -235,18 +235,18 @@ class PHPGraphLibPie extends PHPGraphLib
         $valueX = $this->pie_center_x + ($this->pie_width / 2 + $this->pie_data_label_space) * cos($theta);
         $valueY = $this->pie_center_y + ($this->pie_width / 2 + $this->pie_data_label_space) * sin($theta) * $skew;
         $displayValue = $this->formatPercent($value);
-        $valueArray = $this->dataLabelHandicap($valueX, $valueY, $displayValue, $midway);
+        $valueArray = $this->dataLabelHandicap($valueX , $valueY , $displayValue , $midway);
         $valueX = $valueArray[0];
         $valueY = $valueArray[1];
-        imagestring($this->image, 2, $valueX, $valueY, $displayValue, $this->label_text_color);
+        imagestring($this->image , 2 , $valueX , $valueY , $displayValue , $this->label_text_color);
     }
 
     protected function formatPercent($input)
     {
-        return number_format($input * 100, $this->pie_precision) . '%';
+        return number_format($input * 100 , $this->pie_precision) . '%';
     }
 
-    protected function dataLabelHandicap($x, $y, $value, $midway)
+    protected function dataLabelHandicap($x , $y , $value , $midway)
     {
         //moves data label x/y based on quadrant and length of displayed data
         //and how text is displayed (upper left corner x/y)
@@ -277,7 +277,7 @@ class PHPGraphLibPie extends PHPGraphLib
             $newX = $x - $lengthOffset;
             $newY = $y - $vertOffset;
         }
-        return array($newX, $newY);
+        return array($newX , $newY);
     }
 
     protected function generateNextColor($dark = false)
@@ -289,7 +289,7 @@ class PHPGraphLibPie extends PHPGraphLib
             $array[1] *= .8;
             $array[2] *= .8;
         }
-        $color = imagecolorallocate($this->image, $array[0], $array[1], $array[2]);
+        $color = imagecolorallocate($this->image , $array[0] , $array[1] , $array[2]);
         $this->pie_color_pointer++;
         if ($this->pie_color_pointer >= count($this->pie_avail_colors)) {
             $this->pie_color_pointer = 0;
@@ -313,40 +313,40 @@ class PHPGraphLibPie extends PHPGraphLib
             //remove last error generated (phpgraphlib::returncolorarray) sets only one error if false)
             array_pop($this->error);
             //check to see if numeric color passed through in form '128,128,128'
-            if (strpos($color, ',') !== false) {
-                return explode(',', $color);
+            if (strpos($color , ',') !== false) {
+                return explode(',' , $color);
             }
             switch (strtolower($color)) {
                 //named colors based on w3c's recommended html colors
                 case 'pastel_orange_1':
-                    return array(238, 197, 145);
+                    return array(238 , 197 , 145);
                     break;
                 case 'pastel_orange_2':
-                    return array(238, 180, 34);
+                    return array(238 , 180 , 34);
                     break;
                 case 'pastel_blue_1':
-                    return array(122, 197, 205);
+                    return array(122 , 197 , 205);
                     break;
                 case 'pastel_green_1':
-                    return array(102, 205, 0);
+                    return array(102 , 205 , 0);
                     break;
                 case 'pastel_blue_2':
-                    return array(125, 167, 217);
+                    return array(125 , 167 , 217);
                     break;
                 case 'pastel_green_2':
-                    return array(196, 223, 155);
+                    return array(196 , 223 , 155);
                     break;
                 case 'clay':
-                    return array(246, 142, 85);
+                    return array(246 , 142 , 85);
                     break;
                 case 'pastel_yellow':
-                    return array(255, 247, 153);
+                    return array(255 , 247 , 153);
                     break;
                 case 'pastel_purple':
-                    return array(135, 129, 189);
+                    return array(135 , 129 , 189);
                     break;
                 case 'brown':
-                    return array(166, 124, 81);
+                    return array(166 , 124 , 81);
                     break;
             }
             $this->error[] = "Color name \"$color\" not recogized.";
@@ -369,13 +369,13 @@ class PHPGraphLibPie extends PHPGraphLib
         } else {
             $title_y = ($topElement / 2) - (self::TITLE_CHAR_HEIGHT / 2);
             $title_x = ($this->width / 2) - ((strlen($this->title_text) * self::TITLE_CHAR_WIDTH) / 2);
-            imagestring($this->image, 2, $title_x, $title_y, $this->title_text, $this->title_color);
+            imagestring($this->image , 2 , $title_x , $title_y , $this->title_text , $this->title_color);
         }
     }
 
     public function setLabelTextColor($color)
     {
-        $this->setGenericColor($color, '$this->label_text_color', "Label text color not specified properly.");
+        $this->setGenericColor($color , '$this->label_text_color' , "Label text color not specified properly.");
     }
 
     public function setPrecision($digits)

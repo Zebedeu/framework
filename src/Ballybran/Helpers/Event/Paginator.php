@@ -19,7 +19,7 @@ class Paginator extends DBconnection
     private $total_result;
 
 
-    public function __construct($dbType, $query, $limit)
+    public function __construct($dbType , $query , $limit)
     {
         $reg = new RegistryDatabase();
         $this->stmt = $reg->get($dbType);

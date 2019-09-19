@@ -28,13 +28,13 @@ class Breadcrumb
     {
 
         $this->options = array(
-            'before' => '<span class="arrow">',
-            'after' => '</span>',
+            'before' => '<span class="arrow">' ,
+            'after' => '</span>' ,
             'delimiter' => '&raquo;'
         );
 
         if (is_array($options)) {
-            return $this->options = array_merge($this->options, $options);
+            return $this->options = array_merge($this->options , $options);
         }
 
         return $markup = $this->options['before'] . $this->options['delimiter'] . $this->options['after'];

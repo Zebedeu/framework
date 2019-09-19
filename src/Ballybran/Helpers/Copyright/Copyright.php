@@ -25,11 +25,11 @@ class Copyright extends ValidateTypes implements CopyrightInterface
     private static $date;
     private static $data_last = 2015;
 
-    public static function copyright(int $data_last = NULL, string $name = "knut7 FRAMWORK")
+    public static function copyright(int $data_last = NULL , string $name = "knut7 FRAMWORK")
     {
 
         self::$date = date('y');
-        if (self::getSQLValueString($data_last, 'int')) {
+        if (self::getSQLValueString($data_last , 'int')) {
             return "Copyright (c)\n" . $data_last . "\n-" . self::$date . "\n" . $name . "\n" . "All Rights Reserved";
         }
         return "Copyright (c)\n" . self::$data_last . "\n-" . self::$date . "\n" . $name . "\n" . "All Rights Reserved";

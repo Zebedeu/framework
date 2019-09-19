@@ -54,9 +54,9 @@ class BaseVarDumper
      * @param integer $depth maximum depth that the dumper should go into the variable. Defaults to 10.
      * @param boolean $highlight whether the result should be syntax-highlighted
      */
-    public static function dump($var, $depth = 10, bool $highlight = false)
+    public static function dump($var , $depth = 10 , $highlight = false)
     {
-        echo static::dumpAsString($var, $depth, $highlight);
+        echo static::dumpAsString($var , $depth , $highlight);
     }
 
     /**
@@ -68,15 +68,15 @@ class BaseVarDumper
      * @param boolean $highlight whether the result should be syntax-highlighted
      * @return string the string representation of the variable
      */
-    private static function dumpAsString($var, int $depth = 10, bool $highlight = false)
+    public static function dumpAsString($var , $depth = 10 , $highlight = false)
     {
         self::$_output = '';
         self::$_objects = [];
         self::$_depth = $depth;
-        self::dumpInternal($var, 0);
+        self::dumpInternal($var , 0);
         if ($highlight) {
-            $result = highlight_string("<?php\n" . self::$_output, true);
-            self::$_output = preg_replace('/&lt;\\?php<br \\/>/', '', $result, 1);
+            $result = highlight_string("<?php\n" . self::$_output , true);
+            self::$_output = preg_replace('/&lt;\\?php<br \\/>/' , '' , $result , 1);
         }
 
         return self::$_output;
@@ -86,7 +86,7 @@ class BaseVarDumper
      * @param mixed $var variable to be dumped
      * @param integer $level depth level
      */
-    private static function dumpInternal($var, $level)
+    private static function dumpInternal($var , $level)
     {
         switch (gettype($var)) {
             case 'boolean':
@@ -117,31 +117,31 @@ class BaseVarDumper
                     self::$_output .= '[]';
                 } else {
                     $keys = array_keys($var);
-                    $spaces = str_repeat(' ', $level * 4);
+                    $spaces = str_repeat(' ' , $level * 4);
                     self::$_output .= '[';
                     foreach ($keys as $key) {
                         self::$_output .= "\n" . $spaces . '    ';
-                        self::dumpInternal($key, 0);
+                        self::dumpInternal($key , 0);
                         self::$_output .= ' => ';
-                        self::dumpInternal($var[$key], $level + 1);
+                        self::dumpInternal($var[$key] , $level + 1);
                     }
                     self::$_output .= "\n" . $spaces . ']';
                 }
                 break;
             case 'object':
-                if (($id = array_search($var, self::$_objects, true)) !== false) {
+                if (($id = array_search($var , self::$_objects , true)) !== false) {
                     self::$_output .= get_class($var) . '#' . ($id + 1) . '(...)';
                 } elseif (self::$_depth <= $level) {
                     self::$_output .= get_class($var) . '(...)';
                 } else {
-                    $id = array_push(self::$_objects, $var);
+                    $id = array_push(self::$_objects , $var);
                     $className = get_class($var);
-                    $spaces = str_repeat(' ', $level * 4);
+                    $spaces = str_repeat(' ' , $level * 4);
                     self::$_output .= "$className#$id\n" . $spaces . '(';
                     foreach ((array)$var as $key => $value) {
-                        $keyDisplay = strtr(trim($key), "\0", ':');
+                        $keyDisplay = strtr(trim($key) , "\0" , ':');
                         self::$_output .= "\n" . $spaces . "    [$keyDisplay] => ";
-                        self::dumpInternal($value, $level + 1);
+                        self::dumpInternal($value , $level + 1);
                     }
                     self::$_output .= "\n" . $spaces . ')';
                 }
@@ -168,7 +168,7 @@ class BaseVarDumper
     public static function export($var)
     {
         self::$_output = '';
-        self::exportInternal($var, 0);
+        self::exportInternal($var , 0);
         return self::$_output;
     }
 
@@ -176,7 +176,7 @@ class BaseVarDumper
      * @param mixed $var variable to be exported
      * @param integer $level depth level
      */
-    private static function exportInternal($var, $level)
+    private static function exportInternal($var , $level)
     {
         switch (gettype($var)) {
             case 'NULL':
@@ -187,16 +187,16 @@ class BaseVarDumper
                     self::$_output .= '[]';
                 } else {
                     $keys = array_keys($var);
-                    $outputKeys = ($keys !== range(0, sizeof($var) - 1));
-                    $spaces = str_repeat(' ', $level * 4);
+                    $outputKeys = ($keys !== range(0 , sizeof($var) - 1));
+                    $spaces = str_repeat(' ' , $level * 4);
                     self::$_output .= '[';
                     foreach ($keys as $key) {
                         self::$_output .= "\n" . $spaces . '    ';
                         if ($outputKeys) {
-                            self::exportInternal($key, 0);
+                            self::exportInternal($key , 0);
                             self::$_output .= ' => ';
                         }
-                        self::exportInternal($var[$key], $level + 1);
+                        self::exportInternal($var[$key] , $level + 1);
                         self::$_output .= ',';
                     }
                     self::$_output .= "\n" . $spaces . ']';
@@ -204,16 +204,16 @@ class BaseVarDumper
                 break;
             case 'object':
                 try {
-                    $output = 'unserialize(' . var_export(serialize($var), true) . ')';
+                    $output = 'unserialize(' . var_export(serialize($var) , true) . ')';
                 } catch (\Exception $e) {
                     // serialize may fail, for example: if object contains a `\Closure` instance
                     // so we use regular `var_export()` as fallback
-                    $output = var_export($var, true);
+                    $output = var_export($var , true);
                 }
                 self::$_output .= $output;
                 break;
             default:
-                self::$_output .= var_export($var, true);
+                self::$_output .= var_export($var , true);
         }
     }
 }

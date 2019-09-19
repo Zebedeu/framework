@@ -1,6 +1,4 @@
-<?php
-/**
- *
+/*
  * KNUT7 K7F (http://framework.artphoweb.com/)
  * KNUT7 K7F (tm) : Rapid Development Framework (http://framework.artphoweb.com/)
  *
@@ -12,32 +10,14 @@
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (http://www.artphoweb.com)
  * @license   http://framework.artphoweb.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- * @version   1.0.7
- *
- *
+ * @version   1.0.2
  */
 
-namespace Ballybran\Helpers;
-
-use Ballybran\Exception\Exception;
-use Ballybran\Exception\KException;
-use Ballybran\Helpers\Language;
-
-/**
- * Class Routes
- * @package Ballybran\Helpers\Routing
- */
-class Routes
-{
-    public static $validRoutes = array();
-
-    public static function set($route, \Closure $closure)
-    {
-
-        self::$validRoutes[] = $route;
-
-        if ($_GET['url'] == $route) {
-            $closure->__invoke();
-        }
-    }
-}
+$(document).ready(function (e) {
+    $("small").remove();
+    $("i").remove(":contains('size')");
+    $("b").add("div").addClass("seta");
+    $(".xdebug-var-dump").click(function () {
+        $("i").addElements("f");
+    });
+});

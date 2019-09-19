@@ -25,7 +25,7 @@ class Form extends Value
     private $_currentItem = null;
 
     /** @var array $_postData Stores the Posted Data */
-    private $_postData = array("text" => "text", "button" => "button");
+    private $_postData = array("text" => "text" , "button" => "button");
 
 
     private $_name;
@@ -44,7 +44,7 @@ class Form extends Value
         return $this;
     }
 
-    public function setType($field, $nome = null, $value = null)
+    public function setType($field , $nome = null , $value = null)
     {
 
         $this->_postData[$field] = $field;

@@ -26,7 +26,7 @@ namespace Ballybran\Helpers\Security;
 class ValidateTypes
 {
 
-    public static function getSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "")
+    public static function getSQLValueString($theValue , $theType , $theDefinedValue = "" , $theNotDefinedValue = "")
     {
 
         $theValue = function_exists("htmlspecialchars") ? htmlspecialchars($theValue) : htmlspecialchars($theValue);
@@ -42,7 +42,7 @@ class ValidateTypes
                 if (!is_string($theValue)) {
                     return null;
                 }
-                return filter_var($theValue, FILTER_VALIDATE_EMAIL);
+                return filter_var($theValue , FILTER_VALIDATE_EMAIL);
                 break;
             case "long":
             case "int":
@@ -65,19 +65,19 @@ class ValidateTypes
                 if (!is_string($theValue)) {
                     return null;
                 }
-                return filter_var($theValue, FILTER_VALIDATE_URL);
+                return filter_var($theValue , FILTER_VALIDATE_URL);
                 break;
             case "domain":
                 if (!is_string($theValue)) {
                     return null;
                 }
-                return filter_var($theValue, FILTER_VALIDATE_DOMAIN);
+                return filter_var($theValue , FILTER_VALIDATE_DOMAIN);
                 break;
             case "ip":
                 if (!is_double($theValue)) {
                     return null;
                 }
-                return filter_var($theValue, FILTER_VALIDATE_IP);
+                return filter_var($theValue , FILTER_VALIDATE_IP);
                 break;
             case "defined":
                 $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;

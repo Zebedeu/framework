@@ -27,7 +27,7 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+    public function setFetchMode($fetchMode , $arg2 = null , $arg3 = null)
     {
         // This thin wrapper is necessary to shield against the weird signature
         // of PDOStatement::setFetchMode(): even if the second and third
@@ -39,10 +39,10 @@ class PDOStatement extends \PDOStatement
             }
 
             if ($arg3 === null) {
-                return parent::setFetchMode($fetchMode, $arg2);
+                return parent::setFetchMode($fetchMode , $arg2);
             }
 
-            return parent::setFetchMode($fetchMode, $arg2, $arg3);
+            return parent::setFetchMode($fetchMode , $arg2 , $arg3);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }
@@ -51,10 +51,10 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = \PDO::PARAM_STR)
+    public function bindValue($param , $value , $type = \PDO::PARAM_STR)
     {
         try {
-            return parent::bindValue($param, $value, $type);
+            return parent::bindValue($param , $value , $type);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }
@@ -63,10 +63,10 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null)
+    public function bindParam($column , &$variable , $type = \PDO::PARAM_STR , $length = null , $driverOptions = null)
     {
         try {
-            return parent::bindParam($column, $variable, $type, $length, $driverOptions);
+            return parent::bindParam($column , $variable , $type , $length , $driverOptions);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }
@@ -87,7 +87,7 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null)
+    public function fetch($fetchMode = null , $cursorOrientation = null , $cursorOffset = null)
     {
         try {
             if ($fetchMode === null && $cursorOrientation === null && $cursorOffset === null) {
@@ -99,10 +99,10 @@ class PDOStatement extends \PDOStatement
             }
 
             if ($cursorOffset === null) {
-                return parent::fetch($fetchMode, $cursorOrientation);
+                return parent::fetch($fetchMode , $cursorOrientation);
             }
 
-            return parent::fetch($fetchMode, $cursorOrientation, $cursorOffset);
+            return parent::fetch($fetchMode , $cursorOrientation , $cursorOffset);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }
@@ -111,7 +111,7 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
+    public function fetchAll($fetchMode = null , $fetchArgument = null , $ctorArgs = null)
     {
         try {
             if ($fetchMode === null && $fetchArgument === null && $ctorArgs === null) {
@@ -123,10 +123,10 @@ class PDOStatement extends \PDOStatement
             }
 
             if ($ctorArgs === null) {
-                return parent::fetchAll($fetchMode, $fetchArgument);
+                return parent::fetchAll($fetchMode , $fetchArgument);
             }
 
-            return parent::fetchAll($fetchMode, $fetchArgument, $ctorArgs);
+            return parent::fetchAll($fetchMode , $fetchArgument , $ctorArgs);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }

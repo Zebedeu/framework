@@ -40,7 +40,7 @@ class Language
      * @param string $name
      * @param string $code
      */
-    public function Load($name, $value = null)
+    public function Load($name , $value = null)
     {
         /** lang file */
         $file = __DIR__ . '/../../' . DIR_LANGUAGE . LANGUAGE_CODE . DS . "$name.php";
@@ -87,7 +87,7 @@ class Language
      *
      * @return string
      */
-    public static function show($value, $name = null)
+    public static function show($value , $name = null)
     {
         /** lang file */
         $file = __DIR__ . '/../../' . DIR_LANGUAGE . LANGUAGE_CODE . DS . "$name.php";

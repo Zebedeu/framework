@@ -97,7 +97,7 @@ class Validate
         return $this;
     }
 
-    public function getPostDataForHash($fieldName = null, HashInterface $hashObject = null)
+    public function getPostDataForHash($fieldName = null , HashInterface $hashObject = null)
     {
         $it = new IteratorCollection($this->_postData);
         if (isset($fieldName) && is_object($hashObject)) {
@@ -105,7 +105,7 @@ class Validate
                 $this->_postData[$this->_currentItem];
 
                 $securityHash = $hashObject::hash_password($this->_postData[$fieldName]);
-                $it->set($fieldName, $securityHash);
+                $it->set($fieldName , $securityHash);
             }
 
             return $it->toArray();
@@ -134,12 +134,12 @@ class Validate
      *
      * @return $this
      */
-    public function val(string $typeOfValidator, int $length)
+    public function val(string $typeOfValidator , int $length)
     {
         $error = '';
 
         if (!empty($length)) {
-            $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem], $length);
+            $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem] , $length);
         }
         if ($error) {
             $this->_error[$this->_currentItem] = $error;
@@ -159,8 +159,8 @@ class Validate
 
     public function email()
     {
-        $email = filter_var($this->_postData[$this->_currentItem], FILTER_SANITIZE_EMAIL);
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $email = filter_var($this->_postData[$this->_currentItem] , FILTER_SANITIZE_EMAIL);
+        if (!filter_var($email , FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('the value entered must have a Email');
         }
 
@@ -196,7 +196,7 @@ class Validate
 
     public function domain()
     {
-        if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_DOMAIN)) {
+        if (!filter_var($this->_postData[$this->_currentItem] , FILTER_VALIDATE_DOMAIN)) {
             throw new \InvalidArgumentException('the value entered must have a Domain');
         }
 
@@ -205,7 +205,7 @@ class Validate
 
     public function url()
     {
-        if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_URL)) {
+        if (!filter_var($this->_postData[$this->_currentItem] , FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException('the value entered must have a Url');
         }
 
@@ -214,7 +214,7 @@ class Validate
 
     public function ip()
     {
-        if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_IP)) {
+        if (!filter_var($this->_postData[$this->_currentItem] , FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('the value entered must have a Ip');
         }
 

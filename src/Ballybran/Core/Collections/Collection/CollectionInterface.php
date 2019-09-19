@@ -49,7 +49,7 @@ interface CollectionInterface extends Traversable
      * @param $value
      * @return mixed
      */
-    public function offsetSet($offset, $value);
+    public function offsetSet($offset , $value);
 
     /**
      * @param $offset

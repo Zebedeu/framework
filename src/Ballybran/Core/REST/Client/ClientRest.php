@@ -15,9 +15,9 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Core\Http\Client;
+namespace Ballybran\Core\REST\Client;
 
-use \Ballybran\Core\Http\Encodes;
+use \Ballybran\Core\REST\Encodes;
 use Ballybran\Helpers\Http\Http;
 
 class ClientRest extends Encodes
@@ -30,7 +30,7 @@ class ClientRest extends Encodes
     private $cookie_file;
     private $proxy;
 
-    function __construct($cookies = true, $cookie = "", $compression = 'gzip', $proxy = '')
+    function __construct($cookies = true , $cookie = "" , $compression = 'gzip' , $proxy = '')
     {
         $this->headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';
         $this->headers[] = 'Connection: Keep-Alive';
@@ -46,27 +46,27 @@ class ClientRest extends Encodes
     private function cookie($cookie_file)
     {
         if (file_exists($cookie_file)) {
-             $this->cookie_file = $cookie_file;
+            echo $this->cookie_file = $cookie_file;
         } else {
-            fopen($cookie_file, 'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
+            fopen($cookie_file , 'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
             $this->cookie_file = $cookie_file;
-            fclose($cookie_file);
+            fclose($this->cookie_file);
         }
     }
 
-    public function get($url, $fields = null)
+    public function get($url , $fields = null)
     {
         $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 0);
-        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
-        curl_setopt($process, CURLOPT_ENCODING, $this->compression);
-        curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($process , CURLOPT_HTTPHEADER , $this->headers);
+        curl_setopt($process , CURLOPT_HEADER , 0);
+        curl_setopt($process , CURLOPT_USERAGENT , $this->user_agent);
+        if ($this->cookies == true) curl_setopt($process , CURLOPT_COOKIEFILE , $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process , CURLOPT_COOKIEJAR , $this->cookie_file);
+        curl_setopt($process , CURLOPT_ENCODING , $this->compression);
+        curl_setopt($process , CURLOPT_TIMEOUT , 30);
+        if ($this->proxy) curl_setopt($process , CURLOPT_PROXY , $this->proxy);
+        curl_setopt($process , CURLOPT_RETURNTRANSFER , 1);
+        curl_setopt($process , CURLOPT_FOLLOWLOCATION , 1);
         $return = curl_exec($process);
 
 
@@ -89,37 +89,35 @@ class ClientRest extends Encodes
 
     }
 
-    public function post($url, $data)
+    public function post($url , $data)
     {
         $process = curl_init($url);
         // curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 1);
-        curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
-        curl_setopt($process, CURLOPT_ENCODING, $this->compression);
-        curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
-        curl_setopt($process, CURLOPT_POST, 1);
-        curl_setopt($process, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($process , CURLOPT_HEADER , 1);
+        curl_setopt($process , CURLOPT_USERAGENT , $this->user_agent);
+        if ($this->cookies == true) curl_setopt($process , CURLOPT_COOKIEFILE , $this->cookie_file);
+        if ($this->cookies == true) curl_setopt($process , CURLOPT_COOKIEJAR , $this->cookie_file);
+        curl_setopt($process , CURLOPT_ENCODING , $this->compression);
+        curl_setopt($process , CURLOPT_TIMEOUT , 30);
+        if ($this->proxy) curl_setopt($process , CURLOPT_PROXY , $this->proxy);
+        curl_setopt($process , CURLOPT_POST , 1);
+        curl_setopt($process , CURLOPT_POSTFIELDS , $data);
+        curl_setopt($process , CURLOPT_RETURNTRANSFER , 1);
+        curl_setopt($process , CURLOPT_FOLLOWLOCATION , 1);
         $return = curl_exec($process);
         curl_close($process);
         return $return;
     }
 
-
-
-    public function put($url = '', array $data)
+    public function put($url = '' , array $data)
     {
 //        'http://example.com/api/conversations/cid123/status'
         $process = curl_init($url);
 
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($process, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($process , CURLOPT_RETURNTRANSFER , true);
+        curl_setopt($ch , CURLOPT_CUSTOMREQUEST , "PUT");
         $data = array("status" => 'R');
-        curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($process , CURLOPT_POSTFIELDS , http_build_query($data));
         $response = curl_exec($process);
         if ($response === false) {
             $info = curl_getinfo($process);
@@ -140,9 +138,14 @@ class ClientRest extends Encodes
 //        'http://example.com/api/conversations/[CONVERSATION_ID]'
         $service_url = $value;
         $process = curl_init($service_url);
-        curl_setopt($process, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($process, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($service_url));
+        curl_setopt($process , CURLOPT_RETURNTRANSFER , true);
+        curl_setopt($process , CURLOPT_CUSTOMREQUEST , "DELETE");
+        $curl_post_data = array(
+            'note' => 'this is spam!' ,
+            'useridentifier' => 'agent@example.com' ,
+            'apikey' => 'key001'
+        );
+        curl_setopt($process , CURLOPT_POSTFIELDS , $curl_post_data);
         $curl_response = curl_exec($process);
         if ($curl_response === false) {
             $info = curl_getinfo($process);

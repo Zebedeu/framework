@@ -103,7 +103,7 @@ class FileSystem extends ImageProperties
                 $this->type = $_FILES['archive']['type'][$i];
                 $this->tmp = $_FILES['archive']['tmp_name'][$i];
 
-                $this->explode = explode('.', $this->name);
+                $this->explode = explode('.' , $this->name);
             }
         }
 
@@ -140,23 +140,23 @@ class FileSystem extends ImageProperties
     private function makePathDirIfUserExist()
     {
         if (!file_exists(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS, 0777, true);
+            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS , 0777 , true);
         }
     }
 
     private function makePathDirIfDefaultFileNotExist()
     {
         if (!file_exists(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS, 0777, true);
+            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS , 0777 , true);
         }
     }
 
     private function getObjectImage()
     {
         $this->image->upload($this->path);
-        $this->image->imageRotate($this->getDegree(), $this->getColor());
-        $this->image->resizeImage($this->getWidth(), $this->getHeight(), $this->getOption());
-        $this->image->save($this->path, $this->getQuality());
+        $this->image->imageRotate($this->getDegree() , $this->getColor());
+        $this->image->resizeImage($this->getWidth() , $this->getHeight() , $this->getOption());
+        $this->image->save($this->path , $this->getQuality());
     }
 
     /**
@@ -168,7 +168,7 @@ class FileSystem extends ImageProperties
         if (empty($this->tmp)) {
             throw new NoFilesException('No uploaded files were found. Did you specify "enctype" in your &lt;form&gt; tag?');
         }
-        if (move_uploaded_file($this->tmp, $this->path)) {
+        if (move_uploaded_file($this->tmp , $this->path)) {
             echo $this->getObjectImage();
         }
     }

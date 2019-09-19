@@ -66,7 +66,7 @@ class CSSCache {
     $buffer = str_replace(' {', '{', $buffer);
     $buffer = str_replace('} ', '}', $buffer);
     $buffer = str_replace(': ', ':', $buffer);
-    $buffer = str_replace(',', ',', $buffer);
+    $buffer = str_replace(' ,', ',', $buffer);
     $buffer = str_replace(' ;', ';', $buffer);
     return $buffer;
   }

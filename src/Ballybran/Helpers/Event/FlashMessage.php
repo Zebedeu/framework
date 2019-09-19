@@ -45,9 +45,9 @@ class FlashMessage
         return $suucsss;
     }
 
-    public static function display($closure, $message)
+    public static function display($closure , $message)
     {
-        return call_user_func(array(self::class, $closure), $message);
+        return call_user_func(array(self::class , $closure) , $message);
     }
 
     public function sendMessage()

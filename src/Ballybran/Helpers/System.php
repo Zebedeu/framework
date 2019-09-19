@@ -33,7 +33,7 @@ class System extends Http
      */
     private static function microtime_float()
     {
-        $time = explode(" ", microtime());
+        $time = explode(" " , microtime());
         foreach ($time as $item => $value) {
             return ((float)$item + (float)$value);
         }

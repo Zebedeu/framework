@@ -19,7 +19,6 @@
 namespace Ballybran\Core\Model;
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Exception\KException;
 
 /**
  * Class Model.
@@ -38,12 +37,12 @@ class Model
     /**
      * @var string
      */
-    public $modelPath = 'Models';
+    public $modelPath = '/Models/';
 
     /**
      * @var string
      */
-    private $obj;
+    private $obj_ip;
 
     /**
      * Model constructor.
@@ -56,35 +55,32 @@ class Model
     /**
      * @return mixed
      */
-
-
-    private function getLoadModel()
+    public function getLoadModel()
     {
-        $className = str_replace('\\', '/', get_class($this));
-        $classModel = str_replace('Controllers', $this->modelPath, $className);
+        $className = str_replace('\\' , '/' , get_class($this));
+        $classModel = str_replace('Controllers' , 'Models' , $className);
         $this->modelClass = $classModel . 'Model';
-        //$path = 'Module/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
-        $path =   $this->modelClass . '.php';
+        $path = 'Module/' . $this->modelClass . '.php';
 
         if (file_exists($path) || is_readable($path)) {
             require_once $path;
+
             return $this->dbObject();
         }
-
     }
 
     /**
      * @return mixed
      */
-    private function dbObject()
+    public function dbObject()
     {
         $registry = RegistryDatabase::getInstance();
         $this->obj = $registry->get(TYPE);
-        $className = str_replace('/', '\\', $this->modelClass);
+        $className = str_replace('/' , '\\' , $this->modelClass);
 
         $this->model = new $className($this->obj);
 
-         $this->model;
+        return $this->model;
     }
 
 }

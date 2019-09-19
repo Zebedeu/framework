@@ -29,10 +29,10 @@ class Backup extends DBconnection
 //leave empty to do all
 
 
-    function backup_tables($file, $compress = false, $tables = null)
+    function backup_tables($file , $compress = false , $tables = null)
     {
 
-        $this->conn->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_TO_STRING);
+        $this->conn->setAttribute(PDO::ATTR_ORACLE_NULLS , PDO::NULL_TO_STRING);
 
 //Script Variables
         $compression = $compress;
@@ -41,14 +41,14 @@ class Backup extends DBconnection
 
 //create/open files
         if ($compression) {
-            $zp = gzopen($BACKUP_PATH . '', "w9");
+            $zp = gzopen($BACKUP_PATH . '' , "w9");
         } else {
-            $handle = fopen($BACKUP_PATH, 'a+');
+            $handle = fopen($BACKUP_PATH , 'a+');
         }
 
 
 //array of all database field types which just take numbers 
-        $numtypes = array('tinyint', 'smallint', 'mediumint', 'int', 'bigint', 'float', 'double', 'decimal', 'real');
+        $numtypes = array('tinyint' , 'smallint' , 'mediumint' , 'int' , 'bigint' , 'float' , 'double' , 'decimal' , 'real');
 
 //get all of the tables
         if (empty($tables)) {
@@ -57,7 +57,7 @@ class Backup extends DBconnection
                 $tables[] = $row[0];
             }
         } else {
-            $tables = is_array($tables) ? $tables : explode(',', $tables);
+            $tables = is_array($tables) ? $tables : explode(',' , $tables);
         }
 
 //cycle through the table(s)
@@ -75,14 +75,14 @@ class Backup extends DBconnection
 //table structure
             $pstm2 = $this->conn->query('SHOW CREATE TABLE ' . $table);
             $row2 = $pstm2->fetch(PDO::FETCH_NUM);
-            $ifnotexists = str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $row2[1]);
+            $ifnotexists = str_replace('CREATE TABLE' , 'CREATE TABLE IF NOT EXISTS' , $row2[1]);
             $return .= "\n\n" . $ifnotexists . ";\n\n";
 
 
             if ($compression) {
-                gzwrite($zp, $return);
+                gzwrite($zp , $return);
             } else {
-                fwrite($handle, $return);
+                fwrite($handle , $return);
             }
             $return = "";
 
@@ -95,8 +95,8 @@ class Backup extends DBconnection
 
                 while ($rows = $pstm3->fetch(PDO::FETCH_NUM)) {
 
-                    if (stripos($rows[1], '(')) {
-                        $type[$table][] = stristr($rows[1], '(', true);
+                    if (stripos($rows[1] , '(')) {
+                        $type[$table][] = stristr($rows[1] , '(' , true);
                     } else $type[$table][] = $rows[1];
 
                     $return .= $rows[0];
@@ -109,9 +109,9 @@ class Backup extends DBconnection
                 $return .= ")" . ' VALUES';
 
                 if ($compression) {
-                    gzwrite($zp, $return);
+                    gzwrite($zp , $return);
                 } else {
-                    fwrite($handle, $return);
+                    fwrite($handle , $return);
                 }
                 $return = "";
             }
@@ -125,7 +125,7 @@ class Backup extends DBconnection
 
                     if (isset($row[$j])) {
 //if number, take away "". else leave as string
-                        if (in_array($type[$table][$j], $numtypes)) $return .= $row[$j]; else $return .= '"' . $row[$j] . '"';
+                        if (in_array($type[$table][$j] , $numtypes)) $return .= $row[$j]; else $return .= '"' . $row[$j] . '"';
                     } else {
                         $return .= '""';
                     }
@@ -141,17 +141,17 @@ class Backup extends DBconnection
 
                 }
                 if ($compression) {
-                    gzwrite($zp, $return);
+                    gzwrite($zp , $return);
                 } else {
-                    fwrite($handle, $return);
+                    fwrite($handle , $return);
                 }
                 $return = "";
             }
             $return = "\n\n-- ------------------------------------------------ \n\n";
             if ($compression) {
-                gzwrite($zp, $return);
+                gzwrite($zp , $return);
             } else {
-                fwrite($handle, $return);
+                fwrite($handle , $return);
             }
             $return = "";
         }

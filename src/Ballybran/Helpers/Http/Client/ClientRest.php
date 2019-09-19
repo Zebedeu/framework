@@ -17,7 +17,7 @@
 
 namespace Ballybran\Helpers\Http\Client;
 
-use \Ballybran\Core\Http\Encodes;
+use \Ballybran\Core\REST\Encodes;
 
 class ClientRest extends Encodes
 {
@@ -30,22 +30,22 @@ class ClientRest extends Encodes
         // Now set some options (most are optional)
 
         // Set URL to download
-        curl_setopt($ch, CURLOPT_URL, $argm);
+        curl_setopt($ch , CURLOPT_URL , $argm);
 
         // Set a referer
-        curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
+        curl_setopt($ch , CURLOPT_REFERER , "http://www.example.org/yay.htm");
 
         // User agent
-        curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+        curl_setopt($ch , CURLOPT_USERAGENT , "MozillaXYZ/1.0");
 
         // Include header in result? (0 = yes, 1 = no)
-        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch , CURLOPT_HEADER , 0);
 
         // Should cURL return or print out the data? (true = return, false = print)
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER , true);
 
         // Timeout in seconds
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch , CURLOPT_TIMEOUT , 10);
 
         // Download the given URL, and return output
         $output = curl_exec($ch);
@@ -74,16 +74,16 @@ class ClientRest extends Encodes
      * @param $fields array  ["id" => 1, "name"=> "Joe Doe"]
      */
 
-    public function post(string $url, array $filds)
+    public function post(string $url , array $filds)
     {
         $service_url = $url;
         $curl = curl_init($service_url);
         $curl_post_data = $filds;
 
 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER , true);
+        curl_setopt($curl , CURLOPT_POST , true);
+        curl_setopt($curl , CURLOPT_POSTFIELDS , $curl_post_data);
         $curl_response = curl_exec($curl);
         if ($curl_response === false) {
             $info = curl_getinfo($curl);
@@ -102,10 +102,10 @@ class ClientRest extends Encodes
         $service_url = $value;
         $ch = curl_init($service_url);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER , true);
+        curl_setopt($ch , CURLOPT_CUSTOMREQUEST , "PUT");
         $data = array("status" => 'R');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch , CURLOPT_POSTFIELDS , http_build_query($data));
         $response = curl_exec($ch);
         if ($response === false) {
             $info = curl_getinfo($ch);
@@ -126,14 +126,14 @@ class ClientRest extends Encodes
 //        'http://example.com/api/conversations/[CONVERSATION_ID]'
         $service_url = $value;
         $ch = curl_init($service_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch , CURLOPT_RETURNTRANSFER , true);
+        curl_setopt($ch , CURLOPT_CUSTOMREQUEST , "DELETE");
         $curl_post_data = array(
-            'note' => 'this is spam!',
-            'useridentifier' => 'agent@example.com',
+            'note' => 'this is spam!' ,
+            'useridentifier' => 'agent@example.com' ,
             'apikey' => 'key001'
         );
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
+        curl_setopt($ch , CURLOPT_POSTFIELDS , $curl_post_data);
         $curl_response = curl_exec($ch);
         if ($curl_response === false) {
             $info = curl_getinfo($ch);

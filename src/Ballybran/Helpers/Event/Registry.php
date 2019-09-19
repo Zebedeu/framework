@@ -46,7 +46,7 @@ use Ballybran\Exception;
      * @param $name
      * @param $value
      */
-    function __set($name, $value)
+    function __set($name , $value)
     {
         $this->_object[$name] = $value;
 
@@ -58,7 +58,7 @@ use Ballybran\Exception;
      */
     function __get($name)
     {
-        if (array_key_exists($name, $this->_object)) {
+        if (array_key_exists($name , $this->_object)) {
             return $this->_object[$name];
         }
         return false;
@@ -85,14 +85,14 @@ use Ballybran\Exception;
      */
     public function isValid($name)
     {
-        return array_key_exists($name, $this->_object);
+        return array_key_exists($name , $this->_object);
     }
 
     /**
      * @param $name
      * @param $value
      */
-    public function set($name, $value)
+    public function set($name , $value)
     {
         $this->_object[$name] = $value;
     }
@@ -103,7 +103,7 @@ use Ballybran\Exception;
      */
     public function get($name)
     {
-        if (array_key_exists($name, $this->_object)) {
+        if (array_key_exists($name , $this->_object)) {
             return $this->_object[$name];
         }
     }
@@ -113,17 +113,17 @@ use Ballybran\Exception;
      * @param null $param
      * @return mixed
      */
-    public function __call($method, $param = null)
+    public function __call($method , $param = null)
     {
-        $prefix = substr($method, 0, 3);
-        $key = strtolower(substr($method, 3));
+        $prefix = substr($method , 0 , 3);
+        $key = strtolower(substr($method , 3));
         if ($prefix == 'set' && count($param) == 1) {
 
             $value = $param[0];
             $this->method[$key] = $value;
 
         }
-        if ($prefix == 'get' && array_key_exists($key, $this->method)) {
+        if ($prefix == 'get' && array_key_exists($key , $this->method)) {
             return $this->method[$key];
         } else {
             throw new  Exception\InvalidCallException ('Setting read-only method: ' . '::');

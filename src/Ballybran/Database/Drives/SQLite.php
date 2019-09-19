@@ -41,7 +41,7 @@ class SQLite3 implements DatabaseInterface
      * @param int $fetchMode
      * @return mixed
      */
-    public function selectManager($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
+    public function selectManager($sql , $array = array() , $fetchMode = PDO::FETCH_ASSOC)
     {
         // TODO: Implement selectManager() method.
     }
@@ -53,7 +53,7 @@ class SQLite3 implements DatabaseInterface
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array(), $fetchMode)
+    public function select($table , $fields = "*" , $where = ' ' , $order = '' , $limit = null , $offset = null , $array = array() , $fetchMode)
     {
         // TODO: Implement select() method.
     }
@@ -63,7 +63,7 @@ class SQLite3 implements DatabaseInterface
      * @param $data recebido do array
      * @return bool
      */
-    public function insert($table, array $data)
+    public function insert($table , array $data)
     {
         // TODO: Implement insert() method.
     }
@@ -74,7 +74,7 @@ class SQLite3 implements DatabaseInterface
      * @param $where
      * @return bool
      */
-    public function update($table, $data, $where)
+    public function update($table , $data , $where)
     {
         // TODO: Implement update() method.
     }
@@ -85,7 +85,7 @@ class SQLite3 implements DatabaseInterface
      * @param $limit
      * @return mixed
      */
-    public function delete($table, $where, $limit)
+    public function delete($table , $where , $limit)
     {
         // TODO: Implement delete() method.
     }
@@ -104,7 +104,7 @@ class SQLite3 implements DatabaseInterface
      * @param array $fileds
      * @return mixed
      */
-    public function createTable(String $table, array $fileds)
+    public function createTable(String $table , array $fileds)
     {
         // TODO: Implement createTable() method.
     }

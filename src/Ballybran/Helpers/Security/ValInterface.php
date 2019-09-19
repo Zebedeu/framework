@@ -27,13 +27,13 @@ namespace Ballybran\Helpers\Security;
 interface ValInterface
 {
 
-    public function minlength(string $data, int $length);
+    public function minlength(string $data , int $length);
 
-    public function maxlength(string $data, int $length);
+    public function maxlength(string $data , int $length);
 
     public function digit(string $data);
 
-    public function __call(string $name, $arguments);
+    public function __call(string $name , $arguments);
 
-    public function isValidLenght(string $lenght, string $data, int $length);
+    public function isValidLenght(string $lenght , string $data , int $length);
 }

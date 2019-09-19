@@ -43,7 +43,7 @@ class Log
      * @param type $filename
      * @param null $dir
      */
-    public function __construct($filename, $dir = null)
+    public function __construct($filename , $dir = null)
     {
 
         if ($dir != null) {
@@ -61,31 +61,31 @@ class Log
      * @param type $message
      * @param null $type
      */
-    public function write($message, $type = null)
+    public function write($message , $type = null)
     {
-        if ($this->handle = fopen($this->filename, 'a')) {
+        if ($this->handle = fopen($this->filename , 'a')) {
             if (is_array($message) && $type === 'A') {
                 foreach ($message as $key => $value) {
-                    fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value, true) . "\n");
+                    fwrite($this->handle , date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value , true) . "\n");
 
                 }
             }
             if (!empty($message)) {
-                fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
+                fwrite($this->handle , date('Y-m-d G:i:s') . ' - ' . print_r($message , true) . "\n");
 
             }
             // to use for get data
 
             if (is_array($message) && $type == 'F') {
                 foreach ($message as $key => $value) {
-                    fwrite($this->handle, date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value, true) . "\n") . "<br>";
+                    fwrite($this->handle , date('Y-m-d G:i:s') . ';' . print_r($key . "=>" . $value , true) . "\n") . "<br>";
 
                 }
             }
         }
         fclose($this->handle);
         if ($this->filename == true) {
-            chmod($this->filename, 0755);
+            chmod($this->filename , 0755);
         }
     }
 
@@ -94,7 +94,7 @@ class Log
      */
     public function open()
     {
-        if (file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename, 'r')) {
+        if (file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename , 'r')) {
             require_once DIR_FILE . 'View/header.phtml';
             ?>
             <div class="well">

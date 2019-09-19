@@ -34,7 +34,7 @@ class Variable extends ArrayObject
     public function __construct(array $variables = array())
     {
         parent::__construct(
-            $variables, ArrayObject::ARRAY_AS_PROPS, 'ArrayIterator'
+            $variables , ArrayObject::ARRAY_AS_PROPS , 'ArrayIterator'
         );
 //        $this->importObj($user, $variables);
     }
@@ -44,20 +44,20 @@ class Variable extends ArrayObject
         return $this[$key];
     }
 
-    public function __set($key, $value)
+    public function __set($key , $value)
     {
         $this[$key] = $value;
     }
 
-    public function __call($key, $args)
+    public function __call($key , $args)
     {
-        if (is_object($this->___class) && is_callable([$this->___class, $key])) {
-            return call_user_func_array([$this->___class, $key], $args);
+        if (is_object($this->___class) && is_callable([$this->___class , $key])) {
+            return call_user_func_array([$this->___class , $key] , $args);
         }
-        return is_callable($c = $this->__get($key)) ? call_user_func_array($c, $args) : null;
+        return is_callable($c = $this->__get($key)) ? call_user_func_array($c , $args) : null;
     }
 
-    public function importObj($class = null, $array = [])
+    public function importObj($class = null , $array = [])
     {
         $this->___class = $class;
         if (count($array) > 0) {

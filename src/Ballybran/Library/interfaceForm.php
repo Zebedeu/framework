@@ -139,7 +139,7 @@ interface interfaceForm
     /**
      * This method returns a table element given the params for settings
      *
-     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'], 'class' =>  'xxxxxx', ] ;
+     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'] , 'class' =>  'xxxxxx', ] ;
      *
      * @return  string
      */

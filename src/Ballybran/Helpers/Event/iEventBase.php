@@ -12,7 +12,7 @@ namespace Ballybran\Helpers\Event;
 interface iEventBase
 {
 
-    public function __construct(InterfaceEventCollection $events, InterfaceEventHandlerCollection $handlers
+    public function __construct(InterfaceEventCollection $events , InterfaceEventHandlerCollection $handlers
     = null);
 
     public function __destruct();
@@ -21,6 +21,6 @@ interface iEventBase
 
     public function notify($listEventName);
 
-    public function triggerEvent($eventName, $args);
+    public function triggerEvent($eventName , $args);
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ballybran\Core\Http;
+namespace Ballybran\Core\REST;
 
 class EncodeContainer
 {

@@ -46,7 +46,7 @@ class Session
      * @param $value
      * @return mixed
      */
-    public static function set($key, $value)
+    public static function set($key , $value)
     {
         return $_SESSION[$key] = $value;
     }

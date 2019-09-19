@@ -26,37 +26,37 @@ class Image2
         $this->filename = $file;
     }
 
-    public function resize($width, $height)
+    public function resize($width , $height)
     {
         if (!is_file(DIR_FILE . $this->filename)) {
             return;
         }
 
-        $extension = pathinfo($this->filename, PATHINFO_EXTENSION);
+        $extension = pathinfo($this->filename , PATHINFO_EXTENSION);
 
         $old_image = $this->filename;
-        $new_image = 'cache/' . utf8_substr($this->filename, 0, utf8_strrpos($this->filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
+        $new_image = 'cache/' . utf8_substr($this->filename , 0 , utf8_strrpos($this->filename , '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
         if (!is_file(DIR_FILE . $new_image) || (filectime(DIR_FILE . $old_image) > filectime(DIR_FILE . $new_image))) {
             $path = '';
 
-            $directories = explode('/', dirname(str_replace('../', '', $new_image)));
+            $directories = explode('/' , dirname(str_replace('../' , '' , $new_image)));
 
             foreach ($directories as $directory) {
                 $path = $path . '/' . $directory;
 
                 if (!is_dir(DIR_FILE . $path)) {
-                    @mkdir(DIR_FILE . $path, 0777);
+                    @mkdir(DIR_FILE . $path , 0777);
                 }
             }
 
-            list($width_orig, $height_orig) = getimagesize(DIR_FILE . $old_image);
+            list($width_orig , $height_orig) = getimagesize(DIR_FILE . $old_image);
 
             if ($width_orig != $width || $height_orig != $height) {
-                $image = new Image(DIR_FILE . $old_image, $width, $height);
+                $image = new Image(DIR_FILE . $old_image , $width , $height);
                 $image->saveImage(DIR_FILE . $new_image);
             } else {
-                copy(DIR_FILE . $old_image, DIR_FILE . $new_image);
+                copy(DIR_FILE . $old_image , DIR_FILE . $new_image);
             }
         }
 

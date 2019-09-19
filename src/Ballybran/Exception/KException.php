@@ -17,6 +17,7 @@
 
 namespace Ballybran\Exception;
 
+use Ballybran\Helpers\Utility\Assets;
 
 
 class KException {
@@ -34,7 +35,7 @@ public static function createPathInModelo()
   <code>$<en>MY_PROJECT_NAME = 'MINHA APLICACÃO';</code><br/><br/> ");
 }
 
-public static function createController($classFile, $controllerPath)
+public static function createController($classFile , $controllerPath)
 {
 
     PageError::Auth("3 . O Controllador <code>$classFile.php</code>  nao existe. Cria um novo directorio e nomeie por <code>Controllers</code>.<br/><br/> Em seguida dentro deste novo directório <code>Controllers</code> insere o controllador <code>$classFile.php</code>. E por ultimo,  cole o codigo de baixo no <code>$classFile.php</code><br/>
@@ -186,9 +187,6 @@ public static function error($params = null){ ?>
 </div>
 </div>
 <?php
-}public static function createPathInModels($string)
-{
-    PageError::no("<br/>Não foi criado o arquivo <code>$string</code> ");
 }
 }
 ?>
