@@ -159,6 +159,6 @@ define('DIR_COOKIE', 'storage/cookie/');
 define('VIEW', 'html'. DS . 'views' . DS);
 
 if (!defined('VERSION')) {
-    define('VERSION', '1.0.10');
+    define('VERSION', '1.0.12');
 }
 
