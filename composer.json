@@ -1,35 +1,30 @@
-
 {
-    "name": "knut7/framework",
-    "type": "library",
-    "description": "Min framwork em mvc para PHP 7.0.0 ou superior",
-    "keywords": ["framwork","mvc"],
-    "homepage": "https://github.com/Knut7/framework",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Marcio Zebede",
-            "email": "marciozebedeu@gmail.com",
-            "homepage": "http://artphoweb.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=7.0.0"
+  "name": "knut7/framework",
+  "type": "library",
+  "description": "Min framwork em mvc para PHP 7.0.0 ou superior",
+  "keywords": [
+    "framwork",
+    "mvc"
+  ],
+  "homepage": "https://github.com/Knut7/Knut7",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marcio Zebede",
+      "email": "marciozebedeu@gmail.com",
+      "homepage": "http://artphoweb.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.0.0",
+    "phpmailer/phpmailer": "~6.0"
 
-    },
-
-    "autoload": {
-        "psr-4": {
-            "Ballybran\\": "src/Ballybran/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Ballybran\\Tests\\": "tests/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
-
+  },
+  "require-dev": {
+    "php": ">=7.0.0",
+    "phpmailer/phpmailer": "~6.0",
+    "swiftmailer/swiftmailer": "^6.0"
+  }
 }
