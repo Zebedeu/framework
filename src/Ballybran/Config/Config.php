@@ -62,7 +62,7 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 // require_once PV . 'Config/config_module.php';
 
-define('PV', 'Module' . DS);
+define('PV', 'App' . DS);
 
 /*
  * APP é a costante responsavel pela criacao da tua applicação.
@@ -139,7 +139,7 @@ define('ROOT', dirname(__FILE__));
 //define('DIR_Ballybran', URL . PV . APP . DS);
 
 /*
- *   Module/YourProject/
+ *   App/YourProject/
  */
 define('DIR_FILE', PV . APP . DS);
 
@@ -158,10 +158,6 @@ define('DIR_LOGS', 'Log/storage/');
 define('VIEW', PV . APP . DS . 'Views' . DS);
 
 if (!defined('VERSION')) {
-    define('VERSION', '1.0.4');
+    define('VERSION', '1.0.10');
 }
 
-class Config
-{
-    public static $project = 'apweb';
-}

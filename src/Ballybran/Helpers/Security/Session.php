@@ -17,7 +17,6 @@
 namespace Ballybran\Helpers\Security;
 
 use Ballybran\Helpers\Hook;
-use Module\Service\AbstractModel;
 
 /**
  * Class Session

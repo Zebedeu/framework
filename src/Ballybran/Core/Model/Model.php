@@ -63,7 +63,7 @@ class Model
         $className = str_replace('\\', '/', get_class($this));
         $classModel = str_replace('Controllers', $this->modelPath, $className);
         $this->modelClass = $classModel . 'Model';
-        //$path = 'Module/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
+        //$path = 'App/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
         $path =   $this->modelClass . '.php';
 
         if (file_exists($path) || is_readable($path)) {

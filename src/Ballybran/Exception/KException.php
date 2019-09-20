@@ -25,7 +25,7 @@ class KException {
 public static function createPathInModelo()
 {
 
-    PageError::Auth("Se estas a ver esta mensagem é sinal de que o directório padrão <code>Applications</code> não se encontra dentro do <code>Module</code>. Para corrigir este erro faça o seguinte: <br/><br/>1 . A pasta para a aplicação por padrão é o <code>Applications</code>. Se não existe ou se quer criar uma  <br/>
+    PageError::Auth("Se estas a ver esta mensagem é sinal de que o directório padrão <code>Applications</code> não se encontra dentro do <code>App</code>. Para corrigir este erro faça o seguinte: <br/><br/>1 . A pasta para a aplicação por padrão é o <code>Applications</code>. Se não existe ou se quer criar uma  <br/>
   pasta  nova para a tua aplicação então você pode cria uma pasta para a tua aplicação em <code>" . PV . "</code><br/>
   Exemplo:<br/><br/>
   <code>" . PV . "MINHA APLICACÃO;</code><br/><br/>
