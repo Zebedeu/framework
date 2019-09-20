@@ -40,6 +40,6 @@ class FileLoggerFactory implements iLoggerFactory{
 
     public function createLogger(): iLogger
     {
-        return new \Ballybran\Helpers\Log\FileLogger($this->filePath, $this->dir);
+        return new \Ballybran\Helpers\Log\FileLogger($this->filePath);
     }
 }

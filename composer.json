@@ -15,9 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "phpunit/phpunit": "6.3.*",
-        "knut7/knut7": "@dev"
+        "php": ">=7.0.0"
 
     },
 
@@ -30,5 +28,8 @@
         "psr-4": {
             "Ballybran\\Tests\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+
 }

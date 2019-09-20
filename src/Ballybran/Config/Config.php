@@ -141,13 +141,14 @@ define('ROOT', dirname(__FILE__));
 /*
  *   App/YourProject/
  */
-define('DIR_FILE', PV . APP . DS);
+define('DIR_FILE', 'Public' . DS);
 
 // define('DIR_FILES', PV . APP . '/class/');
 
 define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
 
-define('DIR_LOGS', 'Log/storage/');
+define('DIR_LOGS', 'storage/log/');
+define('DIR_COOKIE', 'storage/cookie/');
 
 /*
  *
@@ -155,7 +156,7 @@ define('DIR_LOGS', 'Log/storage/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-define('VIEW', PV . APP . DS . 'Views' . DS);
+define('VIEW', 'html'. DS . 'views' . DS);
 
 if (!defined('VERSION')) {
     define('VERSION', '1.0.10');

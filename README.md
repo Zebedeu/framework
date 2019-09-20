@@ -40,9 +40,9 @@ composer create-project --prefer-dist knut7/knut7 site
 
 #Criando o Projecto
 
-Existe um Diretório padrão na framewok que se chama Module. Dentro dela, você criara um outro diretório e renomeara dando o nome do teu projecto como mostra a fig 1.1. 
+Existe um Diretório padrão na framewok que se chama App. Dentro dela, você criara um outro diretório e renomeara dando o nome do teu projecto como mostra a fig 1.1. 
 
-1 – Nome padrão da Framewok onde será colocado todos s projectos se chama Module
+1 – Nome padrão da Framewok onde será colocado todos s projectos se chama App
 OBS Não alterar o nome.
 
 2 – Nome do Projecto “Pessoa”

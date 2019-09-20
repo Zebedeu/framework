@@ -36,7 +36,7 @@ class FileLogger implements iLogger
     private $handles;
 
 
-    public function __construct(string $filePath, $dir)
+    public function __construct(string $filePath)
     {
         $this->filename = $filePath;
     }
@@ -82,7 +82,7 @@ class FileLogger implements iLogger
     public function open()
     {
         if (file_exists($this->filename) && is_readable($this->filename) && $this->handles = fopen($this->filename, 'r')) {
-            require_once DIR_FILE . 'View/header.phtml';
+            require_once VIEW . 'header.phtml';
             ?>
             <div class="well">
                 <ul>
