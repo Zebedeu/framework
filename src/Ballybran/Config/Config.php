@@ -62,7 +62,7 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 // require_once PV . 'Config/config_module.php';
 
-define('PV', 'App' . DS);
+define('PV', 'Module' . DS);
 
 /*
  * APP é a costante responsavel pela criacao da tua applicação.

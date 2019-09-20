@@ -95,7 +95,7 @@ class Routes
 
             if (is_string($this->callable)) {
 
-                $params = explode('#', $this->callable);
+                $params = explode('@', $this->callable);
 
                 $file = $this->_controllerPath . $params[0] . '.php';
 
