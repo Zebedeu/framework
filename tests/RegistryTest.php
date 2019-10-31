@@ -20,6 +20,10 @@ use Ballybran\Helpers\Event\Registry;
 class RegistryTest extends TestCase {
 
 
+    protected function setUp() : void
+    {
+
+    }
     function testRegistryIsSingleton() {
         $this->assertInstanceOf ('Ballybran\Helpers\Event\Registry',  Registry::getInstance());
     }
