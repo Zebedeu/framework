@@ -7,7 +7,7 @@ use Ballybran\Helpers\Event\Event;
 
 class EventHandlerTest extends TestCase
 {
-    public function setUp() : void
+    protected function setUp() : void
     {
     }
 

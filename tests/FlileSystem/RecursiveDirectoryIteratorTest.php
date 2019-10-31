@@ -14,18 +14,15 @@ class RecursiveDirectoryIteratorTest extends TestCase {
 
     private $file;
 
-    public function setUp() : void
+    protected function setUp() : void
     {
-        $file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests', FilesystemIterator::CURRENT_AS_FILEINFO);
-
-
-            return $this->file = $file->current();
+        $this->file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests', FilesystemIterator::CURRENT_AS_FILEINFO);
 
     }
 
     public function testOpenFile()
     {
         $t  = 'tests';
-        $this->assertFileExists($t, $this->file);
+        $this->assertFileExists($t, $this->file->current());
     }
 }
