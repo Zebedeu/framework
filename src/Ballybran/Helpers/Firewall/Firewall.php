@@ -169,15 +169,15 @@ class Firewall
     public function ipToHex($ipAddress)
     {
         $hex = '';
-        if (strpos($ipAddress, ',') !== false) {
+        if ( false !== strpos($ipAddress, ',') ) {
             $splitIp = explode(',', $ipAddress);
             $ipAddress = trim($splitIp[0]);
         }
         $isIpV6 = false;
         $isIpV4 = false;
-        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+        if ( false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
             $isIpV6 = true;
-        } else if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+        } else if (false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
             $isIpV4 = true;
         }
         if (!$isIpV4 && !$isIpV6) {
@@ -195,7 +195,7 @@ class Firewall
         else {
             $parts = explode(':', $ipAddress);
             // If this is mixed IPv6/IPv4, convert end to IPv6 value
-            if (filter_var($parts[count($parts) - 1], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+            if ( false !== filter_var($parts[count($parts) - 1], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
                 $partsV4 = explode('.', $parts[count($parts) - 1]);
                 for ($i = 0; $i < 4; $i++) {
                     $partsV4[$i] = str_pad(dechex($partsV4[$i]), 2, '0', STR_PAD_LEFT);

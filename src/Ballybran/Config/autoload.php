@@ -47,7 +47,7 @@ function search_lib($lib, $file, $ds = '/')
             // Se for um diretório procura dentro dele
             $f = search_lib($lib . $ds . $dir, $file, $ds);
             // Caso não encontre retora false
-            if ($f !== false) return $f;
+            if ( false !== $f ) return $f;
         }
     }
     // Se o diretório informado não for válido ou se não tiver encontrado retorna false
@@ -60,7 +60,7 @@ function __autoload($class)
     $ext = '.php';
     $file = search_lib($libs, $class . $ext);
     // Se encontrou inclui o arquivo
-    if ($file !== false) require_once $file;
+    if (false !== $file) require_once $file;
     // Se não encontrar o arquivo lança um erro na tela. :)
     else {
         $msg = "Autoload fatal erro: Can't find the file {$class}{$ext}!";

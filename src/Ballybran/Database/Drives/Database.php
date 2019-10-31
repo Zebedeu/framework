@@ -1024,19 +1024,19 @@ class Database
 
         $value = $this->format($value);
 
-        if ($value === null) {
+        if ( null === $value ) {
 
             return "NULL";
 
         }
 
-        if ($value === false) {
+        if ( false === $value ) {
 
             return "'0'";
 
         }
 
-        if ($value === true) {
+        if ( true === $value ) {
 
             return "'1'";
 

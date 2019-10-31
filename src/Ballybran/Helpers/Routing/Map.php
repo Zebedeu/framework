@@ -43,9 +43,10 @@ class Map extends Bootstrap
      * @param $path
      * @param $callable
      * @param null $name
-     * @return Routes
+     * @return Route
+     * example $router->add( '/user/:id', function($id) {}, 'name')->with('id','[0-9]+');
      */
-    public function get($path, $callable, $name = null)
+    public function get($path, $callable, $name = null) : Routes
     {
 
         /** @var TYPE_NAME $callable */
@@ -58,8 +59,9 @@ class Map extends Bootstrap
      * @param $callable
      * @param null $name
      * @return Routes
+     * example $router->post( '/user/:id', function() {}, 'name')
      */
-    public  function post($path, $callable, $name = null)
+    public  function post($path, $callable, $name = null) : Routes
     {
 
         return self::add($path, $callable, $name, 'POST');
@@ -73,8 +75,9 @@ class Map extends Bootstrap
      * @param $name
      * @param $method
      * @return Routes
+  	* example $router->add( '/user/:id', function($id) {}, 'name')->with('id','[0-9]+');
      */
-    public  function add($path, $callable, $name, $method)
+    public  function add($path, $callable, $name, $method) : Routes
     {
         $route = new Routes($path, $callable);
         $this->routes[$method][] = $route;
@@ -91,7 +94,7 @@ class Map extends Bootstrap
 
     }
 
-    public   function run()
+    public  function run()
     {
         if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
             throw new \Exception(' REQUEST_METHOD does not exists', 1);
@@ -110,6 +113,12 @@ class Map extends Bootstrap
             KException::notFound();
 
     }
+    /*
+     * @param $name
+     * @param $params array optional 
+	 * $router->url('name', ['id'=> 1] )
+	* example $router->get( '/user/:id', function($id) { return $router->url('name', ['id'=> 1] ) }, 'name')->with('id','[0-9]+');
+	*/
 
     public function url($name, $params = [])
     {

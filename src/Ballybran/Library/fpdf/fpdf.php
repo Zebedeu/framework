@@ -484,14 +484,14 @@ class FPDF
         else
             $family = strtolower($family);
         $style = strtoupper($style);
-        if (strpos($style, 'U') !== false) {
+        if ( false !== strpos($style, 'U') ) {
             $this->underline = true;
             $style = str_replace('U', '', $style);
         } else
             $this->underline = false;
-        if ($style == 'IB')
+        if ( 'IB' == $style )
             $style = 'BI';
-        if ($size == 0)
+        if ( 0 == $size )
             $size = $this->FontSizePt;
         // Test if font is already selected
         if ($this->FontFamily == $family && $this->FontStyle == $style && $this->FontSizePt == $size)

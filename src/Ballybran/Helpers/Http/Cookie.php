@@ -75,7 +75,7 @@ class Cookie extends RestUtilities
         $ob = ini_get('output_buffering');
 
         // Abort the method if headers have already been sent, except when output buffering has been enabled
-        if (headers_sent() && (bool)$ob === false || strtolower($ob) == 'off') {
+        if (headers_sent() && false === (bool)$ob  || 'off' == strtolower($ob) ) {
             return $this;
         }
 
@@ -188,7 +188,7 @@ class Cookie extends RestUtilities
             }
             // Remove port information.
             $port = strpos($domain, ':');
-            if ($port !== false) {
+            if ( false !== $port ) {
                 $this->data['domain'] = substr($domain, 0, $port);
             }
         }

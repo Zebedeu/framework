@@ -121,7 +121,7 @@ class ClientRest extends Encodes
         $data = array("status" => 'R');
         curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($data));
         $response = curl_exec($process);
-        if ($response === false) {
+        if ( false === $response ) {
             $info = curl_getinfo($process);
             curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
@@ -144,7 +144,7 @@ class ClientRest extends Encodes
         curl_setopt($process, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($service_url));
         $curl_response = curl_exec($process);
-        if ($curl_response === false) {
+        if ( false === $curl_response) {
             $info = curl_getinfo($process);
             curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));

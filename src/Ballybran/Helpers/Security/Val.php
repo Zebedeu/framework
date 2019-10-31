@@ -44,7 +44,7 @@ class Val implements ValInterface
 
     public function digit(string $data)
     {
-        if (ctype_digit($data) == false) {
+        if ( false == ctype_digit($data) ) {
             return "Your string " . $data . " must be a digit";
         }
     }

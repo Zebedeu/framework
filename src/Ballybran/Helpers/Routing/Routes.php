@@ -47,6 +47,7 @@ class Routes
      * @param string $params
      * @param string $regex
      * @return Routes
+     * example with('id','[0-9]+')
      */
     public function with(string $params, string $regex): Routes
     {
@@ -133,7 +134,9 @@ class Routes
         return $path;
     }
 
-
+	/*
+	*@deprecated
+	*/
     public static function route()
     {
 

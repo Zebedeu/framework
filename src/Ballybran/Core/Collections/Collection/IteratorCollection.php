@@ -163,7 +163,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function removeEleme($element)
     {
         $key = array_search($element, $this->elements, true);
-        if ($key == false) {
+        if (false == $key) {
             return false;
         }
         unset($this->elements[$key]);
