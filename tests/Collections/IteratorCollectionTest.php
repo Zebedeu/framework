@@ -13,7 +13,7 @@ class IteratorCollectionTest extends PHPUnit
 
     private $it;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->it = new IteratorCollection(['name'=>'John Doe', 'age'=> 100, 'adress'=> 'San Diego']);
     }

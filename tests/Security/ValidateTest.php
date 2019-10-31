@@ -38,7 +38,7 @@ class ValidateTest extends PHPUnit
 
     }
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->val = new Val();
         $this->valid = new Validate($this->val);

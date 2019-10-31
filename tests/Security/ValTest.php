@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class ValTest extends PHPUnit
 {
     private $val;
-    public function setUp()
+    public function setUp() : void
     {
         $this->val = new Val();
     }

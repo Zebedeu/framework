@@ -23,7 +23,7 @@ class ControllerTest extends PHPUnit {
 
     private $objController;
 
-    public function setUp() {
+    public function setUp() : void {
         $this->objController = new \Ballybran\Core\Controller\AbstractController();
 
     }

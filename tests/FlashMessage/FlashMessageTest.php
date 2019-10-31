@@ -22,7 +22,7 @@ class FlashMessageTest extends PHPUnit
     private $flash;
     private $registry;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->registry =  \Ballybran\Helpers\Event\Registry::getInstance();
     }

@@ -14,7 +14,7 @@ class RecursiveDirectoryIteratorTest extends TestCase {
 
     private $file;
 
-    public function setUp()
+    public function setUp() : void
     {
         $file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests', FilesystemIterator::CURRENT_AS_FILEINFO);
 

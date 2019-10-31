@@ -25,7 +25,7 @@ class RegistryDatabaseTest extends PHPUnit
     private $registry;
 
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->registry = RegistryDatabase::getInstance();
 

@@ -14,7 +14,7 @@ class SessionTest  extends PHPUnit
 
     private $init;
 
-    protected function setUp()
+    protected function setUp() : void
     {
 
     }
