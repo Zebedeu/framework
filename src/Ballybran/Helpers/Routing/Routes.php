@@ -42,7 +42,6 @@ class Routes
 
     }
 
-
     /**
      * @param string $params
      * @param string $regex
@@ -89,11 +88,11 @@ class Routes
 
         return '([^/]+)';
     }
-
+	
 
      public function call()
     {
-
+	    
             if (is_string($this->callable)) {
 
                 $params = explode('@', $this->callable);
@@ -101,8 +100,6 @@ class Routes
                 $file = $this->_controllerPath . $params[0] . '.php';
 
                 $controller = $this->_controllerPath . $params[0] . '.php';
-
-
                 $namespace = str_replace('/', '\\', $this->_controllerPath);
                 $className = $namespace . $params[0];
 

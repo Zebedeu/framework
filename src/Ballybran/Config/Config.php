@@ -125,18 +125,11 @@ if (!empty($_dev)) {
  *
  *  O URL base do sistema
  */
-//define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DS);
 
 define('URL', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . DS);
-//define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
+define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
 
 define('ROOT', dirname(__FILE__));
-
-/*
- *
- *
- */
-//define('DIR_Ballybran', URL . PV . APP . DS);
 
 /*
  *   App/YourProject/
@@ -157,8 +150,4 @@ define('DIR_COOKIE', 'storage/cookie/');
  *
  */
 define('VIEW', 'html'. DS . 'views' . DS);
-
-if (!defined('VERSION')) {
-    define('VERSION', '1.0.10');
-}
 

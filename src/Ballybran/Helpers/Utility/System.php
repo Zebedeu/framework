@@ -14,7 +14,7 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Helpers;
+namespace Ballybran\Helpers\Utility;
 
 use Ballybran\Helpers\{
     Http\Http

@@ -26,7 +26,7 @@ namespace Ballybran\Core\Controller;
 
 use Ballybran\Core\Model\Model;
 use Ballybran\Core\View\View;
-use Ballybran\Helpers\Language;
+use Ballybran\Helpers\Utility\Language;
 use Ballybran\Helpers\Security\Session;
 
 class AbstractController extends Model implements AbstractControllerInterface

@@ -33,7 +33,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     public $view;
     public $data = array();
     public $layout;
-    private $controllers;
+    protected $controllers;
     public $form;
     public $reg;
 
