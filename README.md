@@ -4,11 +4,11 @@
 
 /**
  *
- * knut7 Framework (http://knut7.com)
+ * knut7 Framework (https://github.com/knut7/framework/)
  *
  * @link      http://github.com/knut7/knut7 for the canonical source repository
- * @copyright (c) 2016.  MACHIZE Technologies AO Inc. (http://knut7.com)
- * @license   http://knut7.com/license/new-bsd New BSD License
+ * @copyright (c) 2016.  MACHIZE Technologies AO Inc. (https://github.com/knut7/framework/)
+ * @license   https://github.com/knut7/framework//license/new-bsd New BSD License
  */
 
 
