@@ -104,11 +104,6 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    /**
-     * @param $ Controller $ this responsible to get View's folder
-     *     * @param $ view Index responsible for getting Index files from the Controller folder
-     */
-
     public function set($id)
     {
         $this->data = \array_merge($this->data, $id);
@@ -118,18 +113,6 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     public function get_data()
     {
         return $this->data;
-    }
-
-    protected function include_file($file)
-    {
-        $view = new View($file);
-        $view->render($this->controllers, $this->view, $this->data);
-        $this->data[] = $view->get_data();
-    }
-
-    protected function set_layout($file)
-    {
-        $this->layout = $file;
     }
 
     protected function capture()
