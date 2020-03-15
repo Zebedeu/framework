@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Ballybran\Helpers\Routing\Map;
 class MapTest extends TestCase {
 
-	public testIfAddGetMethodResturnRouter(){
+	public function testIfAddGetMethodResturnRouter(){
 		
 		$router = new Map();
 		$this->assertFalse($router->get('/', 'Index@inddddex'));
