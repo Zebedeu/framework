@@ -33,6 +33,7 @@
         <const name="SECURE_AUTH_SALT" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~"/>
         <const name="SECURE_AUTH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~"/>
         <const name="HASH_KEY" value="LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~"/>
+        <const name="PV" value="/"/>
         <const name="str" value="it is test"/>
         <const name="ALGO" value="md5"/>
         <const name="DIR_LOGS" value=""/>
