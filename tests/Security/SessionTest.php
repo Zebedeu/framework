@@ -35,7 +35,7 @@ class SessionTest  extends PHPUnit
 
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         \Ballybran\Helpers\Security\Session::Destroy();
     }
