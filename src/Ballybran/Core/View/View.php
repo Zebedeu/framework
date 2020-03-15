@@ -15,20 +15,7 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  *
  * @version   1.0.2
- *
- *   Includes - Ability to include other views
- *
- *   Captures - Ability to easily capture content within your view
- *
- *   Layouts - Ability to inject data into a re-usable layout template
- *
- *   Fetching - Ability to fetch view output instead of sending it to output buffer
- *
- *   data - Ability to access the resulting data once the view is finished
- *
- * *NOTE* When a view uses a layout, the output of the view is ignored, as
- *        as the view is expected to use capture() to send data to the layout.
-
+ */
 
 /**
  * @property  UserData propriedade gerada e usada para pegar dados do model
@@ -71,15 +58,16 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      *
      * @return string
      */
-    public function render(object $controller, string $view): string
+    public function render(object $controller, String $view, array $data = null): string
     {
-        $this->dot = new IteratorDot($this->get_data());
+        $this->dot = new IteratorDot($data);
 
-        $data = (null === $this->get_data()) ? array() : $this->get_data();
+        $data = (null === $data) ? array() : $data;
         $this->view = $view;
         $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
-        extract($this->get_data());
+
+        extract($this->data = $data);
         ob_start();
         $this->isHeader();
 
@@ -104,6 +92,11 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
+    public function get_data()
+    {
+        return $this->data;
+    }
+
     /**
      * @param $ Controller $ this responsible to get View's folder
      *     * @param $ view Index responsible for getting Index files from the Controller folder
@@ -111,13 +104,8 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 
     public function set($id)
     {
-        $this->data = \array_merge($this->data, $id);
+        $this->data[] = \array_merge($this->data, $id);
 
-    }
-
-    public function get_data()
-    {
-        return $this->data;
     }
 
     protected function include_file($file)
