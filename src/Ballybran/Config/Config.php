@@ -24,7 +24,7 @@
 
 namespace Ballybran\Config;
 
-require './Config/Config.php';
+require './Config/config.php';
 
 /*
  *
