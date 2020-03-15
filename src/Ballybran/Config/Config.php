@@ -75,14 +75,14 @@ global $MY_PROJECT_NAME;
 if (!empty($MY_PROJECT_NAME)) {
     define('APP', $MY_PROJECT_NAME);
 } else {
-    define('APP', 'Applications');
+    define('APP', 'app');
 }
 
 global $MY_LOCALE;
 if (!empty($MY_LOCALE)) {
     define('MY_LOCALE', $MY_LOCALE);
 } else {
-    define('MY_LOCALE', 'Applications');
+    define('MY_LOCALE', 'app');
 }
 
 global $HEADER_TITLE;
@@ -134,7 +134,7 @@ define('ROOT', dirname(__FILE__));
 /*
  *   App/YourProject/
  */
-define('DIR_FILE', 'Public' . DS);
+define('DIR_FILE', 'public' . DS);
 
 // define('DIR_FILES', PV . APP . '/class/');
 
@@ -149,5 +149,5 @@ define('DIR_COOKIE', 'storage/cookie/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-define('VIEW', 'html'. DS . 'Views' . DS);
+define('VIEW', 'html'. DS . 'views' . DS);
 
