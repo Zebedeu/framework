@@ -40,21 +40,21 @@ use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
 use Ballybran\Library\Form;
 use Ballybran\Library\interfaceForm;
+use \Ballybran\Helpers\Event\Registry;
 
 class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 {
-    public $view;
-    public $data = array();
-    public $layout;
-    protected $controllers;
-    public $form;
-    public $reg;
+    public string $view;
+    public array $data = array();
+    protected string $controllers;
+    public Form $form;
+    public Registry $reg;
 
     public function __construct(interfaceForm $form = null)
     {
-        $this->reg = \Ballybran\Helpers\Event\Registry::getInstance();
+        $this->reg = Registry::getInstance();
 
-        if ($this->form != null && $this->form instanceof $form) {
+        if ($form != null && $form instanceof Form) {
             $this->form = $form;
         } else {
             $this->form = new Form();
@@ -84,17 +84,10 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         $this->isHeader();
 
         include $this->file =  VIEW . $this->controllers . DS . $this->view . $this->ex;
-        $this->isFooter();
-        if (null === $this->layout) {
-            ob_end_flush();
-        } else {
-            ob_end_clean();
-            $this->include_file($this->layout);
-        }
         $content = ob_get_contents();
-
         return $content;
     }
+
 
     public function fetch($data = null)
     {
@@ -110,7 +103,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 
     }
 
-    public function get_data()
+    public function get_data() : array
     {
         return $this->data;
     }
@@ -133,12 +126,12 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return true;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return isset($this->data[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset) : string
     {
         return $this->data[$offset];
     }
