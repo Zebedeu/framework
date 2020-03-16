@@ -47,8 +47,8 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     public string $view;
     public array $data = array();
     protected string $controllers;
-    public Form $form;
-    public Registry $reg;
+    private Form $form;
+    private Registry $reg;
 
     public function __construct(interfaceForm $form = null)
     {
@@ -97,7 +97,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    public function set($id)
+    public function set($id) : void
     {
         $this->data = \array_merge($this->data, $id);
 
@@ -136,12 +136,12 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return $this->data[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         $this->data[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         unset($this->data[$offset]);
     }
