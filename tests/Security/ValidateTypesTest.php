@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class ValidateTypesTest extends PHPUnit{
 
 
-    protected function assertPreConditions()
+    protected function assertPreConditions() : void
     {
        $this->assertTrue(class_exists($class = '\Ballybran\Helpers\Security\ValidateTypes'), 'Classe Not Faund');
     }
