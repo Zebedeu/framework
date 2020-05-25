@@ -34,9 +34,11 @@ class Map extends Bootstrap
 
     public function __construct()
     {
-
-        $url = $_GET['url'] ?? "/";
-        $this->url = $url;
+        if (!empty($_SERVER['REQUEST_URI'])) {
+            $this->url = trim($_SERVER['REQUEST_URI'], '/index');
+        }
+      
+       
     }
 
     /**
@@ -100,7 +102,6 @@ class Map extends Bootstrap
             throw new \Exception(' REQUEST_METHOD does not exists', 1);
 
         }
-
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
 
             if ($route->match($this->url)) {
