@@ -1,6 +1,6 @@
 <?php
 
-namespace Ballybran\Helpers\Http;
+namespace Ballybran\Core\Http;
 
 use Psr\Http\Message\UriInterface;
 

@@ -2,60 +2,32 @@
 
 namespace Ballybran\Core\Http;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
 
 /**
- * Class Request
+ * Class Response
  * @package Hero\Http
  */
-class Request implements RequestInterface
+class Response implements ResponseInterface
 {
     /**
-     * @var string
+     * @var int
      */
-    private $method;
+    private $code;
 
     /**
-     * @var Uri
+     * @var Stream
      */
-    private $uri;
+    private $body;
 
     /**
-     * Request constructor.
+     * Response constructor.
      */
     public function __construct()
     {
-        $this->method = $this->method();
-        $this->uri = $this->uri();
-    }
-
-    /**
-     * @return string
-     */
-    private function method()
-    {
-        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'unknown';
-    }
-
-    /**
-     * @return string
-     */
-    public function uri()
-    {
-        $self = isset($_SERVER['PHP_SELF']) ? str_replace('index.php/', '', $_SERVER['PHP_SELF']) : '';
-        $route = isset($_SERVER['REQUEST_URI']) ? explode('?', $_SERVER['REQUEST_URI'])[0] : '';
-
-        if ($self !== $route) {
-            $peaces = explode('/', $self);
-            array_pop($peaces);
-            $start = implode('/', $peaces);
-            $search = '/' . preg_quote($start, '/') . '/';
-            $route = preg_replace($search, '', $route, 1);
-        }
-
-        return new Uri($route);
+        $this->code = 200;
+        $this->body = new Stream();
     }
 
     /**
@@ -248,8 +220,7 @@ class Request implements RequestInterface
      */
     public function getBody()
     {
-        // TODO: Implement getBody() method.
-        throw new \Exception('Method not implemented yet!');
+        return $this->body;
     }
 
     /**
@@ -267,138 +238,71 @@ class Request implements RequestInterface
      */
     public function withBody(StreamInterface $body)
     {
-        // TODO: Implement withBody() method.
-        throw new \Exception('Method not implemented yet!');
+        $new = clone $this;
+
+        $new->body = $body;
+
+        return $new;
     }
 
     /**
-     * Retrieves the message's request target.
+     * Gets the response status code.
      *
-     * Retrieves the message's request-target either as it will appear (for
-     * clients), as it appeared at request (for servers), or as it was
-     * specified for the instance (see withRequestTarget()).
+     * The status code is a 3-digit integer result code of the server's attempt
+     * to understand and satisfy the request.
      *
-     * In most cases, this will be the origin-form of the composed URI,
-     * unless a value was provided to the concrete implementation (see
-     * withRequestTarget() below).
-     *
-     * If no URI is available, and no request-target has been specifically
-     * provided, this method MUST return the string "/".
-     *
-     * @return string
+     * @return int Status code.
      */
-    public function getRequestTarget()
+    public function getStatusCode()
     {
-        // TODO: Implement getRequestTarget() method.
-        throw new \Exception('Method not implemented yet!');
+        return $this->code;
     }
 
     /**
-     * Return an instance with the specific request-target.
+     * Return an instance with the specified status code and, optionally, reason phrase.
      *
-     * If the request needs a non-origin-form request-target — e.g., for
-     * specifying an absolute-form, authority-form, or asterisk-form —
-     * this method may be used to create an instance with the specified
-     * request-target, verbatim.
+     * If no reason phrase is specified, implementations MAY choose to default
+     * to the RFC 7231 or IANA recommended reason phrase for the response's
+     * status code.
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return an instance that has the
-     * changed request target.
+     * updated status and reason phrase.
      *
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3 (for the various
-     *     request-target forms allowed in request messages)
-     * @param mixed $requestTarget
+     * @link http://tools.ietf.org/html/rfc7231#section-6
+     * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+     * @param int $code The 3-digit integer result code to set.
+     * @param string $reasonPhrase The reason phrase to use with the
+     *     provided status code; if none is provided, implementations MAY
+     *     use the defaults as suggested in the HTTP specification.
      * @return static
+     * @throws \InvalidArgumentException For invalid status code arguments.
      */
-    public function withRequestTarget($requestTarget)
+    public function withStatus($code, $reasonPhrase = '')
     {
-        // TODO: Implement withRequestTarget() method.
+        $new = clone $this;
+
+        $new->code = $code;
+
+        return $new;
+    }
+
+    /**
+     * Gets the response reason phrase associated with the status code.
+     *
+     * Because a reason phrase is not a required element in a response
+     * status line, the reason phrase value MAY be null. Implementations MAY
+     * choose to return the default RFC 7231 recommended reason phrase (or those
+     * listed in the IANA HTTP Status Code Registry) for the response's
+     * status code.
+     *
+     * @link http://tools.ietf.org/html/rfc7231#section-6
+     * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+     * @return string Reason phrase; must return an empty string if none present.
+     */
+    public function getReasonPhrase()
+    {
+        // TODO: Implement getReasonPhrase() method.
         throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Retrieves the HTTP method of the request.
-     *
-     * @return string Returns the request method.
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    /**
-     * Return an instance with the provided HTTP method.
-     *
-     * While HTTP method names are typically all uppercase characters, HTTP
-     * method names are case-sensitive and thus implementations SHOULD NOT
-     * modify the given string.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request method.
-     *
-     * @param string $method Case-sensitive method.
-     * @return static
-     * @throws \InvalidArgumentException for invalid HTTP methods.
-     */
-    public function withMethod($method)
-    {
-        $with = clone $this;
-
-        $with->method = strtolower($method);
-
-        return $with;
-    }
-
-    /**
-     * Retrieves the URI instance.
-     *
-     * This method MUST return a UriInterface instance.
-     *
-     * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return Uri
-     */
-    public function getUri()
-    {
-        return $this->uri;
-    }
-
-    /**
-     * Returns an instance with the provided URI.
-     *
-     * This method MUST update the Host header of the returned request by
-     * default if the URI contains a host component. If the URI does not
-     * contain a host component, any pre-existing Host header MUST be carried
-     * over to the returned request.
-     *
-     * You can opt-in to preserving the original state of the Host header by
-     * setting `$preserveHost` to `true`. When `$preserveHost` is set to
-     * `true`, this method interacts with the Host header in the following ways:
-     *
-     * - If the Host header is missing or empty, and the new URI contains
-     *   a host component, this method MUST update the Host header in the returned
-     *   request.
-     * - If the Host header is missing or empty, and the new URI does not contain a
-     *   host component, this method MUST NOT update the Host header in the returned
-     *   request.
-     * - If a Host header is present and non-empty, this method MUST NOT update
-     *   the Host header in the returned request.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new UriInterface instance.
-     *
-     * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @param UriInterface $uri New request URI to use.
-     * @param bool $preserveHost Preserve the original state of the Host header.
-     * @return static
-     */
-    public function withUri(UriInterface $uri, $preserveHost = false)
-    {
-        $with = clone $this;
-
-        $with->uri = $uri;
-
-        return $with;
     }
 }
