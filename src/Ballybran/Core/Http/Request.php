@@ -1,404 +1,340 @@
 <?php
+/**
+ *
+ * KNUT7 K7F (https://marciozebedeu.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (https://marciozebedeu.com/)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @link      https://github.com/knut7/framework/ for the canonical source repository
+ * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
+ * @license   https://marciozebedeu.com/license/new-bsd New BSD License
+ * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ * @version   1.0.7
+ *
+ *
+ */
+
+/**
+ * Created by PhpStorm.
+ * User: marciozebedeu
+ * Date: 1/3/19
+ * Time: 2:25 AM
+ */
 
 namespace Ballybran\Core\Http;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
 
 /**
- * Class Request
- * @package Hero\Http
+ * The Request class provides a simple HTTP request interface.
+ *
+ * Usage examples can be found in the included README file, and all methods
+ * should have adequate documentation to get you started.
+ *
+ * Quick Start:
+ * @code
+
+ * @endcode
+ *
+ * Minimum requirements: PHP 5.3.x, cURL.
+ *
+ * @version 1.0-beta1
+ * @author Jeff Geerling (geerlingguy).
  */
-class Request implements RequestInterface
-{
-    /**
-     * @var string
-     */
-    private $method;
+
+
+class Request {
+    // You can set the address when creating the Request object, or using the
+    // setAddress() method.
+    private $address;
+
+    // Variables used for the request.
+    public $userAgent = 'Mozilla/5.0 (compatible; PHP Request library)';
+    public $connectTimeout = 10;
+    public $timeout = 15;
+
+    // Variables used for cookie support.
+    private $cookiesEnabled = FALSE;
+    private $cookiePath;
+
+    // Enable or disable SSL/TLS.
+    private $ssl = FALSE;
+
+    // Request type.
+    private $requestType;
+    // If the $requestType is POST, you can also add post fields.
+    private $postFields;
+
+    // Userpwd value used for basic HTTP authentication.
+    private $userpwd;
+    // Latency, in ms.
+    private $latency;
+    // HTTP response body.
+    private $responseBody;
+    // HTTP response header.
+    private $responseHeader;
+    // HTTP response status code.
+    private $httpCode;
+    // cURL error.
+    private $error;
 
     /**
-     * @var Uri
+     * Called when the Request object is created.
      */
-    private $uri;
-
-    /**
-     * Request constructor.
-     */
-    public function __construct()
-    {
-        $this->method = $this->method();
-        $this->uri = $this->uri();
-    }
-
-    /**
-     * @return string
-     */
-    private function method()
-    {
-        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'unknown';
-    }
-
-    /**
-     * @return string
-     */
-    public function uri()
-    {
-        $self = isset($_SERVER['PHP_SELF']) ? str_replace('index.php/', '', $_SERVER['PHP_SELF']) : '';
-        $route = isset($_SERVER['REQUEST_URI']) ? explode('?', $_SERVER['REQUEST_URI'])[0] : '';
-
-        if ($self !== $route) {
-            $peaces = explode('/', $self);
-            array_pop($peaces);
-            $start = implode('/', $peaces);
-            $search = '/' . preg_quote($start, '/') . '/';
-            $route = preg_replace($search, '', $route, 1);
+    public function __construct($address) {
+        if (!isset($address)) {
+            throw new Exception("Error: Address not provided.");
         }
-
-        return new Uri($route);
+        $this->address = $address;
     }
 
     /**
-     * Retrieves the HTTP protocol version as a string.
+     * Set the address for the request.
      *
-     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
-     *
-     * @return string HTTP protocol version.
+     * @param string $address
+     *   The URI or IP address to request.
      */
-    public function getProtocolVersion()
-    {
-        // TODO: Implement getProtocolVersion() method.
-        throw new \Exception('Method not implemented yet!');
+    public function setAddress($address) {
+        $this->address = $address;
     }
 
     /**
-     * Return an instance with the specified HTTP protocol version.
+     * Set the username and password for HTTP basic authentication.
      *
-     * The version string MUST contain only the HTTP version number (e.g.,
-     * "1.1", "1.0").
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new protocol version.
-     *
-     * @param string $version HTTP protocol version
-     * @return static
+     * @param string $username
+     *   Username for basic authentication.
+     * @param string $password
+     *   Password for basic authentication.
      */
-    public function withProtocolVersion($version)
-    {
-        // TODO: Implement withProtocolVersion() method.
-        throw new \Exception('Method not implemented yet!');
+    public function setBasicAuthCredentials($username, $password) {
+        $this->userpwd = $username . ':' . $password;
     }
 
     /**
-     * Retrieves all message header values.
+     * Enable cookies.
      *
-     * The keys represent the header name as it will be sent over the wire, and
-     * each value is an array of strings associated with the header.
-     *
-     *     // Represent the headers as a string
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         echo $name . ": " . implode(", ", $values);
-     *     }
-     *
-     *     // Emit headers iteratively:
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         foreach ($values as $value) {
-     *             header(sprintf('%s: %s', $name, $value), false);
-     *         }
-     *     }
-     *
-     * While header names are not case-sensitive, getHeaders() will preserve the
-     * exact case in which headers were originally specified.
-     *
-     * @return string[][] Returns an associative array of the message's headers. Each
-     *     key MUST be a header name, and each value MUST be an array of strings
-     *     for that header.
+     * @param string $cookie_path
+     *   Absolute path to a txt file where cookie information will be stored.
      */
-    public function getHeaders()
-    {
-        // TODO: Implement getHeaders() method.
-        throw new \Exception('Method not implemented yet!');
+    public function enableCookies($cookie_path) {
+        $this->cookiesEnabled = TRUE;
+        $this->cookiePath = $cookie_path;
     }
 
     /**
-     * Checks if a header exists by the given case-insensitive name.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @return bool Returns true if any header names match the given header
-     *     name using a case-insensitive string comparison. Returns false if
-     *     no matching header name is found in the message.
+     * Disable cookies.
      */
-    public function hasHeader($name)
-    {
-        // TODO: Implement hasHeader() method.
-        throw new \Exception('Method not implemented yet!');
+    public function disableCookies() {
+        $this->cookiesEnabled = FALSE;
+        $this->cookiePath = '';
     }
 
     /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * This method returns an array of all the header values of the given
-     * case-insensitive header name.
-     *
-     * If the header does not appear in the message, this method MUST return an
-     * empty array.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @return string[] An array of string values as provided for the given
-     *    header. If the header does not appear in the message, this method MUST
-     *    return an empty array.
+     * Enable SSL.
      */
-    public function getHeader($name)
-    {
-        // TODO: Implement getHeader() method.
-        throw new \Exception('Method not implemented yet!');
+    public function enableSSL() {
+        $this->ssl = TRUE;
     }
 
     /**
-     * Retrieves a comma-separated string of the values for a single header.
-     *
-     * This method returns all of the header values of the given
-     * case-insensitive header name as a string concatenated together using
-     * a comma.
-     *
-     * NOTE: Not all header values may be appropriately represented using
-     * comma concatenation. For such headers, use getHeader() instead
-     * and supply your own delimiter when concatenating.
-     *
-     * If the header does not appear in the message, this method MUST return
-     * an empty string.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @return string A string of values as provided for the given header
-     *    concatenated together using a comma. If the header does not appear in
-     *    the message, this method MUST return an empty string.
+     * Disable SSL.
      */
-    public function getHeaderLine($name)
-    {
-        // TODO: Implement getHeaderLine() method.
-        throw new \Exception('Method not implemented yet!');
+    public function disableSSL() {
+        $this->ssl = FALSE;
     }
 
     /**
-     * Return an instance with the provided value replacing the specified header.
+     * Set timeout.
      *
-     * While header names are case-insensitive, the casing of the header will
-     * be preserved by this function, and returned from getHeaders().
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new and/or updated header and value.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @param string|string[] $value Header value(s).
-     * @return static
-     * @throws \InvalidArgumentException for invalid header names or values.
+     * @param int $timeout
+     *   Timeout value in seconds.
      */
-    public function withHeader($name, $value)
-    {
-        // TODO: Implement withHeader() method.
-        throw new \Exception('Method not implemented yet!');
+    public function setTimeout($timeout = 15) {
+        $this->timeout = $timeout;
     }
 
     /**
-     * Return an instance with the specified header appended with the given value.
+     * Get timeout.
      *
-     * Existing values for the specified header will be maintained. The new
-     * value(s) will be appended to the existing list. If the header did not
-     * exist previously, it will be added.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new header and/or value.
-     *
-     * @param string $name Case-insensitive header field name to add.
-     * @param string|string[] $value Header value(s).
-     * @return static
-     * @throws \InvalidArgumentException for invalid header names or values.
+     * @return int
+     *   Timeout value in seconds.
      */
-    public function withAddedHeader($name, $value)
-    {
-        // TODO: Implement withAddedHeader() method.
-        throw new \Exception('Method not implemented yet!');
+    public function getTimeout() {
+        return $this->timeout;
     }
 
     /**
-     * Return an instance without the specified header.
+     * Set connect timeout.
      *
-     * Header resolution MUST be done without case-sensitivity.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that removes
-     * the named header.
-     *
-     * @param string $name Case-insensitive header field name to remove.
-     * @return static
+     * @param int $connect_timeout
+     *   Timeout value in seconds.
      */
-    public function withoutHeader($name)
-    {
-        // TODO: Implement withoutHeader() method.
-        throw new \Exception('Method not implemented yet!');
+    public function setConnectTimeout($connectTimeout = 10) {
+        $this->connectTimeout = $connectTimeout;
     }
 
     /**
-     * Gets the body of the message.
+     * Get connect timeout.
      *
-     * @return StreamInterface Returns the body as a stream.
+     * @return int
+     *   Timeout value in seconds.
      */
-    public function getBody()
-    {
-        // TODO: Implement getBody() method.
-        throw new \Exception('Method not implemented yet!');
+    public function getConnectTimeout() {
+        return $this->connectTimeout;
     }
 
     /**
-     * Return an instance with the specified message body.
+     * Set a request type (by default, cURL will send a GET request).
      *
-     * The body MUST be a StreamInterface object.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return a new instance that has the
-     * new body stream.
-     *
-     * @param StreamInterface $body Body.
-     * @return static
-     * @throws \InvalidArgumentException When the body is not valid.
+     * @param string $type
+     *   GET, POST, DELETE, PUT, etc. Any standard request type will work.
      */
-    public function withBody(StreamInterface $body)
-    {
-        // TODO: Implement withBody() method.
-        throw new \Exception('Method not implemented yet!');
+    public function setRequestType($type) {
+        $this->requestType = $type;
     }
 
     /**
-     * Retrieves the message's request target.
+     * Set the POST fields (only used if $this->requestType is 'POST').
      *
-     * Retrieves the message's request-target either as it will appear (for
-     * clients), as it appeared at request (for servers), or as it was
-     * specified for the instance (see withRequestTarget()).
-     *
-     * In most cases, this will be the origin-form of the composed URI,
-     * unless a value was provided to the concrete implementation (see
-     * withRequestTarget() below).
-     *
-     * If no URI is available, and no request-target has been specifically
-     * provided, this method MUST return the string "/".
+     * @param array $fields
+     *   An array of fields that will be sent with the POST request.
+     */
+    public function setPostFields($fields = array()) {
+        $this->postFields = $fields;
+    }
+
+    /**
+     * Get the response body.
      *
      * @return string
+     *   Response body.
      */
-    public function getRequestTarget()
-    {
-        // TODO: Implement getRequestTarget() method.
-        throw new \Exception('Method not implemented yet!');
+    public function getResponse() {
+        return $this->responseBody;
     }
 
     /**
-     * Return an instance with the specific request-target.
+     * Get the response header.
      *
-     * If the request needs a non-origin-form request-target — e.g., for
-     * specifying an absolute-form, authority-form, or asterisk-form —
-     * this method may be used to create an instance with the specified
-     * request-target, verbatim.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request target.
-     *
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3 (for the various
-     *     request-target forms allowed in request messages)
-     * @param mixed $requestTarget
-     * @return static
+     * @return string
+     *   Response header.
      */
-    public function withRequestTarget($requestTarget)
-    {
-        // TODO: Implement withRequestTarget() method.
-        throw new \Exception('Method not implemented yet!');
+    public function getHeader() {
+        return $this->responseHeader;
     }
 
     /**
-     * Retrieves the HTTP method of the request.
+     * Get the HTTP status code for the response.
      *
-     * @return string Returns the request method.
+     * @return int
+     *   HTTP status code.
+     *
+     * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
      */
-    public function getMethod()
-    {
-        return $this->method;
+    public function getHttpCode() {
+        return $this->httpCode;
     }
 
     /**
-     * Return an instance with the provided HTTP method.
+     * Get the latency (the total time spent waiting) for the response.
      *
-     * While HTTP method names are typically all uppercase characters, HTTP
-     * method names are case-sensitive and thus implementations SHOULD NOT
-     * modify the given string.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request method.
-     *
-     * @param string $method Case-sensitive method.
-     * @return static
-     * @throws \InvalidArgumentException for invalid HTTP methods.
+     * @return int
+     *   Latency, in milliseconds.
      */
-    public function withMethod($method)
-    {
-        $with = clone $this;
-
-        $with->method = strtolower($method);
-
-        return $with;
+    public function getLatency() {
+        return $this->latency;
     }
 
     /**
-     * Retrieves the URI instance.
+     * Get any cURL errors generated during the execution of the request.
      *
-     * This method MUST return a UriInterface instance.
-     *
-     * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return Uri
+     * @return string
+     *   An error message, if any error was given. Otherwise, empty.
      */
-    public function getUri()
-    {
-        return $this->uri;
+    public function getError() {
+        return $this->error;
     }
 
     /**
-     * Returns an instance with the provided URI.
+     * Check for content in the HTTP response body.
      *
-     * This method MUST update the Host header of the returned request by
-     * default if the URI contains a host component. If the URI does not
-     * contain a host component, any pre-existing Host header MUST be carried
-     * over to the returned request.
+     * This method should not be called until after execute(), and will only check
+     * for the content if the response code is 200 OK.
      *
-     * You can opt-in to preserving the original state of the Host header by
-     * setting `$preserveHost` to `true`. When `$preserveHost` is set to
-     * `true`, this method interacts with the Host header in the following ways:
+     * @param string $content
+     *   String for which the response will be checked.
      *
-     * - If the Host header is missing or empty, and the new URI contains
-     *   a host component, this method MUST update the Host header in the returned
-     *   request.
-     * - If the Host header is missing or empty, and the new URI does not contain a
-     *   host component, this method MUST NOT update the Host header in the returned
-     *   request.
-     * - If a Host header is present and non-empty, this method MUST NOT update
-     *   the Host header in the returned request.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new UriInterface instance.
-     *
-     * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @param UriInterface $uri New request URI to use.
-     * @param bool $preserveHost Preserve the original state of the Host header.
-     * @return static
+     * @return bool
+     *   TRUE if $content was found in the response, FALSE otherwise.
      */
-    public function withUri(UriInterface $uri, $preserveHost = false)
-    {
-        $with = clone $this;
+    public function checkResponseForContent($content = '') {
+        if ($this->httpCode == 200 && !empty($this->responseBody)) {
+            if (strpos($this->responseBody, $content) !== FALSE) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
 
-        $with->uri = $uri;
+    /**
+     * Check a given address with cURL.
+     *
+     * After this method is completed, the response body, headers, latency, etc.
+     * will be populated, and can be accessed with the appropriate methods.
+     */
+    public function execute() {
+        // Set a default latency value.
+        $latency = 0;
 
-        return $with;
+        // Set up cURL options.
+        $ch = curl_init();
+        // If there are basic authentication credentials, use them.
+        if (isset($this->userpwd)) {
+            curl_setopt($ch, CURLOPT_USERPWD, $this->userpwd);
+        }
+        // If cookies are enabled, use them.
+        if ($this->cookiesEnabled) {
+            curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookiePath);
+            curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookiePath);
+        }
+        // Send a custom request if set (instead of standard GET).
+        if (isset($this->requestType)) {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->requestType);
+            // If POST fields are given, and this is a POST request, add fields.
+            if ($this->requestType == 'POST' && isset($this->postFields)) {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->postFields);
+            }
+        }
+        // Don't print the response; return it from curl_exec().
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_URL, $this->address);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        // Follow redirects (maximum of 5).
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+        // SSL support.
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->ssl);
+        // Set a custom UA string so people can identify our requests.
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+        // Output the header in the response.
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        $response = curl_exec($ch);
+        $error = curl_error($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $time = curl_getinfo($ch, CURLINFO_TOTAL_TIME);
+        curl_close($ch);
+
+        // Set the header, response, error and http code.
+        $this->responseHeader = substr($response, 0, $header_size);
+        $this->responseBody = substr($response, $header_size);
+        $this->error = $error;
+        $this->httpCode = $http_code;
+
+        // Convert the latency to ms.
+        $this->latency = round($time * 1000);
     }
 }

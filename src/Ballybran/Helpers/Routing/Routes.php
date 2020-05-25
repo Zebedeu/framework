@@ -35,7 +35,7 @@ class Routes
      * @param string $path
      * @param $callable
      */
-    public function __construct(string $path, $callable)
+    public function __construct( $path, $callable)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
@@ -92,7 +92,7 @@ class Routes
 
      public function call()
     {
-	    
+            
             if (is_string($this->callable)) {
 
                 $params = explode('@', $this->callable);

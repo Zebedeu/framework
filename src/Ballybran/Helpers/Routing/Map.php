@@ -24,7 +24,7 @@ use Ballybran\Helpers\vardump\Vardump;
  * Class Map
  * @package Ballybran\Helpers\Routing
  */
-class Map extends Bootstrap
+class Map
 {
     private  $url;
     private  $callable;
@@ -35,9 +35,8 @@ class Map extends Bootstrap
     public function __construct()
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
-            $this->url = trim($_SERVER['REQUEST_URI'], '/index');
-        }
-      
+            $this->url = trim($_SERVER['REQUEST_URI'], '/');
+        }      
        
     }
 
