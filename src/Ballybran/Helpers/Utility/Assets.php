@@ -43,10 +43,10 @@ class Assets
 
         if (is_array($files)) {
             foreach ($files as $file) {
-                echo sprintf($template, $file) . "\n";
+                return sprintf($template, $file) . "\n";
             }
         } else {
-            echo(sprintf($template, $files) . "\n");
+             return sprintf($template, $files) . "\n";
         }
     }
 
@@ -54,10 +54,10 @@ class Assets
     {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
-                static::resource($value, 'js');
+               echo static::resource($value, 'js');
             }
         } else {
-            static::resource($files, 'js');
+            echo static::resource($files, 'js');
 
         }
     }
@@ -66,11 +66,13 @@ class Assets
     public static function css(Array $files)
     {
         if (is_array($files)) {
+
+
             foreach ($files as $key => $value) {
-                static::resource($value, 'css');
+                echo static::resource($value, 'css');
             }
         } else {
-            static::resource($files, 'css');
+            echo static::resource($files, 'css');
         }
     }
 

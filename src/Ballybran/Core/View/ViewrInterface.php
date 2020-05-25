@@ -21,7 +21,7 @@ namespace Ballybran\Core\View;
 
 interface ViewrInterface
 {
-    public function render(object $controller, String $view, array $data = array()) : string;
+    public function render(object $controller, String $view);
 
     public function fetch($data = null);
 

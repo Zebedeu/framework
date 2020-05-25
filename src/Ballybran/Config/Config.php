@@ -126,8 +126,8 @@ if (!empty($_dev)) {
  *  O URL base do sistema
  */
 
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . DS);
-define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF'])) . DIRECTORY_SEPARATOR);
+define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
+define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
 
 define('ROOT', dirname(__FILE__));
 
@@ -149,5 +149,6 @@ define('DIR_COOKIE', 'storage/cookie/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-define('VIEW', 'html'. DS . 'views' . DS);
+    define('VIEW', 'html'. DS . 'views' . DS);
+
 

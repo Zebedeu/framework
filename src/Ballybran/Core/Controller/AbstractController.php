@@ -24,8 +24,6 @@
 
 namespace Ballybran\Core\Controller;
 
-use Ballybran\Core\Http\Response;
-use Ballybran\Core\Http\Request;
 use Ballybran\Core\Model\Model;
 use Ballybran\Core\View\View;
 use Ballybran\Helpers\Utility\Language;
@@ -41,17 +39,6 @@ class AbstractController extends Model implements AbstractControllerInterface
     /**
      * @var
      */
-
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var Response
-     */
-    private $response;
-
     protected $width;
     /**
      * @var
@@ -84,34 +71,4 @@ class AbstractController extends Model implements AbstractControllerInterface
         $this->reg = \Ballybran\Helpers\Event\Registry::getInstance();
 
     }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return $this
-     */
-    public function __invoke(Request $request, Response $response)
-    {
-        $this->request = $request;
-        $this->response = $response;
-
-        return $this;
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
-
 }

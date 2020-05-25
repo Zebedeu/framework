@@ -29,6 +29,8 @@
  * *NOTE* When a view uses a layout, the output of the view is ignored, as
  *        as the view is expected to use capture() to send data to the layout.
 
+
+/**
  * @property  UserData propriedade gerada e usada para pegar dados do model
  */
 
@@ -48,7 +50,6 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     private Form $form;
     private Registry $reg;
 
-
     public function __construct(interfaceForm $form = null)
     {
         $this->reg = Registry::getInstance();
@@ -58,31 +59,33 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         } else {
             $this->form = new Form();
         }
+        $this->data;
     }
 
     /**
      * render.
      *
-     * @param object $controller
-     * @param string $view
-     * @param array $data
+     * @param mixed $controller
+     * @param mixed $view
+     * @param mixed $data
      *
      * @return string
      */
-    public function render(object $controller, string $view, array $data = array()): string
+    public function render(object $controller, string $view): string
     {
-        
-        $this->merge($data);
+        $this->dot = new IteratorDot($this->get_data());
+
         $data = (null === $this->get_data()) ? array() : $this->get_data();
         $this->view = $view;
         $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
-        $this->dot = new IteratorDot($this->get_data());
         extract($this->get_data());
         ob_start();
         $this->isHeader();
 
         include $this->file =  VIEW . $this->controllers . DS . $this->view . $this->ex;
+        $this->isFooter();
+
         $content = ob_get_contents();
         return $content;
     }
@@ -96,9 +99,9 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    public function merge(array $data = array()) : void
+    public function set($id) : void
     {
-        $this->data = array_merge($this->data, $data);
+        $this->data = \array_merge($this->data, $id);
 
     }
 

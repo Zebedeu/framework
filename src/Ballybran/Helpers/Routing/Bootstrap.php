@@ -30,7 +30,7 @@ use Ballybran\Helpers\Language;
 class Bootstrap extends RestRequest
 {
     private $_controller;
-    public $_controllerPath = PV . APP . DS . 'Controllers/';
+    public $_controllerPath = PV . APP . DS . 'controllers/';
     private $_modelPath = 'Models';
     private $_errorFile = 'Error.php';
     private $_defaultFile = 'Index.php';
@@ -140,7 +140,7 @@ class Bootstrap extends RestRequest
         }
         require $file;
 
-        $namespace = str_replace('/', '\\', APP . '/Controllers/');
+        $namespace = str_replace('/', '\\', APP . '/controllers/');
         $className = $namespace . $this->_url[0];
 
         $this->_controller = new $className( );
