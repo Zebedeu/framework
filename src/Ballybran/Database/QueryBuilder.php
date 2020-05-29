@@ -31,7 +31,7 @@ use Ballybran\Database\Drives\QueryBuilderInterface;
  * @method QueryBuilder having (array $having)
  * @method QueryBuilder limit (array $join)
  */
-class QueryBuilder extends DBconnection implements QueryBuilderInterface
+class QueryBuilder extends DBconnection
 {
     /**
      * @var array

@@ -75,17 +75,17 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
 
     /**
      * @param $table
-     * @param null $fields
-     * @param null $where
-     * @param null $order
-     * @param null $limit
+     * @param string $fields
+     * @param string $where
+     * @param string $order
+     * @param int $limit
      * @param null $offset
      * @param array $array
      * @param int $fetchMode
      *
      * @return mixed
      */
-    public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode = \PDO::FETCH_ASSOC)
+    public function find(string $table, string $fields = null, string $where = null, string $order = null, int $limit = null, $offset = null, array $array = array(), $fetchMode = \PDO::FETCH_ASSOC)
     {
         $sql = ' SELECT ' . (($fields) ?? '*') . ' FROM ' . (($table)) . (($where) ? ' WHERE ' . $where : ' ')
             . (($limit) ? ' LIMIT ' . $limit : ' ')
@@ -129,7 +129,7 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
             $this->_commit();
             $stmt->execute();
             unset($stmt);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->_Rollback();
             echo 'error insert ' . $e->getMessage();
         }

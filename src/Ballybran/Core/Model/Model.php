@@ -65,7 +65,6 @@ class Model
         $this->modelClass = $classModel . 'Model';
         //$path = 'App/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
         $path =   $this->modelClass . '.php';
-
         if (file_exists($path) || is_readable($path)) {
             require_once $path;
             return $this->dbObject();

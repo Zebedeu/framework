@@ -38,7 +38,7 @@ class QueryBuilderInterface
      * @param $arguments
      * @return $this
      */
-    function __call($name, $arguments);
+    public function __call($name, $arguments);
 
     /**
      * QueryBuilder constructor.

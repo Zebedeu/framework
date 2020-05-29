@@ -99,9 +99,9 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    public function set($id) : void
+    public function merge(array $data) : void
     {
-        $this->data = \array_merge($this->data, $id);
+        $this->data = \array_merge($this->data, $data);
 
     }
 
