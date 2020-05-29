@@ -64,7 +64,7 @@ interface AbstractDatabaseInterface
      * @param $fetchMode
      * @return mixed
      */
-    public function find($table, $fields = null, $where = null, $order = null, $limit = null, $offset = null, $array = array(), $fetchMode);
+    public function find(string $table, string $fields = null, string $where = null, string $order = null, int $limit = null, $offset = null, array $array = array(), $fetchMode = \PDO::FETCH_ASSOC);
 
 
     /**

@@ -27,6 +27,8 @@ interface ViewrInterface
 
     public function get_data() : array;
 
+    public function merge(array $data) : void;
+
     public function offsetExists($offset) : bool;
 
     public function offsetGet($offset) : string ;
