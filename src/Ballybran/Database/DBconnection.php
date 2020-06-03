@@ -21,7 +21,7 @@ namespace Ballybran\Database;
 
 use PDO;
 
-class DBconnection extends PDOStatement
+class DBconnection extends PDOStatement implements DBconnectionInterface
 {
     /**
      * @params array
