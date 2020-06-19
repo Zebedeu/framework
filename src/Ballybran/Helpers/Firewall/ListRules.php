@@ -8,7 +8,7 @@
 
 namespace Ballybran\Helpers\Firewall;
 
-class Lista
+class ListRules
 {
 
     public function rules($rules)
