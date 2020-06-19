@@ -55,7 +55,7 @@ class Firewall
 
     public function check($allowed_ips = null)
     {
-        $allowed_ips = $allowed_ips ?? $this->_allowed_ips;
+        $allowed_ips = $this->allowed_ips ?? $this->_allowed_ips;
 
         foreach ($allowed_ips as $allowed_ip) {
             $type = $this->_judge_ip_type($allowed_ip);
