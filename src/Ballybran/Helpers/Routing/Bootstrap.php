@@ -23,6 +23,7 @@ use Ballybran\Core\Http\RestRequest;
 use Ballybran\Core\Http\RestUtilities;
 use Ballybran\Exception\KException;
 use Ballybran\Helpers\Language;
+use Ballybran\Helpers\Utility\Language as UtilityLanguage;
 
 /**
  * Class Bootstrap.
@@ -207,7 +208,7 @@ class Bootstrap extends RestRequest
             $bootstrap = new self();
             $bootstrap->init();
         } else {
-            $lang = new Language();
+            $lang = new UtilityLanguage();
             $lang->Load('welcome');
             KException::error("<p class='btn btn-warning'>" . $lang->get("version") . "</p>");
         }
