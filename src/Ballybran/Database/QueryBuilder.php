@@ -21,7 +21,6 @@ use Ballybran\Database\Drives\QueryBuilderInterface;
 
 /**
  * Class QueryBuilder
- * @package Hero
  * @method QueryBuilder table (string $table)
  * @method QueryBuilder join (string $join)
  * @method QueryBuilder fields (array $fields)

@@ -13,7 +13,6 @@ namespace Ballybran\Core\Collections\Collection;
 use Countable;
 use ArrayAccess;
 use ArrayIterator;
-use JsonSerializable;
 use IteratorAggregate;
 
 /**
@@ -22,7 +21,7 @@ use IteratorAggregate;
  * This class provides a dot notation access and helper functions for
  * working with arrays of data. Inspired by Laravel Collection.
  */
-class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
+class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The stored items
@@ -441,19 +440,5 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
     public function getIterator()
     {
         return new ArrayIterator($this->elements);
-    }
-    /*
-     * --------------------------------------------------------------
-     * JsonSerializable interface
-     * --------------------------------------------------------------
-     */
-    /**
-     * Return items for JSON serialization
-     *
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->elements;
     }
 }
