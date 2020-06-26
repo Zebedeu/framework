@@ -33,9 +33,8 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
     /**
      *  elements
      *
-     * @var array
      */
-    protected $elements = [];
+    protected $elements;
 
     /**
      * Create a new Dot instance
