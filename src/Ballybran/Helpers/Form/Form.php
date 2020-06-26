@@ -40,13 +40,13 @@ class Form implements interfaceForm
             throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
         }
         $o = '<form';
-        $o .= self::param_mix($params);
+        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
         $o .= (isset($params['onsubmit'])) ? " onsubmit='{$params['onsubmit']}'" : '';
         $o .= (isset($params['method'])) ? " method='{$params['method']}'" : ' method="get"';
         $o .= (isset($params['action'])) ? " action='{$params['action']}'" : '';
         $o .= (isset($params['files'])) ? " enctype='multipart/form-data'" : '';
         $o .= (isset($params['role'])) ? " role='{$params['role']}'" : '';
-        $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
+        $o .= (isset($params['novalidate'])) ? " {$params['novalidate']}" : '';
         $o .= '>';
         return $o;
     }
@@ -81,7 +81,6 @@ class Form implements interfaceForm
         $o .= (isset($params['cols'])) ? " cols='{$params['cols']}'" : '';
         $o .= (isset($params['rows'])) ? " rows='{$params['rows']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
-        $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= '>';
         $o .= (isset($params['value'])) ? $params['value'] : '';
         $o .= "</textarea>\n";
@@ -108,7 +107,6 @@ class Form implements interfaceForm
         $o .= self::param_mix($params);
         $o .= (isset($params['onkeypress'])) ? " onkeypress='{$params['onkeypress']}'" : '';
         $o .= (isset($params['length'])) ? " maxlength='{$params['length']}'" : '';
-        $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
         $o .= (isset($params['accept'])) ? " accept='{$params['accept']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
         $o .= (isset($params['minlength'])) ? " minlength='{$params['minlength']}'" : '';
