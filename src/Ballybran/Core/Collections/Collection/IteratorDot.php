@@ -11,6 +11,7 @@
 namespace Ballybran\Core\Collections\Collection;
 
 use Countable;
+use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
@@ -20,7 +21,7 @@ use IteratorAggregate;
  * This class provides a dot notation access and helper functions for
  * working with arrays of data. Inspired by Laravel Collection.
  */
-class IteratorDot implements Countable, IteratorAggregate
+class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The stored items
@@ -32,6 +33,7 @@ class IteratorDot implements Countable, IteratorAggregate
     /**
      *  elements
      *
+     * @var array
      */
     protected $elements;
 
@@ -262,7 +264,7 @@ class IteratorDot implements Countable, IteratorAggregate
             $items = (array)$this->get($key);
             $value = array_merge($items, $this->getArrayItems($value));
             $this->set($key, $value);
-        } elseif ($key) {
+        } elseif ($key instanceof self) {
             $this->elements = array_merge($this->elements, $key->all());
         }
     }
@@ -366,8 +368,68 @@ class IteratorDot implements Countable, IteratorAggregate
         $options = $key === null ? 0 : $key;
         return json_encode($this->elements, $options);
     }
-   
- 
+    /*
+     * --------------------------------------------------------------
+     * ArrayAccess interface
+     * --------------------------------------------------------------
+     */
+    /**
+     * Check if a given key exists
+     *
+     * @param  int|string $key
+     * @return bool
+     */
+    public function offsetExists($key)
+    {
+        return $this->has($key);
+    }
+
+    /**
+     * Return the value of a given key
+     *
+     * @param  int|string $key
+     * @return mixed
+     */
+    public function offsetGet($key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Set a given value to the given key
+     *
+     * @param int|string|null $key
+     * @param mixed $value
+     */
+    public function offsetSet($key, $value)
+    {
+        if (is_null($key)) {
+            $this->elements[] = $value;
+            return;
+        }
+        $this->set($key, $value);
+    }
+
+    /**
+     * Delete the given key
+     *
+     * @param int|string $key
+     */
+    public function offsetUnset($key)
+    {
+        $this->delete($key);
+    }
+    /*
+     * --------------------------------------------------------------
+     * Countable interface
+     * --------------------------------------------------------------
+     */
+    /**
+     * Return the number of items in a given key
+     *
+     * @param  int|string|null $key
+     * @return int
+     */
     public function count($key = null)
     {
         return count($this->get($key));
