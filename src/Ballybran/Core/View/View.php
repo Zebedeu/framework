@@ -38,8 +38,6 @@ namespace Ballybran\Core\View;
 
 use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
-use Ballybran\Helpers\Form\Form;
-use Ballybran\Helpers\Form\interfaceForm;
 use \Ballybran\Helpers\Event\Registry;
 
 class View extends RenderFiles implements ViewrInterface, \ArrayAccess
@@ -50,15 +48,9 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     private Form $form;
     private Registry $reg;
 
-    public function __construct(interfaceForm $form = null)
+    public function __construct()
     {
         $this->reg = Registry::getInstance();
-
-        if ($form != null && $form instanceof Form) {
-            $this->form = $form;
-        } else {
-            $this->form = new Form();
-        }
         $this->data;
     }
 
