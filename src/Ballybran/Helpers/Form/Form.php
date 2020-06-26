@@ -131,7 +131,6 @@ class Form implements interfaceForm
      */
     public static function select($params = array())
     {
-
         if (!is_array($params)) {
             throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
         }
@@ -148,9 +147,11 @@ class Form implements interfaceForm
                 } else {
                     $o .= "<option value='{$k}'>{$v}</option>\n";
                 }
-            }
+            }else{
+
             throw new \InvalidArgumentException("Arguments is not valid " . print_r($params, true));
 
+            }
         }
         $o .= "</select>\n";
         return $o;
