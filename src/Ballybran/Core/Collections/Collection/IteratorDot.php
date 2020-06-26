@@ -384,41 +384,6 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
         return $this->has($key);
     }
 
-    /**
-     * Return the value of a given key
-     *
-     * @param  int|string $key
-     * @return mixed
-     */
-    public function offsetGet($key)
-    {
-        return $this->get($key);
-    }
-
-    /**
-     * Set a given value to the given key
-     *
-     * @param int|string|null $key
-     * @param mixed $value
-     */
-    public function offsetSet($key, $value)
-    {
-        if (is_null($key)) {
-            $this->elements[] = $value;
-            return;
-        }
-        $this->set($key, $value);
-    }
-
-    /**
-     * Delete the given key
-     *
-     * @param int|string $key
-     */
-    public function offsetUnset($key)
-    {
-        $this->delete($key);
-    }
     /*
      * --------------------------------------------------------------
      * Countable interface
@@ -434,18 +399,5 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
     {
         return count($this->get($key));
     }
-    /*
-     * --------------------------------------------------------------
-     * IteratorAggregate interface
-     * --------------------------------------------------------------
-     */
-    /**
-     * Get an iterator for the stored items
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->elements);
-    }
+    
 }
