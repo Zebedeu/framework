@@ -9,8 +9,8 @@
  */
 
 namespace Ballybran\Core\Collections\Collection;
+use Ballybran\Core\Collections\Collection\ValidateDot;
 
-use Countable;
 use ArrayIterator;
 
 /**
@@ -19,7 +19,7 @@ use ArrayIterator;
  * This class provides a dot notation access and helper functions for
  * working with arrays of data. Inspired by Laravel Collection.
  */
-class IteratorDot implements Countable
+class IteratorDot extends ValidateDot
 {
     /**
      * The stored items
@@ -64,16 +64,6 @@ class IteratorDot implements Countable
     }
 
     /**
-     * Return all the stored items
-     *
-     * @return array
-     */
-    public function all()
-    {
-        return $this->elements;
-    }
-
-    /**
      * Delete the contents of a given key or keys
      *
      * @param array|int|string|null $keys
@@ -114,19 +104,6 @@ class IteratorDot implements Countable
             }
             unset($items[$lastSegment]);
         }
-    }
-
-    /**
-     * Checks if the given key exists in the provided array.
-     *
-     * @param  array $array Array to validate
-     * @param  int|string $key The key to look for
-     *
-     * @return bool
-     */
-    private function exists($array, $key)
-    {
-        return array_key_exists($key, $array);
     }
 
     /**
@@ -332,26 +309,6 @@ class IteratorDot implements Countable
     }
 
     /**
-     * Replace all items with a given array
-     *
-     * @param mixed $items
-     */
-    public function setArray($items)
-    {
-        $this->elements = $this->getArrayItems($items);
-    }
-
-    /**
-     * Replace all items with a given array as a reference
-     *
-     * @param array $items
-     */
-    public function setReference(array &$items)
-    {
-        $this->elements = &$items;
-    }
-
-    /**
      * Return the value of a given key or all the values as JSON
      *
      * @param  mixed $key
@@ -366,21 +323,5 @@ class IteratorDot implements Countable
         $options = $key === null ? 0 : $key;
         return json_encode($this->elements, $options);
     }
-
-    /*
-     * --------------------------------------------------------------
-     * Countable interface
-     * --------------------------------------------------------------
-     */
-    /**
-     * Return the number of items in a given key
-     *
-     * @param  int|string|null $key
-     * @return int
-     */
-    public function count($key = null)
-    {
-        return count($this->get($key));
-    }
-    
+        
 }
