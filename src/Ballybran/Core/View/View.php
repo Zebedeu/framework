@@ -38,8 +38,8 @@ namespace Ballybran\Core\View;
 
 use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
-use Ballybran\Library\Form;
-use Ballybran\Library\interfaceForm;
+use Ballybran\Helpers\Form\Form;
+use Ballybran\Helpers\Form\interfaceForm;
 use \Ballybran\Helpers\Event\Registry;
 
 class View extends RenderFiles implements ViewrInterface, \ArrayAccess
