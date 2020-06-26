@@ -29,6 +29,13 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
      * @var array
      */
     protected $items = [];
+    
+    /**
+     *  elements
+     *
+     * @var array
+     */
+    protected $elements = [];
 
     /**
      * Create a new Dot instance
@@ -204,7 +211,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
     public function has($keys)
     {
         $keys = (array)$keys;
-        if (!$this->elements || $keys === []) {
+        if ( empty($this->elements) || $keys === []) {
             return false;
         }
         foreach ($keys as $key) {
