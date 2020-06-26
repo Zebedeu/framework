@@ -217,30 +217,7 @@ class IteratorDot extends ValidateDot
         }
     }
 
-    /**
-     * Set a given key / value pair or pairs
-     *
-     * @param array|int|string $keys
-     * @param mixed $value
-     */
-    public function set($keys, $value = null)
-    {
-        if (is_array($keys)) {
-            foreach ($keys as $key => $value) {
-                $this->set($key, $value);
-            }
-            return;
-        }
-        $items = &$this->elements;
-        foreach (explode('.', $keys) as $key) {
-            if (!isset($items[$key]) || !is_array($items[$key])) {
-                $items[$key] = [];
-            }
-            $items = &$items[$key];
-        }
-        $items = $value;
-    }
-
+   
     /**
      * Return the value of a given key or all the values as JSON
      *

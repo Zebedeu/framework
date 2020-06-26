@@ -99,7 +99,7 @@ class ValidateDot implements Countable
         return count($this->get($key));
     }
 
-    
+
     /**
      * Check if a given key or keys exists
      *
@@ -125,6 +125,30 @@ class ValidateDot implements Countable
             }
         }
         return true;
+    }
+ 	
+ 	/**
+     * Set a given key / value pair or pairs
+     *
+     * @param array|int|string $keys
+     * @param mixed $value
+     */
+    public function set($keys, $value = null)
+    {
+        if (is_array($keys)) {
+            foreach ($keys as $key => $value) {
+                $this->set($key, $value);
+            }
+            return;
+        }
+        $items = &$this->elements;
+        foreach (explode('.', $keys) as $key) {
+            if (!isset($items[$key]) || !is_array($items[$key])) {
+                $items[$key] = [];
+            }
+            $items = &$items[$key];
+        }
+        $items = $value;
     }
 
     /**
@@ -166,7 +190,5 @@ class ValidateDot implements Countable
          $this->elements = array_merge($this->elements, $key->all());
         
     }
-
-
 
 }
