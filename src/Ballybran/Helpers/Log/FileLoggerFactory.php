@@ -18,7 +18,7 @@
 namespace Ballybran\Helpers\Log;
 
 
-class FileLoggerFactory implements iLoggerFactory{
+class FileLoggerFactory implements iLoggerFactory {
 
     /**
      * @var string
@@ -26,7 +26,7 @@ class FileLoggerFactory implements iLoggerFactory{
     private $filePath;
     private $dir;
 
-    public function __construct(string $filePath, $dir= null)
+    public function __construct(string $filePath, $dir = null)
     {
         if ($dir != null) {
 

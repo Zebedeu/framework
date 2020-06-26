@@ -71,6 +71,6 @@ class ImportClass
         if (array_key_exists($method, $this->__imported_functions)) {
             return call_user_func_array(Array($this->__imported_functions[$method], $method), $array);
         }
-        throw new ErrorException ('Call to Undefined Method/Class Function', 0, E_ERROR);
+        throw new ErrorException('Call to Undefined Method/Class Function', 0, E_ERROR);
     }
 }

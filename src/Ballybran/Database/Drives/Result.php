@@ -111,7 +111,9 @@ class Result implements \IteratorAggregate, \JsonSerializable
 
         if ($where !== null) {
 
-            if (!is_array($params)) $params = array_slice(func_get_args(), 2);
+            if (!is_array($params)) {
+                $params = array_slice(func_get_args(), 2);
+            }
             $result = $result->where($where, $params);
 
         }
@@ -129,7 +131,9 @@ class Result implements \IteratorAggregate, \JsonSerializable
     function via($key)
     {
 
-        if (!$this->parent_) throw new \LogicException('Cannot set reference key on basic Result');
+        if (!$this->parent_) {
+            throw new \LogicException('Cannot set reference key on basic Result');
+        }
 
         $clone = clone $this;
 
@@ -155,7 +159,9 @@ class Result implements \IteratorAggregate, \JsonSerializable
     function execute()
     {
 
-        if (isset($this->rows)) return $this;
+        if (isset($this->rows)) {
+            return $this;
+        }
 
         if ($this->parent_) {
 

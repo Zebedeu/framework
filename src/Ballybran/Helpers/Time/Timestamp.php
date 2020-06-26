@@ -25,8 +25,8 @@ class Timestamp
 {
     private static $tempo_da_sessao;
 
-   public static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false)
-   {
+    public static function distanceOfTimeInWords($fromTime, $toTime = 0, $showLessThanAMinute = false)
+    {
     $distanceInSeconds = round(abs($toTime - strtotime($fromTime)));
     $distanceInMinutes = round($distanceInSeconds / 60);
 
@@ -95,7 +95,7 @@ class Timestamp
         
     }
 
-    public static function setDataTime($data, string $strftime='%d %B %Y', string $format = 'Y-m-d H:i:s')
+    public static function setDataTime($data, string $strftime = '%d %B %Y', string $format = 'Y-m-d H:i:s')
     {
         $data = new \DateTime($data);
         $data_f = $data->format($format);
@@ -127,7 +127,7 @@ class Timestamp
         $now             = time();
         $unix_date         = strtotime($date);
 
-       // check validity of date
+        // check validity of date
         if(empty($unix_date)) {   
             return "Bad date";
         }

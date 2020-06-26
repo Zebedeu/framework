@@ -169,15 +169,15 @@ class Firewall
     public function ipToHex($ipAddress)
     {
         $hex = '';
-        if ( false !== strpos($ipAddress, ',') ) {
+        if (false !== strpos($ipAddress, ',')) {
             $splitIp = explode(',', $ipAddress);
             $ipAddress = trim($splitIp[0]);
         }
         $isIpV6 = false;
         $isIpV4 = false;
-        if ( false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
+        if (false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             $isIpV6 = true;
-        } else if (false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
+        } else if (false !== filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             $isIpV4 = true;
         }
         if (!$isIpV4 && !$isIpV6) {
@@ -195,7 +195,7 @@ class Firewall
         else {
             $parts = explode(':', $ipAddress);
             // If this is mixed IPv6/IPv4, convert end to IPv6 value
-            if ( false !== filter_var($parts[count($parts) - 1], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
+            if (false !== filter_var($parts[count($parts) - 1], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                 $partsV4 = explode('.', $parts[count($parts) - 1]);
                 for ($i = 0; $i < 4; $i++) {
                     $partsV4[$i] = str_pad(dechex($partsV4[$i]), 2, '0', STR_PAD_LEFT);
@@ -240,11 +240,18 @@ class Firewall
         $QRange1 = $temp[0];
         $QRange2 = $temp[1];
 
-        if ($QRange2 == "") return array($QRange1); //special case, they didn't put a second quad parameter
+        if ($QRange2 == "") {
+            return array($QRange1);
+        }
+        //special case, they didn't put a second quad parameter
 
         //basic error handling to see if it is generally a valid IP in the form N.N.N.N
-        if (preg_match("/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $QRange1) != 1) return array(-1);
-        if (preg_match("/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $QRange2) != 1) return array(-1);
+        if (preg_match("/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $QRange1) != 1) {
+            return array(-1);
+        }
+        if (preg_match("/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/", $QRange2) != 1) {
+            return array(-1);
+        }
 
         $quad1 = explode(".", $QRange1);
         $quad2 = explode(".", $QRange2);
@@ -252,12 +259,16 @@ class Firewall
         reset($quad1);
         while (list ($key, $val) = each($quad1)) {
             $quad1[$key] = intval($val);
-            if ($quad1[$key] < 0 || $quad1[$key] > 255) return array(-2);
+            if ($quad1[$key] < 0 || $quad1[$key] > 255) {
+                return array(-2);
+            }
         }
         reset($quad2);
         while (list ($key, $val) = each($quad2)) {
             $quad2[$key] = intval($val);
-            if ($quad2[$key] < 0 || $quad2[$key] > 255) return array(-2);
+            if ($quad2[$key] < 0 || $quad2[$key] > 255) {
+                return array(-2);
+            }
         }
 
         $startIP_long = sprintf("%u", ip2long($QRange1));
@@ -272,8 +283,9 @@ class Firewall
 
             //this is a total hack. there must be a better way.
             $thisQuad = explode(".", $temp);
-            if ($thisQuad[3] > 0 && $thisQuad[3] < 255)
-                $ip[$k++] = $temp;
+            if ($thisQuad[3] > 0 && $thisQuad[3] < 255) {
+                            $ip[$k++] = $temp;
+            }
         }
 
         return $ip;

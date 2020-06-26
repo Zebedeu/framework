@@ -35,7 +35,6 @@ namespace Ballybran\Core\Http;
  *
  * Quick Start:
  * @code
-
  * @endcode
  *
  * Minimum requirements: PHP 5.3.x, cURL.

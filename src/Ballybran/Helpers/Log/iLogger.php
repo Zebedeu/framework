@@ -19,7 +19,7 @@
 namespace Ballybran\Helpers\Log;
 
 
-interface iLogger{
+interface iLogger {
 
-    public function write( $message, string $type = null);
+    public function write($message, string $type = null);
 }

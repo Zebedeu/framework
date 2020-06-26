@@ -149,6 +149,6 @@ define('DIR_COOKIE', 'storage/cookie/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-    define('VIEW', 'html'. DS . 'views' . DS);
+    define('VIEW', 'html' . DS . 'views' . DS);
 
 
