@@ -44,14 +44,11 @@ class Form implements interfaceForm
             throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
         }
         $o = '<form';
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
+        $o .= self::param_mix($params);
         $o .= (isset($params['onsubmit'])) ? " onsubmit='{$params['onsubmit']}'" : '';
         $o .= (isset($params['method'])) ? " method='{$params['method']}'" : ' method="get"';
         $o .= (isset($params['action'])) ? " action='{$params['action']}'" : '';
         $o .= (isset($params['files'])) ? " enctype='multipart/form-data'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= (isset($params['role'])) ? " role='{$params['role']}'" : '';
         $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
         $o .= '>';
@@ -84,12 +81,11 @@ class Form implements interfaceForm
             throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
         }
         $o = '<textarea';
-
+        $o .= self::param_mix($params);
         $o .= (isset($params['cols'])) ? " cols='{$params['cols']}'" : '';
         $o .= (isset($params['rows'])) ? " rows='{$params['rows']}'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= '>';
         $o .= (isset($params['value'])) ? $params['value'] : '';
@@ -149,7 +145,6 @@ class Form implements interfaceForm
         $o = "<select";
         $o .= self::param_mix($params);
         $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
-        $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= ">\n";
         $o .= "<option value=''>Select</option>\n";
@@ -254,7 +249,7 @@ class Form implements interfaceForm
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= ">";
-        $o .= (isset($params['iclass'])) ? "<i class='fa {$params['iclass']}'></i> " : '';
+        $o .= (isset($params['class'])) ? "<i class='fa {$params['iclass']}'></i> " : '';
         $o .= "</button>\n";
         return $o;
     }
@@ -282,93 +277,6 @@ class Form implements interfaceForm
     }
 
     /**
-     * This method returns a hidden input elements given its params
-     *
-     * @param   array(id, name, class, value)
-     *
-     * @return  string
-     */
-    public static function hidden($params = array())
-    {
-
-        if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
-        }
-
-        $o = '<input type="hidden"';
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
-        $o .= (isset($params['value'])) ? " value='{$params['value']}'" : '';
-        $o .= " />\n";
-        return $o;
-    }
-
-    /**
-     * This method returns a table element given the params for settings
-     *
-     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'], 'class' =>  'xxxxxx', ] ;
-     *
-     * @return  string
-     */
-    public static function table($params = array())
-    {
-
-        if (!is_array($params)) {
-            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
-        }
-
-        $o = "<table ";
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
-        $o .= ">";
-
-        $o .= "<thead>";
-        $o .= "<tr>";
-        if (isset($params['thead']) && is_array($params['thead'])) {
-            foreach ($params['thead'] as $key => $value) {
-
-                if (isset($params['th']) && $params['th'] == $key) {
-                    $o .= "<th>" . $value . "</th>";
-                } else {
-                    $o .= "<th>" . $value . "</th>";
-                }
-            }
-        }
-        $o .= " </tr>";
-        $o .= "</thead>";
-
-        $o .= "<tfoot>";
-        $o .= "<tr>";
-        if (isset($params['tfoot']) && is_array($params['tfoot'])) {
-            foreach ($params['tfoot'] as $key => $value) {
-                if (isset($params['td']) && $params['td'] == $key) {
-                    $o .= "<td>" . $value . "</td>";
-                } else {
-                    $o .= "<td>" . $value . "</td>";
-                }
-            }
-        }
-        $o .= " </tr>";
-        $o .= "</tfoot>";
-
-        $o .= "<tbody>";
-        $o .= "<tr>";
-        if (isset($params['tbody']) && is_array($params['tbody'])) {
-            foreach ($params['tbody'] as $key => $value) {
-                if (isset($params['td']) && $params['td'] == $key) {
-                    $o .= "<td>" . $value . "</td>";
-                } else {
-                    $o .= "<td>" . $value . "</td>";
-                }
-            }
-        }
-        $o .= " </tr>";
-        $o .= "</tbody>";
-        $o .= "</table>";
-        return $o;
-    }
-
-    /**
      *
      * @since 1.0.6
      *
@@ -387,6 +295,7 @@ class Form implements interfaceForm
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
         $o .= (isset($params['class'])) ? " class='form-input textbox {$params['class']}'" : '';
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+        $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= (isset($params['type'])) ? " type='{$params['type']}'" : 'type="text"';
         return $o;
 

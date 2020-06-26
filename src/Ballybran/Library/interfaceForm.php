@@ -128,24 +128,6 @@ interface interfaceForm
     public static function submit($params = array());
 
     /**
-     * This method returns a hidden input elements given its params
-     *
-     * @param   array(id, name, class, value)
-     *
-     * @return  string
-     */
-    public static function hidden($params = array());
-
-    /**
-     * This method returns a table element given the params for settings
-     *
-     * @param [ 'thead' => [ 'a', 'b' ], 'tbody' => [ 'ax', 'bx'], 'class' =>  'xxxxxx', ] ;
-     *
-     * @return  string
-     */
-    public static function table($params = array());
-
-    /**
      *
      * @since 1.0.6
      *
