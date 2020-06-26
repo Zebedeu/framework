@@ -20,7 +20,6 @@ namespace Ballybran\Core\Collections\Collection;
 
 use Ballybran\Core\Variables\Variable;
 use Closure;
-use Phpml\Exception\InvalidArgumentException;
 
 /**
  * Class IteratorCollection
