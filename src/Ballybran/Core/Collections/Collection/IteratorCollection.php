@@ -35,7 +35,6 @@ class IteratorCollection extends Variable implements \ArrayAccess
     /**
      * @var int
      */
-    private $position = 0;
 
     //put your code here
 
@@ -114,7 +113,6 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     public function valid()
     {
-        // return isset($this->elements[$this->position]);
         return $this->offsetExists($this->elements);
 
     }
@@ -127,14 +125,14 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function offsetSet($offset, $value)
     {
         if (!isset($offset)) {
-            return $this->set($offset, $value);
+            $this->set($offset, $value);
         }
-        return $this->set($offset, $value);
+         $this->set($offset, $value);
     }
 
     public function offsetUnset($offset)
     {
-        return $this->remove($offset);
+         $this->remove($offset);
     }
 
     public function containsKey($key)
@@ -147,10 +145,10 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return $this->containsKey($offset);
     }
 
-    public function remove($key): string
+    public function remove($key)
     {
         if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
-            return null;
+            return false;
         } else {
             $removed = $this->elements[$key];
             unset($this->elements[$key]);
@@ -162,7 +160,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function removeEleme($element)
     {
         $key = array_search($element, $this->elements, true);
-        if (false == $key) {
+        if (false === $key) {
             return false;
         }
         unset($this->elements[$key]);
@@ -213,7 +211,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
      * @return int
      * return the position of the  element
      */
-    public function indexOf($element): Int
+    public function indexOf($element)
     {
         return array_search($element, $this->elements);
     }
@@ -243,19 +241,19 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function slice($start, $end)
     {
         if ($start < 0 || !is_int($start)) {
-            throw new InvalidArgumentException("Start must be a no-negative integer");
+            throw new \InvalidArgumentException("Start must be a no-negative integer");
         }
 
         if ($end < 0 || !is_int($end)) {
-            throw new InvalidArgumentException("End must be a positive integer");
+            throw new \InvalidArgumentException("End must be a positive integer");
         }
 
         if ($start > $end) {
-            throw new InvalidArgumentException("End must be geater than start");
+            throw new \InvalidArgumentException("End must be geater than start");
         }
 
         if ($end > $this->count() + 1) {
-            throw new InvalidArgumentException("End must be less than the count of the items in the Collection");
+            throw new \InvalidArgumentException("End must be less than the count of the items in the Collection");
         }
 
         $length = $end - $start + 1;
