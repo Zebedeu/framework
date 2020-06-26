@@ -124,7 +124,7 @@ class IteratorDot implements Countable
      *
      * @return bool
      */
-    protected function exists($array, $key)
+    private function exists($array, $key)
     {
         return array_key_exists($key, $array);
     }
@@ -365,21 +365,6 @@ class IteratorDot implements Countable
         }
         $options = $key === null ? 0 : $key;
         return json_encode($this->elements, $options);
-    }
-    /*
-     * --------------------------------------------------------------
-     * ArrayAccess interface
-     * --------------------------------------------------------------
-     */
-    /**
-     * Check if a given key exists
-     *
-     * @param  int|string $key
-     * @return bool
-     */
-    public function offsetExists($key)
-    {
-        return $this->has($key);
     }
 
     /*
