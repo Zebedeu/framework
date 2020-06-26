@@ -13,31 +13,30 @@
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.2
  */
-/**
- * Form Helper
- *
- */
+
+
+namespace Ballybran\Helpers\Form;
 
 
 /**
  * Create form elements quickly.
  */
 
-/**
- * open form
- *
- * This method return the form element <form...
- *
- * @param   array(id, name, class, onsubmit, method, action, files, style)
- *
- * @return  string
- */
-
-namespace Ballybran\Library;
-
-
 interface interfaceForm
 {
+
+
+    /**
+     * open form
+     *
+     * This method return the form element <form...
+     *
+     * @param   array(id, name, class, onsubmit, method, action, files, style)
+     *
+     * @return  string
+     */
+
+
 
     public static function open($params = array());
 
