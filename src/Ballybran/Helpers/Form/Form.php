@@ -271,7 +271,7 @@ class Form implements interfaceForm
      *
      * @since 1.0.6
      *
-     * @param [ 'for' => 'exemplo-title' ], ['title' => 'Example Title' ];
+     * @param array('for' => 'exemplo-title' , 'title' => 'Example Title');
      *
      * @return  string
      */
