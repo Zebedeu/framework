@@ -25,8 +25,6 @@ Um framework para aplicações web é um framework de software designado para su
 
 Fonte: wikipedia
 
-Ele é modular. Tudo se passa na pasta módulo. O grande benefício no knut7 é pelo facto dele ser totalmente modular. Você pode instalar um módulo em MVC pelo composer ou ainda mesmo remove-lo sem que haja complicações!!. Os módulos são totalmente substituíveis.!
-
 A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC) que permitirá a reutilização do teu código sem muitas dificuldades. Ela possui a seguinte estrutura:
 
 ## Requisitos:
@@ -685,124 +683,6 @@ show Pagination Links
 echo $page->createLinks('pagination' ); 
 ```
 
-
-## Event Handler
-
-```php
-class MyEventClass
-{
-    private $events;
-    private $eventHandlers;
-
-    public function __construct(InterfaceEventCollection $events, InterfaceEventHandlerCollection $handlers
-= null)
-    {
-        $this->events = $events;
-
-        if ($handlers) {
-            $this->eventHandlers = $handlers;
-        } else {
-            $this->eventHandlers = new EventHandlerCollection();
-        }
-
-
-    public function __destruct()
-    {
-        $this->triggerEvent('onUnload', array('arg2' => 2));
-    }
-
-    public function registerEventHandler($handler)
-    {
-        if ($this->events->contains($handler->getEventName())) {
-            $this->eventHandlers->add($handler);
-        }
-    }
-
-  public function notify($listEventName)
-    {
-        if (is_array($listEventName)) {
-            foreach ($listEventName as $eventName) {
-                $this->events->add(new Event($eventName));
-            }
-        } else {
-            $this->events->add(new Event($eventName));
-        }
-    }
-    
-    public function triggerEvent($eventName, $args)
-    {
-        $this->eventHandlers->raiseEvent($eventName, $this,
-$args);
-    }
-}
-
-$handlers = new EventHandlerCollection();
-$handlers->add(new EventHandler(new Event('onLoad'),
-'handleLoad'));
-$handlers->add(new EventHandler(new Event('onUnload'),
-'handleUnload'));
-
-echo $handlers->add(new EventHandler(new Event('carro'), 'on'));
-echo $obj = new MyEventClass(new EventCollection(), $handlers);
-echo $obj->registerEventHandler(new EventHandler(new Event('carro'), function () {
-}));
-
-
-```
-
-## Example 2
-
-```php
-
-class MyEventClass2 implements InterfaceEventClass
-{
-    private $events;
-    private $eventHandlers;
-
-    public function __construct(InterfaceEventCollection $events, InterfaceEventHandlerCollection $handlers = null)
-    {
-        $this->events = $events;
-
-        if ($handlers) {
-            $this->eventHandlers = $handlers;
-        } else {
-            $this->eventHandlers = new EventHandlerCollection();
-        }
-    }
-
-    public function notify($listEventName)
-    {
-        if (is_array($listEventName)) {
-            foreach ($listEventName as $eventName) {
-                $this->events->add(new Event($eventName));
-            }
-        } else {
-            $this->events->add(new Event($eventName));
-        }
-    }
-
-    public function triggerEvent($eventName, $args)
-    {
-        $this->eventHandlers->raiseEvent($eventName, $this,
-$args);
-    }
-}
-
-$handlers2 = new EventHandlerCollection();
-echo $handlers2->add(new EventHandler(new Event('onLoad'), 'handleLoad'));
-$obj2 = new MyEventClass2(new EventCollection(), $handlers2);
-echo $obj2->notify(['onLoad']);
-echo $obj2->triggerEvent('onLoad', ['args3' => 43]);
-
-function handleLoad($sender, $args)
-{
-    echo 'object '.get_class($sender).' loaded with '.count($args).' args!<br />';
-}
-
-function handleUnload($sender, $args)
-{
-    echo 'object '.get_class($sender).' unloaded with '.count($args).' args!';
-}
 ```
 
 ## HZIP
