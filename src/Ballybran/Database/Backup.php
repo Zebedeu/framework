@@ -29,7 +29,7 @@ class Backup extends DBconnection
 //leave empty to do all
 
 
-    function backup_tables($file, $compress = false, $tables = null)
+    public function backup_tables($file, $compress = false, $tables = null)
     {
 
         $this->conn->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_TO_STRING);
