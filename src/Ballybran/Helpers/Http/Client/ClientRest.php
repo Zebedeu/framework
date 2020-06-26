@@ -85,7 +85,7 @@ class ClientRest extends Encodes
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
         $curl_response = curl_exec($curl);
-        if ( false === $curl_response ) {
+        if (false === $curl_response) {
             $info = curl_getinfo($curl);
             curl_close($curl);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
@@ -107,7 +107,7 @@ class ClientRest extends Encodes
         $data = array("status" => 'R');
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
         $response = curl_exec($ch);
-        if ( false === $response ) {
+        if (false === $response) {
             $info = curl_getinfo($ch);
             curl_close($ch);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
@@ -135,7 +135,7 @@ class ClientRest extends Encodes
         );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
         $curl_response = curl_exec($ch);
-        if ( false === $curl_response ) {
+        if (false === $curl_response) {
             $info = curl_getinfo($ch);
             curl_close($ch);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));

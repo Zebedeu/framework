@@ -20,7 +20,7 @@ class PDF extends FPDF
 {
 
     protected $col = 0; // Current column
-    protected $y0;      // Ordinate of column start
+    protected $y0; // Ordinate of column start
 
     function Header()
     {

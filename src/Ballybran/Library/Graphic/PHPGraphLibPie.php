@@ -54,7 +54,7 @@ class PHPGraphLibPie extends PHPGraphLib
     const PIE_WIDTH_PERCENT = 75; //default width % of total width
     const PIE_HEIGHT_PERCENT = 28;
     const PIE_LABEL_SCALE = 90; //in % scale width/height if data labels
-    const PIE_LEGEND_SCALE = 64;//in % scale width/height if legend
+    const PIE_LEGEND_SCALE = 64; //in % scale width/height if legend
 
     //internals - do not change
     protected $pie_width;

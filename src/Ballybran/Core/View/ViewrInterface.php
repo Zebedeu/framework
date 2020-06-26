@@ -31,7 +31,7 @@ interface ViewrInterface
 
     public function offsetExists($offset) : bool;
 
-    public function offsetGet($offset) : string ;
+    public function offsetGet($offset) : string;
 
     public function offsetSet($offset, $value) : void;
 

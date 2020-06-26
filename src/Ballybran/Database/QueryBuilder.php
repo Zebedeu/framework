@@ -146,7 +146,7 @@ class QueryBuilder extends DBconnection
                 'separator' => ',',
             ],
         ];
-        foreach($clausules as $key => $clausule) {
+        foreach ($clausules as $key => $clausule) {
             if (isset($this->clausules[$key])) {
                 $value = $this->clausules[$key];
                 if (is_array($value)) {
@@ -202,7 +202,7 @@ class QueryBuilder extends DBconnection
                 'separator' => ' ',
             ]
         ];
-        foreach($clausules as $key => $clausule) {
+        foreach ($clausules as $key => $clausule) {
             if (isset($this->clausules[$key])) {
                 $value = $this->clausules[$key];
                 if (is_array($value)) {
@@ -244,7 +244,7 @@ class QueryBuilder extends DBconnection
                 'separator' => ' ',
             ]
         ];
-        foreach($clausules as $key => $clausule) {
+        foreach ($clausules as $key => $clausule) {
             if (isset($this->clausules[$key])) {
                 $value = $this->clausules[$key];
                 if (is_array($value)) {

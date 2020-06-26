@@ -97,7 +97,9 @@ class Backup extends DBconnection
 
                     if (stripos($rows[1], '(')) {
                         $type[$table][] = stristr($rows[1], '(', true);
-                    } else $type[$table][] = $rows[1];
+                    } else {
+                        $type[$table][] = $rows[1];
+                    }
 
                     $return .= $rows[0];
                     $count++;
@@ -125,7 +127,11 @@ class Backup extends DBconnection
 
                     if (isset($row[$j])) {
 //if number, take away "". else leave as string
-                        if (in_array($type[$table][$j], $numtypes)) $return .= $row[$j]; else $return .= '"' . $row[$j] . '"';
+                        if (in_array($type[$table][$j], $numtypes)) {
+                            $return .= $row[$j];
+                        } else {
+                            $return .= '"' . $row[$j] . '"';
+                        }
                     } else {
                         $return .= '""';
                     }

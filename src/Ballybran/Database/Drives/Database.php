@@ -437,7 +437,9 @@ class Database
 
         $primary = $this->getPrimary($table);
 
-        if (is_array($primary)) return null;
+        if (is_array($primary)) {
+            return null;
+        }
 
         $table = $this->rewriteTable($table);
 
@@ -608,8 +610,12 @@ class Database
     function insert($table, $rows, $method = null)
     {
 
-        if (empty($rows)) return;
-        if (!isset($rows[0])) $rows = array($rows);
+        if (empty($rows)) {
+            return;
+        }
+        if (!isset($rows[0])) {
+            $rows = array($rows);
+        }
 
         if ($method === 'prepared') {
 
@@ -638,7 +644,9 @@ class Database
     {
 
         $columns = $this->getColumns($rows);
-        if (empty($columns)) return;
+        if (empty($columns)) {
+            return;
+        }
 
         $query = $this->insertHead($table, $columns);
         $query .= "( ?" . str_repeat(", ?", count($columns) - 1) . " )";
@@ -677,7 +685,9 @@ class Database
     {
 
         $columns = $this->getColumns($rows);
-        if (empty($columns)) return;
+        if (empty($columns)) {
+            return;
+        }
 
         $query = $this->insertHead($table, $columns);
         $lists = $this->valueLists($rows, $columns);
@@ -703,7 +713,9 @@ class Database
     {
 
         $columns = $this->getColumns($rows);
-        if (empty($columns)) return;
+        if (empty($columns)) {
+            return;
+        }
 
         $query = $this->insertHead($table, $columns);
         $lists = $this->valueLists($rows, $columns);
@@ -811,7 +823,9 @@ class Database
     function update($table, $data, $where = array(), $params = array())
     {
 
-        if (empty($data)) return;
+        if (empty($data)) {
+            return;
+        }
 
         $set = array();
 
@@ -821,8 +835,12 @@ class Database
 
         }
 
-        if (!is_array($where)) $where = array($where);
-        if (!is_array($params)) $params = array_slice(func_get_args(), 3);
+        if (!is_array($where)) {
+            $where = array($where);
+        }
+        if (!is_array($params)) {
+            $params = array_slice(func_get_args(), 3);
+        }
 
         $table = $this->rewriteTable($table);
         $query = "UPDATE " . $this->quoteIdentifier($table);
@@ -851,8 +869,12 @@ class Database
     function delete($table, $where = array(), $params = array())
     {
 
-        if (!is_array($where)) $where = array($where);
-        if (!is_array($params)) $params = array_slice(func_get_args(), 2);
+        if (!is_array($where)) {
+            $where = array($where);
+        }
+        if (!is_array($params)) {
+            $params = array_slice(func_get_args(), 2);
+        }
 
         $table = $this->rewriteTable($table);
         $query = "DELETE FROM " . $this->quoteIdentifier($table);
@@ -1024,19 +1046,19 @@ class Database
 
         $value = $this->format($value);
 
-        if ( null === $value ) {
+        if (null === $value) {
 
             return "NULL";
 
         }
 
-        if ( false === $value ) {
+        if (false === $value) {
 
             return "'0'";
 
         }
 
-        if ( true === $value ) {
+        if (true === $value) {
 
             return "'1'";
 
@@ -1094,12 +1116,14 @@ class Database
 
         $delimiter = $this->identifierDelimiter;
 
-        if (empty($delimiter)) return $identifier;
+        if (empty($delimiter)) {
+            return $identifier;
+        }
 
         $identifier = explode(".", $identifier);
 
         $identifier = array_map(
-            function ($part) use ($delimiter) {
+            function($part) use ($delimiter) {
                 return $delimiter . str_replace($delimiter, $delimiter . $delimiter, $part) . $delimiter;
             },
             $identifier

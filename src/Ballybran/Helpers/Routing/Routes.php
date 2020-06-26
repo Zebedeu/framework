@@ -26,7 +26,7 @@ use Ballybran\Helpers\Language;
  */
 class Routes
 {
-    private $path, $callable, $matches=[], $params=[];
+    private $path, $callable, $matches = [], $params = [];
     protected $_controllerPath = PV . APP . DS . "Controllers/";
 
 
@@ -35,7 +35,7 @@ class Routes
      * @param string $path
      * @param $callable
      */
-    public function __construct( $path, $callable)
+    public function __construct($path, $callable)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
@@ -58,7 +58,7 @@ class Routes
      * @param string $url
      * @return bool
      */
-    public function match( $url) : bool
+    public function match($url) : bool
     {
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
@@ -90,7 +90,7 @@ class Routes
     }
 	
 
-     public function call()
+        public function call()
     {
             
             if (is_string($this->callable)) {
@@ -131,7 +131,7 @@ class Routes
         return $path;
     }
 
-	/*
+    /*
 	*@deprecated
 	*/
     public static function route()

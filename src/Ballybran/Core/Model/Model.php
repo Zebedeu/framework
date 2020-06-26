@@ -64,7 +64,7 @@ class Model
         $classModel = str_replace('Controllers', $this->modelPath, $className);
         $this->modelClass = $classModel . 'Model';
         //$path = 'App/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
-        $path =   $this->modelClass . '.php';
+        $path = $this->modelClass . '.php';
         if (file_exists($path) || is_readable($path)) {
             require_once $path;
             return $this->dbObject();
@@ -83,7 +83,7 @@ class Model
 
         $this->model = new $className($this->obj);
 
-         $this->model;
+            $this->model;
     }
 
 }

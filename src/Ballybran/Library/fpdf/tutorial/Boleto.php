@@ -32,8 +32,9 @@ class Boleto extends FPDF
         // Read file lines
         $lines = file($file);
         $data = array();
-        foreach ($lines as $line)
-            $data[] = explode(';', trim($line));
+        foreach ($lines as $line) {
+                    $data[] = explode(';', trim($line));
+        }
         return $data;
     }
 
@@ -41,13 +42,15 @@ class Boleto extends FPDF
     function BasicTable($header, $data)
     {
         // Header
-        foreach ($data as $col)
-            $this->Cell(72, 7, $col, 1);
+        foreach ($data as $col) {
+                    $this->Cell(72, 7, $col, 1);
+        }
         $this->Ln();
         // Data
         foreach ($header as $row) {
-            foreach ($row as $col)
-                $this->Cell(72, 6, $col, 1);
+            foreach ($row as $col) {
+                            $this->Cell(72, 6, $col, 1);
+            }
             $this->Ln();
         }
     }

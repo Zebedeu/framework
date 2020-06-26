@@ -29,9 +29,9 @@ class RestRequest
     public function __construct()
     {
         $this->request_vars = array();
-        $this->data    = '';
+        $this->data = '';
         $this->http_accept = (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
-        $this->method    = 'get';
+        $this->method = 'get';
     }
 
     public function setData($data)
