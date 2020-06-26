@@ -208,7 +208,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     }
 
     /**
-     * @return int
+     * @return int|string
      * return the position of the  element
      */
     public function indexOf($element)
@@ -260,7 +260,9 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
         $subsetItems = array_slice($this->elements, $start, $length);
 
-
+            if(null === $subsetItems ){
+                    return null
+            }
         return $this->setElementsFromTrustedSource($subsetItems);
 
     }
@@ -268,6 +270,10 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function reverse()
     {
         $item = array_reverse($this->elements);
+            if(null === $item ){
+                    return null
+            }
+
         return $this->setElementsFromTrustedSource($item);
 
     }
