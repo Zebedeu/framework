@@ -264,9 +264,9 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
             $items = (array)$this->get($key);
             $value = array_merge($items, $this->getArrayItems($value));
             $this->set($key, $value);
-        } elseif ($key) {
-            $this->elements = array_merge($this->elements, $key->all());
-        }
+        } 
+         $this->elements = array_merge($this->elements, $key->all());
+        
     }
 
     /**
