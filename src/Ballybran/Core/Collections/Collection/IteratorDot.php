@@ -262,7 +262,7 @@ class IteratorDot implements Countable, IteratorAggregate
             $items = (array)$this->get($key);
             $value = array_merge($items, $this->getArrayItems($value));
             $this->set($key, $value);
-        } elseif ($key instanceof self) {
+        } elseif ($key) {
             $this->elements = array_merge($this->elements, $key->all());
         }
     }
