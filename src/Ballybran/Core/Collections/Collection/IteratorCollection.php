@@ -261,7 +261,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         $subsetItems = array_slice($this->elements, $start, $length);
 
             if(null === $subsetItems ){
-                    return null;
+                return null;
             }
         return $this->setElementsFromTrustedSource($subsetItems);
 
