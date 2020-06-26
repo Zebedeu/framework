@@ -11,9 +11,7 @@
 namespace Ballybran\Core\Collections\Collection;
 
 use Countable;
-use ArrayAccess;
 use ArrayIterator;
-use IteratorAggregate;
 
 /**
  * Dot
@@ -21,7 +19,7 @@ use IteratorAggregate;
  * This class provides a dot notation access and helper functions for
  * working with arrays of data. Inspired by Laravel Collection.
  */
-class IteratorDot implements ArrayAccess, Countable, IteratorAggregate
+class IteratorDot implements Countable
 {
     /**
      * The stored items
