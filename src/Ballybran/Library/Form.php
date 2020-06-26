@@ -84,14 +84,10 @@ class Form implements interfaceForm
             throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
         }
         $o = '<textarea';
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='form-input textbox {$params['class']}'" : '';
-        $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+
         $o .= (isset($params['cols'])) ? " cols='{$params['cols']}'" : '';
         $o .= (isset($params['rows'])) ? " rows='{$params['rows']}'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
-        $o .= (isset($params['placeholder'])) ? " placeholder='{$params['placeholder']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
         $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= (isset($params['required'])) ? " required='required'" : '';
@@ -118,22 +114,14 @@ class Form implements interfaceForm
         }
 
         $o = '<input ';
-        $o .= (isset($params['type'])) ? " type='{$params['type']}'" : 'type="text"';
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='form-input text {$params['class']}'" : '';
-        $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+        $o .= self::param_mix($params);
         $o .= (isset($params['onkeypress'])) ? " onkeypress='{$params['onkeypress']}'" : '';
-        $o .= (isset($params['value'])) ? ' value="' . $params['value'] . '"' : '';
         $o .= (isset($params['length'])) ? " maxlength='{$params['length']}'" : '';
         $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
-        $o .= (isset($params['placeholder'])) ? " placeholder='{$params['placeholder']}'" : '';
         $o .= (isset($params['accept'])) ? " accept='{$params['accept']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
         $o .= (isset($params['minlength'])) ? " minlength='{$params['minlength']}'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
-        $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
         $o .= (isset($params['autofocus'])) ? " autofocus" : '';
         $o .= " />\n";
@@ -159,14 +147,10 @@ class Form implements interfaceForm
         }
 
         $o = "<select";
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
-        $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+        $o .= self::param_mix($params);
         $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
         $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= ">\n";
         $o .= "<option value=''>Select</option>\n";
         if (isset($params['data']) && is_array($params['data'])) {
@@ -206,13 +190,9 @@ class Form implements interfaceForm
         foreach ($params as $k => $v) {
             $v['id'] = (isset($v['id'])) ? $v['id'] : "cb_id_{$x}_" . rand(1000, 9999);
             $o .= "<input type='checkbox'";
-            $o .= (isset($v['id'])) ? " id='{$v['id']}'" : '';
-            $o .= (isset($v['name'])) ? " name='{$v['name']}'" : '';
-            $o .= (isset($v['value'])) ? " value='{$v['value']}'" : '';
-            $o .= (isset($v['class'])) ? " class='{$v['class']}'" : '';
+            $o .= self::param_mix($params);
             $o .= (isset($v['checked'])) ? " checked='checked'" : '';
             $o .= (isset($v['disabled'])) ? " disabled='{$v['disabled']}'" : '';
-            $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
             $o .= " />\n";
             $o .= (isset($v['label'])) ? "<label for='{$v['id']}'>{$v['label']}</label> " : '';
             $x++;
@@ -244,13 +224,9 @@ class Form implements interfaceForm
         foreach ($params as $k => $v) {
             $v['id'] = (isset($v['id'])) ? $v['id'] : "rd_id_{$x}_" . rand(1000, 9999);
             $o .= "<input type='radio'";
-            $o .= (isset($v['id'])) ? " id='{$v['id']}'" : '';
-            $o .= (isset($v['name'])) ? " name='{$v['name']}'" : '';
-            $o .= (isset($v['value'])) ? " value='{$v['value']}'" : '';
-            $o .= (isset($v['class'])) ? " class='{$v['class']}'" : '';
+            $o .= self::param_mix($params);
             $o .= (isset($v['checked'])) ? " checked='checked'" : '';
             $o .= (isset($v['disabled'])) ? " disabled='{$v['disabled']}'" : '';
-            $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
             $o .= " />\n";
             $o .= (isset($v['label'])) ? "<label for='{$v['id']}'>{$v['label']}</label> " : '';
             $x++;
@@ -274,15 +250,11 @@ class Form implements interfaceForm
         }
 
         $o = "<button type='submit'";
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
+        $o .= self::param_mix($params);
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= ">";
         $o .= (isset($params['iclass'])) ? "<i class='fa {$params['iclass']}'></i> " : '';
-        $o .= (isset($params['value'])) ? "{$params['value']}" : '';
         $o .= "</button>\n";
         return $o;
     }
@@ -302,13 +274,9 @@ class Form implements interfaceForm
         }
 
         $o = '<input type="submit"';
-        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
-        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
-        $o .= (isset($params['class'])) ? " class='{$params['class']}'" : '';
+        $o .= self::param_mix($params);
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
-        $o .= (isset($params['value'])) ? " value='{$params['value']}'" : '';
         $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
-        $o .= (isset($params['style'])) ? " style='{$params['style']}'" : '';
         $o .= " />\n";
         return $o;
     }
@@ -409,6 +377,20 @@ class Form implements interfaceForm
      * @return  string
      */
 
+    private static function param_mix($params = array()) {
+
+        if (!is_array($params)) {
+            throw new \InvalidArgumentException("Arguments is not a Array" . print_r($params, true));
+        }
+        $o ='';
+        $o .= (isset($params['id'])) ? " id='{$params['id']}'" : '';
+        $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
+        $o .= (isset($params['class'])) ? " class='form-input textbox {$params['class']}'" : '';
+        $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+        $o .= (isset($params['type'])) ? " type='{$params['type']}'" : 'type="text"';
+        return $o;
+
+    }
     public static function label($params = array())
     {
         $o = "<label";
