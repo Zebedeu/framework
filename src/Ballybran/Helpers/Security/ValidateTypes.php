@@ -29,7 +29,7 @@ class ValidateTypes
     public static function getSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "")
     {
 
-        $theValue = function_exists("htmlspecialchars") ? htmlspecialchars($theValue) : null );
+        $theValue = function_exists("htmlspecialchars") ? htmlspecialchars($theValue) : null;
 
         switch ($theType) {
             case "string":
