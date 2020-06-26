@@ -99,7 +99,7 @@ public static function getMessage($message)
 {
     echo $message;
 }
-public static function error($params = null){ ?>
+public static function error($params = null) { ?>
 
 <!DOCTYPE html>
 <html lang="pt">

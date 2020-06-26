@@ -25,8 +25,9 @@ class PDF extends FPDF
         // Read file lines
         $lines = file($file);
         $data = array();
-        foreach ($lines as $line)
-            $data[] = explode(';', trim($line));
+        foreach ($lines as $line) {
+                    $data[] = explode(';', trim($line));
+        }
         return $data;
     }
 
@@ -34,13 +35,15 @@ class PDF extends FPDF
     function BasicTable($header, $data)
     {
         // Header
-        foreach ($header as $col)
-            $this->Cell(40, 7, $col, 1);
+        foreach ($header as $col) {
+                    $this->Cell(40, 7, $col, 1);
+        }
         $this->Ln();
         // Data
         foreach ($data as $row) {
-            foreach ($row as $col)
-                $this->Cell(40, 6, $col, 1);
+            foreach ($row as $col) {
+                            $this->Cell(40, 6, $col, 1);
+            }
             $this->Ln();
         }
     }
@@ -51,8 +54,9 @@ class PDF extends FPDF
         // Column widths
         $w = array(40, 35, 40, 45);
         // Header
-        for ($i = 0; $i < count($header); $i++)
-            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C');
+        for ($i = 0; $i < count($header); $i++) {
+                    $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C');
+        }
         $this->Ln();
         // Data
         foreach ($data as $row) {
@@ -77,8 +81,9 @@ class PDF extends FPDF
         $this->SetFont('', 'B');
         // Header
         $w = array(40, 35, 40, 45);
-        for ($i = 0; $i < count($header); $i++)
-            $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        for ($i = 0; $i < count($header); $i++) {
+                    $this->Cell($w[$i], 7, $header[$i], 1, 0, 'C', true);
+        }
         $this->Ln();
         // Color and font restoration
         $this->SetFillColor(224, 235, 255);

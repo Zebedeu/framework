@@ -46,7 +46,7 @@ class Assets
                 return sprintf($template, $file) . "\n";
             }
         } else {
-             return sprintf($template, $files) . "\n";
+                return sprintf($template, $files) . "\n";
         }
     }
 
@@ -54,7 +54,7 @@ class Assets
     {
         if (is_array($files)) {
             foreach ($files as $key => $value) {
-               echo static::resource($value, 'js');
+                echo static::resource($value, 'js');
             }
         } else {
             echo static::resource($files, 'js');

@@ -167,7 +167,7 @@ class IteratorDot implements ArrayAccess, Countable, IteratorAggregate, JsonSeri
         if ($this->exists($this->elements, $key)) {
             return $this->elements[$key];
         }
-        if ( false === strpos($key, '.') ) {
+        if (false === strpos($key, '.')) {
             return $default;
         }
         $items = $this->elements;

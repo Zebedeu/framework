@@ -28,7 +28,7 @@ class Map
 {
     private  $url;
     private  $callable;
-    private  $routes =[];
+    private  $routes = [];
     private  $nameRoute;
 
 
@@ -76,7 +76,7 @@ class Map
      * @param $name
      * @param $method
      * @return Routes
-  	* example $router->add( '/user/:id', function($id) {}, 'name')->with('id','[0-9]+');
+     * example $router->add( '/user/:id', function($id) {}, 'name')->with('id','[0-9]+');
      */
     public  function add($path, $callable, $name, $method) : Routes
     {

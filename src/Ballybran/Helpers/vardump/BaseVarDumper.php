@@ -129,7 +129,7 @@ class BaseVarDumper
                 }
                 break;
             case 'object':
-                if ( false !== ($id = array_search($var, self::$_objects, true)) ) {
+                if (false !== ($id = array_search($var, self::$_objects, true))) {
                     self::$_output .= get_class($var) . '#' . ($id + 1) . '(...)';
                 } elseif (self::$_depth <= $level) {
                     self::$_output .= get_class($var) . '(...)';

@@ -68,7 +68,9 @@ class DatabaseDump extends DBconnection
 
             foreach ($schemas as $schema) {
                 $schema = $schema['Create Table'];
-                if ($this->removeAI) $schema = preg_replace('/AUTO_INCREMENT=([0-9]+)(\s{0,1})/', '', $schema);
+                if ($this->removeAI) {
+                    $schema = preg_replace('/AUTO_INCREMENT=([0-9]+)(\s{0,1})/', '', $schema);
+                }
                 $this->ln($schema . ";\n\n");
             }
         }

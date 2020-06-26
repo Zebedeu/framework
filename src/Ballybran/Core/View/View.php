@@ -83,7 +83,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         ob_start();
         $this->isHeader();
 
-        include $this->file =  VIEW . $this->controllers . DS . $this->view . $this->ex;
+        include $this->file = VIEW . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
 
         $content = ob_get_contents();
