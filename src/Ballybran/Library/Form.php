@@ -52,7 +52,7 @@ class Form implements interfaceForm
         $o .= (isset($params['role'])) ? " role='{$params['role']}'" : '';
         $o .= (isset($params['autocomplete'])) ? " autocomplete='{$params['autocomplete']}'" : '';
         $o .= '>';
-        return $o . "\n";
+        return $o;
     }
 
     /**
@@ -84,7 +84,6 @@ class Form implements interfaceForm
         $o .= self::param_mix($params);
         $o .= (isset($params['cols'])) ? " cols='{$params['cols']}'" : '';
         $o .= (isset($params['rows'])) ? " rows='{$params['rows']}'" : '';
-        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
         $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= '>';
@@ -114,7 +113,6 @@ class Form implements interfaceForm
         $o .= (isset($params['onkeypress'])) ? " onkeypress='{$params['onkeypress']}'" : '';
         $o .= (isset($params['length'])) ? " maxlength='{$params['length']}'" : '';
         $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
-        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= (isset($params['accept'])) ? " accept='{$params['accept']}'" : '';
         $o .= (isset($params['maxlength'])) ? " maxlength='{$params['maxlength']}'" : '';
         $o .= (isset($params['minlength'])) ? " minlength='{$params['minlength']}'" : '';
@@ -145,7 +143,6 @@ class Form implements interfaceForm
         $o = "<select";
         $o .= self::param_mix($params);
         $o .= (isset($params['width'])) ? " style='width:{$params['width']}px;'" : '';
-        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= ">\n";
         $o .= "<option value=''>Select</option>\n";
         if (isset($params['data']) && is_array($params['data'])) {
@@ -247,7 +244,6 @@ class Form implements interfaceForm
         $o = "<button type='submit'";
         $o .= self::param_mix($params);
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
-        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= ">";
         $o .= (isset($params['class'])) ? "<i class='fa {$params['iclass']}'></i> " : '';
         $o .= "</button>\n";
@@ -271,7 +267,6 @@ class Form implements interfaceForm
         $o = '<input type="submit"';
         $o .= self::param_mix($params);
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
-        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= " />\n";
         return $o;
     }
@@ -295,6 +290,7 @@ class Form implements interfaceForm
         $o .= (isset($params['name'])) ? " name='{$params['name']}'" : '';
         $o .= (isset($params['class'])) ? " class='form-input textbox {$params['class']}'" : '';
         $o .= (isset($params['onclick'])) ? " onclick='{$params['onclick']}'" : '';
+        $o .= (isset($params['disabled'])) ? " disabled='{$params['disabled']}'" : '';
         $o .= (isset($params['required'])) ? " required='required'" : '';
         $o .= (isset($params['type'])) ? " type='{$params['type']}'" : 'type="text"';
         return $o;
