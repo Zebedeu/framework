@@ -147,8 +147,7 @@ class Form implements interfaceForm
                 } else {
                     $o .= "<option value='{$k}'>{$v}</option>\n";
                 }
-            }else{
-
+            } else {
             throw new \InvalidArgumentException("Arguments is not valid " . print_r($params, true));
 
             }
