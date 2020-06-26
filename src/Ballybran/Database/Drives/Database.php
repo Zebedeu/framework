@@ -35,7 +35,7 @@ class Database
      *
      * @param \PDO $pdo
      */
-    function __construct($pdo)
+    public function __construct($pdo)
     {
 
         // required for safety
@@ -73,7 +73,7 @@ class Database
      * @param int|null $id
      * @return Result|Row|null
      */
-    function table($name, $id = null)
+    public function table($name, $id = null)
     {
 
         // ignore List suffix
@@ -110,7 +110,7 @@ class Database
      * @param Result|null $result
      * @return Row
      */
-    function createRow($name, $properties = array(), $result = null)
+    public function createRow($name, $properties = array(), $result = null)
     {
 
         return new Row($this, $name, $properties, $result);
@@ -125,7 +125,7 @@ class Database
      * @param string $name
      * @return Result
      */
-    function createResult($parent, $name)
+    public function createResult($parent, $name)
     {
 
         return new Result($parent, $name);
@@ -140,7 +140,7 @@ class Database
      * @param string $query
      * @return \PDOStatement
      */
-    function prepare($query)
+    public function prepare($query)
     {
 
         return $this->pdo->prepare($query);
@@ -153,7 +153,7 @@ class Database
      * @param string $query
      * @return \PDOStatement
      */
-    function query($query)
+    public function query($query)
     {
 
         return $this->pdo->query($query);
@@ -166,7 +166,7 @@ class Database
      * @param string|null $sequence
      * @return string
      */
-    function lastInsertId($sequence = null)
+    public function lastInsertId($sequence = null)
     {
 
         return $this->pdo->lastInsertId($sequence);
@@ -178,7 +178,7 @@ class Database
      *
      * @return bool
      */
-    function begin()
+    public function begin()
     {
 
         return $this->pdo->beginTransaction();
@@ -190,7 +190,7 @@ class Database
      *
      * @return bool
      */
-    function commit()
+    public function commit()
     {
 
         return $this->pdo->commit();
@@ -202,7 +202,7 @@ class Database
      *
      * @return bool
      */
-    function rollback()
+    public function rollback()
     {
 
         return $this->pdo->rollBack();
@@ -219,7 +219,7 @@ class Database
      * @param string $table
      * @return string|array
      */
-    function getPrimary($table)
+    public function getPrimary($table)
     {
 
         if (isset($this->primary[$table])) {
@@ -241,7 +241,7 @@ class Database
      * @param string|array $key
      * @return $this
      */
-    function setPrimary($table, $key)
+    public function setPrimary($table, $key)
     {
 
         $this->primary[$table] = $key;
@@ -273,7 +273,7 @@ class Database
      * @param string $name
      * @return string
      */
-    function getReference($table, $name)
+    public function getReference($table, $name)
     {
 
         if (isset($this->references[$table][$name])) {
@@ -294,7 +294,7 @@ class Database
      * @param string $key
      * @return $this
      */
-    function setReference($table, $name, $key)
+    public function setReference($table, $name, $key)
     {
 
         $this->references[$table][$name] = $key;
@@ -314,7 +314,7 @@ class Database
      * @param string $name
      * @return string
      */
-    function getBackReference($table, $name)
+    public function getBackReference($table, $name)
     {
 
         if (isset($this->backReferences[$table][$name])) {
@@ -335,7 +335,7 @@ class Database
      * @param string $key
      * @return $this
      */
-    function setBackReference($table, $name, $key)
+    public function setBackReference($table, $name, $key)
     {
 
         $this->backReferences[$table][$name] = $key;
@@ -350,7 +350,7 @@ class Database
      * @param string $alias
      * @return string
      */
-    function getAlias($alias)
+    public function getAlias($alias)
     {
 
         return isset($this->aliases[$alias]) ? $this->aliases[$alias] : $alias;
@@ -364,7 +364,7 @@ class Database
      * @param string $table
      * @return $this
      */
-    function setAlias($alias, $table)
+    public function setAlias($alias, $table)
     {
 
         $this->aliases[$alias] = $table;
@@ -380,7 +380,7 @@ class Database
      * @param string $column
      * @return bool
      */
-    function isRequired($table, $column)
+    public function isRequired($table, $column)
     {
 
         return isset($this->required[$table][$column]);
@@ -393,7 +393,7 @@ class Database
      * @param string $table
      * @return array
      */
-    function getRequired($table)
+    public function getRequired($table)
     {
 
         return isset($this->required[$table]) ? $this->required[$table] : array();
@@ -409,7 +409,7 @@ class Database
      * @param string $column
      * @return $this
      */
-    function setRequired($table, $column)
+    public function setRequired($table, $column)
     {
 
         $this->required[$table][$column] = true;
@@ -426,7 +426,7 @@ class Database
      * @param string $table
      * @return null|string
      */
-    function getSequence($table)
+    public function getSequence($table)
     {
 
         if (isset($this->sequences[$table])) {
@@ -454,7 +454,7 @@ class Database
      * @param string $sequence
      * @return $this
      */
-    function setSequence($table, $sequence)
+    public function setSequence($table, $sequence)
     {
 
         $this->sequences[$table] = $sequence;
@@ -469,7 +469,7 @@ class Database
      * @param string $table
      * @return string
      */
-    function rewriteTable($table)
+    public function rewriteTable($table)
     {
 
         if (is_callable($this->rewrite)) {
@@ -483,13 +483,13 @@ class Database
     }
 
     /**
-     * Set table rewrite function
+     * Set table rewrite public function
      * For example, it could add a prefix
      *
      * @param callable $rewrite
      * @return $this
      */
-    function setRewrite($rewrite)
+    public function setRewrite($rewrite)
     {
 
         $this->rewrite = $rewrite;
@@ -505,7 +505,7 @@ class Database
      *
      * @return string
      */
-    function getIdentifierDelimiter()
+    public function getIdentifierDelimiter()
     {
 
         return $this->identifierDelimiter;
@@ -520,7 +520,7 @@ class Database
      * @param string|null $d
      * @return $this
      */
-    function setIdentifierDelimiter($d)
+    public function setIdentifierDelimiter($d)
     {
 
         $this->identifierDelimiter = $d;
@@ -543,7 +543,7 @@ class Database
      * @param array $params
      * @return \PDOStatement
      */
-    function select($table, $options = array())
+    public function select($table, $options = array())
     {
 
         $options = array_merge(array(
@@ -607,7 +607,7 @@ class Database
      * @param string|null $method
      * @return \PDOStatement|null
      */
-    function insert($table, $rows, $method = null)
+    public function insert($table, $rows, $method = null)
     {
 
         if (empty($rows)) {
@@ -742,7 +742,7 @@ class Database
      * @param array $columns
      * @return string
      */
-    protected function insertHead($table, $columns)
+    protected  function insertHead($table, $columns)
     {
 
         $quotedColumns = array_map(array($this, 'quoteIdentifier'), $columns);
@@ -760,7 +760,7 @@ class Database
      * @param array $rows
      * @return array
      */
-    protected function getColumns($rows)
+    public function getColumns($rows)
     {
 
         $columns = array();
@@ -820,7 +820,7 @@ class Database
      * @param array $params
      * @return null|\PDOStatement
      */
-    function update($table, $data, $where = array(), $params = array())
+    public function update($table, $data, $where = array(), $params = array())
     {
 
         if (empty($data)) {
@@ -866,7 +866,7 @@ class Database
      * @param array $params
      * @return \PDOStatement
      */
-    function delete($table, $where = array(), $params = array())
+    public function delete($table, $where = array(), $params = array())
     {
 
         if (!is_array($where)) {
@@ -900,7 +900,7 @@ class Database
      * @param int|null $limitOffset
      * @return string
      */
-    function getSuffix($where, $orderBy = array(), $limitCount = null, $limitOffset = null)
+    public function getSuffix($where, $orderBy = array(), $limitCount = null, $limitOffset = null)
     {
 
         $suffix = "";
@@ -943,7 +943,7 @@ class Database
      * @param bool $not
      * @return string
      */
-    function is($column, $value, $not = false)
+    public function is($column, $value, $not = false)
     {
 
         $bang = $not ? "!" : "";
@@ -1028,7 +1028,7 @@ class Database
      * @param string|array $value
      * @return string
      */
-    function isNot($column, $value)
+    public function isNot($column, $value)
     {
 
         return $this->is($column, $value, true);
@@ -1041,7 +1041,7 @@ class Database
      * @param mixed $value
      * @return string
      */
-    function quote($value)
+    public function quote($value)
     {
 
         $value = $this->format($value);
@@ -1092,7 +1092,7 @@ class Database
      * @param mixed $value
      * @return string
      */
-    function format($value)
+    public function format($value)
     {
 
         if ($value instanceof \DateTime) {
@@ -1111,7 +1111,7 @@ class Database
      * @param string $identifier
      * @return string
      */
-    function quoteIdentifier($identifier)
+    public function quoteIdentifier($identifier)
     {
 
         $delimiter = $this->identifierDelimiter;
@@ -1139,7 +1139,7 @@ class Database
      * @param string $value
      * @return Literal
      */
-    function literal($value)
+    public function literal($value)
     {
 
         return new Literal($value);
@@ -1154,7 +1154,7 @@ class Database
      * @param string $query
      * @param array $params
      */
-    function onQuery($query, $params = array())
+    public function onQuery($query, $params = array())
     {
 
         if (is_callable($this->queryCallback)) {
@@ -1171,7 +1171,7 @@ class Database
      * @param callable $callback
      * @return $this
      */
-    function setQueryCallback($callback)
+    public function setQueryCallback($callback)
     {
 
         $this->queryCallback = $callback;
