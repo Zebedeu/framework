@@ -33,26 +33,6 @@ spl_autoload_register(function($class) {
 });
 
 
-function search_lib($lib, $file, $ds = '/')
-{
-    // Verifica se o diretório informado é válido
-    if (is_dir($lib)) {
-        // Verifica se o arquivo já existe neste primeiro diretório
-        if (file_exists($lib . $ds . $file)) return $lib . $ds . $file;
-        // Lista os subdiretórios e arquivos
-        $dirs = array_diff(scandir($lib, 1), array('.', '..'));
-        foreach ($dirs as $dir) {
-            // Verifica se é um arquivo se for, pula para o próximo
-            if (!is_dir($lib . $ds . $dir)) continue;
-            // Se for um diretório procura dentro dele
-            $f = search_lib($lib . $ds . $dir, $file, $ds);
-            // Caso não encontre retora false
-            if (false !== $f) return $f;
-        }
-    }
-    // Se o diretório informado não for válido ou se não tiver encontrado retorna false
-    return false;
-}
 
 function __autoload($class)
 {
@@ -65,7 +45,7 @@ function __autoload($class)
     }
     // Se não encontrar o arquivo lança um erro na tela. :)
     else {
-        $msg = "Autoload fatal erro: Can't find the file {$class}{$ext}!";
+        $msg = "Autoload fatal erro: Can't find the file {$class}!";
         error_log($msg);
         exit('<br><br><strong>' . $msg . '</strong>');
     }
