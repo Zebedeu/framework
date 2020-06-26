@@ -31,22 +31,3 @@ spl_autoload_register(function($class) {
     }
 
 });
-
-
-
-function __autoload($class)
-{
-    $libs = './';
-    $ext = '.php';
-    $file = search_lib($libs, $class . $ext);
-    // Se encontrou inclui o arquivo
-    if (false !== $file) {
-        require_once $file;
-    }
-    // Se não encontrar o arquivo lança um erro na tela. :)
-    else {
-        $msg = "Autoload fatal erro: Can't find the file {$class}!";
-        error_log($msg);
-        exit('<br><br><strong>' . $msg . '</strong>');
-    }
-}
