@@ -17,13 +17,6 @@
  *
  */
 
-/**
- * Created by PhpStorm.
- * User: marciozebedeu
- * Date: 1/3/19
- * Time: 2:25 AM
- */
-
 namespace Ballybran\Core\Http;
 
 
@@ -84,7 +77,7 @@ class Request {
      */
     public function __construct($address) {
         if (!isset($address)) {
-            throw new Exception("Error: Address not provided.");
+            throw new \Exception("Error: Address not provided.");
         }
         $this->address = $address;
     }
