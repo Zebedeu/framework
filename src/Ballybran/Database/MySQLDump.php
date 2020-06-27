@@ -190,7 +190,7 @@ class MySQLDump
         fwrite($handle, "\n");
     
     }
-    private function checkSizendLen($cols, $s, $handle) : void {
+    private function checkSizendLen($cols, $s, $handle){
 
         if ($this->size == 0) {
             $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
