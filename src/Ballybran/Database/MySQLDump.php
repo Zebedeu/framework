@@ -38,10 +38,10 @@ class MySQLDump
         $this->connection = $connection;
 
         if ($connection->connect_errno) {
-            throw new Exception($connection->connect_error);
+            throw new \Exception($connection->connect_error);
 
         } elseif (!$connection->set_charset($charset)) { // was added in MySQL 5.0.7 and PHP 5.0.5, fixed in PHP 5.1.5)
-            throw new Exception($connection->error);
+            throw new \Exception($connection->error);
         }
     }
 
@@ -55,7 +55,7 @@ class MySQLDump
     {
         $handle = strcasecmp(substr($file, -3), '.gz') ? fopen($file, 'wb') : gzopen($file, 'wb');
         if (!$handle) {
-            throw new Exception("ERROR: Cannot write file '$file'.");
+            throw new \Exception("ERROR: Cannot write file '$file'.");
         }
         $this->write($handle);
     }
@@ -71,7 +71,7 @@ class MySQLDump
         if ($handle === null) {
             $handle = fopen('php://output', 'wb');
         } elseif (!is_resource($handle) || get_resource_type($handle) !== 'stream') {
-            throw new Exception('Argument must be stream resource.');
+            throw new \Exception('Argument must be stream resource.');
         }
 
         $tables = $views = [];
@@ -129,7 +129,7 @@ class MySQLDump
         fwrite($handle, "-- --------------------------------------------------------\n\n");
 
         $mode = isset($this->tables[$table]) ? $this->tables[$table] : $this->tables['*'];
-        $view = isset($row['Create View']);
+        $view = isset($row['Create View']) ?? false;
 
         if ($mode & self::DROP) {
             fwrite($handle, 'DROP ' . ($view ? 'VIEW' : 'TABLE') . " IF EXISTS $delTable;\n\n");

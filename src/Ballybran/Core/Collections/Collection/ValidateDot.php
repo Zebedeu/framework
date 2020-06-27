@@ -51,7 +51,7 @@ class ValidateDot implements Countable
      *
      * @return bool
      */
-    private function exists($array, $key)
+    protected function exists($array, $key)
     {
         return array_key_exists($key, $array);
     }
