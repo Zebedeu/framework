@@ -884,6 +884,24 @@ $loggerFactory = new \Ballybran\Helpers\Log\StdoutLoggerFactory();
 $logger = $loggerFactory->createLogger();
 echo $logger->write("Hello World");
  ```
+
+ 
+ # Pipeline
+
+Simple PHP pipelines to use for things like middlewares.
+
+This is just a modified version of the `illuminate/pipeline` repository, without the need for the illuminate container class.
+
+```php
+(new Pipeline)
+	->send($object)
+    ->through($middleware)
+    ->then(function(){
+    	// middleware is finished
+    });
+```
+## License
+
 ## License
 
 [MIT license](LICENSE.md)
