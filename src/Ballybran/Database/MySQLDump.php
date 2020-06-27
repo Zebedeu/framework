@@ -154,7 +154,7 @@ class MySQLDump
             $cols = '(' . implode(', ', $cols) . ')';
             $res->close();
 
-            $this->mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle);
+            echo $this->mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle);
         }
     }
 
@@ -185,12 +185,12 @@ class MySQLDump
         
 
 
-            $this->trigger($mode, $handle, $table);
+            echo $this->trigger($mode, $handle, $table);
         
         fwrite($handle, "\n");
     
     }
-    function checkSizendLen($cols, $s, $handle){
+    private function checkSizendLen($cols, $s, $handle) : void {
 
         if ($this->size == 0) {
             $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
