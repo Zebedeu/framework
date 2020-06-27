@@ -900,6 +900,41 @@ This is just a modified version of the `illuminate/pipeline` repository, without
     	// middleware is finished
     });
 ```
+## Example
+
+```php
+
+
+    class Auth {
+    
+    public function handle( $piped,  $next) {
+    if($piped === "auth") {
+      return $next($piped);  
+
+    }else {
+      $piped = "no";
+      return $next($piped);  
+
+    }
+  
+    }  
+}
+
+class Foo {
+  function handle($piped, $next) {
+    if($piped === "auth") {
+      $piped = "Authenticated";
+      return $next($piped);
+    } else {
+        $piped = "not authenticated";
+        return $next($piped);
+    }
+ 
+
+    }
+}
+```
+
 ## License
 
 ## License
