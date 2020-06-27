@@ -20,6 +20,7 @@ class MySQLDump
     const TRIGGERS = 8;
     const ALL = 15; // DROP | CREATE | DATA | TRIGGERS
 
+    private $delTable;
     /** @var array */
     public $tables = [
         '*' => self::ALL,
@@ -121,18 +122,18 @@ class MySQLDump
      */
     public function dumpTable($handle, $table)
     {
-        $delTable = $this->delimite($table);
-        $res = $this->connection->query("SHOW CREATE TABLE $delTable");
+        $this->delTable = $this->delimite($table);
+        $res = $this->connection->query("SHOW CREATE TABLE $this->delTable");
         $row = $res->fetch_assoc();
         $res->close();
 
         fwrite($handle, "-- --------------------------------------------------------\n\n");
 
         $mode = isset($this->tables[$table]) ? $this->tables[$table] : $this->tables['*'];
-        $view = isset($row['Create View']) ?? false;
+        $view = isset($row['Create View']);
 
         if ($mode & self::DROP) {
-            fwrite($handle, 'DROP ' . ($view ? 'VIEW' : 'TABLE') . " IF EXISTS $delTable;\n\n");
+            fwrite($handle, 'DROP ' . ($view ? 'VIEW' : 'TABLE') . " IF EXISTS $this->delTable;\n\n");
         }
 
         if ($mode & self::CREATE) {
@@ -140,9 +141,9 @@ class MySQLDump
         }
 
         if (!$view && ($mode & self::DATA)) {
-            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " DISABLE KEYS;\n\n");
+            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $this->delTable . " DISABLE KEYS;\n\n");
             $numeric = [];
-            $res = $this->connection->query("SHOW COLUMNS FROM $delTable");
+            $res = $this->connection->query("SHOW COLUMNS FROM $this->delTable");
             $cols = [];
             while ($row = $res->fetch_assoc()) {
                 $col = $row['Field'];
@@ -152,9 +153,13 @@ class MySQLDump
             $cols = '(' . implode(', ', $cols) . ')';
             $res->close();
 
+            $this->mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle);
+        }
+    }
 
+        private function mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle){
             $size = 0;
-            $res = $this->connection->query("SELECT * FROM $delTable", MYSQLI_USE_RESULT);
+            $res = $this->connection->query("SELECT * FROM $this->delTable", MYSQLI_USE_RESULT);
             while ($row = $res->fetch_assoc()) {
                 $s = '(';
                 foreach ($row as $key => $value) {
@@ -168,7 +173,7 @@ class MySQLDump
                 }
 
                 if ($size == 0) {
-                    $s = "INSERT INTO $delTable $cols VALUES\n$s";
+                    $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
                 } else {
                     $s = ",\n$s";
                 }
@@ -188,23 +193,30 @@ class MySQLDump
             if ($size) {
                 fwrite($handle, ";\n");
             }
-            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " ENABLE KEYS;\n\n");
+            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $this->delTable . " ENABLE KEYS;\n\n");
             fwrite($handle, "\n");
-        }
+        
 
+
+            $this->trigger($mode, $handle, $table);
+        
+        fwrite($handle, "\n");
+    
+    }
+
+    private function trigger($mode, $handle, $table){
         if ($mode & self::TRIGGERS) {
             $res = $this->connection->query("SHOW TRIGGERS LIKE '" . $this->connection->real_escape_string($table) . "'");
             if ($res->num_rows) {
                 fwrite($handle, "DELIMITER ;;\n\n");
                 while ($row = $res->fetch_assoc()) {
-                    fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $delTable FOR EACH ROW\n$row[Statement];;\n\n");
+                    fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $this->delTable FOR EACH ROW\n$row[Statement];;\n\n");
                 }
                 fwrite($handle, "DELIMITER ;\n\n");
             }
             $res->close();
         }
 
-        fwrite($handle, "\n");
     }
 
 
