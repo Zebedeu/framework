@@ -69,7 +69,7 @@ class Paginator extends DBconnection
 
         for ($i = $start; $i <= $end; $i++) {
             $class = ($this->page == $i) ? "active" : "";
-            $html .= '<li class="' . $class . '"><a class="page-link" href="?limit=' . $this->limit . '&page=' . $i . '">' . $i . '</a></li>';
+            $html .= '<li class="' . $class . '"><a class="page-link" href="?limit=' . $this->limit . "&page=$i". '">' . $i . '</a></li>';
         }
 
         if ($end < $last) {
