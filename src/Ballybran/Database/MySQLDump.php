@@ -20,6 +20,7 @@ class MySQLDump
     const TRIGGERS = 8;
     const ALL = 15; // DROP | CREATE | DATA | TRIGGERS
 
+    private $size = 0;
     private $delTable;
     /** @var array */
     public $tables = [
@@ -158,7 +159,7 @@ class MySQLDump
     }
 
         private function mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle){
-            $size = 0;
+            $this->size = 0;
             $res = $this->connection->query("SELECT * FROM $this->delTable", MYSQLI_USE_RESULT);
             while ($row = $res->fetch_assoc()) {
                 $s = '(';
@@ -172,25 +173,11 @@ class MySQLDump
                     }
                 }
 
-                if ($size == 0) {
-                    $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
-                } else {
-                    $s = ",\n$s";
-                }
-
-                $len = strlen($s) - 1;
-                $s[$len - 1] = ')';
-                fwrite($handle, $s, $len);
-
-                $size += $len;
-                if ($size > self::MAX_SQL_SIZE) {
-                    fwrite($handle, ";\n");
-                    $size = 0;
-                }
+                echo $this->checkSizendLen($cols, $s, $handle);
             }
 
             $res->close();
-            if ($size) {
+            if ($this->size) {
                 fwrite($handle, ";\n");
             }
             fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $this->delTable . " ENABLE KEYS;\n\n");
@@ -203,7 +190,24 @@ class MySQLDump
         fwrite($handle, "\n");
     
     }
+    function checkSizendLen($cols, $s, $handle){
 
+        if ($this->size == 0) {
+            $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
+        } else {
+            $s = ",\n$s";
+        }
+
+        $len = strlen($s) - 1;
+        $s[$len - 1] = ')';
+        fwrite($handle, $s, $len);
+
+        $this->size += $len;
+        if ($this->size > self::MAX_SQL_SIZE) {
+            fwrite($handle, ";\n");
+            $this->size = 0;
+        }
+    }
     private function trigger($mode, $handle, $table){
         if ($mode & self::TRIGGERS) {
             $res = $this->connection->query("SHOW TRIGGERS LIKE '" . $this->connection->real_escape_string($table) . "'");
