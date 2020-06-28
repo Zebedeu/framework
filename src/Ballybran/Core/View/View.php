@@ -30,7 +30,6 @@
  *        as the view is expected to use capture() to send data to the layout.
 
 
-/**
  * @property  UserData propriedade gerada e usada para pegar dados do model
  */
 
