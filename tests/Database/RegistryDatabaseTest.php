@@ -23,11 +23,12 @@ class RegistryDatabaseTest extends PHPUnit
 
 
     private $registry;
-
+    const VETT = 'it is test';
 
     public function setUp() : void
     {
         $this->registry = RegistryDatabase::getInstance();
+        $this->registry->set("PDO" , 'bbbb' );
 
     }
 
@@ -49,15 +50,12 @@ class RegistryDatabaseTest extends PHPUnit
     public function testIRegistryClassValid()
     {
 
-        $this->registry->set("PDO" , str);
         $this->assertTrue($this->registry->isRegistered("PDO"));
 
     }
 
     public function testIunRegistryClassValid()
     {
-
-        $this->registry->set("PDO" , str);
 
         $this->assertNull($this->registry->unRegistered("PDO"));
     }

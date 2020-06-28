@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 
 class StdoutLoggerFactoryTest extends PHPUnit
 {
-
+    const DIR_LOGS = '';
     public function testCanCreateStdoutLogging(){
 
         $loggerFactory = new \Ballybran\Helpers\Log\StdoutLoggerFactory();
