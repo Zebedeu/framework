@@ -3,7 +3,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/knut7/framework/badges/build.png?b=master)](https://scrutinizer-ci.com/g/knut7/framework/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/knut7/framework/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 ![PHP Composer](https://github.com/knut7/framework/workflows/PHP%20Composer/badge.svg)
-[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=master)](https://travis-ci.org/Knut7/Knut7)
+[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=master)](https://travis-ci.org/Knut7/framework)
 [![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
 
