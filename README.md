@@ -32,18 +32,12 @@ The rest is easy.
 Link to contributions and Download: https://github.com/knut7 && https://github.com/knut7/framework
 
 
-
-
 # Installation
 
 composer create-project --prefer-dist knut7 / knut7 site
 
 #Creating the Project
 
-1 - Standard Framewok name where all projects will be placed is called App
-NOTE Do not change the name.
-
-Knut7- FRAMEWORK follows the architectural model Modelo Visão e Controller (MVC), so the structure of your project should be as follows:
 ## Docs
 Documentation page: [Framework Docs][doc-url]
 [doc-url]: https://github.com/knut7/framework/wiki
