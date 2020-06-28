@@ -3,9 +3,9 @@
 [![Build Status](https://scrutinizer-ci.com/g/knut7/framework/badges/build.png?b=master)](https://scrutinizer-ci.com/g/knut7/framework/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/knut7/framework/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 ![PHP Composer](https://github.com/knut7/framework/workflows/PHP%20Composer/badge.svg)
-[![Build Status](https://travis-ci.org/knut7/knut7.svg?branch=master)](https://travis-ci.org/Knut7/Knut7)
-[![license](https://img.shields.io/github/license/Knut7/Knut7.svg)]()
-[![Packagist](https://img.shields.io/packagist/v/Knut7/Knut7.svg)]()
+[![Build Status](https://travis-ci.org/knut7/framework.svg?branch=master)](https://travis-ci.org/Knut7/Knut7)
+[![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
+[![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
 
 /**
  *
@@ -61,6 +61,33 @@ Pra configurar a framework é simples. Vai ate ao Diretório Config (1) e altera
 
 
 A knut7- FRAMEWORK segue o padrão arquitetural Modelo Visão e Controller(MVC), logo, a estrutura do teu projecto devera ficar da seguinte forma:
+
+
+## Router
+- Supports GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD, AJAX and ANY request methods
+- Controllers support (Example: HomeController@about)
+- Before and after Route Middlewares support
+- Static Route Patterns
+- Dynamic Route Patterns
+- Easy-to-use patterns
+- Adding a new pattern supports. (with RegExp)
+- Namespaces supports.
+- Group Routing
+- Custom 404 handling
+- Debug mode (Error message open/close)
+
+## Example Usage
+```php
+
+$router = new Ballybran\Routing\Router();
+
+$router->get('/', function() {
+    return 'Hello World!';
+});
+$router->get('/controller', 'TestController@main');
+
+$router->run();
+```
 
 ## Basic Controller
 
