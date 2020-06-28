@@ -40,6 +40,9 @@ composer create-project --prefer-dist knut7 / knut7 site
 
 ## Docs
 Documentation page: [Framework Docs][doc-url]
+
+
+
 [doc-url]: https://github.com/knut7/framework/wiki
 
 ## License
