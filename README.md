@@ -34,9 +34,27 @@ Link to contributions and Download: https://github.com/knut7 && https://github.c
 
 # Installation
 
-composer create-project --prefer-dist knut7 / knut7 site
 
-#Creating the Project
+## Install
+
+composer.json file:
+```json
+{
+    "require": {
+        "knut7/framework": "*"
+    }
+}
+```
+after run the install command.
+```
+$ composer install
+```
+
+OR run the following command directly.
+
+```
+$ composer require knut7/framework
+```
 
 ## Docs
 Documentation page: [Framework Docs][doc-url]
