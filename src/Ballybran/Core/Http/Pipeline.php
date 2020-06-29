@@ -58,7 +58,7 @@ class Pipeline
      * @param  mixed  $passable
      * @return $this
      */
-    public function send(...$passable)
+    public function send(...$passable) : self
     {
         $this->passable = $passable;
 
@@ -71,7 +71,7 @@ class Pipeline
      * @param  array|mixed  $pipes
      * @return $this
      */
-    public function through($pipes)
+    public function through($pipes) : self
     {
         $this->pipes = is_array($pipes) ? $pipes : func_get_args();
 
@@ -84,7 +84,7 @@ class Pipeline
      * @param  string  $method
      * @return $this
      */
-    public function via($method)
+    public function via($method) : self
     {
         $this->method = $method;
 
@@ -97,7 +97,7 @@ class Pipeline
      * @param  mixed  $parameters
      * @return $this
      */
-    public function with(...$parameters)
+    public function with(...$parameters) : self
     {
         $this->parameters = $parameters;
 
@@ -125,7 +125,7 @@ class Pipeline
      * @param  \Closure  $destination
      * @return \Closure
      */
-    protected function prepareDestination(Closure $destination)
+    protected function prepareDestination(Closure $destination) : Closure
     {
         return function () use ($destination) {
             return call_user_func_array($destination, func_get_args());
@@ -137,7 +137,7 @@ class Pipeline
      *
      * @return \Closure
      */
-    protected function carry()
+    protected function carry() : Closure
     {
         return function ($stack, $pipe) {
             return function () use ($stack, $pipe) {
@@ -177,7 +177,7 @@ class Pipeline
      * @param  string $pipe
      * @return array
      */
-    protected function parsePipeString($pipe)
+    protected function parsePipeString( string $pipe) : array
     {
         list($name, $parameters) = array_pad(explode(':', $pipe, 2), 2, []);
 

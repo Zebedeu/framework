@@ -22,15 +22,15 @@ class Ucfirst
 
 
     /**
-     * @param $post
-     * @param array $a_char
+     * @param string $post
+     * @param array $char
      * @return string
      */
-    public static function _ucfirst($post, $a_char = array("'", "-", " "))
+    public static function _ucfirst($post, $char = array("'", "-", " ")) : string
     {
 
         $string = strtolower($post);
-        foreach ($a_char as $temp) {
+        foreach ($char as $temp) {
             $pos = strpos($string, $temp);
 
             if ($pos) {
@@ -45,8 +45,12 @@ class Ucfirst
         }
         return ucfirst($string);
     }
-
-    public static function abbreviate($strString, $intLength = NULL)
+    /**
+     * @param string $strString
+     * @param int $intLength
+     * @return string
+     */
+    public static function abbreviate($strString, $intLength = NULL) : string
     {
         $defaultAbbrevLength = 8; //Default abbreviation length if none is specified
 
@@ -87,17 +91,23 @@ class Ucfirst
         }
         return $abbreviation;
     }
-    /*
-	* $string string
-	* example removeAccentsIstring( "Õ") output "O"
+
+    /**
+    * example removeAccentsIstring( "Õ") output "O"
+    * @param string $string
+    * @return string
 	*/
-    public static function removeAccentsIstring($string)
+    public static function removeAccentsIstring($string) : string
     {
         return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(ç)/", "/(Ç)/"), explode(" ", "a A e E i I o O u U n N c C"), $string);
 
     }
-
-    public static function removeAccents($string, $slug = false)
+    /**
+     * @param string $string
+     * @param bool 
+     * @return string
+     */
+    public static function removeAccents($string, $slug = false) : string
     {
         $string = strtolower($string);
         // ASCII code of vowels
