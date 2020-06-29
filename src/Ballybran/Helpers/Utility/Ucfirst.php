@@ -83,7 +83,7 @@ class Ucfirst
                 if ($characterDeficit == 0)                //If the word is full and we're not short any characters, ignore the character
                     continue;
                 else
-                    $characterDefecit--; //If we are short some characters, decrement the defecit and carry on with adding the character to the abbreviation
+                    $characterDeficit--; //If we are short some characters, decrement the defecit and carry on with adding the character to the abbreviation
             }
             $abbreviation .= $currentChar; //Add the character to the abbreviation
             $abbrevLength++; //Increment abbreviation length
