@@ -127,12 +127,12 @@ class IteratorCollection extends Variable implements \ArrayAccess
         if (!isset($offset)) {
             $this->set($offset, $value);
         }
-         $this->set($offset, $value);
+            $this->set($offset, $value);
     }
 
     public function offsetUnset($offset)
     {
-         $this->remove($offset);
+            $this->remove($offset);
     }
 
     public function containsKey($key)
@@ -260,7 +260,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
         $subsetItems = array_slice($this->elements, $start, $length);
 
-            if(null === $subsetItems ){
+            if (null === $subsetItems) {
                 return null;
             }
         return $this->setElementsFromTrustedSource($subsetItems);
@@ -270,7 +270,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
     public function reverse()
     {
         $item = array_reverse($this->elements);
-            if(null === $item ){
+            if (null === $item) {
                     return null;
             }
 

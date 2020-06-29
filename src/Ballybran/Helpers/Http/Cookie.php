@@ -256,8 +256,8 @@ class Cookie extends RestUtilities
         return $this->data['value'];
     }
 
-    public function setValue($value){
-            $this->data['value']= $value;
+    public function setValue($value) {
+            $this->data['value'] = $value;
 
     }
 

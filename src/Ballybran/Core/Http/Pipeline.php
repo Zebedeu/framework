@@ -127,7 +127,7 @@ class Pipeline
      */
     protected function prepareDestination(Closure $destination) : Closure
     {
-        return function () use ($destination) {
+        return function() use ($destination) {
             return call_user_func_array($destination, func_get_args());
         };
     }
@@ -139,8 +139,8 @@ class Pipeline
      */
     protected function carry() : Closure
     {
-        return function ($stack, $pipe) {
-            return function () use ($stack, $pipe) {
+        return function($stack, $pipe) {
+            return function() use ($stack, $pipe) {
                 $passable = func_get_args();
                 $passable[] = $stack;
                 $passable = array_merge($passable, $this->parameters);
@@ -150,7 +150,7 @@ class Pipeline
                     // otherwise we'll resolve the pipes out of the container and call it with
                     // the appropriate method and arguments, returning the results back out.
                     return call_user_func_array($pipe, $passable);
-                } elseif (! is_object($pipe)) {
+                } elseif (!is_object($pipe)) {
                     list($name, $parameters) = $this->parsePipeString($pipe);
                     // If the pipe is a string we will parse the string and resolve the class out
                     // of the dependency injection container. We can then build a callable and
@@ -177,7 +177,7 @@ class Pipeline
      * @param  string $pipe
      * @return array
      */
-    protected function parsePipeString( string $pipe) : array
+    protected function parsePipeString(string $pipe) : array
     {
         list($name, $parameters) = array_pad(explode(':', $pipe, 2), 2, []);
 
