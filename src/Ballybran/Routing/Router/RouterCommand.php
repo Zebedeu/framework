@@ -98,7 +98,7 @@ class RouterCommand
      */
     public function beforeAfter($command)
     {
-        if (! is_null($command)) {
+        if (!is_null($command)) {
             $info = $this->getMiddlewareInfo();
             if (is_array($command)) {
                 foreach ($command as $value) {
@@ -121,7 +121,7 @@ class RouterCommand
                     return $response;
                 }
 
-                return $this->exception('handle() method is not found in <b>'.$command.'</b> class.');
+                return $this->exception('handle() method is not found in <b>' . $command . '</b> class.');
             }
         }
 
@@ -140,7 +140,7 @@ class RouterCommand
     public function runRoute($command, $params = null)
     {
         $info = $this->getControllerInfo();
-        if (! is_object($command)) {
+        if (!is_object($command)) {
             $segments = explode('@', $command);
             $controllerClass = str_replace([$info['namespace'], '\\', '.'], ['', '/', '/'], $segments[0]);
             $controllerMethod = $segments[1];
@@ -151,7 +151,7 @@ class RouterCommand
                 return;
             }
 
-            return $this->exception($controllerMethod . ' method is not found in '.$controllerClass.' class.');
+            return $this->exception($controllerMethod . ' method is not found in ' . $controllerClass . ' class.');
         } else {
             echo $this->runMethodWithParams($command, $params);
         }
@@ -172,7 +172,7 @@ class RouterCommand
     protected function resolveClass($class, $path, $namespace)
     {
         $file = realpath(rtrim($path, '/') . '/' . $class . '.php');
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             return $this->exception($class . ' class is not found. Please, check file.');
         }
 

@@ -18,16 +18,18 @@ class CSSCache {
     private $cwd;
 
     public function __construct(array $i_filename_arr) {
-    if (!is_array($i_filename_arr))
-        $i_filename_arr = array($i_filename_arr);
+    if (!is_array($i_filename_arr)) {
+            $i_filename_arr = array($i_filename_arr);
+    }
 
     $this->filenames = $i_filename_arr;
     $this->cwd = getcwd() . DIRECTORY_SEPARATOR;
 
-    if ($this->style_changed())
-        $expire = -72000;
-    else
-        $expire = 3200;
+    if ($this->style_changed()) {
+            $expire = -72000;
+    } else {
+            $expire = 3200;
+    }
 
     header('Content-Type: text/css; charset: UTF-8');
     header('Cache-Control: must-revalidate');
@@ -37,8 +39,9 @@ class CSSCache {
     public function dump_style() {
     ob_start('ob_gzhandler');
 
-    foreach ($this->filenames as $filename)
-        $this->dump_cache_contents($filename);
+    foreach ($this->filenames as $filename) {
+            $this->dump_cache_contents($filename);
+    }
 
     ob_end_flush();
     }
@@ -50,9 +53,10 @@ class CSSCache {
     }
 
     private function style_changed() {
-    foreach ($this->filenames as $filename)
-        if (!is_file($this->get_cache_name($filename)))
+    foreach ($this->filenames as $filename) {
+            if (!is_file($this->get_cache_name($filename)))
         return TRUE;
+    }
     return FALSE;
     }
 
@@ -81,9 +85,10 @@ class CSSCache {
     }
 
     // remove any old, lingering caches for this file
-    if ($dead_files = glob($this->get_cache_name($filename, TRUE), GLOB_NOESCAPE))
-        foreach ($dead_files as $dead_file)
+    if ($dead_files = glob($this->get_cache_name($filename, TRUE), GLOB_NOESCAPE)) {
+            foreach ($dead_files as $dead_file)
         unlink($dead_file);
+    }
 
     $compressed = $this->compress(file_get_contents($filename));
     file_put_contents($current_cache, $compressed);

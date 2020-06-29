@@ -158,7 +158,7 @@ class MySQLDump
         }
     }
 
-        private function mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle){
+        private function mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle) {
             $this->size = 0;
             $res = $this->connection->query("SELECT * FROM $this->delTable", MYSQLI_USE_RESULT);
             while ($row = $res->fetch_assoc()) {
@@ -190,7 +190,7 @@ class MySQLDump
         fwrite($handle, "\n");
     
     }
-    private function checkSizendLen($cols, $s, $handle){
+    private function checkSizendLen($cols, $s, $handle) {
 
         if ($this->size == 0) {
             $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
@@ -208,7 +208,7 @@ class MySQLDump
             $this->size = 0;
         }
     }
-    private function trigger($mode, $handle, $table){
+    private function trigger($mode, $handle, $table) {
         if ($mode & self::TRIGGERS) {
             $res = $this->connection->query("SHOW TRIGGERS LIKE '" . $this->connection->real_escape_string($table) . "'");
             if ($res->num_rows) {

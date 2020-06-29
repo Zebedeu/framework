@@ -414,7 +414,7 @@ class Router
 
         // check if route is defined without regex
         if (in_array($uri, $routes)) {
-            $currentRoute = array_filter($this->routes, function ($r) use ($method, $uri) {
+            $currentRoute = array_filter($this->routes, function($r) use ($method, $uri) {
                 return RouterRequest::validMethod($r['method'], $method) && $r['route'] === $uri;
             });
             if (!empty($currentRoute)) {
@@ -438,7 +438,7 @@ class Router
                         $this->runRouteMiddleware($data, 'before');
 
                         array_shift($matched);
-                        $matched = array_map(function ($value) {
+                        $matched = array_map(function($value) {
                             return trim(urldecode($value));
                         }, $matched);
 
@@ -457,7 +457,7 @@ class Router
 
         if ($foundRoute === false) {
             if (!$this->errorCallback) {
-                $this->errorCallback = function () {
+                $this->errorCallback = function() {
                     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
                     return $this->exception('Route not found. Looks like something went wrong. Please try again.');
                 };
