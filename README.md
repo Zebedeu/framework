@@ -5,6 +5,8 @@
 ![PHP Composer](https://github.com/knut7/framework/workflows/PHP%20Composer/badge.svg)
 [![license](https://img.shields.io/github/license/Knut7/framework.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/Knut7/framework.svg)]()
+[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
+
 
 /**
  *
