@@ -151,7 +151,7 @@ class Validate
     public function text()
     {
         if (!is_string($this->_postData[$this->_currentItem])) {
-            throw new \InvalidArgumentException('the value entered must have a Text');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Text');
         }
 
         return $this;
@@ -161,7 +161,7 @@ class Validate
     {
         $email = filter_var($this->_postData[$this->_currentItem], FILTER_SANITIZE_EMAIL);
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('the value entered must have a Email');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Email');
         }
 
         return $this;
@@ -170,7 +170,7 @@ class Validate
     public function numeric()
     {
         if (!is_numeric($this->_postData[$this->_currentItem])) {
-            throw new \InvalidArgumentException('the value entered must have a Numeric');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Numeric');
         }
 
         return $this;
@@ -178,8 +178,8 @@ class Validate
 
     public function int()
     {
-        if (!is_int($this->_postData[$this->_currentItem])) {
-            throw new \InvalidArgumentException('the value entered must have a Int');
+        if (!intval($this->_postData[$this->_currentItem])) {
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Int');
         }
 
         return $this;
@@ -188,7 +188,7 @@ class Validate
     public function long()
     {
         if (!floatval($this->_postData[$this->_currentItem])) {
-            throw new \InvalidArgumentException('the value entered must have a Long');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Long');
         }
 
         return $this;
@@ -197,7 +197,7 @@ class Validate
     public function domain()
     {
         if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_DOMAIN)) {
-            throw new \InvalidArgumentException('the value entered must have a Domain');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Domain');
         }
 
         return $this;
@@ -206,7 +206,7 @@ class Validate
     public function url()
     {
         if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('the value entered must have a Url');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Url');
         }
 
         return $this;
@@ -215,7 +215,7 @@ class Validate
     public function ip()
     {
         if (!filter_var($this->_postData[$this->_currentItem], FILTER_VALIDATE_IP)) {
-            throw new \InvalidArgumentException('the value entered must have a Ip');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Ip');
         }
 
         return $this;
@@ -224,7 +224,7 @@ class Validate
     public function date()
     {
         if (!is_string($this->_postData[$this->_currentItem])) {
-            throw new \InvalidArgumentException('the value entered must have a Date');
+            throw new \InvalidArgumentException('the value (' . $this->_postData[$this->_currentItem] . ') entered must have a Date');
         }
 
         return $this;

@@ -58,7 +58,7 @@ class Cookie extends RestUtilities
      *
      * @return Cookie
      */
-    public function createCookie( $name, int $maxage = 0, string $path = '', string $domain = '', bool $secure = false,bool $HTTPOnly = false): Cookie
+    public function createCookie($name, int $maxage = 0, string $path = '', string $domain = '', bool $secure = false, bool $HTTPOnly = false): Cookie
     {
         $this->setName($name)
         ->setMaxage($maxage)
@@ -75,7 +75,7 @@ class Cookie extends RestUtilities
         $ob = ini_get('output_buffering');
 
         // Abort the method if headers have already been sent, except when output buffering has been enabled
-        if (headers_sent() && false === (bool)$ob  || 'off' == strtolower($ob) ) {
+        if (headers_sent() && false === (bool)$ob || 'off' == strtolower($ob)) {
             return $this;
         }
 
@@ -129,13 +129,13 @@ class Cookie extends RestUtilities
      */
     public function setName($name) : Cookie
     {
-        if(is_array($name)) {
+        if (is_array($name)) {
 
             foreach ($name as $k => $v) {
                 $this->data['name'] = $k . '=' . rawurlencode($v);
             }
-        }else {
-            $this->data['name'] = $name . '='. rawurlencode($name);
+        } else {
+            $this->data['name'] = $name . '=' . rawurlencode($name);
         }
 
         return $this;
@@ -188,7 +188,7 @@ class Cookie extends RestUtilities
             }
             // Remove port information.
             $port = strpos($domain, ':');
-            if ( false !== $port ) {
+            if (false !== $port) {
                 $this->data['domain'] = substr($domain, 0, $port);
             }
         }
@@ -256,8 +256,8 @@ class Cookie extends RestUtilities
         return $this->data['value'];
     }
 
-    public function setValue($value){
-         $this->data['value']= $value;
+    public function setValue($value) {
+            $this->data['value'] = $value;
 
     }
 

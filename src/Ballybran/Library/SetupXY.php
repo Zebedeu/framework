@@ -8,7 +8,7 @@ class SetupXY
     public function setupXAxis($percent = '', $color = '')
     {
         $this->bool_x_axis_setup = true;
-        if ( false === $percent ) {
+        if (false === $percent) {
             $this->bool_x_axis = false;
         } else {
             $this->bool_x_axis = true;
@@ -28,7 +28,7 @@ class SetupXY
     public function setupYAxis($percent = '', $color = '')
     {
         $this->bool_y_axis_setup = true;
-        if ( false === $percent ) {
+        if (false === $percent) {
             $this->bool_y_axis = false;
         } else {
             $this->bool_y_axis = true;
@@ -60,9 +60,9 @@ class SetupXY
     protected function returnColorArray($color)
     {
         //check to see if color passed through in form '128,128,128' or hex format
-        if ( false !== strpos($color, ',') ) {
+        if (false !== strpos($color, ',')) {
             return explode(',', $color);
-        } elseif ( '#' == substr($color, 0, 1) ) {
+        } elseif ('#' == substr($color, 0, 1)) {
             if (strlen($color) == 7) {
                 $hex1 = hexdec(substr($color, 1, 2));
                 $hex2 = hexdec(substr($color, 3, 2));

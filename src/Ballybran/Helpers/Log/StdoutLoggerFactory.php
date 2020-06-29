@@ -18,7 +18,7 @@
 
 namespace Ballybran\Helpers\Log;
 
-class StdoutLoggerFactory implements iLoggerFactory{
+class StdoutLoggerFactory implements iLoggerFactory {
 
 
     public function createLogger(): iLogger

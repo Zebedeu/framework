@@ -7,25 +7,23 @@
  */
 
 
-
 use PHPUnit\Framework\TestCase;
 
-class RecursiveDirectoryIteratorTest extends TestCase {
+class RecursiveDirectoryIteratorTest extends TestCase
+{
 
     private $file;
 
-    protected function setUp() : void
+    public function setUp() : void
     {
-        $file =  new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests', FilesystemIterator::CURRENT_AS_FILEINFO);
-
-
-             $this->file = $file->current();
+        $file = new \Ballybran\Helpers\Http\RecursiveDirectoryIterator('tests' , FilesystemIterator::CURRENT_AS_FILEINFO);
+         $this->file = $file->current();
 
     }
 
     public function testOpenFile()
     {
-        $t  = 'tests';
-        $this->assertFileExists($t, $this->file);
+        $t = 'tests';
+        $this->assertFileExists($t , $this->file);
     }
 }

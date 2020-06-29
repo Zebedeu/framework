@@ -28,9 +28,6 @@
  *
  * *NOTE* When a view uses a layout, the output of the view is ignored, as
  *        as the view is expected to use capture() to send data to the layout.
-
-
-/**
  * @property  UserData propriedade gerada e usada para pegar dados do model
  */
 
@@ -38,27 +35,19 @@ namespace Ballybran\Core\View;
 
 use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
-use Ballybran\Library\Form;
-use Ballybran\Library\interfaceForm;
+use \Ballybran\Helpers\Event\Registry;
 
 class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 {
-    public $view;
-    public $data = array();
-    public $layout;
-    protected $controllers;
-    public $form;
-    public $reg;
+    public string $view;
+    public array $data = array();
+    protected string $controllers;
+    private Form $form;
+    private Registry $reg;
 
-    public function __construct(interfaceForm $form = null)
+    public function __construct()
     {
-        $this->reg = \Ballybran\Helpers\Event\Registry::getInstance();
-
-        if ($this->form != null && $this->form instanceof $form) {
-            $this->form = $form;
-        } else {
-            $this->form = new Form();
-        }
+        $this->reg = Registry::getInstance();
         $this->data;
     }
 
@@ -83,18 +72,13 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         ob_start();
         $this->isHeader();
 
-        include $this->file =  VIEW . $this->controllers . DS . $this->view . $this->ex;
+        include $this->file = VIEW . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
-        if (null === $this->layout) {
-            ob_end_flush();
-        } else {
-            ob_end_clean();
-            $this->include_file($this->layout);
-        }
-        $content = ob_get_contents();
 
+        $content = ob_get_contents();
         return $content;
     }
+
 
     public function fetch($data = null)
     {
@@ -104,32 +88,15 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    /**
-     * @param $ Controller $ this responsible to get View's folder
-     *     * @param $ view Index responsible for getting Index files from the Controller folder
-     */
-
-    public function set($id)
+    public function merge(array $data) : void
     {
-        $this->data = \array_merge($this->data, $id);
+        $this->data = \array_merge($this->data, $data);
 
     }
 
-    public function get_data()
+    public function get_data() : array
     {
         return $this->data;
-    }
-
-    protected function include_file($file)
-    {
-        $view = new View($file);
-        $view->render($this->controllers, $this->view, $this->data);
-        $this->data[] = $view->get_data();
-    }
-
-    protected function set_layout($file)
-    {
-        $this->layout = $file;
     }
 
     protected function capture()
@@ -150,22 +117,22 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return true;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset) : bool
     {
         return isset($this->data[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset) : string
     {
         return $this->data[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         $this->data[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         unset($this->data[$offset]);
     }

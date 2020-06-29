@@ -20,6 +20,8 @@ class MySQLDump
     const TRIGGERS = 8;
     const ALL = 15; // DROP | CREATE | DATA | TRIGGERS
 
+    private $size = 0;
+    private $delTable;
     /** @var array */
     public $tables = [
         '*' => self::ALL,
@@ -38,10 +40,10 @@ class MySQLDump
         $this->connection = $connection;
 
         if ($connection->connect_errno) {
-            throw new Exception($connection->connect_error);
+            throw new \Exception($connection->connect_error);
 
         } elseif (!$connection->set_charset($charset)) { // was added in MySQL 5.0.7 and PHP 5.0.5, fixed in PHP 5.1.5)
-            throw new Exception($connection->error);
+            throw new \Exception($connection->error);
         }
     }
 
@@ -55,7 +57,7 @@ class MySQLDump
     {
         $handle = strcasecmp(substr($file, -3), '.gz') ? fopen($file, 'wb') : gzopen($file, 'wb');
         if (!$handle) {
-            throw new Exception("ERROR: Cannot write file '$file'.");
+            throw new \Exception("ERROR: Cannot write file '$file'.");
         }
         $this->write($handle);
     }
@@ -71,7 +73,7 @@ class MySQLDump
         if ($handle === null) {
             $handle = fopen('php://output', 'wb');
         } elseif (!is_resource($handle) || get_resource_type($handle) !== 'stream') {
-            throw new Exception('Argument must be stream resource.');
+            throw new \Exception('Argument must be stream resource.');
         }
 
         $tables = $views = [];
@@ -121,8 +123,8 @@ class MySQLDump
      */
     public function dumpTable($handle, $table)
     {
-        $delTable = $this->delimite($table);
-        $res = $this->connection->query("SHOW CREATE TABLE $delTable");
+        $this->delTable = $this->delimite($table);
+        $res = $this->connection->query("SHOW CREATE TABLE $this->delTable");
         $row = $res->fetch_assoc();
         $res->close();
 
@@ -132,7 +134,7 @@ class MySQLDump
         $view = isset($row['Create View']);
 
         if ($mode & self::DROP) {
-            fwrite($handle, 'DROP ' . ($view ? 'VIEW' : 'TABLE') . " IF EXISTS $delTable;\n\n");
+            fwrite($handle, 'DROP ' . ($view ? 'VIEW' : 'TABLE') . " IF EXISTS $this->delTable;\n\n");
         }
 
         if ($mode & self::CREATE) {
@@ -140,9 +142,9 @@ class MySQLDump
         }
 
         if (!$view && ($mode & self::DATA)) {
-            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " DISABLE KEYS;\n\n");
+            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $this->delTable . " DISABLE KEYS;\n\n");
             $numeric = [];
-            $res = $this->connection->query("SHOW COLUMNS FROM $delTable");
+            $res = $this->connection->query("SHOW COLUMNS FROM $this->delTable");
             $cols = [];
             while ($row = $res->fetch_assoc()) {
                 $col = $row['Field'];
@@ -152,9 +154,13 @@ class MySQLDump
             $cols = '(' . implode(', ', $cols) . ')';
             $res->close();
 
+            echo $this->mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle);
+        }
+    }
 
-            $size = 0;
-            $res = $this->connection->query("SELECT * FROM $delTable", MYSQLI_USE_RESULT);
+        private function mysqliUseResult($mode, $table, $numeric, $cols, $view, $handle) {
+            $this->size = 0;
+            $res = $this->connection->query("SELECT * FROM $this->delTable", MYSQLI_USE_RESULT);
             while ($row = $res->fetch_assoc()) {
                 $s = '(';
                 foreach ($row as $key => $value) {
@@ -167,44 +173,54 @@ class MySQLDump
                     }
                 }
 
-                if ($size == 0) {
-                    $s = "INSERT INTO $delTable $cols VALUES\n$s";
-                } else {
-                    $s = ",\n$s";
-                }
-
-                $len = strlen($s) - 1;
-                $s[$len - 1] = ')';
-                fwrite($handle, $s, $len);
-
-                $size += $len;
-                if ($size > self::MAX_SQL_SIZE) {
-                    fwrite($handle, ";\n");
-                    $size = 0;
-                }
+                echo $this->checkSizendLen($cols, $s, $handle);
             }
 
             $res->close();
-            if ($size) {
+            if ($this->size) {
                 fwrite($handle, ";\n");
             }
-            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $delTable . " ENABLE KEYS;\n\n");
+            fwrite($handle, 'ALTER ' . ($view ? 'VIEW' : 'TABLE') . ' ' . $this->delTable . " ENABLE KEYS;\n\n");
             fwrite($handle, "\n");
+        
+
+
+            echo $this->trigger($mode, $handle, $table);
+        
+        fwrite($handle, "\n");
+    
+    }
+    private function checkSizendLen($cols, $s, $handle) {
+
+        if ($this->size == 0) {
+            $s = "INSERT INTO $this->delTable $cols VALUES\n$s";
+        } else {
+            $s = ",\n$s";
         }
 
+        $len = strlen($s) - 1;
+        $s[$len - 1] = ')';
+        fwrite($handle, $s, $len);
+
+        $this->size += $len;
+        if ($this->size > self::MAX_SQL_SIZE) {
+            fwrite($handle, ";\n");
+            $this->size = 0;
+        }
+    }
+    private function trigger($mode, $handle, $table) {
         if ($mode & self::TRIGGERS) {
             $res = $this->connection->query("SHOW TRIGGERS LIKE '" . $this->connection->real_escape_string($table) . "'");
             if ($res->num_rows) {
                 fwrite($handle, "DELIMITER ;;\n\n");
                 while ($row = $res->fetch_assoc()) {
-                    fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $delTable FOR EACH ROW\n$row[Statement];;\n\n");
+                    fwrite($handle, "CREATE TRIGGER {$this->delimite($row['Trigger'])} $row[Timing] $row[Event] ON $this->delTable FOR EACH ROW\n$row[Statement];;\n\n");
                 }
                 fwrite($handle, "DELIMITER ;\n\n");
             }
             $res->close();
         }
 
-        fwrite($handle, "\n");
     }
 
 

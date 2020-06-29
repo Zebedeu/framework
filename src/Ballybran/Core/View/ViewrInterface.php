@@ -25,13 +25,15 @@ interface ViewrInterface
 
     public function fetch($data = null);
 
-    public function get_data();
+    public function get_data() : array;
 
-    public function offsetExists($offset);
+    public function merge(array $data) : void;
 
-    public function offsetGet($offset);
+    public function offsetExists($offset) : bool;
 
-    public function offsetSet($offset, $value);
+    public function offsetGet($offset) : string;
 
-    public function offsetUnset($offset);
+    public function offsetSet($offset, $value) : void;
+
+    public function offsetUnset($offset) : void;
 }

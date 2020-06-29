@@ -22,7 +22,7 @@ use Ballybran\Exception;
  * Class Registry
  * @package Ballybran\Helpers\Event
  */
- class Registry
+    class Registry
 {
     private static $instance;
 
@@ -126,7 +126,7 @@ use Ballybran\Exception;
         if ($prefix == 'get' && array_key_exists($key, $this->method)) {
             return $this->method[$key];
         } else {
-            throw new  Exception\InvalidCallException ('Setting read-only method: ' . '::');
+            throw new  Exception\InvalidCallException('Setting read-only method: ' . '::');
 
         }
     }

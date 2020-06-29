@@ -26,8 +26,8 @@ class StdoutLogger implements iLogger
     /**
      * @param string $message
      */
-    public function write( $message, string $type = null)
+    public function write($message, string $type = null)
     {
-        return $this->message =$message;
+        return $this->message = $message;
     }
 }
