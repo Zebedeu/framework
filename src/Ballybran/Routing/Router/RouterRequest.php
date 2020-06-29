@@ -70,7 +70,7 @@ class RouterRequest
             if (isset($headers['X-HTTP-Method-Override']) &&
                 in_array($headers['X-HTTP-Method-Override'], ['PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])) {
                 $method = $headers['X-HTTP-Method-Override'];
-            } elseif (! empty($_POST['_method'])) {
+            } elseif (!empty($_POST['_method'])) {
                 $method = strtoupper($_POST['_method']);
             }
         }

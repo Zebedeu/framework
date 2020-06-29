@@ -32,7 +32,7 @@ class ValidateDot implements Countable
         $this->elements = &$items;
     }
 
-	/**
+    /**
      * Return all the stored items
      *
      * @return array
@@ -57,7 +57,7 @@ class ValidateDot implements Countable
     }
 
    
-      /*
+        /*
      * --------------------------------------------------------------
      * ArrayAccess interface
      * --------------------------------------------------------------
@@ -109,7 +109,7 @@ class ValidateDot implements Countable
     public function has($keys)
     {
         $keys = (array)$keys;
-        if ( empty($this->elements) || $keys === []) {
+        if (empty($this->elements) || $keys === []) {
             return false;
         }
         foreach ($keys as $key) {
@@ -127,12 +127,12 @@ class ValidateDot implements Countable
         return true;
     }
  	
- 	/**
-     * Set a given key / value pair or pairs
-     *
-     * @param array|int|string $keys
-     * @param mixed $value
-     */
+        /**
+         * Set a given key / value pair or pairs
+         *
+         * @param array|int|string $keys
+         * @param mixed $value
+         */
     public function set($keys, $value = null)
     {
         if (is_array($keys)) {
@@ -187,7 +187,7 @@ class ValidateDot implements Countable
             $value = array_merge($items, $this->getArrayItems($value));
             $this->set($key, $value);
         } 
-         $this->elements = array_merge($this->elements, $key->all());
+            $this->elements = array_merge($this->elements, $key->all());
         
     }
 
