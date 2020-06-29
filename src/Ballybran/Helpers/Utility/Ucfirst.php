@@ -73,17 +73,27 @@ class Ucfirst
         $characterDeficit = 0; //Gets incremented when an uppercase letter is encountered before $targetCharsPerWord characters have been collected since the last UC char.
         $wordIndex = $targetWordLength; //HACK: keeps track of how many characters have been carried into the abbreviation since the last UC char
         while ($stringIndex < strlen($strString)) {  //Process the whole input string...
-            if ($abbrevLength >= $targetLength)              //...unless the abbreviation has hit the target length cap
+            if ($abbrevLength >= $targetLength) {
+                //...unless the abbreviation has hit the target length cap
                 break;
+            }
             $currentChar = $strString[$stringIndex++]; //Grab a character from the string, advance the string cursor
             if (in_array($currentChar, $ucLetters)) {           //If handling a UC char, consider it a new word
                 $characterDeficit += $targetWordLength - $wordIndex; //If UC chars are closer together than targetWordLength, keeps track of how many extra characters are required to fit the target length of the abbreviation
                 $wordIndex = 0; //Set the wordIndex to reflect a new word
             } else if ($wordIndex >= $targetWordLength) {
-                if ($characterDeficit == 0)                //If the word is full and we're not short any characters, ignore the character
+                if ($characterDeficit == 0) {
+                    //If the word is full and we're not short any characters, ignore the character
                     continue;
+<<<<<<< HEAD
                 else
                     $characterDeficit--; //If we are short some characters, decrement the defecit and carry on with adding the character to the abbreviation
+=======
+                } else {
+                                    $characterDefecit--;
+                }
+                //If we are short some characters, decrement the defecit and carry on with adding the character to the abbreviation
+>>>>>>> db6a84ee1ccfc7512761c60858471990924eed14
             }
             $abbreviation .= $currentChar; //Add the character to the abbreviation
             $abbrevLength++; //Increment abbreviation length
@@ -93,10 +103,10 @@ class Ucfirst
     }
 
     /**
-    * example removeAccentsIstring( "Õ") output "O"
-    * @param string $string
-    * @return string
-	*/
+     * example removeAccentsIstring( "Õ") output "O"
+     * @param string $string
+     * @return string
+     */
     public static function removeAccentsIstring($string) : string
     {
         return preg_replace(array("/(á|à|ã|â|ä)/", "/(Á|À|Ã|Â|Ä)/", "/(é|è|ê|ë)/", "/(É|È|Ê|Ë)/", "/(í|ì|î|ï)/", "/(Í|Ì|Î|Ï)/", "/(ó|ò|õ|ô|ö)/", "/(Ó|Ò|Õ|Ô|Ö)/", "/(ú|ù|û|ü)/", "/(Ú|Ù|Û|Ü)/", "/(ñ)/", "/(Ñ)/", "/(ç)/", "/(Ç)/"), explode(" ", "a A e E i I o O u U n N c C"), $string);
