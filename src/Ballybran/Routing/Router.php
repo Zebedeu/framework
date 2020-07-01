@@ -828,7 +828,7 @@ class Router
 
         $routeName = is_string($callback)
             ? strtolower(preg_replace(
-                '/[^\w]/i', '.', str_replace($this->namespaces['controllers'], '', $callback)
+                '/[^\w]/i', '/', str_replace($this->namespaces['controllers'], '', $callback)
             ))
             : null;
         $data = [

@@ -125,9 +125,10 @@ if (!empty($_dev)) {
  *
  *  O URL base do sistema
  */
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
-define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
+define('URL', $root);
 
 define('ROOT', dirname(__FILE__));
 
