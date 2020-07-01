@@ -13,6 +13,7 @@ namespace Ballybran\Routing;
 use Ballybran\Routing\Router\RouterCommand;
 use Ballybran\Routing\Router\RouterException;
 use Ballybran\Routing\Router\RouterRequest;
+use Ballybran\Routing\Router\RouteMiddleware;
 use Closure;
 use Exception;
 use ReflectionMethod;
@@ -35,7 +36,7 @@ use ReflectionMethod;
  *
  * @package Buki
  */
-class Router
+class Router extends RouteMiddleware
 {
     /**
      * @var string
@@ -149,58 +150,6 @@ class Router
     /**
      * [TODO] This method implementation not completed yet.
      *
-     * Set route middleware
-     *
-     * @param string|array $middleware
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function middleware($middleware, $type = 'before')
-    {
-        if (!is_array($middleware) && !is_string($middleware)) {
-            return $this;
-        }
-
-        $currentRoute = end($this->routes);
-        $currentRoute[$type] = $middleware;
-        array_pop($this->routes);
-        array_push($this->routes, $currentRoute);
-
-        return $this;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
-     * @param string|array $middleware
-     *
-     * @return $this
-     */
-    public function middlewareBefore($middleware)
-    {
-        $this->middleware($middleware, 'before');
-
-        return $this;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
-     * @param string|array $middleware
-     *
-     * @return $this
-     */
-    public function middlewareAfter($middleware)
-    {
-        $this->middleware($middleware, 'after');
-
-        return $this;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
      * Set route name
      *
      * @param string $name
@@ -219,48 +168,6 @@ class Router
         array_push($this->routes, $currentRoute);
 
         return $this;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
-     * Set general middlewares
-     *
-     * @param array $middlewares
-     *
-     * @return void
-     */
-    public function setMiddleware(array $middlewares)
-    {
-        $this->middlewares = $middlewares;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
-     * Set Route middlewares
-     *
-     * @param array $middlewares
-     *
-     * @return void
-     */
-    public function setRouteMiddleware(array $middlewares)
-    {
-        $this->routeMiddlewares = $middlewares;
-    }
-
-    /**
-     * [TODO] This method implementation not completed yet.
-     *
-     * Set middleware groups
-     *
-     * @param array $middlewareGroup
-     *
-     * @return void
-     */
-    public function setMiddlewareGroup(array $middlewareGroup)
-    {
-        $this->middlewareGroups = $middlewareGroup;
     }
 
     /**
@@ -609,29 +516,6 @@ class Router
     public function error($callback)
     {
         $this->errorCallback = $callback;
-    }
-
-    /**
-     * Detect Routes Middleware; before or after
-     *
-     * @param $middleware
-     * @param $type
-     *
-     * @return void
-     */
-    public function runRouteMiddleware($middleware, $type)
-    {
-        if ($type === 'before') {
-            if (!is_null($middleware['group'])) {
-                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
-            }
-            $this->routerCommand()->beforeAfter($middleware[$type]);
-        } else {
-            $this->routerCommand()->beforeAfter($middleware[$type]);
-            if (!is_null($middleware['group'])) {
-                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
-            }
-        }
     }
 
     /**
