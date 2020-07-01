@@ -751,6 +751,29 @@ class Router extends RouteMiddleware
         array_pop($this->groups);
     }
 
+     /**
+     * Detect Routes Middleware; before or after
+     *
+     * @param $middleware
+     * @param $type
+     *
+     * @return void
+     */
+    public function runRouteMiddleware($middleware, $type)
+    {
+        if ($type === 'before') {
+            if (!is_null($middleware['group'])) {
+                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
+            }
+            $this->routerCommand()->beforeAfter($middleware[$type]);
+        } else {
+            $this->routerCommand()->beforeAfter($middleware[$type]);
+            if (!is_null($middleware['group'])) {
+                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
+            }
+        }
+    }
+
     /**
      * @param string $route
      *
