@@ -542,7 +542,7 @@ class Router extends RouteMiddleware
             $this->criateRoute($route, $groupItem, $method, $callback, $settings);
         }
 
-      private function criateRoute($route, $groupItem, $method, $callback, $settings){
+        private function criateRoute($route, $groupItem, $method, $callback, $settings){
             $routeName = is_string($callback)
             ? strtolower(preg_replace(
                 '/[^\w]/i', '/', str_replace($this->namespaces['controllers'], '', $callback)
@@ -585,14 +585,14 @@ class Router extends RouteMiddleware
         array_pop($this->groups);
     }
 
-     /**
-     * Detect Routes Middleware; before or after
-     *
-     * @param $middleware
-     * @param $type
-     *
-     * @return void
-     */
+        /**
+         * Detect Routes Middleware; before or after
+         *
+         * @param $middleware
+         * @param $type
+         *
+         * @return void
+         */
     public function runRouteMiddleware($middleware, $type)
     {
         if ($type === 'before') {
