@@ -397,7 +397,7 @@ class Router
         $base = str_replace('\\', '/', str_replace($this->documentRoot, '', $this->runningPath));
         $uri = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         if ($_SERVER['REQUEST_URI'] !== $_SERVER['PHP_SELF']) {
-            $uri = str_replace(dirname($_SERVER['PHP_SELF']), '', $uri);
+            $uri = str_replace(dirname($_SERVER['PHP_SELF']), '/', $uri);
         }
 
         if (($base !== $uri) && (substr($uri, -1) === '/')) {
@@ -840,6 +840,7 @@ class Router
             'after' => isset($settings['after']) ? $settings['after'] : null,
             'group' => $groupItem === -1 ? null : $this->groups[$groupItem],
         ];
+
         array_push($this->routes, $data);
     }
 
