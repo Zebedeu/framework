@@ -709,8 +709,11 @@ class Router extends RouteMiddleware
         if ($route === $path) {
             $route .= '/';
         }
+            $this->criateRoute($route, $groupItem, $method, $callback, $settings);
+        }
 
-        $routeName = is_string($callback)
+      private function criateRoute($route, $groupItem, $method, $callback, $settings){
+            $routeName = is_string($callback)
             ? strtolower(preg_replace(
                 '/[^\w]/i', '/', str_replace($this->namespaces['controllers'], '', $callback)
             ))
@@ -726,7 +729,8 @@ class Router extends RouteMiddleware
         ];
 
         array_push($this->routes, $data);
-    }
+    
+        }
 
     /**
      * Run Route Command; Controller or Closure
