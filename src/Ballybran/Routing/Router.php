@@ -382,14 +382,14 @@ class Router extends RouteMiddleware
      *
      * @return bool
      */
-    public function group($name, $settings = null, $callback = null)
+    public function group($settings = null, $callback = null, $name =null)
     {
         if ($this->cacheLoaded) {
             return true;
         }
 
         $group = [];
-        $group['route'] = $this->clearRouteName($name);
+        $group['route'] = isset($name) ? $this->clearRouteName($name) : null;
         $group['before'] = $group['after'] = null;
 
         if (is_null($callback)) {
@@ -570,6 +570,7 @@ class Router extends RouteMiddleware
      *
      * @return void
      */
+
     private function runRouteCommand($command, $params = null)
     {
         $this->routerCommand()->runRoute($command, $params);
