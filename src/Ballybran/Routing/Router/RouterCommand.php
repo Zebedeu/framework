@@ -96,30 +96,26 @@ class RouterCommand
      * @return mixed|void
      * @throws
      */
-    public function beforeAfter($command)
+    public function beforeAfter($command, $request, $response2)
     {
         if (!is_null($command)) {
             $info = $this->getMiddlewareInfo();
             if (is_array($command)) {
                 foreach ($command as $value) {
-                    $this->beforeAfter($value);
+                    $this->beforeAfter($value, $request, $response2);
                 }
             } elseif (is_string($command)) {
                 $middleware = explode(':', $command);
                 $params = [];
+                $params[] = $request;
+                $params[] = $response2;
                 if (count($middleware) > 1) {
                     $params = explode(',', $middleware[1]);
                 }
                 $controller = $this->resolveClass($middleware[0], $info['path'], $info['namespace']);
                 if (method_exists($controller, 'handle')) {
-                    $response = call_user_func_array([$controller, 'handle'], $params);
-                    if ($response !== true) {
-                        echo $response;
-                        exit;
+                    return  call_user_func_array([$controller, 'handle'], $params);
                     }
-
-                    return $response;
-                }
 
                 return $this->exception('handle() method is not found in <b>' . $command . '</b> class.');
             }

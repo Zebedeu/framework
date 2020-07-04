@@ -1,15 +1,26 @@
 <?php
 /**
- * @Package: Router - simple router class for php
- * @Class  : Router
- * @Author : izni burak demirtas / @izniburak <info@burakdemirtas.org>
- * @Web    : http://burakdemirtas.org
- * @URL    : https://github.com/izniburak/php-router
- * @Licence: The MIT License (MIT) - Copyright (c) - http://opensource.org/licenses/MIT
+ *
+ * KNUT7 K7F (https://marciozebedeu.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (https://marciozebedeu.com/)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @link      https://github.com/knut7/framework/ for the canonical source repository
+ * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
+ * @license   https://marciozebedeu.com/license/new-bsd New BSD License
+ * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ * @version   1.0.14
+ *
+ *
  */
-
 namespace Ballybran\Routing;
 
+use Ballybran\Core\Http\Api;
+use Ballybran\Core\Http\Request;
+use Ballybran\Core\Http\Response;
 use Ballybran\Routing\Router\RouterCommand;
 use Ballybran\Routing\Router\RouterException;
 use Ballybran\Routing\Router\RouterRequest;
@@ -48,6 +59,8 @@ class Router extends RouteMiddleware
      */
     protected $runningPath = '';
 
+    private $request;
+    private $response;
     /**
      * @var string $baseFolder Pattern definitions for parameters of Route
      */
@@ -142,6 +155,8 @@ class Router extends RouteMiddleware
         if (isset($params['debug']) && is_bool($params['debug'])) {
             RouterException::$debug = $params['debug'];
         }
+        $this->request = new RouterRequest();
+        $this->response = new Response();
 
         $this->setPaths($params);
         $this->loadCache();
@@ -190,7 +205,7 @@ class Router extends RouteMiddleware
             return false;
         }
 
-        if (!in_array(strtoupper($method), explode('|', RouterRequest::$validMethods))) {
+        if (!in_array(strtoupper($method), explode('|', $this->request->validMethods))) {
             return $this->exception($method . ' is not valid.');
         }
 
@@ -227,7 +242,6 @@ class Router extends RouteMiddleware
         } else {
             $this->addRoute($route, $method, $callback, $settings);
         }
-
         return $this;
     }
 
@@ -311,8 +325,10 @@ class Router extends RouteMiddleware
             $uri = substr($uri, 0, (strlen($uri) - 1));
         }
 
+
         $uri = $this->clearRouteName($uri);
-        $method = RouterRequest::getRequestMethod();
+        $method = $this->request->getRequestMethod();
+        
         $searches = array_keys($this->patterns);
         $replaces = array_values($this->patterns);
         $foundRoute = false;
@@ -322,14 +338,16 @@ class Router extends RouteMiddleware
         // check if route is defined without regex
         if (in_array($uri, $routes)) {
             $currentRoute = array_filter($this->routes, function($r) use ($method, $uri) {
-                return RouterRequest::validMethod($r['method'], $method) && $r['route'] === $uri;
+
+                return $this->request->validMethod($r['method'], $method) && $r['route'] === $uri;
             });
+
             if (!empty($currentRoute)) {
                 $currentRoute = current($currentRoute);
                 $foundRoute = true;
-                $this->runRouteMiddleware($currentRoute, 'before');
+                $this->runRouteMiddleware($currentRoute, 'before',  $this->request, $this->response);
                 $this->runRouteCommand($currentRoute['callback']);
-                $this->runRouteMiddleware($currentRoute, 'after');
+                $this->runRouteMiddleware($currentRoute, 'after',  $this->request, $this->response);
             }
         } else {
             foreach ($this->routes as $data) {
@@ -339,18 +357,18 @@ class Router extends RouteMiddleware
                 }
 
                 if (preg_match('#^' . $route . '$#', $uri, $matched)) {
-                    if (RouterRequest::validMethod($data['method'], $method)) {
+                    if ($this->request->validMethod($data['method'], $method)) {
                         $foundRoute = true;
 
-                        $this->runRouteMiddleware($data, 'before');
+                        $this->runRouteMiddleware($data, 'before',  $this->reques, $this->response);
 
                         array_shift($matched);
                         $matched = array_map(function($value) {
                             return trim(urldecode($value));
                         }, $matched);
 
-                        $this->runRouteCommand($data['callback'], $matched);
-                        $this->runRouteMiddleware($data, 'after');
+                        $this->runRouteCommand($data['callback'], $matched, $this->request);
+                        $this->runRouteMiddleware($data, 'after',  $this->request, $this->response);
                         break;
                     }
                 }
@@ -466,7 +484,7 @@ class Router extends RouteMiddleware
             foreach ($classMethods as $methodName) {
                 if (!strstr($methodName, '__')) {
                     $method = 'any';
-                    foreach (explode('|', RouterRequest::$validMethods) as $m) {
+                    foreach (explode('|', $this->request->validMethods) as $m) {
                         if (stripos($methodName, strtolower($m), 0) === 0) {
                             $method = strtolower($m);
                             break;
@@ -594,17 +612,18 @@ class Router extends RouteMiddleware
          *
          * @return void
          */
-    public function runRouteMiddleware($middleware, $type)
+    public function runRouteMiddleware($middleware, $type, $request, $response)
     {
+        
         if ($type === 'before') {
             if (!is_null($middleware['group'])) {
-                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
+                $this->routerCommand()->beforeAfter($middleware['group'][$type], $request, $response);
             }
-            $this->routerCommand()->beforeAfter($middleware[$type]);
+            $this->routerCommand()->beforeAfter($middleware[$type], $request, $response);
         } else {
-            $this->routerCommand()->beforeAfter($middleware[$type]);
+            $this->routerCommand()->beforeAfter($middleware[$type], $request, $response);
             if (!is_null($middleware['group'])) {
-                $this->routerCommand()->beforeAfter($middleware['group'][$type]);
+                $this->routerCommand()->beforeAfter($middleware['group'][$type], $request, $response);
             }
         }
     }
