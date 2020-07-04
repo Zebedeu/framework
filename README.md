@@ -14,7 +14,7 @@
  *
  * @link      http://github.com/knut7/knut7 for the canonical source repository
  * @copyright (c) 2016.  MACHIZE Technologies AO Inc. (https://github.com/knut7/framework/)
- * @license   https://github.com/knut7/framework//license/new-bsd New BSD License
+ * @license   https://github.com/knut7/framework//license/new-bsd MIT lIcense
  */
 
 ## Introduction

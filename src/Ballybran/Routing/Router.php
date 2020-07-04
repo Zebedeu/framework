@@ -10,7 +10,7 @@
  *
  * @link      https://github.com/knut7/framework/ for the canonical source repository
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
- * @license   https://marciozebedeu.com/license/new-bsd New BSD License
+ * @license   https://marciozebedeu.com/license/new-bsd MIT lIcense
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  * @version   1.0.14
  *
@@ -18,15 +18,11 @@
  */
 namespace Ballybran\Routing;
 
-use Ballybran\Core\Http\Api;
-use Ballybran\Core\Http\Request;
 use Ballybran\Core\Http\Response;
-use Ballybran\Routing\Router\RouterCommand;
 use Ballybran\Routing\Router\RouterException;
 use Ballybran\Routing\Router\RouterRequest;
 use Ballybran\Routing\Router\RouteMiddleware;
 use Closure;
-use Exception;
 use ReflectionMethod;
 
 /**
