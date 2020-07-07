@@ -101,6 +101,8 @@ abstract class Message
         return stream_get_contents($body);
     }
 
+    
+
     /**
      * Returns the message body, as it's internal representation.
      *
