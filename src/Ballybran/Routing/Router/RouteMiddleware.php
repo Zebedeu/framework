@@ -274,13 +274,13 @@ class RouteMiddleware {
     {
         foreach ($this->getRoutes() as $key => $r) {
             if (!is_string($r['callback'])) {
-                throw new Exception(sprintf('Routes cannot contain a Closure/Function callback while caching.'));
+                throw new \Exception(sprintf('Routes cannot contain a Closure/Function callback while caching.'));
             }
         }
 
         $cacheContent = '<?php return ' . var_export($this->getRoutes(), true) . ';' . PHP_EOL;
         if (false === file_put_contents($this->cacheFile, $cacheContent)) {
-            throw new Exception(sprintf('Routes cache file could not be written.'));
+            throw new \Exception(sprintf('Routes cache file could not be written.'));
         }
 
         return true;
