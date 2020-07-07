@@ -35,6 +35,9 @@ Link to contributions and Download: https://github.com/knut7 && https://github.c
 
 # Installation
 
+Create project
+
+composer create-project --prefer-dist knut7/knut7 site
 
 ## Install
 
