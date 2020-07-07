@@ -19,8 +19,8 @@
 namespace Ballybran\Routing;
 
 use Ballybran\Core\Http\Response;
+use Ballybran\Core\Http\Request;
 use Ballybran\Routing\Router\RouterException;
-use Ballybran\Routing\Router\RouterRequest;
 use Ballybran\Routing\Router\RouteMiddleware;
 use Closure;
 use ReflectionMethod;
@@ -151,7 +151,7 @@ class Router extends RouteMiddleware
         if (isset($params['debug']) && is_bool($params['debug'])) {
             RouterException::$debug = $params['debug'];
         }
-        $this->request = new RouterRequest();
+        $this->request = new Request();
         $this->response = new Response();
 
         $this->setPaths($params);
@@ -356,7 +356,7 @@ class Router extends RouteMiddleware
                     if ($this->request->validMethod($data['method'], $method)) {
                         $foundRoute = true;
 
-                        $this->runRouteMiddleware($data, 'before',  $this->reques, $this->response);
+                        $this->runRouteMiddleware($data, 'before',  $this->request, $this->response);
 
                         array_shift($matched);
                         $matched = array_map(function($value) {
