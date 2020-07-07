@@ -12,258 +12,277 @@
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
  * @license   https://marciozebedeu.com/license/new-bsd MIT lIcense
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- * @version   1.0.15
+ * @version   1.0.14
  *
  *
  */
 
 namespace Ballybran\Core\Http;
 
-class Request extends Message
+use Ballybran\Core\Http\RequestBuilder;
+use Ballybran\Core\Http\Response;
+
+class Request
 {
     /**
-     * HTTP Method.
-     *
-     * @var string
+     * @var string $validMethods Valid methods for Requests
      */
-    protected $method;
+    public $validMethods = 'GET|POST|PUT|DELETE|HEAD|OPTIONS|PATCH|ANY|AJAX|XPOST|XPUT|XDELETE|XPATCH';
 
     /**
-     * Request Url.
+     * Request method validation
      *
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * Creates the request object.
+     * @param string $data
+     * @param string $method
      *
-     * @param resource|callable|string $body
+     * @return bool
      */
-    public function __construct(string $method, string $url, array $headers = [], $body = null)
+    public function validMethod($data, $method)
     {
-        $this->setMethod($method);
-        $this->setUrl($url);
-        $this->setHeaders($headers);
-        $this->setBody($body);
-    }
-
-    /**
-     * Returns the current HTTP method.
-     */
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-    /**
-     * Sets the HTTP method.
-     */
-    public function setMethod(string $method)
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * Returns the request url.
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * Sets the request url.
-     */
-    public function setUrl(string $url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * Returns the list of query parameters.
-     *
-     * This is equivalent to PHP's $_GET superglobal.
-     */
-    public function getQueryParameters(): array
-    {
-        $url = $this->getUrl();
-        if (false === ($index = strpos($url, '?'))) {
-            return [];
-        }
-
-        parse_str(substr($url, $index + 1), $queryParams);
-
-        return $queryParams;
-    }
-
-    protected $absoluteUrl;
-
-    /**
-     * Sets the absolute url.
-     */
-    public function setAbsoluteUrl(string $url)
-    {
-        $this->absoluteUrl = $url;
-    }
-
-    /**
-     * Returns the absolute url.
-     */
-    public function getAbsoluteUrl(): string
-    {
-        if (!$this->absoluteUrl) {
-            // Guessing we're a http endpoint.
-            $this->absoluteUrl = 'http://'.
-                ($this->getHeader('Host') ?? 'localhost').
-                $this->getUrl();
-        }
-
-        return $this->absoluteUrl;
-    }
-
-    /**
-     * Base url.
-     *
-     * @var string
-     */
-    protected $baseUrl = '/';
-
-    /**
-     * Sets a base url.
-     *
-     * This url is used for relative path calculations.
-     */
-    public function setBaseUrl(string $url)
-    {
-        $this->baseUrl = $url;
-    }
-
-    /**
-     * Returns the current base url.
-     */
-    public function getBaseUrl(): string
-    {
-        return $this->baseUrl;
-    }
-
-    /**
-     * Returns the relative path.
-     *
-     * This is being calculated using the base url. This path will not start
-     * with a slash, so it will always return something like
-     * 'example/path.html'.
-     *
-     * If the full path is equal to the base url, this method will return an
-     * empty string.
-     *
-     * This method will also urldecode the path, and if the url was incoded as
-     * ISO-8859-1, it will convert it to UTF-8.
-     *
-     * If the path is outside of the base url, a LogicException will be thrown.
-     */
-    public function getPath(): string
-    {
-        // Removing duplicated slashes.
-        $uri = str_replace('//', '/', $this->getUrl());
-
-        $uri = $uri;
-        $baseUri = $this->getBaseUrl();
-
-        if (0 === strpos($uri, $baseUri)) {
-            // We're not interested in the query part (everything after the ?).
-            list($uri) = explode('?', $uri);
-
-            return trim(substr($uri, strlen($baseUri)), '/');
-        }
-
-        if ($uri.'/' === $baseUri) {
-            return '';
-        }
-        // A special case, if the baseUri was accessed without a trailing
-        // slash, we'll accept it as well.
-
-        throw new \LogicException('Requested uri ('.$this->getUrl().') is out of base uri ('.$this->getBaseUrl().')');
-    }
-
-    /**
-     * Equivalent of PHP's $_POST.
-     *
-     * @var array
-     */
-    protected $postData = [];
-
-    /**
-     * Sets the post data.
-     *
-     * This is equivalent to PHP's $_POST superglobal.
-     *
-     * This would not have been needed, if POST data was accessible as
-     * php://input, but unfortunately we need to special case it.
-     */
-    public function setPostData(array $postData)
-    {
-        $this->postData = $postData;
-    }
-
-    /**
-     * Returns the POST data.
-     *
-     * This is equivalent to PHP's $_POST superglobal.
-     */
-    public function getPostData(): array
-    {
-        return $this->postData;
-    }
-
-    /**
-     * An array containing the raw _SERVER array.
-     *
-     * @var array
-     */
-    protected $rawServerData;
-
-    /**
-     * Returns an item from the _SERVER array.
-     *
-     * If the value does not exist in the array, null is returned.
-     *
-     * @return string|null
-     */
-    public function getRawServerValue(string $valueName)
-    {
-        return $this->rawServerData[$valueName] ?? null;
-    }
-
-    /**
-     * Sets the _SERVER array.
-     */
-    public function setRawServerData(array $data)
-    {
-        $this->rawServerData = $data;
-    }
-
-    /**
-     * Serializes the request object as a string.
-     *
-     * This is useful for debugging purposes.
-     */
-    public function __toString(): string
-    {
-        $out = $this->getMethod().' '.$this->getUrl().' HTTP/'.$this->getHttpVersion()."\r\n";
-
-        foreach ($this->getHeaders() as $key => $value) {
-            foreach ($value as $v) {
-                if ('Authorization' === $key) {
-                    list($v) = explode(' ', $v, 2);
-                    $v .= ' REDACTED';
+        $valid = false;
+        if (strstr($data, '|')) {
+            foreach (explode('|', $data) as $value) {
+                $valid = $this->checkMethods($value, $method);
+                if ($valid) {
+                    break;
                 }
-                $out .= $key.': '.$v."\r\n";
+            }
+        } else {
+            $valid = $this->checkMethods($data, $method);
+        }
+
+        return $valid;
+    }
+
+    /**
+     * Get the request method used, taking overrides into account
+     *
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        // Take the method as found in $_SERVER
+        $method = $_SERVER['REQUEST_METHOD'];
+        // If it's a HEAD request override it to being GET and prevent any output, as per HTTP Specification
+        // @url http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4
+        if ($method === 'HEAD') {
+            ob_start();
+            $method = 'GET';
+        } elseif ($method === 'POST') {
+            $headers = $this->getRequestHeaders();
+            if (isset($headers['X-HTTP-Method-Override']) &&
+                in_array($headers['X-HTTP-Method-Override'], ['PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])) {
+                $method = $headers['X-HTTP-Method-Override'];
+            } elseif (!empty($_POST['_method'])) {
+                $method = strtoupper($_POST['_method']);
             }
         }
-        $out .= "\r\n";
-        $out .= $this->getBodyAsString();
 
-        return $out;
+        return $method;
     }
+
+    /**
+     * check method valid
+     *
+     * @param string $value
+     * @param string $method
+     *
+     * @return bool
+     */
+    protected function checkMethods($value, $method)
+    {
+        if (in_array($value, explode('|', $this->validMethods))) {
+            if ($this->isAjax() && $value === 'AJAX') {
+                return true;
+            }
+
+            if ($this->isAjax() && strpos($value, 'X') === 0 && $method === ltrim($value, 'X')) {
+                return true;
+            }
+
+            if (in_array($value, [$method, 'ANY'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check ajax request
+     *
+     * @return bool
+     */
+    protected function isAjax()
+    {
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest');
+    }
+
+    /**
+     * Get all request headers
+     *
+     * @return array
+     */
+    protected function getRequestHeaders()
+    {
+        
+
+        // Method getallheaders() not available: manually extract 'm
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_' || $name === 'CONTENT_TYPE' || $name === 'CONTENT_LENGTH') {
+                $headerKey = str_replace(
+                    [' ', 'Http'],
+                    ['-', 'HTTP'],
+                    ucwords(strtolower(str_replace('_', ' ', substr($name, 5))))
+                );
+                $headers[$headerKey] = $value;
+            }
+        }
+
+        return $headers;
+    }
+
+      /**
+     * This static method will create a new Request object, based on the
+     * current PHP request.
+     */
+    public static function getRequest(): RequestBuilder
+    {
+        $serverArr = $_SERVER;
+        // $serverArr[] = ['Content-Type' => 'application/json'];
+
+        $r = self::createFromServerArray($serverArr);
+        $r->setBody(fopen('php://input', 'r'));
+        $r->setPostData($_POST);
+
+        return $r;
+    }
+
+    /**
+     * Sends the HTTP response back to a HTTP client.
+     *
+     * This calls php's header() function and streams the body to php://output.
+     */
+    public static function sendResponse(Response $response) : Response
+    {
+        header('HTTP/'.$response->getHttpVersion().' '.$response->getStatus().' '.$response->getStatusText());
+        foreach ($response->getHeaders() as $key => $value) {
+            foreach ($value as $k => $v) {
+                if (0 === $k) {
+                    header($key.': '.$v);
+                } else {
+                    header($key.': '.$v, false);
+                }
+            }
+        }
+
+        return $response;
+        
+    }
+
+    /**
+     * This static method will create a new Request object, based on a PHP
+     * $_SERVER array.
+     *
+     * REQUEST_URI and REQUEST_METHOD are required.
+     */
+    public static function createFromServerArray(array $serverArray): RequestBuilder
+    {
+        $headers = [];
+        $method = null;
+        $url = null;
+        $httpVersion = '1.1';
+
+        $protocol = 'http';
+        $hostName = 'localhost';
+
+        foreach ($serverArray as $key => $value) {
+            switch ($key) {
+                case 'SERVER_PROTOCOL':
+                    if ('HTTP/1.0' === $value) {
+                        $httpVersion = '1.0';
+                    } elseif ('HTTP/2.0' === $value) {
+                        $httpVersion = '2.0';
+                    }
+                    break;
+                case 'REQUEST_METHOD':
+                    $method = $value;
+                    break;
+                case 'REQUEST_URI':
+                    $url = $value;
+                    break;
+
+                // These sometimes show up without a HTTP_ prefix
+                case 'CONTENT_TYPE':
+                    $headers['Content-Type'] = $value;
+                    break;
+                case 'CONTENT_LENGTH':
+                    $headers['Content-Length'] = $value;
+                    break;
+
+                // mod_php on apache will put credentials in these variables.
+                // (fast)cgi does not usually do this, however.
+                case 'PHP_AUTH_USER':
+                    if (isset($serverArray['PHP_AUTH_PW'])) {
+                        $headers['Authorization'] = 'Basic '.base64_encode($value.':'.$serverArray['PHP_AUTH_PW']);
+                    }
+                    break;
+
+                // Similarly, mod_php may also screw around with digest auth.
+                case 'PHP_AUTH_DIGEST':
+                    $headers['Authorization'] = 'Digest '.$value;
+                    break;
+
+                // Apache may prefix the HTTP_AUTHORIZATION header with
+                // REDIRECT_, if mod_rewrite was used.
+                case 'REDIRECT_HTTP_AUTHORIZATION':
+                    $headers['Authorization'] = $value;
+                    break;
+
+                case 'HTTP_HOST':
+                    $hostName = $value;
+                    $headers['Host'] = $value;
+                    break;
+
+                case 'HTTPS':
+                    if (!empty($value) && 'off' !== $value) {
+                        $protocol = 'https';
+                    }
+                    break;
+
+                default:
+                    if ('HTTP_' === substr($key, 0, 5)) {
+                        // It's a HTTP header
+
+                        // Normalizing it to be prettier
+                        $header = strtolower(substr($key, 5));
+
+                        // Transforming dashes into spaces, and uppercasing
+                        // every first letter.
+                        $header = ucwords(str_replace('_', ' ', $header));
+
+                        // Turning spaces into dashes.
+                        $header = str_replace(' ', '-', $header);
+                        $headers[$header] = $value;
+                    }
+                    break;
+            }
+        }
+
+        if (null === $url) {
+            throw new \InvalidArgumentException('The _SERVER array must have a REQUEST_URI key');
+        }
+
+        if (null === $method) {
+            throw new \InvalidArgumentException('The _SERVER array must have a REQUEST_METHOD key');
+        }
+        $r = new RequestBuilder($method, $url, $headers);
+        $r->setHttpVersion($httpVersion);
+        $r->setRawServerData($serverArray);
+        $r->setAbsoluteUrl($protocol.'://'.$hostName.$url);
+
+        return $r;
+    }
+    
 }
