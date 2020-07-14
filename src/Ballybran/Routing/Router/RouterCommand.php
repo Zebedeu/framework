@@ -96,30 +96,32 @@ class RouterCommand
      * @return mixed|void
      * @throws
      */
-    public function beforeAfter($command, $request, $response2)
+    public function beforeAfter($command, $request, $response)
     {
         if (!is_null($command)) {
             $info = $this->getMiddlewareInfo();
             if (is_array($command)) {
                 foreach ($command as $value) {
-                    $this->beforeAfter($value, $request, $response2);
+                    $this->beforeAfter($value, $request, $response);
                 }
             } elseif (is_string($command)) {
                 $middleware = explode(':', $command);
                 $params = [];
                 $params[] = $request;
-                $params[] = $response2;
+                $params[] = $response;
                 if (count($middleware) > 1) {
                     $params = explode(',', $middleware[1]);
+
                 }
                 $controller = $this->resolveClass($middleware[0], $info['path'], $info['namespace']);
                 if (method_exists($controller, 'handle')) {
-                     $response =  call_user_func_array([$controller, 'handle'], $params);
-                     if($response != false) {
-                         echo $response;
-                         exit;
-                     } else {
-                         return $response;
+                     $return =  call_user_func_array([$controller, 'handle'], $params);
+                     if($return != true) {
+                          echo $return;
+                          exit;
+
+                        } else {
+                         return $return;
                      }
                     }
 
