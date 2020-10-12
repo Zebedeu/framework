@@ -142,7 +142,7 @@ class PipelineTest extends TestCase
     {
         $pipelineInstance = new Pipeline();
         $result = $pipelineInstance->send('data')
-            ->through(new PipelineTestPipeOne)
+            ->through([new PipelineTestPipeOne, new PipelineTestPipeTwo])
             ->via('differentMethod')
             ->then(function ($piped) {
                 return $piped;
@@ -165,7 +165,20 @@ class PipelineTestPipeOne
         return $next($piped);
     }
 }
+class PipelineTestPipeTwo
+{
+    public function handle($piped, $next)
+    {
+        $_SERVER['__test.pipe.one'] = $piped;
 
+        return $next($piped);
+    }
+
+    public function differentMethod($piped, $next)
+    {
+        return $next($piped);
+    }
+}
 class PipelineTestParameterPipe
 {
     public function handle($piped, $next, $parameter1 = null, $parameter2 = null)

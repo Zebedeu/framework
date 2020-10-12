@@ -63,7 +63,6 @@ class RenderFiles
 
     public function isIndex($controller, $view, $data = null)
     {
-        $data = new \Ballybran\Core\Variables\Variable($data);
         require_once VIEW . $controller . DS . $view . $this->ex;
 
     }

@@ -16,10 +16,8 @@
  * @version   1.0.2
  */
 
-namespace Ballybran\Helpers\Http;
-
+namespace Ballybran\Helpers\Zip;
 use Ballybran\Exception\Exception;
-use Ballybran\Helpers\Zip\ZipStatus;
 
 class HZip extends ZipStatus
 {

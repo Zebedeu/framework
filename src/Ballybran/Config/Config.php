@@ -141,8 +141,9 @@ define('DIR_FILE', 'public' . DS);
 
 define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
 
-define('DIR_LOGS', 'storage/log/');
-define('DIR_COOKIE', 'storage/cookie/');
+define('DIR_LOGS', 'log/');
+define('DIR_COOKIE', 'cookie/');
+define('DIR_STORAGE', 'storage/');
 
 /*
  *

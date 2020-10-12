@@ -17,15 +17,13 @@
  */
 
 namespace Ballybran\Helpers\Http;
-use Ballybran\Core\Http\{
-    RestUtilities
-};
+use Ballybran\Core\Http\{Request , Response , RestUtilities};
 
 
 /**
  * Class Cookie.
  */
-class Cookie extends RestUtilities
+class Cookie
 {
 
     private static $default = [
@@ -40,6 +38,8 @@ class Cookie extends RestUtilities
     ];
 
     private $data;
+    private $request;
+    private $response;
     private $responseCode;
 
 
@@ -79,8 +79,8 @@ class Cookie extends RestUtilities
             return $this;
         }
 
-        // Prevent "headers already sent" error with utf8 support (BOM)
-        //if ( utf8_support ) header('Content-Type: text/html; charset=utf-8');
+//         Prevent "headers already sent" error with utf8 support (BOM)
+//        if ( utf8_support ) header('Content-Type: text/html; charset=utf-8');
         header('Set-Cookie: ' . $this->getName() . ";"
             . (empty($this->getDomain()) ? '' : '; Domain=' . $this->getDomain())
             . (empty($this->getMaxage()) ? '' : '; Max-Age=' . $this->getMaxage())
@@ -106,9 +106,10 @@ class Cookie extends RestUtilities
      */
     public function setMaxage($maxage) : Cookie
     {
+
         if (!is_null($maxage)) {
             $maxage = intval($maxage);
-            $this->data['maxage'] = 'Expires=' . date(DATE_COOKIE, $maxage > 0 ? time() + $maxage : 0) . 'Max-Age=' . $maxage;
+            $this->data['maxage'] = 'Expires=' .gmdate("D, d M Y H:i:s",  $maxage > 0 ? time() + $maxage : 0)." GMT" . 'Max-Age=' . $maxage;
         }
         $this->data['maxage'] = $maxage;
         return $this;

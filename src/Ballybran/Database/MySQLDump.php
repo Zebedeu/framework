@@ -2,6 +2,7 @@
 
 namespace Ballybran\Database;
 
+use Ballybran\Helpers\Stdlib\CreateFiles;
 use mysqli;
 
 /**
@@ -11,6 +12,7 @@ use mysqli;
  */
 class MySQLDump
 {
+    use CreateFiles;
     const MAX_SQL_SIZE = 1e6;
 
     const NONE = 0;
@@ -55,6 +57,8 @@ class MySQLDump
      */
     public function save($file)
     {
+        $this->createWritableFolder($file);
+        $file = DIR_STORAGE. $file;
         $handle = strcasecmp(substr($file, -3), '.gz') ? fopen($file, 'wb') : gzopen($file, 'wb');
         if (!$handle) {
             throw new \Exception("ERROR: Cannot write file '$file'.");
@@ -228,4 +232,5 @@ class MySQLDump
     {
         return '`' . str_replace('`', '``', $s) . '`';
     }
+
 }

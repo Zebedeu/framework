@@ -58,7 +58,7 @@ class Model
      */
 
 
-    private function getLoadModel()
+    public function getLoadModel()
     {
         $className = str_replace('\\', '/', get_class($this));
         $classModel = str_replace('Controllers', $this->modelPath, $className);

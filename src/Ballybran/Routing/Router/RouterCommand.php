@@ -19,6 +19,9 @@
 
 namespace Ballybran\Routing\Router;
 
+use Ballybran\Core\Http\Request;
+use Ballybran\Core\Http\Response;
+
 class RouterCommand
 {
     /**
@@ -184,8 +187,9 @@ class RouterCommand
         if (!class_exists($class)) {
             require_once($file);
         }
-
-        return new $class();
+        $request = new Request();
+        $reponse = new Response();
+        return new $class($request, $reponse);
     }
 
     /**

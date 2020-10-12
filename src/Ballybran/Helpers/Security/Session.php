@@ -17,6 +17,7 @@
 namespace Ballybran\Helpers\Security;
 
 use Ballybran\Helpers\Hook;
+use http\Url;
 
 /**
  * Class Session
@@ -37,7 +38,19 @@ class Session
      */
     public static function init()
     {
-        @session_start();
+        if (headers_sent()) {
+            return;
+        }
+
+        $id = session_id();
+        if (empty( $id )) {
+            @session_start(
+                [
+                    'cookie_lifetime' => 86400 ,
+//            'read_and_close'  => true,
+                ]
+            );
+        }
     }
 
     /**
@@ -92,6 +105,7 @@ class Session
     public static function exist()
     {
         if (sizeof($_SESSION) > 0) {
+            session_regenerate_id();
             return true;
         } else {
             return false;

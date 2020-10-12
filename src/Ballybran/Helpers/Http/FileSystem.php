@@ -209,7 +209,7 @@ class FileSystem extends ImageProperties
     private function makePathBayUserName(): String
     {
         $this->ext = end($this->explode);
-        $this->path = DIR_FILE . 'Upload' . $this->userNamePath . DS . $this->dir . DS;
+        $this->path = DIR_FILE . 'Upload' . DS. $this->userNamePath . DS . $this->dir . DS;
         $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
 
         return $this->path;

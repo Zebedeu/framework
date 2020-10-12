@@ -180,15 +180,16 @@ class ValidateDot implements Countable
      */
     public function merge($key, $value = null)
     {
-        if (is_array($key)) {
-            $this->elements = array_merge($this->elements, $key);
-        } elseif (is_string($key)) {
-            $items = (array)$this->get($key);
-            $value = array_merge($items, $this->getArrayItems($value));
-            $this->set($key, $value);
-        } 
-            $this->elements = array_merge($this->elements, $key->all());
-        
+        if (is_array( $key )) {
+            $this->elements = array_merge( $this->elements , $key );
+        }
+        if (is_string( $key )) {
+            $items = (array)$this->get( $key );
+            $value = array_merge( $items , $this->getArrayItems( $value ) );
+            $this->set( $key , $value );
+        }
+        if (is_object( $key ) || $key instanceof IteratorDot) {
+            $this->elements = array_merge( $this->elements , $key->all() );
+        }
     }
-
 }
