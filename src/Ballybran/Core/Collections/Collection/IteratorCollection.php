@@ -83,6 +83,12 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return current($this->elements);
     }
 
+    /**
+     * @param $element
+     * Checks if a value exists in an array
+     * @see in_array
+     * @return bool
+     */
     public function contains($element)
     {
         return in_array($element, $this->elements, true);

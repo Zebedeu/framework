@@ -69,8 +69,9 @@ class Session
      */
     public static function get($key)
     {
-
-        return $_SESSION[$key];
+        if(isset($_SESSION[$key])) {
+            return $_SESSION[$key];
+        }
     }
 
     /**

@@ -56,10 +56,10 @@ class ClientRest extends Encodes
         }
     }
 
-    public function get($url, $fields = null)
+    public function get($url, $fields = null, $httpheader)
     {
         $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
         curl_setopt($process, CURLOPT_HEADER, 0);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
         if ($this->cookies == true) {
@@ -97,11 +97,11 @@ class ClientRest extends Encodes
 
     }
 
-    public function post($url, $data)
+    public function post($url, $data, $httpheader = null )
     {
         $process = curl_init($url);
-        // curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 1);
+        curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
+        // curl_setopt($process, CURLOPT_HEADER, 1);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
         if ($this->cookies == true) {
             curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
