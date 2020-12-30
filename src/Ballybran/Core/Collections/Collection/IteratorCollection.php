@@ -233,7 +233,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return array_values($this->elements);
     }
 
-    public function getKey()
+    public function getKeys()
     {
         return array_keys($this->elements);
     }

@@ -44,6 +44,7 @@ class EncodeText
     public static function encodeXml($responseData): string
     {
         // creating object of SimpleXMLElement
+        header('Content-Type: text/xml');
         $version = self::$version;
         $encoding = self::$encode;
         $xml = new \SimpleXMLElement("<?xml version='$version' encoding='$encoding' ?>\n<mobile></mobile>");
@@ -57,4 +58,26 @@ class EncodeText
         }
         return $xml->asXML();
     }
+
+    public static function encodeXmlSaft($responseData): string
+    {
+        // creating object of SimpleXMLElement
+        header('Content-Type: text/xml');
+        $version = self::$version;
+        $encoding = self::$encode;
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AuditFile xmlns="urn:OECD:StandardAuditFile-Tax:AO_1.01_01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:OECD:StandardAuditFile-Tax:AO_1.01_01 https://raw.githubusercontent.com/assoft-portugal/SAF-T-AO/master/XSD/SAFTAO1.01_01.xsd">
+ 
+</AuditFile>');
+
+        foreach ($responseData as $key => $variable) {
+
+            foreach ($variable as $k => $v) {
+                $xml->addChild($k, $v);
+            }
+
+        }
+        return $xml->asXML();
+    }
 }
+

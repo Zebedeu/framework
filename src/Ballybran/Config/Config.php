@@ -26,6 +26,9 @@ namespace Ballybran\Config;
 
 require './config/config.php';
 
+if (!defined('VERSION')) {
+    define('VERSION', '1.0.14.RC');
+}
 /*
  *
  * This is for database passwords only
@@ -41,6 +44,8 @@ define('AUTH_SALT', 'eZyT)-Naw]F8CwA*VaW#q*|.)g@o}||wf~@C-YSt}(dh_r6EbI#A,y|nU2{
 define('SECURE_AUTH_SALT', '!=oLUTXh,QW=H `}`L|9/^4-3 STz},T(w}W<I`.JjPi)<Bmf1v,HpGe}T1:Xt7n');
 define('LOGGED_IN_SALT', '+XSqHc;@Q*K_b|Z?NC[3H!!EONbh.n<+=uKR:>*c(u`g~EJBf#8u#R{mUEZrozmm');
 define('NONCE_SALT', 'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{%^VyKT');
+define('KEY_PAR_PASSWORD', 'test');
+
 
 /*
  * prefix to cache
@@ -97,6 +102,15 @@ if (!empty($HEADER_DESCRIPTION)) {
 } else {
     define('HEADER_DESCRIPTION', 'knut7');
 }
+
+define('PRODUCT_COMPANYTAXID', 'Clínica Pro');
+
+define('SOFTWARE_VALIDATION_NUMBER', '434/AGT/2020');
+
+define('PRODUCT_ID', 'Clinica Pro/2020');
+
+define('PRODUCT_VERSION', '1.0.0');
+
 
 global $code;
 

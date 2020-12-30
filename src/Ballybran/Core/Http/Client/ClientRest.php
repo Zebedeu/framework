@@ -56,7 +56,7 @@ class ClientRest extends Encodes
         }
     }
 
-    public function get($url, $fields = null, $httpheader)
+    public function get($url, $fields = null, $httpheader = null)
     {
         $process = curl_init($url);
         curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
@@ -100,6 +100,9 @@ class ClientRest extends Encodes
     public function post($url, $data, $httpheader = null )
     {
         $process = curl_init($url);
+        if(null == $httpheader){
+            $httpheader = $this->headers;
+        }
         curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
         // curl_setopt($process, CURLOPT_HEADER, 1);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
