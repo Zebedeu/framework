@@ -106,10 +106,10 @@ class IteratorCollectionTest extends PHPUnit
 
     }
 
-    public function testIfReturnRemoveEleme()
+    public function testIfReturnRemoveElement()
     {
 
-        $return = $this->it->removeEleme('John Doe');
+        $return = $this->it->removeElement('John Doe');
         $this->assertTrue($return);
 
     }
