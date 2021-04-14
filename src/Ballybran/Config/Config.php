@@ -59,7 +59,7 @@ define('Ballybran_CACHE', 'cache_');
 define('ALGO', 'md5');
 
 // DIR
-define('DS', DIRECTORY_SEPARATOR);
+if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 /*
  *
  * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
