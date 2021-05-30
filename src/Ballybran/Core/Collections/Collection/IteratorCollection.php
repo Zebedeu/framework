@@ -83,6 +83,12 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return current($this->elements);
     }
 
+    /**
+     * @param $element
+     * Checks if a value exists in an array
+     * @see in_array
+     * @return bool
+     */
     public function contains($element)
     {
         return in_array($element, $this->elements, true);
@@ -157,7 +163,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         }
     }
 
-    public function removeEleme($element)
+    public function removeElement($element)
     {
         $key = array_search($element, $this->elements, true);
         if (false === $key) {
@@ -181,7 +187,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return true;
     }
 
-    public function ksort()
+    public function ksort(int $flags = SORT_REGULAR)
     {
 
         return ksort($this->elements);
@@ -227,7 +233,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return array_values($this->elements);
     }
 
-    public function getKey()
+    public function getKeys()
     {
         return array_keys($this->elements);
     }

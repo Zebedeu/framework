@@ -44,11 +44,18 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     protected string $controllers;
     private Form $form;
     private Registry $reg;
+    public IteratorDot $dot;
+
+    /**
+     * @var string title for meta title
+     */
+    public $title;
 
     public function __construct()
     {
         $this->reg = Registry::getInstance();
         $this->data;
+        $this->dot = new IteratorDot();
     }
 
     /**
@@ -62,17 +69,18 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      */
     public function render(object $controller, string $view): string
     {
-        $this->dot = new IteratorDot($this->get_data());
-
         $data = (null === $this->get_data()) ? array() : $this->get_data();
+        $this->dot->merge($data);
         $this->view = $view;
+
         $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
         extract($this->get_data());
-        ob_start();
-        $this->isHeader();
 
-        include $this->file = VIEW . $this->controllers . DS . $this->view . $this->ex;
+        ob_start();
+
+        $this->isHeader();
+        include VIEW . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
 
         $content = ob_get_contents();
@@ -88,9 +96,9 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    public function merge(array $data) : void
+    public function add(array $data) : void
     {
-        $this->data = \array_merge($this->data, $data);
+        $this->data = array_merge( $this->data, $data );
 
     }
 

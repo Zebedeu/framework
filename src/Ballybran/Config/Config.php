@@ -26,6 +26,10 @@ namespace Ballybran\Config;
 
 require './config/config.php';
 
+
+if (!defined('VERSION')) {
+    define('VERSION', '1.0.14.RC');
+}
 /*
  *
  * This is for database passwords only
@@ -51,10 +55,14 @@ define('Ballybran_CACHE', 'cache_');
  *
  *
  */
+if(!defined('ALGO')){
 define('ALGO', 'md5');
+}
 
 // DIR
+if(!defined('DS')){
 define('DS', DIRECTORY_SEPARATOR);
+}
 /*
  *
  * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
@@ -62,7 +70,9 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 // require_once PV . 'Config/config_module.php';
 
+if(!defined('PV')){
 define('PV', 'App' . DS);
+}
 
 /*
  * APP é a costante responsavel pela criacao da tua applicação.
@@ -125,23 +135,37 @@ if (!empty($_dev)) {
  *
  *  O URL base do sistema
  */
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
-define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
-
+if(!defined('URL')){
+define('URL', $root);
+}
+if(!defined('ROOT')){
 define('ROOT', dirname(__FILE__));
+}
 
-/*
- *   App/YourProject/
- */
-define('DIR_FILE', 'public' . DS);
 
 // define('DIR_FILES', PV . APP . '/class/');
 
-define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
+if(!defined('DIR_FILE')){
+define('DIR_FILE', 'public' . DS);
+}
 
-define('DIR_LOGS', 'storage/log/');
-define('DIR_COOKIE', 'storage/cookie/');
+
+if(!defined('DIR_LANGUAGE')){
+define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
+}
+
+if(!defined('DIR_LOGS')){
+define('DIR_LOGS', 'log/');
+}
+if(!defined('DIR_COOKIE')){
+define('DIR_COOKIE', 'cookie/');
+}
+if(!defined('DIR_STORAGE')){
+define('DIR_STORAGE', 'storage/');
+}
 
 /*
  *

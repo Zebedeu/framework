@@ -64,6 +64,12 @@ class FileSystem extends ImageProperties
     private $dir;
 
     /**
+     * 
+     * @var $userNamePath
+     */
+    public $userNamePath;
+
+    /**
      * @var Image
      */
     private $image;
@@ -94,28 +100,42 @@ class FileSystem extends ImageProperties
      *
      * @param ImageInterface $image
      */
-    public function __construct(ResizeInterface $image)
+    public function __construct(ResizeInterface $image, string $filename = 'archive')
     {
-        if (!empty($_FILES['archive'])) {
-            foreach ($_FILES['archive']['name'] as $i => $name) {
-                $this->name = $_FILES['archive']['name'][$i];
-                $this->size = $_FILES['archive']['size'][$i];
-                $this->type = $_FILES['archive']['type'][$i];
-                $this->tmp = $_FILES['archive']['tmp_name'][$i];
+        if (!empty($_FILES[$filename])) {
+            if(is_array( $_FILES[$filename]['name'])){
+            foreach ($_FILES[$filename]['name'] as $i => $name) {
+                $this->name = $_FILES[$filename]['name'][$i];
+                $this->size = $_FILES[$filename]['size'][$i];
+                $this->type = $_FILES[$filename]['type'][$i];
+                $this->tmp = $_FILES[$filename]['tmp_name'][$i];
 
                 $this->explode = explode('.', $this->name);
             }
-        }
+            }else {
+                $this->name = $_FILES[$filename]['name'];
+                $this->size = $_FILES[$filename]['size'];
+                $this->type = $_FILES[$filename]['type'];
+                $this->tmp = $_FILES[$filename]['tmp_name'];
+                $this->explode = explode('.', $this->name);
 
-        $this->image = $image;
+            }
+
+            $this->image = $image;
+        }
     }
 
     /**
-     * @param null $dir
+     * 
+     * @param string $dir
+     * 
+     * make PathDir If User Exist
+     * @param string $userNamePath
      */
-    public function file($dir_name = null)
+    public function file($dir_name = null, $userNamePath= null)
     {
         $this->dir = $dir_name;
+        $this->userNamePath = $userNamePath;
 
         $this->make();
     }
@@ -125,10 +145,9 @@ class FileSystem extends ImageProperties
      */
     private function make()
     {
-        if (!Session::exist()) {
+        if ( null == $this->userNamePath ) {
             $this->makeDefaultPath();
             $this->makePathDirIfDefaultFileNotExist();
-
             return $this->moveUploadedFile();
         }
 
@@ -139,8 +158,8 @@ class FileSystem extends ImageProperties
 
     private function makePathDirIfUserExist()
     {
-        if (!file_exists(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS, 0777, true);
+        if (!file_exists(DIR_FILE . 'Upload' . DS . $this->userNamePath . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'Upload' . DS . $this->userNamePath . DS . $this->dir . DS, 0777, true);
         }
     }
 
@@ -190,7 +209,7 @@ class FileSystem extends ImageProperties
     private function makePathBayUserName(): String
     {
         $this->ext = end($this->explode);
-        $this->path = DIR_FILE . 'Upload' . DS . Session::get('U_NAME') . DS . $this->dir . DS;
+        $this->path = DIR_FILE . 'Upload' . DS. $this->userNamePath . DS . $this->dir . DS;
         $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
 
         return $this->path;

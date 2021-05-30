@@ -167,7 +167,7 @@ class IteratorDot extends ValidateDot
      * @param  mixed $items
      * @return array
      */
-    protected function getArrayItems($items)
+    public function getArrayItems($items)
     {
         if (is_array($items)) {
             return $items;

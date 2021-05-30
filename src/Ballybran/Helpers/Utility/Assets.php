@@ -16,7 +16,6 @@
  */
 
 namespace Ballybran\Helpers\Utility;
-
 /**
  * Class Assets
  * @package Ballybran\Helpers\Utility
@@ -66,8 +65,6 @@ class Assets
     public static function css(Array $files)
     {
         if (is_array($files)) {
-
-
             foreach ($files as $key => $value) {
                 echo static::resource($value, 'css');
             }

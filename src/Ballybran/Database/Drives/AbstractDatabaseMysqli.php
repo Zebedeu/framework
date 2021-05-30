@@ -90,12 +90,12 @@ class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array(), $fetchMode)
+    public function select($table, $fields = "*", $where = ' ', $order = '', $limit = null, $offset = null, $array = array(), $fetchMode = MYSQLI_ASSOC )
     {
         // TODO: Implement select() method.
     }
 
-    public function delete($table, $where, $limit)
+    public function delete($table, $where, $limit = 1)
     {
         // TODO: Implement delete() method.
     }
@@ -122,13 +122,15 @@ class AbstractDatabaseMysqli extends mysqli implements AbstractDatabaseInterface
         // TODO: Implement find() method.
     }
 
+
     /**
      * @param $table
      * @param $data
+     * @param bool $isId
      * @param null $where
      * @return mixed
      */
-    public function save($table, $data, $where = null)
+    public function save($table, $data, $isId = false, $where = null)
     {
         // TODO: Implement save() method.
     }

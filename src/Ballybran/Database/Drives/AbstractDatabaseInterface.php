@@ -70,10 +70,11 @@ interface AbstractDatabaseInterface
     /**
      * @param $table
      * @param $data
+     * @param bool $isId
      * @param null $where
      * @return mixed
      */
-    public function save($table, $data, $where = null);
+    public function save($table, $data, $isId = false, $where = null);
 
 
     /**
@@ -97,7 +98,7 @@ interface AbstractDatabaseInterface
      * @param $limit
      * @return mixed
      */
-    public function delete($table, $where, $limit);
+    public function delete($table, $where, $limit = 1);
 
 
 }

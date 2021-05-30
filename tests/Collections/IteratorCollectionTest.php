@@ -106,10 +106,10 @@ class IteratorCollectionTest extends PHPUnit
 
     }
 
-    public function testIfReturnRemoveEleme()
+    public function testIfReturnRemoveElement()
     {
 
-        $return = $this->it->removeEleme('John Doe');
+        $return = $this->it->removeElement('John Doe');
         $this->assertTrue($return);
 
     }
@@ -178,10 +178,10 @@ class IteratorCollectionTest extends PHPUnit
 
     }
 
-    public function testIfReturnGetKey()
+    public function testIfReturnGetKeys()
     {
 
-        $return = $this->it->getKey();
+        $return = $this->it->getKeys();
         $this->assertEquals([0 => 'name' , 1 => 'age' , 2 => 'adress'] , $return);
 
     }

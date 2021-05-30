@@ -18,8 +18,11 @@
 namespace Ballybran\Helpers\Log;
 
 
+use Ballybran\Helpers\Stdlib\CreateFiles;
+
 class FileLoggerFactory implements iLoggerFactory {
 
+    use CreateFiles;
     /**
      * @var string
      */
@@ -28,12 +31,10 @@ class FileLoggerFactory implements iLoggerFactory {
 
     public function __construct(string $filePath, $dir = null)
     {
+        $this->createWritableFolder(DIR_LOGS);
         if ($dir != null) {
-
             $this->filePath = $dir . $filePath;
-
         } else {
-
             $this->filePath = DIR_LOGS . $filePath;
         }
     }

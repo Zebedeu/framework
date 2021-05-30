@@ -82,13 +82,13 @@ class Timestamp
 }
 
     /**
-     * dataTime.
+     * currentDataTime.
      *
      * @param string $format
      *
      * @return string
      */
-    public static function dataTime(string $format = 'Y-m-d H:i:s'): string
+    public static function currentDataTime(string $format = 'Y-m-d H:i:s'): string
     {
         $data = new \DateTime();
         return $data->format($format);

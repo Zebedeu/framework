@@ -17,6 +17,7 @@
 
 namespace Ballybran\Helpers\Utility;
 
+use Ballybran\Helpers\Log\Logger;
 use const ALGO;
 use Prophecy\Exception\InvalidArgumentException;
 use function random_int;
@@ -24,6 +25,7 @@ use function random_int;
 class Hash implements HashInterface
 {
     private $key;
+    private static $RANDOM_LENGTH = 31;
 
 
     public function __construct()
@@ -36,23 +38,22 @@ class Hash implements HashInterface
      * @param $salt
      * @return string
      */
-    public static function Create(String $algo, String $data, String $salt): String
+    public static function Create(string $algo , string $data , string $salt): string
     {
-        $context = hash_init($algo, HASH_HMAC, $salt);
-        hash_update($context, $data);
-
-        return hash_final($context);
+        $context = hash_init( $algo , HASH_HMAC , $salt );
+        hash_update( $context , $data );
+        return hash_final( $context );
     }
 
 
-    public static function simpleToken(int $length = 31, $string = '')
+    public static function simpleToken(int $length = 31 , $string = '')
     {
-        $max = strlen($string) - 1;
+        $max = strlen( $string ) - 1;
 
         $token = '';
 
         for ($i = 0; $i < $length; $i++) {
-            $token .= $string[random_int(0, $max)];
+            $token .= $string[random_int( 0 , $max )];
         }
 
         return $token;
@@ -62,35 +63,35 @@ class Hash implements HashInterface
      * @param int $length lenght for tokon
      * @return string
      */
-    public static function token(int $length = 1, $constant = SECURE_AUTH_SALT): String
+    public static function token(int $length = 1 , $constant = SECURE_AUTH_SALT): string
     {
 
         $string = $constant;
 
-        $max = strlen($string) - 1;
+        $max = strlen( $string ) - 1;
 
         $token = '';
 
-        if (!intVal($length)) {
-            throw new  InvalidArgumentException('tripleInteger function only accepts integers. Input was: ' . $length);
+        if (!intVal( $length )) {
+            throw new  InvalidArgumentException( 'tripleInteger function only accepts integers. Input was: ' . $length );
 
         }
 
         for ($i = 0; $i < $length; $i++) {
-            $token .= self::Create(ALGO, uniqid($string[random_int(0, $max)]), SECURE_AUTH_KEY);
+            $token .= self::Create( ALGO , uniqid( $string[random_int( 0 , $max )] ) , SECURE_AUTH_KEY );
         }
 
         return $token;
     }
 
-    public static function hash_password($string, $const = PASSWORD_DEFAULT, $cust = null)
+    public static function hash_password($string , $const = PASSWORD_DEFAULT , $cust = null)
     {
 
-        if (!is_null($cust)) {
+        if (!is_null( $cust )) {
 
-            return password_hash($string, $const, ['cost' => $cust]);
+            return password_hash( $string , $const , ['cost' => $cust] );
         }
-        return password_hash($string, $const);
+        return password_hash( $string , $const );
 
 
     }
@@ -100,10 +101,10 @@ class Hash implements HashInterface
      * @param string $hash password
      * @return bool
      */
-    public static function verify_password(string $string, string $hash): bool
+    public static function verify_password(string $string , string $hash): bool
     {
 
-        if (password_verify($string, $hash)) {
+        if (password_verify( $string , $hash )) {
             return true;
 
         } else {

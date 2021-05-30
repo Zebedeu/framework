@@ -42,13 +42,13 @@ class QueryBuilder extends DBconnection
      * @param $arguments
      * @return $this
      */
-    function __call($name, $arguments)
+    function __call($name , $arguments)
     {
         $clausule = $arguments[0];
-        if (count($arguments) > 1) {
+        if (count( $arguments ) > 1) {
             $clausule = $arguments;
         }
-        $this->clausules[strtolower($name)] = $clausule;
+        $this->clausules[strtolower( $name )] = $clausule;
 
         return $this;
     }
@@ -59,42 +59,50 @@ class QueryBuilder extends DBconnection
      */
     public function __construct(array $options)
     {
-        parent::__construct($options);
+        parent::__construct( $options );
+        $this->conn = $this->connection();
+
     }
 
     /**
      * @param array $values
      * @return string
      */
-    public function insert($values)
+    public function insert(array $values = [] )
     {
         // recupera o nome da tabela
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $table = isset($this->clausules['table']) ? $this->clausules['table'] : '<table>';
+        $table = isset( $this->clausules['table'] ) ? $this->clausules['table'] : '<table>';
 
         // recupera o array dos campos
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $_fields = isset($this->clausules['fields']) ? $this->clausules['fields'] : '<fields>';
-        $fields = implode(', ', $_fields);
+        $_fields = isset( $this->clausules['fields'] ) ? $this->clausules['fields'] : '<fields>';
+//        $fields = implode( ', ' , $_fields );
+//
+//        // cria uma lista de rótulos para usar "prepared statement"
+//        $_placeholders = array_map( function () {
+//            return '?';
+//        } , $_fields );
+//        $placeholders = implode( ', ' , $_placeholders );
 
-        // cria uma lista de rótulos para usar "prepared statement"
-        $_placeholders = array_map(function() {
-            return '?';
-        }, $_fields);
-        $placeholders = implode(', ', $_placeholders);
+        krsort($_fields);
+//
+        $fieldName = implode('`,`', array_keys($_fields));
+        $fieldValues = ':' . implode(',:', array_keys($_fields));
+        $this->_beginTransaction();
 
         $command = [];
         $command[] = 'INSERT INTO';
         $command[] = $table;
-        $command[] = '(' . $fields . ')';
+        $command[] = '(' . $fieldName . ')';
         $command[] = 'VALUES';
-        $command[] = '(' . $placeholders . ')';
+        $command[] = '(' . $fieldValues . ')';
 
         // INSERT INTO {table} ({fields}) VALUES ({values});
         // junta o comando
-        $sql = implode(' ', $command);
+        $sql = implode( ' ' , $command );
 
-        return $this->executeInsert($sql, $values);
+        return $this->executeInsert( $sql , $values );
     }
 
     /**
@@ -105,14 +113,14 @@ class QueryBuilder extends DBconnection
     {
         // recupera o nome da tabela
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $table = isset($this->clausules['table']) ? $this->clausules['table'] : '<table>';
+        $table = isset( $this->clausules['table'] ) ? $this->clausules['table'] : '<table>';
 
         // recupera o array dos campos
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $_fields = isset($this->clausules['fields']) ? $this->clausules['fields'] : '*';
-        $fields = implode(', ', $_fields);
+        $_fields = isset( $this->clausules['fields'] ) ? $this->clausules['fields'] : '*';
+        $fields = implode( ', ' , $_fields );
 
-        $join = isset($this->clausules['join']) ? $this->clausules['join'] : '';
+        $join = isset( $this->clausules['join'] ) ? $this->clausules['join'] : '';
 
         $command = [];
         $command[] = 'SELECT';
@@ -125,31 +133,31 @@ class QueryBuilder extends DBconnection
 
         $clausules = [
             'where' => [
-                'instruction' => 'WHERE',
-                'separator' => ' ',
-            ],
+                'instruction' => 'WHERE' ,
+                'separator' => ' ' ,
+            ] ,
             'group' => [
-                'instruction' => 'GROUP BY',
-                'separator' => ', ',
-            ],
+                'instruction' => 'GROUP BY' ,
+                'separator' => ', ' ,
+            ] ,
             'order' => [
-                'instruction' => 'ORDER BY',
-                'separator' => ', ',
-            ],
+                'instruction' => 'ORDER BY' ,
+                'separator' => ', ' ,
+            ] ,
             'having' => [
-                'instruction' => 'HAVING',
-                'separator' => ' AND ',
-            ],
+                'instruction' => 'HAVING' ,
+                'separator' => ' AND ' ,
+            ] ,
             'limit' => [
-                'instruction' => 'LIMIT',
-                'separator' => ',',
-            ],
+                'instruction' => 'LIMIT' ,
+                'separator' => ',' ,
+            ] ,
         ];
         foreach ($clausules as $key => $clausule) {
-            if (isset($this->clausules[$key])) {
+            if (isset( $this->clausules[$key] )) {
                 $value = $this->clausules[$key];
-                if (is_array($value)) {
-                    $value = implode($clausule['separator'], $this->clausules[$key]);
+                if (is_array( $value )) {
+                    $value = implode( $clausule['separator'] , $this->clausules[$key] );
                 }
                 $command[] = $clausule['instruction'] . ' ' . $value;
             }
@@ -157,34 +165,37 @@ class QueryBuilder extends DBconnection
 
         // SELECT {fields} FROM <JOIN> {table} <WHERE> <GROUP> <ORDER> <HAVING> <LIMIT>;
         // junta o comando
-        $sql = implode(' ', $command);
+        $sql = implode( ' ' , $command );
+        var_dump($sql);
 
-        return $this->executeSelect($sql, $values);
+        return $this->executeSelect( $sql , $values );
     }
 
     /**
-     * @param $values
-     * @param $filters
      * @return int
      */
-    public function update($values, $filters = [])
+    public function update()
     {
         // recupera o nome da tabela
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $table = isset($this->clausules['table']) ? $this->clausules['table'] : '<table>';
+        $table = isset( $this->clausules['table'] ) ? $this->clausules['table'] : '<table>';
 
-        $join = isset($this->clausules['join']) ? $this->clausules['join'] : '';
+        $join = isset( $this->clausules['join'] ) ? $this->clausules['join'] : '';
 
         // recupera o array dos campos
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $_fields = isset($this->clausules['fields']) ? $this->clausules['fields'] : '<fields>';
+        $_fields = isset( $this->clausules['fields'] ) ? $this->clausules['fields'] : '<fields>';
 
-        $sets = $_fields;
-        if (is_array($_fields)) {
-            $sets = implode(', ', array_map(function($value) {
-                return $value . ' = ?';
-            }, $_fields));
+
+        ksort($_fields);
+
+        $fielDetail = null;
+
+        foreach ($_fields as $key => $values) {
+            $fielDetail .= "`$key`=:$key,";
         }
+
+        $fielDetail = trim($fielDetail, ',');
 
         $command = [];
         $command[] = 'UPDATE';
@@ -193,19 +204,23 @@ class QueryBuilder extends DBconnection
             $command[] = $join;
         }
         $command[] = 'SET';
-        $command[] = $sets;
+        $command[] = $fielDetail;
 
         $clausules = [
             'where' => [
-                'instruction' => 'WHERE',
-                'separator' => ' ',
-            ]
+                'instruction' => 'WHERE' ,
+                'separator' => ' ' ,
+            ],
+            'limit' => [
+                'instruction' => 'LIMIT' ,
+                'separator' => ',' ,
+            ] ,
         ];
         foreach ($clausules as $key => $clausule) {
-            if (isset($this->clausules[$key])) {
+            if (isset( $this->clausules[$key] )) {
                 $value = $this->clausules[$key];
-                if (is_array($value)) {
-                    $value = implode($clausule['separator'], $this->clausules[$key]);
+                if (is_array( $value )) {
+                    $value = implode( $clausule['separator'] , $this->clausules[$key] );
                 }
                 $command[] = $clausule['instruction'] . ' ' . $value;
             }
@@ -213,22 +228,22 @@ class QueryBuilder extends DBconnection
 
         // UPDATE {table} SET {set} <WHERE>
         // junta o comando
-        $sql = implode(' ', $command);
+        $sql = implode( ' ' , $command );
 
-        return $this->executeUpdate($sql, array_merge($values, $filters));
+        return $this->executeUpdate( $sql , $_fields );
     }
 
     /**
      * @param $filters
      * @return int
      */
-    public function delete($filters)
+    public function delete($filters = null )
     {
         // recupera o nome da tabela
         // ou deixa uma marcação para mostrar que faltou informar esse campo
-        $table = isset($this->clausules['table']) ? $this->clausules['table'] : '<table>';
+        $table = isset( $this->clausules['table'] ) ? $this->clausules['table'] : '<table>';
 
-        $join = isset($this->clausules['join']) ? $this->clausules['join'] : '';
+        $join = isset( $this->clausules['join'] ) ? $this->clausules['join'] : '';
 
         $command = [];
         $command[] = 'DELETE FROM';
@@ -239,15 +254,20 @@ class QueryBuilder extends DBconnection
 
         $clausules = [
             'where' => [
-                'instruction' => 'WHERE',
-                'separator' => ' ',
-            ]
+                'instruction' => 'WHERE' ,
+                'separator' => ' ' ,
+            ],
+            'limit' => [
+                'instruction' => 'LIMIT' ,
+                'separator' => ',' ,
+            ] ,
+
         ];
         foreach ($clausules as $key => $clausule) {
-            if (isset($this->clausules[$key])) {
+            if (isset( $this->clausules[$key] )) {
                 $value = $this->clausules[$key];
-                if (is_array($value)) {
-                    $value = implode($clausule['separator'], $this->clausules[$key]);
+                if (is_array( $value )) {
+                    $value = implode( $clausule['separator'] , $this->clausules[$key] );
                 }
                 $command[] = $clausule['instruction'] . ' ' . $value;
             }
@@ -255,8 +275,63 @@ class QueryBuilder extends DBconnection
 
         // DELETE FROM {table} <JOIN> <USING> <WHERE>
         // junta o comando
-        $sql = implode(' ', $command);
+        $sql = implode( ' ' , $command );
 
-        return $this->executeDelete($sql, $filters);
+        return $this->executeDelete( $sql , $filters );
+    }
+
+    private function executeSelect($sql , $value)
+    {
+
+        $stmt = $this->conn->prepare( $sql );
+
+        foreach ($value as $key => $values) {
+            return $stmt->bindValue( "$key" , $values );
+        }
+        $stmt->execute();
+
+        do {
+            return $stmt->fetchAll( $fetchMode );
+        } while (
+            $stmt->nextRowset());
+        $stmt->close();
+
+    }
+
+    private function executeInsert($sql , $value)
+    {
+        try {
+
+            $this->_beginTransaction();
+
+            $stmt = $this->conn->prepare($sql);
+            foreach ($value as $key => $values) {
+                $stmt->bindValue( ":$key" , $values );
+            }
+            $this->_commit();
+            $stmt->execute();
+            unset( $stmt );
+        } catch (\Exception $e) {
+            $this->_Rollback();
+            echo 'error insert ' . $e->getMessage();
+        }
+
+    }
+
+
+    private function executeUpdate($sql , $data)
+    {
+        $stmt = $this->conn->prepare($sql);
+        foreach ($data as $key => $values) {
+            $stmt->bindValue(":$key", $values);
+        }
+
+        return $stmt->execute();
+    }
+
+    private function executeDelete($sql , $value)
+    {
+        return $this->conn->exec($sql);
+
     }
 }
