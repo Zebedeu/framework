@@ -69,13 +69,17 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      */
     public function render(object $controller, string $view): string
     {
-        ob_start();
+      
         $data = (null === $this->get_data()) ? array() : $this->get_data();
         $this->dot->merge($data);
         $this->view = $view;
+
         $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
         extract($this->get_data());
+
+        ob_start();
+
         $this->isHeader();
 
         include VIEW . $this->controllers . DS . $this->view . $this->ex;

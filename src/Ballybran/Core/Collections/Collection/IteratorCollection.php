@@ -187,7 +187,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return true;
     }
 
-    public function ksort()
+    public function ksort(int $flags = SORT_REGULAR)
     {
 
         return ksort($this->elements);

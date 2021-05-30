@@ -98,7 +98,7 @@ interface AbstractDatabaseInterface
      * @param $limit
      * @return mixed
      */
-    public function delete($table, $where, $limit);
+    public function delete($table, $where, $limit = 1);
 
 
 }

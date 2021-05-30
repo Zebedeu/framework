@@ -118,14 +118,16 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
             krsort($data);
 
             $fieldNme = implode('`,`', array_keys($data));
-            $fieldValues = ':' . implode(',:', array_keys($data));
+            $fieldValues = ':' . implode(', :', array_keys($data));
             $this->_beginTransaction();
 
             $stmt = $this->conn->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
 
             foreach ($data as $key => $values) {
+
                 $stmt->bindValue(":$key", $values);
             }
+
             $this->_commit();
             $stmt->execute();
             unset($stmt);

@@ -263,7 +263,7 @@ class RouterCommand
             require_once($file);
         }
 
-        return new $class();
+        return new $class($this->request, $this->response);
     }
 
     /**
@@ -291,10 +291,11 @@ class RouterCommand
      */
     protected function resolveCallbackParameters(Reflector $reflection, array $uriParams): array
     {
+
         $parameters = [];
         foreach ($reflection->getParameters() as $key => $param) {
-            $class = $param->getClass();
-            if (!is_null($class) && $class->isInstance($this->request)) {
+            $class = $param->getType();
+            if ( $class instanceof \ReflectionNamedType ) {
                 $parameters[] = $this->request;
             } elseif (!is_null($class) && $class->isInstance($this->response)) {
                 $parameters[] = $this->response;
