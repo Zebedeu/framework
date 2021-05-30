@@ -34,6 +34,7 @@
     "phpstan/phpstan": "^0.10.1",
     "php-coveralls/php-coveralls": "*",
     "jangregor/phpstan-prophecy": "^0.2.0"
+    "robmorgan/phinx": "^0.12.4"
 
   },
   "scripts": {
