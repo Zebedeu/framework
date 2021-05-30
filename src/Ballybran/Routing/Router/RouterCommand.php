@@ -22,6 +22,7 @@ namespace Ballybran\Routing\Router;
 
 use Closure;
 use Exception;
+use ReflectionClass;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -263,7 +264,7 @@ class RouterCommand
             require_once($file);
         }
 
-        return new $class($this->request, $this->response);
+        return new $class();
     }
 
     /**
@@ -288,14 +289,16 @@ class RouterCommand
      * @param array     $uriParams
      *
      * @return array
+     * @throws
      */
     protected function resolveCallbackParameters(Reflector $reflection, array $uriParams): array
     {
-
         $parameters = [];
         foreach ($reflection->getParameters() as $key => $param) {
-            $class = $param->getType();
-            if ( $class instanceof \ReflectionNamedType ) {
+            $class = $param->getType() && !$param->getType()->isBuiltin()
+               ? new ReflectionClass($param->getType()->getName())
+                : null;
+            if (!is_null($class) && $class->isInstance($this->request)) {
                 $parameters[] = $this->request;
             } elseif (!is_null($class) && $class->isInstance($this->response)) {
                 $parameters[] = $this->response;
