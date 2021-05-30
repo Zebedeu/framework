@@ -71,6 +71,7 @@ abstract class Model
     /**
      * @return mixed
      */
+  
     public function getLoadModel()
     {
         

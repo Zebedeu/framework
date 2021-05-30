@@ -69,6 +69,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      */
     public function render(object $controller, string $view): string
     {
+      
         $data = (null === $this->get_data()) ? array() : $this->get_data();
         $this->dot->merge($data);
         $this->view = $view;
@@ -80,6 +81,7 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         ob_start();
 
         $this->isHeader();
+
         include VIEW . $this->controllers . DS . $this->view . $this->ex;
         $this->isFooter();
 
