@@ -116,16 +116,13 @@ class Validate
 
     public function getPostData($fieldName = false)
     {
-        if ($fieldName == false) {
-            return $this->_postData;
-        }
-        if ($this->submit() == true) {
-            if ($fieldName && isset($this->_postData[$fieldName])) {
-                return $this->_postData[$fieldName];
-            }
 
-            return false;
-        }
+            if(  $this->submit() == true  ) return  array('message' => $this->submit() );
+        
+            if ($fieldName && isset($this->_postData[$fieldName]))  return $this->_postData[$fieldName];
+                
+            if ($fieldName == false) return $this->_postData;
+                    
     }
 
     /**
@@ -134,7 +131,7 @@ class Validate
      *
      * @return $this
      */
-    public function val(string $typeOfValidator, int $length)
+    public function val(string $typeOfValidator, $length)
     {
         $error = '';
 
@@ -232,16 +229,16 @@ class Validate
 
     public function submit()
     {
-        if (empty($this->_error)) {
-            return true;
-        }
-
+        if (!empty($this->_error)) {
+          
         $str = '';
         foreach ($this->_error as $key => $value) {
             $str .= $key . ' => ' . $value . "\n" . '<br>';
         }
-        echo "Error Processing Request $str";
+        
+        return "Error Processing Request $str";
 
-        return false;
+        }
+
     }
 }
