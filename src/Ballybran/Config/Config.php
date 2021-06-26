@@ -154,8 +154,6 @@ define('URL', $root);
 }
 
 define('ROOT', dirname(__FILE__));
-}
-
 
 // define('DIR_FILES', PV . APP . '/class/');
 
