@@ -146,7 +146,7 @@ if (!empty($_dev)) {
  *
  *  O URL base do sistema
  */
-$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']  . ":".BASE_PORT;
 $root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
 if(!defined('URL')){
