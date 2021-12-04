@@ -100,9 +100,13 @@ class FileSystem extends ImageProperties
      *
      * @param ImageInterface $image
      */
-    public function __construct(ResizeInterface $image, string $filename = 'archive')
+    public function __construct(ResizeInterface $image = null, string $filename = 'archive')
     {
-        if (!empty($_FILES[$filename])) {
+        if (empty($_FILES[$filename])) {
+
+            throw new \Exception("Error Processing Request", 1);
+            
+        }
             if(is_array( $_FILES[$filename]['name'])){
             foreach ($_FILES[$filename]['name'] as $i => $name) {
                 $this->name = $_FILES[$filename]['name'][$i];
@@ -122,7 +126,7 @@ class FileSystem extends ImageProperties
             }
 
             $this->image = $image;
-        }
+        
     }
 
     /**
@@ -158,20 +162,22 @@ class FileSystem extends ImageProperties
 
     private function makePathDirIfUserExist()
     {
-        if (!file_exists(DIR_FILE . 'Upload' . DS . $this->userNamePath . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . $this->userNamePath . DS . $this->dir . DS, 0777, true);
+        if (!file_exists(DIR_FILE . 'upload' . DS . $this->userNamePath . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'upload' . DS . $this->userNamePath . DS . $this->dir . DS, 0777, true);
         }
     }
 
     private function makePathDirIfDefaultFileNotExist()
     {
-        if (!file_exists(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS)) {
-            mkdir(DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS, 0777, true);
+        if (!file_exists(DIR_FILE . 'upload' . DS . 'default' . DS . $this->dir . DS)) {
+            mkdir(DIR_FILE . 'upload' . DS . 'default' . DS . $this->dir . DS, 0777, true);
         }
     }
 
     private function getObjectImage()
     {
+        if($this->image == null) return false;
+        
         $this->image->upload($this->path);
         $this->image->imageRotate($this->getDegree(), $this->getColor());
         $this->image->resizeImage($this->getWidth(), $this->getHeight(), $this->getOption());
