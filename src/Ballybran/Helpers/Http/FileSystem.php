@@ -205,7 +205,7 @@ class FileSystem extends ImageProperties
      */
     private function makeDefaultPath(): String
     {
-        return $this->path = DIR_FILE . 'Upload' . DS . 'Default' . DS . $this->dir . DS;
+        return $this->path = DIR_FILE . 'upload' . DS . 'default' . DS . $this->dir . DS;
     }
 
     /**
@@ -215,7 +215,7 @@ class FileSystem extends ImageProperties
     private function makePathBayUserName(): String
     {
         $this->ext = end($this->explode);
-        $this->path = DIR_FILE . 'Upload' . DS. $this->userNamePath . DS . $this->dir . DS;
+        $this->path = DIR_FILE . 'upload' . DS. $this->userNamePath . DS . $this->dir . DS;
         $this->path .= basename($this->explode[0] . time() . '.' . $this->ext);
 
         return $this->path;
