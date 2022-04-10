@@ -147,6 +147,7 @@ class Router
      */
     public function __construct(array $params = [], Request $request = null, Response $response = null)
     {
+
         $this->baseFolder = realpath(getcwd());
 
         if (isset($params['debug']) && is_bool($params['debug'])) {
@@ -793,7 +794,7 @@ class Router
         $dirname = dirname($script);
         $dirname = $dirname === '/' ? '' : $dirname;
         $basename = basename($script);
-        $uri = str_replace([$dirname, $basename],null, $this->request()->server->get('REQUEST_URI'));
+        $uri = str_replace([$dirname, $basename],'', $this->request()->server->get('REQUEST_URI'));
         return $this->clearRouteName(explode('?', $uri)[0]);
     }
 }

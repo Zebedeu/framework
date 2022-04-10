@@ -78,7 +78,7 @@ class Session
      * funtion usado para destruir a sessao
      *  exxemplo de uso:: public function DestruirSessao(){ Session::Destroy() }
      */
-    public static function Destroy()
+    public static function remove()
     {
         @session_destroy();
 

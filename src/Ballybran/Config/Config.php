@@ -142,11 +142,60 @@ if (!empty($_dev)) {
 }
 
 
+global $MY_CSRFP_TOKEN;
+if(!defined('MY_CSRFP_TOKEN')){
+    define('MY_CSRFP_TOKEN', $MY_CSRFP_TOKEN);
+}
+global $failedAuthAction;
+if(!defined('failedAuthAction')){
+    define('failedAuthAction', $failedAuthAction);
+}
+global $GET_METHOD;
+if(!defined('GET_METHOD')){
+    define('GET_METHOD', $GET_METHOD);
+}
+global $POST_METHOD;
+if(!defined('POST_METHOD')){
+    define('POST_METHOD', $POST_METHOD);
+}
+global $errorRedirectionPage;
+if(!defined('errorRedirectionPage')){
+    define('errorRedirectionPage', $errorRedirectionPage);
+}
+global $customErrorMessage;
+if(!defined('customErrorMessage')){
+    define('customErrorMessage', $customErrorMessage);
+}
+global $jsUrl;
+if(!defined('jsUrl')){
+    define('jsUrl', $jsUrl);
+}
+global $tokenLength;
+if(!defined('tokenLength')){
+    define('tokenLength', $tokenLength);
+}
+global $cookie_path;
+if(!defined('cookie_path')){
+    define('cookie_path', $cookie_path);
+}
+global $cookie_domain;
+if(!defined('cookie_domain')){
+    define('cookie_domain', $cookie_domain);
+}
+global $cookie_secure;
+if(!defined('cookie_secure')){
+    define('cookie_secure', $cookie_secure);
+}
+global $cookie_expire;
+if(!defined('cookie_expire')){
+    define('cookie_expire', $cookie_expire);
+}
+
 /*
  *
  *  O URL base do sistema
  */
-$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']  . ":".BASE_PORT;
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']   . ( BASE_PORT ? ":".BASE_PORT : '');
 $root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
 if(!defined('URL')){
@@ -160,7 +209,6 @@ define('ROOT', dirname(__FILE__));
 if(!defined('DIR_FILE')){
 define('DIR_FILE', 'public' . DS);
 }
-
 
 if(!defined('DIR_LANGUAGE')){
 define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');

@@ -40,7 +40,7 @@ class Cookie
     private $data;
     private $request;
     private $response;
-    private $responseCode;
+    private int $responseCode = 0;
 
 
     public function __construct()
@@ -238,7 +238,7 @@ class Cookie
     /**
      * @return mixed
      */
-    private function getResponseCode()
+    private function getResponseCode(): int
     {
         return $this->responseCode;
     }

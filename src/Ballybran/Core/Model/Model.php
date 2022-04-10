@@ -19,12 +19,11 @@
 namespace Ballybran\Core\Model;
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Exception\KException;
-
+use Ballybran\Helpers\Security\csrf\libs\csrf\csrfProtector;
 /**
  * Class Model.
  */
-abstract class Model
+abstract class Model extends csrfProtector
 {
     /**
      * @var
@@ -56,6 +55,7 @@ abstract class Model
     public function __construct()
     {
         $this->getLoadModel();
+
     }
 
 

@@ -67,13 +67,13 @@ class IteratorCollection extends Variable implements \ArrayAccess
     /**
      * @return \ArrayObject
      */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
 
         return new \ArrayObject($this->elements);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -123,12 +123,12 @@ class IteratorCollection extends Variable implements \ArrayAccess
 
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): \ReturnTypeWillChange
     {
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!isset($offset)) {
             $this->set($offset, $value);
@@ -136,7 +136,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
             $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
             $this->remove($offset);
     }
@@ -146,7 +146,7 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -187,18 +187,18 @@ class IteratorCollection extends Variable implements \ArrayAccess
         return true;
     }
 
-    public function ksort(int $flags = SORT_REGULAR)
+    public function ksort(int $flags = SORT_REGULAR): bool 
     {
 
         return ksort($this->elements);
     }
 
-    public function natSort()
+    public function natSort(): bool 
     {
         return natsort($this->elements);
     }
 
-    public function natcasesort()
+    public function natcasesort(): bool 
     {
         return natcasesort($this->elements);
     }

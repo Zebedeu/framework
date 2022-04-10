@@ -94,7 +94,7 @@ class IteratorDot extends ValidateDot
                 continue;
             }
             $items = &$this->elements;
-            $segments = explode('.', $key);
+            $segments = explode('.',  $key);
             $lastSegment = array_pop($segments);
             foreach ($segments as $segment) {
                 if (!isset($items[$segment]) || !is_array($items[$segment])) {

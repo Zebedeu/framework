@@ -94,7 +94,7 @@ class ValidateDot implements Countable
      * @param  int|string|null $key
      * @return int
      */
-    public function count($key = null)
+    public function count($key = null): int
     {
         return count($this->get($key));
     }

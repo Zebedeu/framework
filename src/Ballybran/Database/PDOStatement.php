@@ -47,43 +47,43 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = \PDO::PARAM_STR)
+    public function bindValue($param, $value, $type = \PDO::PARAM_STR): bool
     {
         try {
             return parent::bindValue($param, $value, $type);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null)
+    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null): bool
     {
         try {
             return parent::bindParam($column, $variable, $type, $length, $driverOptions);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function execute(?array $params = null)
+    public function execute(?array $params = null): bool
     {
         try {
             return parent::execute($params);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null)
+    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null): bool
     {
         try {
             if ($fetchMode === null && $cursorOrientation === null && $cursorOffset === null) {
@@ -100,15 +100,15 @@ class PDOStatement extends \PDOStatement
 
             return parent::fetch($fetchMode, $cursorOrientation, $cursorOffset);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchAll(int $mode = PDO::FETCH_BOTH, mixed ...$args)
-    {
+    public function fetchAll(int $mode = PDO::FETCH_BOTH, mixed ...$args): array {
+    
         try {
             if ($mode === null && $args === null) {
                 return parent::fetchAll();
@@ -120,21 +120,21 @@ class PDOStatement extends \PDOStatement
 
             return parent::fetchAll($mode, $args);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchColumn($columnIndex = 0)
-    {
+        public function fetchColumn(int $column = 0): mixed { 
+    
         try {
-            return parent::fetchColumn($columnIndex);
+            return parent::fetchColumn($column);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
+    
     }
-
 
 }
