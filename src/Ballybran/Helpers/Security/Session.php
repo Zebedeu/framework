@@ -16,8 +16,7 @@
 
 namespace Ballybran\Helpers\Security;
 
-use Ballybran\Helpers\Hook;
-use http\Url;
+use Symfony\Component\HttpFoundation\Session\Session as SessionHttp;
 
 /**
  * Class Session
@@ -26,92 +25,59 @@ use http\Url;
 class Session
 {
 
+    private static $session;
 
-    /**
-     * @var string
-     */
-
-
-    /**
-     *  init Sessin our Session Start
-     * É usado para ativar o incio de sassão do usuário.
-     */
     public static function init()
     {
-        if (headers_sent()) {
-            return;
-        }
-
-        $id = session_id();
-        if (empty( $id )) {
-            @session_start(
-                [
-                    'cookie_lifetime' => 86400 ,
-//            'read_and_close'  => true,
-                ]
-            );
-        }
+        self::$session = new SessionHttp();
+        self::$session->start();
     }
 
-    /**
-     * @param $key
-     * @param $value
-     * @return mixed
-     */
     public static function set($key, $value)
     {
-        return $_SESSION[$key] = $value;
+        self::$session->set($key, $value);
     }
 
-    /**
-     * @param $key
-     * @return mixed
-     */
-    public static function get($key)
+    public static function get($key, $default = null) 
     {
-        if(isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
+        return self::$session->get($key, $default);
     }
 
-    /**
-     * funtion usado para destruir a sessao
-     *  exxemplo de uso:: public function DestruirSessao(){ Session::Destroy() }
-     */
-    public static function remove()
+    public static function remove($key)
     {
-        @session_destroy();
-
+        self::$session->remove($key);
     }
 
-    /**
-     * @param $key
-     */
-    public static function unsetValue($key)
+    public static function destroy()
     {
-        if (isset($_SESSION[$key])) {
-            unset($_SESSION[$key]);
-        }
+        self::$session->clear();
     }
 
-    /**
-     *  Usa-se como condicao. Se o usuario existe ou se for maior que zero ( > 0 )
-     * entao, isso significa que o usuario existe
-     * mais se for menor q zero ( < 0 ) sigifica que o usuario nao existe.
-     * exemplo de uso: Session::exist(){
-     *  .. .. .. .. your code .. .. .. .
-     * }
-     * @return bool
-     */
-    public static function exist()
+    public static function exist($key)
     {
-        if (sizeof($_SESSION) > 0) {
-            session_regenerate_id();
-            return true;
-        } else {
-            return false;
-        }
+        return self::$session->has($key);
     }
 
+    public static function flash($key, $message)
+    {
+        self::$session->getFlashBag()->add($key, $message);
+    }
+
+    public static function errors()
+    {
+        $errors = self::$session->getFlashBag()->get('errors', []);
+        self::$session->getFlashBag()->clear();
+        return $errors;
+    }
+
+    public static function regenerateId()
+    {
+        self::$session->migrate();
+    }
+
+    public static function invalidate()
+    {
+        self::$session->invalidate();
+    }
 
 }

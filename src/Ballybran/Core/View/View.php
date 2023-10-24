@@ -80,10 +80,11 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
 
         ob_start();
 
-        $this->isHeader();
+        $loader = new \Twig\Loader\FilesystemLoader('html/views/');
 
-        include VIEW . $this->controllers . DS . $this->view . $this->ex;
-        $this->isFooter();
+        $twig = new \Twig\Environment($loader);
+
+        echo $twig->render("$this->controllers/$this->view.html.twig", $this->data);
 
         $content = ob_get_contents();
         return $content;

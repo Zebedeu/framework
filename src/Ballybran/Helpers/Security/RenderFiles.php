@@ -28,8 +28,14 @@ class RenderFiles
     protected $footer = 'footer';
     protected $ex = '.phtml';
 
+    private $twig;
+
     public function __construct()
     {
+        $loader = new \Twig\Loader\FilesystemLoader('caminho/para/templates');
+        
+        $this->twig = new \Twig\Environment($loader);
+
         $this->ex;
     }
 
@@ -58,12 +64,6 @@ class RenderFiles
             return KException::notFooter();
         }
 
-        require_once VIEW . $this->footer . $this->ex;
     }
 
-    public function isIndex($controller, $view, $data = null)
-    {
-        require_once VIEW . $controller . DS . $view . $this->ex;
-
-    }
 }
