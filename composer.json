@@ -19,20 +19,20 @@
 
   "require": {
     "php": "^8.0",
-    "psr/http-message": "^2.0@dev",
-    "psr/http-server-middleware": "^1.0@dev",
-    "psr/container": "^2.0@dev",
-    "phpmailer/phpmailer": "dev-master",
-    "phpseclib/phpseclib": "dev-master",
-    "rafaelgou/padl": "dev-master",
-    "gabordemooij/redbean": "dev-master",
-    "robmorgan/phinx": "0.x-dev",
-    "symfony/http-foundation": "6.4.x-dev",
-    "vlucas/phpdotenv": "^5.5@dev",
-    "twig/twig": "3.x-dev",
-    "league/plates": "v3.x-dev",
-    "guzzlehttp/guzzle": "7.9.x-dev",
-    "illuminate/events": "10.x-dev"
+    "psr/http-message": "^2.0",
+    "psr/http-server-middleware": "^1.0",
+    "psr/container": "^2.0",
+    "phpmailer/phpmailer": "^6.8",
+    "phpseclib/phpseclib": "^3.0",
+    "rafaelgou/padl": "^1.1",
+    "gabordemooij/redbean": "^5.7",
+    "robmorgan/phinx": "^0.15.2",
+    "symfony/http-foundation": "^6.3",
+    "vlucas/phpdotenv": "^5.5",
+    "twig/twig": "^3.7",
+    "league/plates": "^3.5",
+    "guzzlehttp/guzzle": "^7.8",
+    "illuminate/events": "^10.28"
   
 
   },
