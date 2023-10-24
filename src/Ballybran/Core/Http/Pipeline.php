@@ -1,47 +1,67 @@
 <?php
+/**
+ *
+ * KNUT7 K7F (https://marciozebedeu.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (https://marciozebedeu.com/)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @link      https://github.com/knut7/framework/ for the canonical source repository
+ * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
+ * @license   https://marciozebedeu.com/license/new-bsd New BSD License
+ * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ * @version   1.0.7
+ *
+ *
+ */
 
 namespace Ballybran\Core\Http;
 
+/**
+ * Pipeline class for passing an object through a series of pipes.
+ */
+
 use Closure;
 
-class Pipeline 
+class Pipeline
 {
-
     /**
-     * O dado que será passado pelo pipeline.
+     * The object being passed through the pipeline.
      *
      * @var mixed
      */
     protected $passable;
 
     /**
-     * Array com os pipes (callbacks) que serão executados.
-     * 
+     * The array of pipes.
+     *
      * @var array
      */
     protected $pipes = [];
 
     /**
-     * Parâmetros adicionais que serão passados para os pipes.
+     * The additional parameters.
      *
      * @var array
      */
     protected $parameters = [];
 
     /**
-     * O método que será chamado em cada pipe.
+     * The method to call on each pipe.
      *
      * @var string
      */
     protected $method = 'handle';
 
     /**
-     * Define o dado $passable que será processado.
+     * Set the object being sent through the pipeline.
      *
      * @param mixed $passable
-     * @return Pipeline
-     */    
-    public function send(...$passable) : Pipeline
+     * @return $this
+     */
+    public function send($passable): self
     {
         $this->passable = $passable;
 
@@ -49,38 +69,38 @@ class Pipeline
     }
 
     /**
-     * Define os pipes.
+     * Set the array of pipes.
      *
-     * @param array|mixed $pipes
-     * @return Pipeline
+     * @param array $pipes
+     * @return $this
      */
-    public function through($pipes) : Pipeline
+    public function through(array $pipes): self
     {
-        $this->pipes = is_array($pipes) ? $pipes : func_get_args();
+        $this->pipes = $pipes;
 
         return $this;
     }
 
     /**
-     * Define o método a ser chamado em cada pipe.
+     * Set the method to call on the pipes.
      *
      * @param string $method
-     * @return Pipeline
+     * @return $this
      */
-    public function via(string $method) : Pipeline
+    public function via(string $method): self
     {
         $this->method = $method;
-        
+
         return $this;
     }
 
     /**
-     * Define parâmetros adicionais para os pipes.
+     * Set the additional parameters to send.
      *
      * @param array $parameters
-     * @return Pipeline
+     * @return $this
      */
-    public function withParameters(array $parameters) : Pipeline 
+    public function with(array $parameters): self
     {
         $this->parameters = $parameters;
 
@@ -88,7 +108,7 @@ class Pipeline
     }
 
     /**
-     * Executa o pipeline e retorna o resultado.
+     * Run the pipeline with a final destination callback.
      *
      * @param Closure $destination
      * @return mixed
@@ -96,111 +116,66 @@ class Pipeline
     public function process(Closure $destination)
     {
         $pipeline = array_reduce(
-            array_reverse($this->pipes), $this->carry(), $this->prepareDestination($destination)
+            array_reverse($this->pipes),
+            $this->carry(),
+            $this->prepareDestination($destination)
         );
-        
-        return call_user_func_array($pipeline, $this->passable);
+
+        return $pipeline($this->passable);
     }
 
     /**
-     * Prepara o callable final que receberá o resultado dos pipes.
+     * Get the final piece of the Closure onion.
      *
      * @param Closure $destination
      * @return Closure
      */
-    protected function prepareDestination(Closure $destination) : Closure
+    protected function prepareDestination(Closure $destination): Closure
     {
-        return function() use ($destination) {
-            return call_user_func_array($destination, func_get_args());
+        return function ($passable) use ($destination) {
+            return $destination($passable);
         };
     }
 
     /**
-     * Empilha os pipes, criando o "onion" de callables.
+     * Get a Closure that represents a slice of the application onion.
      *
      * @return Closure
      */
-     
-     /**
- * Constroi o "onion" de callables para a pipeline.
- *
- * @return Closure
-*/
-protected function carry(): Closure 
-{
-  return function(mixed $stack, mixed $pipe): Closure {
-    
-    return function(...$args) use($stack, $pipe): mixed {
-
-      $passable = $args;
-
-      $passable[] = $stack;
-
-      $passable = array_merge($passable, $this->parameters);
-
-      if (is_callable($pipe)) {
-
-        return $pipe(...$passable);
-
-      } elseif (is_string($pipe)) {
-
-        [$name, $params] = $this->parsePipeString($pipe);
-
-        $pipe = new $name();
-
-        return $pipe->{$this->method}(...array_merge($passable, $params));
-
-      } elseif (is_object($pipe)) {
-
-        return $pipe->{$this->method}(...$passable);
-
-      }
-
-    };
-
-  };
-
-}
-    /**
-     * Constroi um pipe a partir de uma string de classe.
-     *
-     * @param string $pipe
-     * @return Closure
-     */
-    protected function buildPipeFromString(string $pipe) : Closure
+    protected function carry(): Closure
     {
-        list($name, $params) = $this->parsePipeString($pipe);
-        
-        return function(...$args) use ($name, $params) {
-            $instance = new $name;
-            
-            return $instance->{$this->method}(...array_merge($args, $params));
+        return function ($stack, $pipe): Closure {
+            return function ($passable) use ($stack, $pipe): mixed {
+                $passable = array_merge([$passable, $stack], $this->parameters);
+
+                if (is_callable($pipe)) {
+                    return $pipe($passable);
+                } elseif (is_string($pipe)) {
+                    [$name, $params] = $this->parsePipeString($pipe);
+                    $pipe = new $name();
+
+                    return $pipe->{$this->method}(...array_merge($passable, $params));
+                } elseif (is_object($pipe)) {
+                    return $pipe->{$this->method}(...$passable);
+                }
+            };
         };
     }
 
     /**
-     * Chama o método do pipe com os argumentos informados.
+     * Parse full pipe string to get name and parameters.
      *
-     * @param mixed $pipe
-     * @param array $args
-     * @return mixed
-     */
-    protected function callPipeMethod($pipe, ...$args)
-    {
-        return $pipe->{$this->method}(...$args);
-    }
-
-    /**
-     * Parseia uma string de pipe em nome de classe e parâmetros.
-     * 
      * @param string $pipe
      * @return array
      */
-    protected function parsePipeString(string $pipe) : array
+    protected function parsePipeString(string $pipe): array
     {
-        $pipe = explode(':', $pipe, 2);
-        
-        return array_pad($pipe, 2, []);
-    }
+        list($name, $parameters) = array_pad(explode(':', $pipe, 2), 2, []);
 
+        if (is_string($parameters)) {
+            $parameters = explode(',', $parameters);
+        }
+
+        return [$name, $parameters];
+    }
 }
