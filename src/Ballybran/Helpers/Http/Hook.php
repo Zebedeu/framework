@@ -33,7 +33,7 @@ class Hook
         exit();
     }
 
-    public static function redirect($url, $status = 302)
+    public static function redirect($url, $status = 200)
     {
         return self::$header = header('Location:' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
         exit();

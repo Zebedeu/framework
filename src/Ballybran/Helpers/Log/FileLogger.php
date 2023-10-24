@@ -49,7 +49,7 @@ class FileLogger implements iLogger
      */
     public function write($message, string $type = null)
     {
-        if ($this->handle = fopen($this->filename, 'a')) {
+        if ($this->handle = fopen(getcwd() . DS. DIR_STORAGE.$this->filename, 'a')) {
             if (is_array($message) && $type == 'A') {
                 foreach ($message as $key => $value) {
                     fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($key . " -> " . $value, true) . "\n");
@@ -72,7 +72,7 @@ class FileLogger implements iLogger
 
         fclose($this->handle);
         if ($this->filename == true) {
-            chmod($this->filename, 0755);
+            chmod(getcwd() . DS. DIR_STORAGE.$this->filename, 0755);
         }
     }
 
@@ -118,9 +118,9 @@ class FileLogger implements iLogger
      * @param type $files
      * @return type
      */
-    public function Files($files)
+    public function files($files)
     {
-        return $this->files = $files;
+        return $this->filename = $files;
     }
 
 

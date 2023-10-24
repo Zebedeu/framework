@@ -39,14 +39,16 @@ class ClientRest extends Encodes
         $this->compression = $compression;
         $this->proxy = $proxy;
         $this->cookies = $cookies;
-        if ($this->cookies == true) $this->cookie($cookie);
+        if ($this->cookies == true) {
+            $this->cookie($cookie);
+        }
 
     }
 
     private function cookie($cookie_file)
     {
         if (file_exists($cookie_file)) {
-             $this->cookie_file = $cookie_file;
+                $this->cookie_file = $cookie_file;
         } else {
             fopen($cookie_file, 'w') or $this->error('The cookie file could not be opened. Make sure this directory has the correct permissions');
             $this->cookie_file = $cookie_file;
@@ -54,17 +56,23 @@ class ClientRest extends Encodes
         }
     }
 
-    public function get($url, $fields = null)
+    public function get($url, $fields = null, $httpheader = null)
     {
         $process = curl_init($url);
-        curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
+        curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
         curl_setopt($process, CURLOPT_HEADER, 0);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        if ($this->cookies == true) {
+            curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        }
+        if ($this->cookies == true) {
+            curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        }
         curl_setopt($process, CURLOPT_ENCODING, $this->compression);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        if ($this->proxy) {
+            curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        }
         curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
         $return = curl_exec($process);
@@ -89,17 +97,26 @@ class ClientRest extends Encodes
 
     }
 
-    public function post($url, $data)
+    public function post($url, $data, $httpheader = null )
     {
         $process = curl_init($url);
-        // curl_setopt($process, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($process, CURLOPT_HEADER, 1);
+        if(null == $httpheader){
+            $httpheader = $this->headers;
+        }
+        curl_setopt($process, CURLOPT_HTTPHEADER, $httpheader);
+        // curl_setopt($process, CURLOPT_HEADER, 1);
         curl_setopt($process, CURLOPT_USERAGENT, $this->user_agent);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
-        if ($this->cookies == true) curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        if ($this->cookies == true) {
+            curl_setopt($process, CURLOPT_COOKIEFILE, $this->cookie_file);
+        }
+        if ($this->cookies == true) {
+            curl_setopt($process, CURLOPT_COOKIEJAR, $this->cookie_file);
+        }
         curl_setopt($process, CURLOPT_ENCODING, $this->compression);
         curl_setopt($process, CURLOPT_TIMEOUT, 30);
-        if ($this->proxy) curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        if ($this->proxy) {
+            curl_setopt($process, CURLOPT_PROXY, $this->proxy);
+        }
         curl_setopt($process, CURLOPT_POST, 1);
         curl_setopt($process, CURLOPT_POSTFIELDS, $data);
         curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
@@ -121,7 +138,7 @@ class ClientRest extends Encodes
         $data = array("status" => 'R');
         curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($data));
         $response = curl_exec($process);
-        if ( false === $response ) {
+        if (false === $response) {
             $info = curl_getinfo($process);
             curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));
@@ -144,7 +161,7 @@ class ClientRest extends Encodes
         curl_setopt($process, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($service_url));
         $curl_response = curl_exec($process);
-        if ( false === $curl_response) {
+        if (false === $curl_response) {
             $info = curl_getinfo($process);
             curl_close($process);
             die('error occured during curl exec. Additioanl info: ' . var_export($info));

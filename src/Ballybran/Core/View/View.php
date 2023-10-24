@@ -28,9 +28,6 @@
  *
  * *NOTE* When a view uses a layout, the output of the view is ignored, as
  *        as the view is expected to use capture() to send data to the layout.
-
-
-/**
  * @property  UserData propriedade gerada e usada para pegar dados do model
  */
 
@@ -38,8 +35,6 @@ namespace Ballybran\Core\View;
 
 use Ballybran\Core\Collections\Collection\IteratorDot;
 use Ballybran\Helpers\Security\RenderFiles;
-use Ballybran\Library\Form;
-use Ballybran\Library\interfaceForm;
 use \Ballybran\Helpers\Event\Registry;
 
 class View extends RenderFiles implements ViewrInterface, \ArrayAccess
@@ -49,17 +44,18 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
     protected string $controllers;
     private Form $form;
     private Registry $reg;
+    public IteratorDot $dot;
 
-    public function __construct(interfaceForm $form = null)
+    /**
+     * @var string title for meta title
+     */
+    public $title;
+
+    public function __construct()
     {
         $this->reg = Registry::getInstance();
-
-        if ($form != null && $form instanceof Form) {
-            $this->form = $form;
-        } else {
-            $this->form = new Form();
-        }
         $this->data;
+        $this->dot = new IteratorDot();
     }
 
     /**
@@ -73,18 +69,22 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
      */
     public function render(object $controller, string $view): string
     {
-        $this->dot = new IteratorDot($this->get_data());
-
+      
         $data = (null === $this->get_data()) ? array() : $this->get_data();
+        $this->dot->merge($data);
         $this->view = $view;
+
         $remove_namespace = explode('\\', get_class($controller));
         $this->controllers = $remove_namespace[3];
         extract($this->get_data());
-        ob_start();
-        $this->isHeader();
 
-        include $this->file =  VIEW . $this->controllers . DS . $this->view . $this->ex;
-        $this->isFooter();
+        ob_start();
+
+        $loader = new \Twig\Loader\FilesystemLoader('html/views/');
+
+        $twig = new \Twig\Environment($loader);
+
+        echo $twig->render("$this->controllers/$this->view.html.twig", $this->data);
 
         $content = ob_get_contents();
         return $content;
@@ -99,9 +99,9 @@ class View extends RenderFiles implements ViewrInterface, \ArrayAccess
         return ob_get_clean();
     }
 
-    public function merge(array $data) : void
+    public function add(array $data) : void
     {
-        $this->data = \array_merge($this->data, $data);
+        $this->data = array_merge( $this->data, $data );
 
     }
 

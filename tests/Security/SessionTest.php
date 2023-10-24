@@ -8,34 +8,26 @@
 
 use PHPUnit\Framework\TestCase as PHPUnit;
 
-class SessionTest  extends PHPUnit
+class SessionTest extends PHPUnit
 {
-
-
-    private $init;
-
-    protected function setUp() : void
-    {
-
-    }
 
     public function testGetUserSession()
     {
-        $user = \Ballybran\Helpers\Security\Session::set("U_NAME", "John Doe");
+        $user = \Ballybran\Helpers\Security\Session::set("U_NAME" , "John Doe");
 
-        $this->assertEquals("John Doe", $user);
+        $this->assertEquals("John Doe" , $user);
 
     }
 
     public function testsetUserSession()
     {
-        $user = \Ballybran\Helpers\Security\Session::set("U_NAME", "John Doe Other");
-        $this->assertEquals("John Doe Other", $user);
+        $user = \Ballybran\Helpers\Security\Session::set("U_NAME" , "John Doe Other");
+        $this->assertEquals("John Doe Other" , $user);
 
 
     }
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         \Ballybran\Helpers\Security\Session::Destroy();
     }

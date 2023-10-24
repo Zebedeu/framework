@@ -1,308 +1,196 @@
 <?php
+/**
+ *
+ * KNUT7 K7F (https://marciozebedeu.com/)
+ * KNUT7 K7F (tm) : Rapid Development Framework (https://marciozebedeu.com/)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @link      https://github.com/knut7/framework/ for the canonical source repository
+ * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
+ * @license   https://marciozebedeu.com/license/new-bsd MIT lIcense
+ * @author    Marcio Zebedeu - artphoweb@artphoweb.com
+ * @version   1.0.15
+ *
+ *
+ */
 
 namespace Ballybran\Core\Http;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-
-/**
- * Class Response
- * @package Hero\Http
- */
-class Response implements ResponseInterface
+class Response extends Message
 {
     /**
+     * This is the list of currently registered HTTP status codes.
+     *
+     * @var array
+     */
+    public static $statusCodes = [
+        100 => 'Continue',
+        101 => 'Switching Protocols',
+        102 => 'Processing',
+        200 => 'OK',
+        201 => 'Created',
+        202 => 'Accepted',
+        203 => 'Non-Authorative Information',
+        204 => 'No Content',
+        205 => 'Reset Content',
+        206 => 'Partial Content',
+        207 => 'Multi-Status', // RFC 4918
+        208 => 'Already Reported', // RFC 5842
+        226 => 'IM Used', // RFC 3229
+        300 => 'Multiple Choices',
+        301 => 'Moved Permanently',
+        302 => 'Found',
+        303 => 'See Other',
+        304 => 'Not Modified',
+        305 => 'Use Proxy',
+        307 => 'Temporary Redirect',
+        308 => 'Permanent Redirect',
+        400 => 'Bad Request',
+        401 => 'Unauthorized',
+        402 => 'Payment Required',
+        403 => 'Forbidden',
+        404 => 'Not Found',
+        405 => 'Method Not Allowed',
+        406 => 'Not Acceptable',
+        407 => 'Proxy Authentication Required',
+        408 => 'Request Timeout',
+        409 => 'Conflict',
+        410 => 'Gone',
+        411 => 'Length Required',
+        412 => 'Precondition failed',
+        413 => 'Request Entity Too Large',
+        414 => 'Request-URI Too Long',
+        415 => 'Unsupported Media Type',
+        416 => 'Requested Range Not Satisfiable',
+        417 => 'Expectation Failed',
+        418 => 'I\'m a teapot', // RFC 2324
+        421 => 'Misdirected Request', // RFC7540 (HTTP/2)
+        422 => 'Unprocessable Entity', // RFC 4918
+        423 => 'Locked', // RFC 4918
+        424 => 'Failed Dependency', // RFC 4918
+        426 => 'Upgrade Required',
+        428 => 'Precondition Required', // RFC 6585
+        429 => 'Too Many Requests', // RFC 6585
+        431 => 'Request Header Fields Too Large', // RFC 6585
+        451 => 'Unavailable For Legal Reasons', // draft-tbray-http-legally-restricted-status
+        500 => 'Internal Server Error',
+        501 => 'Not Implemented',
+        502 => 'Bad Gateway',
+        503 => 'Service Unavailable',
+        504 => 'Gateway Timeout',
+        505 => 'HTTP Version not supported',
+        506 => 'Variant Also Negotiates',
+        507 => 'Insufficient Storage', // RFC 4918
+        508 => 'Loop Detected', // RFC 5842
+        509 => 'Bandwidth Limit Exceeded', // non-standard
+        510 => 'Not extended',
+        511 => 'Network Authentication Required', // RFC 6585
+    ];
+
+    /**
+     * HTTP status code.
+     *
      * @var int
      */
-    private $code;
+    protected $status;
 
     /**
-     * @var Stream
+     * HTTP status text.
+     *
+     * @var string
      */
-    private $body;
+    protected $statusText;
 
     /**
-     * Response constructor.
+     * Creates the response object.
+     *
+     * @param string|int $status
+     * @param array      $headers
+     * @param resource   $body
      */
-    public function __construct()
+    public function __construct($status = 500, array $headers = null, $body = null)
     {
-        $this->code = 200;
-        $this->body = new Stream();
+        if (null !== $status) {
+            $this->setStatus($status);
+        }
+        if (null !== $headers) {
+            $this->setHeaders($headers);
+        }
+        if (null !== $body) {
+            $this->setBody($body);
+        }
     }
 
     /**
-     * Retrieves the HTTP protocol version as a string.
-     *
-     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
-     *
-     * @return string HTTP protocol version.
+     * Returns the current HTTP status code.
      */
-    public function getProtocolVersion()
+    public function getStatus(): int
     {
-        // TODO: Implement getProtocolVersion() method.
-        throw new \Exception('Method not implemented yet!');
+        return $this->status;
     }
 
     /**
-     * Return an instance with the specified HTTP protocol version.
+     * Returns the human-readable status string.
      *
-     * The version string MUST contain only the HTTP version number (e.g.,
-     * "1.1", "1.0").
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new protocol version.
-     *
-     * @param string $version HTTP protocol version
-     * @return static
+     * In the case of a 200, this may for example be 'OK'.
      */
-    public function withProtocolVersion($version)
+    public function getStatusText(): string
     {
-        // TODO: Implement withProtocolVersion() method.
-        throw new \Exception('Method not implemented yet!');
+        return $this->statusText;
     }
 
     /**
-     * Retrieves all message header values.
+     * Sets the HTTP status code.
      *
-     * The keys represent the header name as it will be sent over the wire, and
-     * each value is an array of strings associated with the header.
+     * This can be either the full HTTP status code with human readable string,
+     * for example: "403 I can't let you do that, Dave".
      *
-     *     // Represent the headers as a string
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         echo $name . ": " . implode(", ", $values);
-     *     }
+     * Or just the code, in which case the appropriate default message will be
+     * added.
      *
-     *     // Emit headers iteratively:
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         foreach ($values as $value) {
-     *             header(sprintf('%s: %s', $name, $value), false);
-     *         }
-     *     }
+     * @param string|int $status
      *
-     * While header names are not case-sensitive, getHeaders() will preserve the
-     * exact case in which headers were originally specified.
-     *
-     * @return string[][] Returns an associative array of the message's headers. Each
-     *     key MUST be a header name, and each value MUST be an array of strings
-     *     for that header.
+     * @throws \InvalidArgumentException
      */
-    public function getHeaders()
+    public function setStatus($status)
     {
-        // TODO: Implement getHeaders() method.
-        throw new \Exception('Method not implemented yet!');
+        if (ctype_digit($status) || is_int($status)) {
+            $statusCode = $status;
+            $statusText = self::$statusCodes[$status] ?? 'Unknown';
+        } else {
+            list(
+                $statusCode,
+                $statusText
+            ) = explode(' ', $status, 2);
+            $statusCode = (int) $statusCode;
+        }
+        if ($statusCode < 100 || $statusCode > 999) {
+            throw new \InvalidArgumentException('The HTTP status code must be exactly 3 digits');
+        }
+
+        $this->status = $statusCode;
+        $this->statusText = $statusText;
     }
 
     /**
-     * Checks if a header exists by the given case-insensitive name.
+     * Serializes the response object as a string.
      *
-     * @param string $name Case-insensitive header field name.
-     * @return bool Returns true if any header names match the given header
-     *     name using a case-insensitive string comparison. Returns false if
-     *     no matching header name is found in the message.
+     * This is useful for debugging purposes.
      */
-    public function hasHeader($name)
+    public function __toString(): string
     {
-        // TODO: Implement hasHeader() method.
-        throw new \Exception('Method not implemented yet!');
-    }
+        $str = 'HTTP/'.$this->httpVersion.' '.$this->getStatus().' '.$this->getStatusText()."\r\n";
+        foreach ($this->getHeaders() as $key => $value) {
+            foreach ($value as $v) {
+                $str .= $key.': '.$v."\r\n";
+            }
+        }
+        $str .= "\r\n";
+        $str .= $this->getBodyAsString();
 
-    /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * This method returns an array of all the header values of the given
-     * case-insensitive header name.
-     *
-     * If the header does not appear in the message, this method MUST return an
-     * empty array.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @return string[] An array of string values as provided for the given
-     *    header. If the header does not appear in the message, this method MUST
-     *    return an empty array.
-     */
-    public function getHeader($name)
-    {
-        // TODO: Implement getHeader() method.
-        throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Retrieves a comma-separated string of the values for a single header.
-     *
-     * This method returns all of the header values of the given
-     * case-insensitive header name as a string concatenated together using
-     * a comma.
-     *
-     * NOTE: Not all header values may be appropriately represented using
-     * comma concatenation. For such headers, use getHeader() instead
-     * and supply your own delimiter when concatenating.
-     *
-     * If the header does not appear in the message, this method MUST return
-     * an empty string.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @return string A string of values as provided for the given header
-     *    concatenated together using a comma. If the header does not appear in
-     *    the message, this method MUST return an empty string.
-     */
-    public function getHeaderLine($name)
-    {
-        // TODO: Implement getHeaderLine() method.
-        throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Return an instance with the provided value replacing the specified header.
-     *
-     * While header names are case-insensitive, the casing of the header will
-     * be preserved by this function, and returned from getHeaders().
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new and/or updated header and value.
-     *
-     * @param string $name Case-insensitive header field name.
-     * @param string|string[] $value Header value(s).
-     * @return static
-     * @throws \InvalidArgumentException for invalid header names or values.
-     */
-    public function withHeader($name, $value)
-    {
-        // TODO: Implement withHeader() method.
-        throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Return an instance with the specified header appended with the given value.
-     *
-     * Existing values for the specified header will be maintained. The new
-     * value(s) will be appended to the existing list. If the header did not
-     * exist previously, it will be added.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new header and/or value.
-     *
-     * @param string $name Case-insensitive header field name to add.
-     * @param string|string[] $value Header value(s).
-     * @return static
-     * @throws \InvalidArgumentException for invalid header names or values.
-     */
-    public function withAddedHeader($name, $value)
-    {
-        // TODO: Implement withAddedHeader() method.
-        throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Return an instance without the specified header.
-     *
-     * Header resolution MUST be done without case-sensitivity.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that removes
-     * the named header.
-     *
-     * @param string $name Case-insensitive header field name to remove.
-     * @return static
-     */
-    public function withoutHeader($name)
-    {
-        // TODO: Implement withoutHeader() method.
-        throw new \Exception('Method not implemented yet!');
-    }
-
-    /**
-     * Gets the body of the message.
-     *
-     * @return StreamInterface Returns the body as a stream.
-     */
-    public function getBody()
-    {
-        return $this->body;
-    }
-
-    /**
-     * Return an instance with the specified message body.
-     *
-     * The body MUST be a StreamInterface object.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return a new instance that has the
-     * new body stream.
-     *
-     * @param StreamInterface $body Body.
-     * @return static
-     * @throws \InvalidArgumentException When the body is not valid.
-     */
-    public function withBody(StreamInterface $body)
-    {
-        $new = clone $this;
-
-        $new->body = $body;
-
-        return $new;
-    }
-
-    /**
-     * Gets the response status code.
-     *
-     * The status code is a 3-digit integer result code of the server's attempt
-     * to understand and satisfy the request.
-     *
-     * @return int Status code.
-     */
-    public function getStatusCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Return an instance with the specified status code and, optionally, reason phrase.
-     *
-     * If no reason phrase is specified, implementations MAY choose to default
-     * to the RFC 7231 or IANA recommended reason phrase for the response's
-     * status code.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * updated status and reason phrase.
-     *
-     * @link http://tools.ietf.org/html/rfc7231#section-6
-     * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-     * @param int $code The 3-digit integer result code to set.
-     * @param string $reasonPhrase The reason phrase to use with the
-     *     provided status code; if none is provided, implementations MAY
-     *     use the defaults as suggested in the HTTP specification.
-     * @return static
-     * @throws \InvalidArgumentException For invalid status code arguments.
-     */
-    public function withStatus($code, $reasonPhrase = '')
-    {
-        $new = clone $this;
-
-        $new->code = $code;
-
-        return $new;
-    }
-
-    /**
-     * Gets the response reason phrase associated with the status code.
-     *
-     * Because a reason phrase is not a required element in a response
-     * status line, the reason phrase value MAY be null. Implementations MAY
-     * choose to return the default RFC 7231 recommended reason phrase (or those
-     * listed in the IANA HTTP Status Code Registry) for the response's
-     * status code.
-     *
-     * @link http://tools.ietf.org/html/rfc7231#section-6
-     * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-     * @return string Reason phrase; must return an empty string if none present.
-     */
-    public function getReasonPhrase()
-    {
-        // TODO: Implement getReasonPhrase() method.
-        throw new \Exception('Method not implemented yet!');
+        return $str;
     }
 }

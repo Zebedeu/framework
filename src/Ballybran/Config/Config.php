@@ -26,6 +26,9 @@ namespace Ballybran\Config;
 
 require './config/config.php';
 
+if (!defined('VERSION')) {
+    define('VERSION', '1.0.14.RC');
+}
 /*
  *
  * This is for database passwords only
@@ -41,6 +44,8 @@ define('AUTH_SALT', 'eZyT)-Naw]F8CwA*VaW#q*|.)g@o}||wf~@C-YSt}(dh_r6EbI#A,y|nU2{
 define('SECURE_AUTH_SALT', '!=oLUTXh,QW=H `}`L|9/^4-3 STz},T(w}W<I`.JjPi)<Bmf1v,HpGe}T1:Xt7n');
 define('LOGGED_IN_SALT', '+XSqHc;@Q*K_b|Z?NC[3H!!EONbh.n<+=uKR:>*c(u`g~EJBf#8u#R{mUEZrozmm');
 define('NONCE_SALT', 'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{%^VyKT');
+define('KEY_PAR_PASSWORD', 'test');
+
 
 /*
  * prefix to cache
@@ -51,10 +56,15 @@ define('Ballybran_CACHE', 'cache_');
  *
  *
  */
+if(!defined('ALGO')){
 define('ALGO', 'md5');
+}
 
 // DIR
+
+if(!defined('DS')){
 define('DS', DIRECTORY_SEPARATOR);
+}
 /*
  *
  * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
@@ -62,7 +72,9 @@ define('DS', DIRECTORY_SEPARATOR);
  */
 // require_once PV . 'Config/config_module.php';
 
+if(!defined('PV')){
 define('PV', 'App' . DS);
+}
 
 /*
  * APP é a costante responsavel pela criacao da tua applicação.
@@ -98,6 +110,15 @@ if (!empty($HEADER_DESCRIPTION)) {
     define('HEADER_DESCRIPTION', 'knut7');
 }
 
+define('PRODUCT_COMPANYTAXID', 'Clínica Pro');
+
+define('SOFTWARE_VALIDATION_NUMBER', '434/AGT/2020');
+
+define('PRODUCT_ID', 'Clinica Pro/2020');
+
+define('PRODUCT_VERSION', '1.0.0');
+
+
 global $code;
 
 if (!empty($code)) {
@@ -121,27 +142,87 @@ if (!empty($_dev)) {
 }
 
 
+global $MY_CSRFP_TOKEN;
+if(!defined('MY_CSRFP_TOKEN')){
+    define('MY_CSRFP_TOKEN', $MY_CSRFP_TOKEN);
+}
+global $failedAuthAction;
+if(!defined('failedAuthAction')){
+    define('failedAuthAction', $failedAuthAction);
+}
+global $GET_METHOD;
+if(!defined('GET_METHOD')){
+    define('GET_METHOD', $GET_METHOD);
+}
+global $POST_METHOD;
+if(!defined('POST_METHOD')){
+    define('POST_METHOD', $POST_METHOD);
+}
+global $errorRedirectionPage;
+if(!defined('errorRedirectionPage')){
+    define('errorRedirectionPage', $errorRedirectionPage);
+}
+global $customErrorMessage;
+if(!defined('customErrorMessage')){
+    define('customErrorMessage', $customErrorMessage);
+}
+global $jsUrl;
+if(!defined('jsUrl')){
+    define('jsUrl', $jsUrl);
+}
+global $tokenLength;
+if(!defined('tokenLength')){
+    define('tokenLength', $tokenLength);
+}
+global $cookie_path;
+if(!defined('cookie_path')){
+    define('cookie_path', $cookie_path);
+}
+global $cookie_domain;
+if(!defined('cookie_domain')){
+    define('cookie_domain', $cookie_domain);
+}
+global $cookie_secure;
+if(!defined('cookie_secure')){
+    define('cookie_secure', $cookie_secure);
+}
+global $cookie_expire;
+if(!defined('cookie_expire')){
+    define('cookie_expire', $cookie_expire);
+}
+
 /*
  *
  *  O URL base do sistema
  */
+$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']   . ( BASE_PORT ? ":".BASE_PORT : '');
+$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 
-define('URL', 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
-define('HTTPS', 'https://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR);
+if(!defined('URL')){
+define('URL', $root);
+}
 
 define('ROOT', dirname(__FILE__));
 
-/*
- *   App/YourProject/
- */
-define('DIR_FILE', 'public' . DS);
-
 // define('DIR_FILES', PV . APP . '/class/');
 
-define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
+if(!defined('DIR_FILE')){
+define('DIR_FILE', 'public' . DS);
+}
 
-define('DIR_LOGS', 'storage/log/');
-define('DIR_COOKIE', 'storage/cookie/');
+if(!defined('DIR_LANGUAGE')){
+define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
+}
+
+if(!defined('DIR_LOGS')){
+define('DIR_LOGS', 'log/');
+}
+if(!defined('DIR_COOKIE')){
+define('DIR_COOKIE', 'cookie/');
+}
+if(!defined('DIR_STORAGE')){
+define('DIR_STORAGE', 'storage/');
+}
 
 /*
  *
@@ -149,6 +230,6 @@ define('DIR_COOKIE', 'storage/cookie/');
  * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
  *
  */
-    define('VIEW', 'html'. DS . 'views' . DS);
+    define('VIEW', 'html' . DS . 'views' . DS);
 
 

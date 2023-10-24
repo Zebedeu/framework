@@ -27,22 +27,18 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function setFetchMode($fetchMode, $arg2 = null, $arg3 = null)
+    public function setFetchMode(int $mode = PDO::FETCH_BOTH, mixed ...$args)
     {
         // This thin wrapper is necessary to shield against the weird signature
         // of PDOStatement::setFetchMode(): even if the second and third
         // parameters are optional, PHP will not let us remove it from this
         // declaration.
         try {
-            if ($arg2 === null && $arg3 === null) {
-                return parent::setFetchMode($fetchMode);
+            if ($args === null ) {
+                return parent::setFetchMode($mode);
             }
 
-            if ($arg3 === null) {
-                return parent::setFetchMode($fetchMode, $arg2);
-            }
-
-            return parent::setFetchMode($fetchMode, $arg2, $arg3);
+            return parent::setFetchMode($mode, $args);
         } catch (\PDOException $exception) {
             throw new PDOException($exception);
         }
@@ -51,43 +47,43 @@ class PDOStatement extends \PDOStatement
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = \PDO::PARAM_STR)
+    public function bindValue($param, $value, $type = \PDO::PARAM_STR): bool
     {
         try {
             return parent::bindValue($param, $value, $type);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null)
+    public function bindParam($column, &$variable, $type = \PDO::PARAM_STR, $length = null, $driverOptions = null): bool
     {
         try {
             return parent::bindParam($column, $variable, $type, $length, $driverOptions);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function execute($params = null)
+    public function execute(?array $params = null): bool
     {
         try {
             return parent::execute($params);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null)
+    public function fetch($fetchMode = null, $cursorOrientation = null, $cursorOffset = null): bool
     {
         try {
             if ($fetchMode === null && $cursorOrientation === null && $cursorOffset === null) {
@@ -104,44 +100,41 @@ class PDOStatement extends \PDOStatement
 
             return parent::fetch($fetchMode, $cursorOrientation, $cursorOffset);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
-    {
+    public function fetchAll(int $mode = PDO::FETCH_BOTH, mixed ...$args): array {
+    
         try {
-            if ($fetchMode === null && $fetchArgument === null && $ctorArgs === null) {
+            if ($mode === null && $args === null) {
                 return parent::fetchAll();
             }
 
-            if ($fetchArgument === null && $ctorArgs === null) {
-                return parent::fetchAll($fetchMode);
+            if ($args === null) {
+                return parent::fetchAll($mode);
             }
 
-            if ($ctorArgs === null) {
-                return parent::fetchAll($fetchMode, $fetchArgument);
-            }
-
-            return parent::fetchAll($fetchMode, $fetchArgument, $ctorArgs);
+            return parent::fetchAll($mode, $args);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchColumn($columnIndex = 0)
-    {
+        public function fetchColumn(int $column = 0): mixed { 
+    
         try {
-            return parent::fetchColumn($columnIndex);
+            return parent::fetchColumn($column);
         } catch (\PDOException $exception) {
-            throw new PDOException($exception);
+            throw new \PDOException($exception);
         }
+    
     }
 
 }

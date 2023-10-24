@@ -19,12 +19,11 @@
 namespace Ballybran\Core\Model;
 
 use Ballybran\Database\RegistryDatabase;
-use Ballybran\Exception\KException;
-
+use Ballybran\Helpers\Security\csrf\libs\csrf\csrfProtector;
 /**
  * Class Model.
  */
-class Model
+abstract class Model extends csrfProtector
 {
     /**
      * @var
@@ -43,6 +42,11 @@ class Model
     /**
      * @var string
      */
+    public $controller = 'Controllers';
+
+    /**
+     * @var string
+     */
     private $obj;
 
     /**
@@ -51,23 +55,30 @@ class Model
     public function __construct()
     {
         $this->getLoadModel();
+
+    }
+
+
+    public function createClassModel(){
+         $className = str_replace('\\', '/', get_class($this));
+         $classModel = str_replace($this->controller, $this->modelPath, $className);
+         $this->modelClass = $classModel . 'Model';
+
+         return $this->modelClass;
+       
     }
 
     /**
      * @return mixed
      */
-
-
-    private function getLoadModel()
+  
+    public function getLoadModel()
     {
-        $className = str_replace('\\', '/', get_class($this));
-        $classModel = str_replace('Controllers', $this->modelPath, $className);
-        $this->modelClass = $classModel . 'Model';
-        //$path = 'App/' . $this->modelClass . '.php';  // Use when bootstrap route is enabled
-        $path =   $this->modelClass . '.php';
+        
+        $path = $this->createClassModel() . '.php';
         if (file_exists($path) || is_readable($path)) {
             require_once $path;
-            return $this->dbObject();
+            return $this->model =  $this->dbObject();
         }
 
     }
@@ -81,9 +92,7 @@ class Model
         $this->obj = $registry->get(TYPE);
         $className = str_replace('/', '\\', $this->modelClass);
 
-        $this->model = new $className($this->obj);
-
-         $this->model;
+        return new $className($this->obj);
     }
 
 }

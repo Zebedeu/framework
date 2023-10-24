@@ -21,19 +21,8 @@ namespace Ballybran\Core\View;
 
 interface ViewrInterface
 {
-    public function render(object $controller, String $view);
+    public function render(object $controller , string $view);
 
     public function fetch($data = null);
 
-    public function get_data() : array;
-
-    public function merge(array $data) : void;
-
-    public function offsetExists($offset) : bool;
-
-    public function offsetGet($offset) : string ;
-
-    public function offsetSet($offset, $value) : void;
-
-    public function offsetUnset($offset) : void;
 }

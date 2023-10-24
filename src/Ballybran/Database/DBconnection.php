@@ -14,7 +14,7 @@
  * @license   https://marciozebedeu.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
  *
- * @version   1.0.2
+ * @version   1.0.15
  */
 
 namespace Ballybran\Database;
@@ -80,10 +80,10 @@ class DBconnection extends PDOStatement implements DBconnectionInterface
      * */
     protected function _beginTransaction()
     {
-        if (!$this->beginTransactioncount && $this->beginTransactioncount++) {
-            return parent::beginTransaction();
+        if (!$this->beginTransactioncount++) {
+            return  $this->_instances->beginTransaction();
         }
-
+        $this->exec('SAVEPOINT trans'.$this->transactionCounter);
         return $this->beginTransactioncount >= 0;
     }
 
@@ -92,11 +92,9 @@ class DBconnection extends PDOStatement implements DBconnectionInterface
      * */
     protected function _commit()
     {
-        $beginTransactioncount = 0;
-        if (!++$beginTransactioncount) {
-            return parent::commit();
+       if (! --$this->beginTransactioncount) {
+            return $this->_instances->commit();
         }
-
         return $this->beginTransactioncount >= 0;
     }
 
@@ -105,11 +103,11 @@ class DBconnection extends PDOStatement implements DBconnectionInterface
      * */
     protected function _Rollback()
     {
-        if ($this->beginTransactioncount >= 0) {
-            $this->beginTransactioncount = 0;
-
-            return parent::rollBack();
+        if ( --$this->beginTransactioncount) {
+            $this->_instances->exec('ROLLBACK TO trans '.$this->beginTransactioncount + 1);
+            return true;
         }
+            return $this->_instances->rollBack();
     }
 
     public function __destruct()

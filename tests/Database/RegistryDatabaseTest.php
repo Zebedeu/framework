@@ -7,7 +7,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @link      https://github.com/knut7/framework/ for the canonical source repository
+ * @link      https://github.com/knut7/knu7 for the canonical source repository
  * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
  * @license   https://marciozebedeu.com/license/new-bsd New BSD License
  * @author    Marcio Zebedeu - artphoweb@artphoweb.com
@@ -23,38 +23,39 @@ class RegistryDatabaseTest extends PHPUnit
 
 
     private $registry;
+    const VETT = 'it is test';
 
-
-    protected function setUp() : void
+    public function setUp() : void
     {
         $this->registry = RegistryDatabase::getInstance();
+        $this->registry->set("PDO" , 'bbbb' );
 
     }
 
-    public function testRegistryIsSingleton() {
+    public function testRegistryIsSingleton()
+    {
 
-        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase', $this->registry );
+        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase' , $this->registry);
         $this->returnSelf();
 
     }
 
     public function testIfGetInstanceReturnInstance()
     {
-        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase', $this->registry );
+        $this->assertInstanceOf('\Ballybran\Database\RegistryDatabase' , $this->registry);
 
         $this->returnCallback($this->registry->getInstance());
     }
 
-    public function testIRegistryClassValid() {
+    public function testIRegistryClassValid()
+    {
 
-        $this->registry->set("PDO", str );
         $this->assertTrue($this->registry->isRegistered("PDO"));
 
     }
 
-    public function testIunRegistryClassValid() {
-
-        $this->registry->set("PDO", str);
+    public function testIunRegistryClassValid()
+    {
 
         $this->assertNull($this->registry->unRegistered("PDO"));
     }

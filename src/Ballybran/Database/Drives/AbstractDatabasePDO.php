@@ -118,14 +118,16 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
             krsort($data);
 
             $fieldNme = implode('`,`', array_keys($data));
-            $fieldValues = ':' . implode(',:', array_keys($data));
+            $fieldValues = ':' . implode(', :', array_keys($data));
             $this->_beginTransaction();
 
             $stmt = $this->conn->prepare("INSERT INTO $table (`$fieldNme`) VALUES ($fieldValues)");
 
             foreach ($data as $key => $values) {
+
                 $stmt->bindValue(":$key", $values);
             }
+
             $this->_commit();
             $stmt->execute();
             unset($stmt);
@@ -161,18 +163,19 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
         return $stmt->execute();
     }
 
+
     /**
      * @param $table
      * @param $data
-     * @param $where
-     *
-     * @return bool
+     * @param bool $isId
+     * @param null $where
+     * @return mixed
      */
-    public function save($table, $data, $where = null)
+    public function save($table, $data, $isId = false, $where = null)
     {
         ksort($data);
 
-        if (isset($data['id'])) {
+        if (true == $isId ) {
             ksort($data);
 
             $fielDetail = null;
@@ -188,8 +191,9 @@ class AbstractDatabasePDO extends DBconnection implements AbstractDatabaseInterf
             }
 
             return $stmt->execute();
+        }else {
+            $this->insert( $table , $data );
         }
-        $this->insert($table, $data);
     }
 
     /**

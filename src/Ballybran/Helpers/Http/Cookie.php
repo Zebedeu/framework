@@ -17,15 +17,13 @@
  */
 
 namespace Ballybran\Helpers\Http;
-use Ballybran\Core\Http\{
-    RestUtilities
-};
+use Ballybran\Core\Http\{Request , Response , RestUtilities};
 
 
 /**
  * Class Cookie.
  */
-class Cookie extends RestUtilities
+class Cookie
 {
 
     private static $default = [
@@ -40,7 +38,9 @@ class Cookie extends RestUtilities
     ];
 
     private $data;
-    private $responseCode;
+    private $request;
+    private $response;
+    private int $responseCode = 0;
 
 
     public function __construct()
@@ -58,7 +58,7 @@ class Cookie extends RestUtilities
      *
      * @return Cookie
      */
-    public function createCookie( $name, int $maxage = 0, string $path = '', string $domain = '', bool $secure = false,bool $HTTPOnly = false): Cookie
+    public function createCookie($name, int $maxage = 0, string $path = '', string $domain = '', bool $secure = false, bool $HTTPOnly = false): Cookie
     {
         $this->setName($name)
         ->setMaxage($maxage)
@@ -75,12 +75,12 @@ class Cookie extends RestUtilities
         $ob = ini_get('output_buffering');
 
         // Abort the method if headers have already been sent, except when output buffering has been enabled
-        if (headers_sent() && false === (bool)$ob  || 'off' == strtolower($ob) ) {
+        if (headers_sent() && false === (bool)$ob || 'off' == strtolower($ob)) {
             return $this;
         }
 
-        // Prevent "headers already sent" error with utf8 support (BOM)
-        //if ( utf8_support ) header('Content-Type: text/html; charset=utf-8');
+//         Prevent "headers already sent" error with utf8 support (BOM)
+//        if ( utf8_support ) header('Content-Type: text/html; charset=utf-8');
         header('Set-Cookie: ' . $this->getName() . ";"
             . (empty($this->getDomain()) ? '' : '; Domain=' . $this->getDomain())
             . (empty($this->getMaxage()) ? '' : '; Max-Age=' . $this->getMaxage())
@@ -106,9 +106,10 @@ class Cookie extends RestUtilities
      */
     public function setMaxage($maxage) : Cookie
     {
+
         if (!is_null($maxage)) {
             $maxage = intval($maxage);
-            $this->data['maxage'] = 'Expires=' . date(DATE_COOKIE, $maxage > 0 ? time() + $maxage : 0) . 'Max-Age=' . $maxage;
+            $this->data['maxage'] = 'Expires=' .gmdate("D, d M Y H:i:s",  $maxage > 0 ? time() + $maxage : 0)." GMT" . 'Max-Age=' . $maxage;
         }
         $this->data['maxage'] = $maxage;
         return $this;
@@ -129,13 +130,13 @@ class Cookie extends RestUtilities
      */
     public function setName($name) : Cookie
     {
-        if(is_array($name)) {
+        if (is_array($name)) {
 
             foreach ($name as $k => $v) {
                 $this->data['name'] = $k . '=' . rawurlencode($v);
             }
-        }else {
-            $this->data['name'] = $name . '='. rawurlencode($name);
+        } else {
+            $this->data['name'] = $name . '=' . rawurlencode($name);
         }
 
         return $this;
@@ -188,7 +189,7 @@ class Cookie extends RestUtilities
             }
             // Remove port information.
             $port = strpos($domain, ':');
-            if ( false !== $port ) {
+            if (false !== $port) {
                 $this->data['domain'] = substr($domain, 0, $port);
             }
         }
@@ -237,7 +238,7 @@ class Cookie extends RestUtilities
     /**
      * @return mixed
      */
-    private function getResponseCode()
+    private function getResponseCode(): int
     {
         return $this->responseCode;
     }
@@ -256,8 +257,8 @@ class Cookie extends RestUtilities
         return $this->data['value'];
     }
 
-    public function setValue($value){
-         $this->data['value']= $value;
+    public function setValue($value) {
+            $this->data['value'] = $value;
 
     }
 
