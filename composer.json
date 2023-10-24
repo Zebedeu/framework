@@ -32,6 +32,7 @@
     "twig/twig": "3.x-dev",
     "league/plates": "v3.x-dev",
     "guzzlehttp/guzzle": "7.9.x-dev",
+    "illuminate/events": "10.x-dev"
   
 
   },
