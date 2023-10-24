@@ -16,7 +16,7 @@
       "role": "Developer"
     }
   ],
-  "minimum-stability": "dev",
+
   "require": {
     "php": "^8.0",
     "psr/http-message": "^2.0@dev",
