@@ -60,11 +60,17 @@
     "analyse": "Analyse project quality using PHPStan"
   },
     "autoload": {
+       "files": [
+        "src/Ballybran/helper.php"
+      ],
         "psr-4": {
             "Ballybran\\": "src/Ballybran/"
         }
     },
     "autoload-dev": {
+       "files": [
+        "src/Ballybran/helper.php"
+      ],
         "psr-4": {
             "tests\\": "tests/"
         }
