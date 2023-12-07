@@ -103,7 +103,7 @@ if (!function_exists('logger')) {
      *
      * @param mixed|null $message
      *
-     * @return mixed|Knut7\Log\Log
+     * @return mixed|Ballybran\Log\Log
      */
     function logger($message = null)
     {
@@ -166,7 +166,7 @@ if (!function_exists('auth')) {
     /**
      * Authentication
      *
-     * @return Knut7\Auth\Auth
+     * @return Ballybran\Auth\Auth
      */
     function auth(): Knut7\Auth\Auth
     {
@@ -458,6 +458,7 @@ if (!function_exists('csrf_token')) {
     {
         $csrf = hash_hmac('sha256', config('app.key'), uniqid('', true));
         session()->set('_knut_csrf' . (!is_null($name) ? '_' . $name : ''), $csrf);
+
 
         return $csrf;
     }

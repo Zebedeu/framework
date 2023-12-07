@@ -77,6 +77,9 @@
     "analyse": "Analyse project quality using PHPStan"
   },
     "autoload": {
+       "files": [
+        "src/Ballybran/helper.php"
+      ],
         "psr-4": {
             "Ballybran\\": "src/Ballybran/"
         }
@@ -85,5 +88,10 @@
         "psr-4": {
             "tests\\": "tests/"
         }
-    }
+    },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
