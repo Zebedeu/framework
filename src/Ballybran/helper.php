@@ -103,7 +103,7 @@ if (!function_exists('logger')) {
      *
      * @param mixed|null $message
      *
-     * @return mixed|Nur\Log\Log
+     * @return mixed|Ballybran\Log\Log
      */
     function logger($message = null)
     {
@@ -166,9 +166,9 @@ if (!function_exists('auth')) {
     /**
      * Authentication
      *
-     * @return Nur\Auth\Auth
+     * @return Ballybran\Auth\Auth
      */
-    function auth(): Nur\Auth\Auth
+    function auth(): Knut7\Auth\Auth
     {
         /** @var \Ballybran\Auth\Auth $auth */
         return app(\Ballybran\Auth\Auth::class);
@@ -194,7 +194,7 @@ if (!function_exists('session')) {
      *
      * @param string|null $name
      *
-     * @return Nur\Http\Session|string|array|int
+     * @return Knut7\Http\Session|string|array|int
      */
     function session(?string $name = null)
     {
@@ -214,7 +214,7 @@ if (!function_exists('cookie')) {
      *
      * @param string|null $name
      *
-     * @return Nur\Http\Cookie|string|int
+     * @return Knut7\Http\Cookie|string|int
      */
     function cookie(?string $name = null)
     {
@@ -234,7 +234,7 @@ if (!function_exists('uri')) {
      *
      * @param string|null $name
      *
-     * @return string|Nur\Uri\Uri
+     * @return string|Knut7\Uri\Uri
      */
     function uri(?string $name = null)
     {
@@ -457,7 +457,8 @@ if (!function_exists('csrf_token')) {
     function csrf_token(?string $name = null): string
     {
         $csrf = hash_hmac('sha256', config('app.key'), uniqid('', true));
-        session()->set('_nur_csrf' . (!is_null($name) ? '_' . $name : ''), $csrf);
+        session()->set('_knut_csrf' . (!is_null($name) ? '_' . $name : ''), $csrf);
+
 
         return $csrf;
     }
@@ -475,9 +476,9 @@ if (!function_exists('csrf_check')) {
     function csrf_check(string $token, $name = null): bool
     {
         $name = (!is_null($name) ? '_' . $name : '');
-        if (session()->has('_nur_csrf' . $name) &&
-            $token === session()->get('_nur_csrf' . $name)) {
-            session()->delete('_nur_csrf' . $name);
+        if (session()->has('_knut_csrf' . $name) &&
+            $token === session()->get('_knut_csrf' . $name)) {
+            session()->delete('_knut_csrf' . $name);
             return true;
         }
 

@@ -1,235 +1,198 @@
 <?php
 
-/**
- * KNUT7 K7F (https://marciozebedeu.com/)
- * KNUT7 K7F (tm) : Rapid Development Framework (https://marciozebedeu.com/).
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @see      https://github.com/knut7/framework/ for the canonical source repository
- *
- * @copyright (c) 2015.  KNUT7  Software Technologies AO Inc. (https://marciozebedeu.com/)
- * @license   https://marciozebedeu.com/license/new-bsd New BSD License
- * @author    Marcio Zebedeu - artphoweb@artphoweb.com
- *
- * @version   1.0.2
- */
-
-/**
- * The sitewide hashkey, do not change this because its used for passwords!
- * This is for other hash keys... Not sure yet.
- */
-
 namespace Ballybran\Config;
 
-require './config/config.php';
+use ArrayAccess;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
+use Illuminate\Support\Arr;
 
-if (!defined('VERSION')) {
-    define('VERSION', '1.0.14.RC');
-}
-/*
+/**
+ * Class Config
+ * Adapted from illuminate/config packages of Laravel
+ * @see https://github.com/laravel/framework/tree/8.x/src/Illuminate/Config
  *
- * This is for database passwords only
- *
+ * @package Knut7\Config
  */
-define('HASH_KEY', '?j)o@LHX~E!SqxRwzm%Jy^Dyo<cEjL<j1:}!cpuleU9~}f8/M@n L[4XwMkaRog=');
+class Config implements ArrayAccess, ConfigContract
+{
+    /**
+     * All of the configuration items.
+     *
+     * @var array
+     */
+    protected $items = [];
 
-define('AUTH_KEY', ' Xakm<o xQy rw4EMsLKM-?!T+,PFF})H4lzcW57AF0U@N@< >M%G4Yt>f`z]MON');
-define('SECURE_AUTH_KEY', 'LzJ}op]mr|6+![P}Ak:uNdJCJZd>(Hx.-Mh#Tz)pCIU#uGEnfFz|f ;;eU%/U^O~');
-define('LOGGED_IN_KEY', '|i|Ux`9<p-h$aFf(qnT:sDO:D1P^wZ$$/Ra@miTJi9G;ddp_<q}6H1)o|a +&JCM');
-define('NONCE_KEY', '%:R{[P|,s.KuMltH5}cI;/k<Gx~j!f0I)m_sIyu+&NJZ)-iO>z7X>QYR0Z_XnZ@|');
-define('AUTH_SALT', 'eZyT)-Naw]F8CwA*VaW#q*|.)g@o}||wf~@C-YSt}(dh_r6EbI#A,y|nU2{B#JBW');
-define('SECURE_AUTH_SALT', '!=oLUTXh,QW=H `}`L|9/^4-3 STz},T(w}W<I`.JjPi)<Bmf1v,HpGe}T1:Xt7n');
-define('LOGGED_IN_SALT', '+XSqHc;@Q*K_b|Z?NC[3H!!EONbh.n<+=uKR:>*c(u`g~EJBf#8u#R{mUEZrozmm');
-define('NONCE_SALT', 'h`GXHhD>SLWVfg1(1(N{;.V!MoE(SfbA_ksP@&`+AycHcAV$+?@3q+rxV{%^VyKT');
-define('KEY_PAR_PASSWORD', 'test');
+    /**
+     * Create a new configuration repository.
+     *
+     * @param  array $items
+     *
+     * @return void
+     */
+    public function __construct(array $items = [])
+    {
+        $this->items = $items;
+    }
 
+    /**
+     * Determine if the given configuration value exists.
+     *
+     * @param  string $key
+     *
+     * @return bool
+     */
+    public function has($key): bool
+    {
+        return Arr::has($this->items, $key);
+    }
 
-/*
- * prefix to cache
- */
-define('Ballybran_CACHE', 'cache_');
+    /**
+     * Get the specified configuration value.
+     *
+     * @param  array|string $key
+     * @param  mixed        $default
+     *
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        if (is_array($key)) {
+            return $this->getMany($key);
+        }
 
-/*
- *
- *
- */
-if(!defined('ALGO')){
-define('ALGO', 'md5');
+        return Arr::get($this->items, $key, $default);
+    }
+
+    /**
+     * Get many configuration values.
+     *
+     * @param  array $keys
+     *
+     * @return array
+     */
+    public function getMany($keys): array
+    {
+        $config = [];
+
+        foreach ($keys as $key => $default) {
+            if (is_numeric($key)) {
+                [$key, $default] = [$default, null];
+            }
+
+            $config[$key] = Arr::get($this->items, $key, $default);
+        }
+
+        return $config;
+    }
+
+    /**
+     * Set a given configuration value.
+     *
+     * @param  array|string $key
+     * @param  mixed        $value
+     *
+     * @return void
+     */
+    public function set($key, $value = null): void
+    {
+        $keys = is_array($key) ? $key : [$key => $value];
+
+        foreach ($keys as $key => $value) {
+            Arr::set($this->items, $key, $value);
+        }
+    }
+
+    /**
+     * Prepend a value onto an array configuration value.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     *
+     * @return void
+     */
+    public function prepend($key, $value): void
+    {
+        $array = $this->get($key);
+
+        array_unshift($array, $value);
+
+        $this->set($key, $array);
+    }
+
+    /**
+     * Push a value onto an array configuration value.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     *
+     * @return void
+     */
+    public function push($key, $value): void
+    {
+        $array = $this->get($key);
+
+        $array[] = $value;
+
+        $this->set($key, $array);
+    }
+
+    /**
+     * Get all of the configuration items for the application.
+     *
+     * @return array
+     */
+    public function all(): array
+    {
+        return $this->items;
+    }
+
+    /**
+     * Determine if the given configuration option exists.
+     *
+     * @param  string $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * Get a configuration option.
+     *
+     * @param  string $offset
+     *
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * Set a configuration option.
+     *
+     * @param  string $offset
+     * @param  mixed  $value
+     *
+     * @return void
+     */
+    public function offsetSet($offset, $value): void
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * Unset a configuration option.
+     *
+     * @param  string $offset
+     *
+     * @return void
+     */
+    public function offsetUnset($offset): void
+    {
+        $this->set($offset);
+    }
 }
-
-// DIR
-
-if(!defined('DS')){
-define('DS', DIRECTORY_SEPARATOR);
-}
-/*
- *
- * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
- *
- */
-// require_once PV . 'Config/config_module.php';
-
-if(!defined('PV')){
-define('PV', 'App' . DS);
-}
-
-/*
- * APP é a costante responsavel pela criacao da tua applicação.
- * Por padradao o nome da tua applicacao é Applications.
- * Você pode renomear o nome da tua applicacao aqui alterando o seu nome.
- * OBS Se alterar o nome da Applicaçao aqui, terá que criar uma pasta com o novo nome.
- */
-
-global $MY_PROJECT_NAME;
-if (!empty($MY_PROJECT_NAME)) {
-    define('APP', $MY_PROJECT_NAME);
-} else {
-    define('APP', 'app');
-}
-
-global $MY_LOCALE;
-if (!empty($MY_LOCALE)) {
-    define('MY_LOCALE', $MY_LOCALE);
-} else {
-    define('MY_LOCALE', 'app');
-}
-
-global $HEADER_TITLE;
-if (!empty($HEADER_TITLE)) {
-    define('HEADER_TITLE', $HEADER_TITLE);
-} else {
-    define('HEADER_TITLE', 'knut7');
-}
-global $HEADER_DESCRIPTION;
-if (!empty($HEADER_DESCRIPTION)) {
-    define('HEADER_DESCRIPTION', $HEADER_DESCRIPTION);
-} else {
-    define('HEADER_DESCRIPTION', 'knut7');
-}
-
-define('PRODUCT_COMPANYTAXID', 'Clínica Pro');
-
-define('SOFTWARE_VALIDATION_NUMBER', '434/AGT/2020');
-
-define('PRODUCT_ID', 'Clinica Pro/2020');
-
-define('PRODUCT_VERSION', '1.0.0');
-
-
-global $code;
-
-if (!empty($code)) {
-    define('LANGUAGE_CODE', $code);
-} else {
-    define('LANGUAGE_CODE', 'en');
-}
-
-if (!empty($country_utc)) {
-    define('DEFAULT_UTC', $country_utc);
-} else {
-    define('DEFAULT_UTC', 'UTC');
-
-}
-
-if (!empty($_dev)) {
-    define('_ERROR_', $_dev);
-} else {
-    define('_ERROR_', 'no-dev');
-
-}
-
-
-global $MY_CSRFP_TOKEN;
-if(!defined('MY_CSRFP_TOKEN')){
-    define('MY_CSRFP_TOKEN', $MY_CSRFP_TOKEN);
-}
-global $failedAuthAction;
-if(!defined('failedAuthAction')){
-    define('failedAuthAction', $failedAuthAction);
-}
-global $GET_METHOD;
-if(!defined('GET_METHOD')){
-    define('GET_METHOD', $GET_METHOD);
-}
-global $POST_METHOD;
-if(!defined('POST_METHOD')){
-    define('POST_METHOD', $POST_METHOD);
-}
-global $errorRedirectionPage;
-if(!defined('errorRedirectionPage')){
-    define('errorRedirectionPage', $errorRedirectionPage);
-}
-global $customErrorMessage;
-if(!defined('customErrorMessage')){
-    define('customErrorMessage', $customErrorMessage);
-}
-global $jsUrl;
-if(!defined('jsUrl')){
-    define('jsUrl', $jsUrl);
-}
-global $tokenLength;
-if(!defined('tokenLength')){
-    define('tokenLength', $tokenLength);
-}
-global $cookie_path;
-if(!defined('cookie_path')){
-    define('cookie_path', $cookie_path);
-}
-global $cookie_domain;
-if(!defined('cookie_domain')){
-    define('cookie_domain', $cookie_domain);
-}
-global $cookie_secure;
-if(!defined('cookie_secure')){
-    define('cookie_secure', $cookie_secure);
-}
-global $cookie_expire;
-if(!defined('cookie_expire')){
-    define('cookie_expire', $cookie_expire);
-}
-
-/*
- *
- *  O URL base do sistema
- */
-$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST']   . ( BASE_PORT ? ":".BASE_PORT : '');
-$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-
-if(!defined('URL')){
-define('URL', $root);
-}
-
-define('ROOT', dirname(__FILE__));
-
-// define('DIR_FILES', PV . APP . '/class/');
-
-if(!defined('DIR_FILE')){
-define('DIR_FILE', 'public' . DS);
-}
-
-if(!defined('DIR_LANGUAGE')){
-define('DIR_LANGUAGE', 'Ballybran/Core/Language/language/');
-}
-
-if(!defined('DIR_LOGS')){
-define('DIR_LOGS', 'log/');
-}
-if(!defined('DIR_COOKIE')){
-define('DIR_COOKIE', 'cookie/');
-}
-if(!defined('DIR_STORAGE')){
-define('DIR_STORAGE', 'storage/');
-}
-
-/*
- *
- * Faça alteração aqui caso seja necessrio e saiba o que esta a fazer.
- * Esta constante é a constante resposnavel pela nossa View ( Arquivo de visualização).
- *
- */
-    define('VIEW', 'html' . DS . 'views' . DS);
-
-
