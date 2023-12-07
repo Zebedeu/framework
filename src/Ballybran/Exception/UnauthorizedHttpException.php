@@ -6,17 +6,10 @@ namespace Ballybran\Exception;
  * Class UnauthorizedHttpException
  * Adapted from Laravel Framework in order to use HTTP Exceptions
  *
- * @package Ballybran\Exception
+ * @package Knut7\Exception
  */
 class UnauthorizedHttpException extends HttpException
 {
-    /**
-     * @param string        $challenge  WWW-Authenticate challenge string
-     * @param string|array  $message    The internal exception message
-     * @param \Exception    $previous   The previous exception
-     * @param int           $code       The internal exception code
-     * @param array         $headers
-     */
     public function __construct(
         string $challenge,
         $message = null,
