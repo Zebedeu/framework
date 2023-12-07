@@ -4,7 +4,7 @@ namespace Ballybran\Router;
 
 use Ballybran\Exception\NotFoundHttpException;
 
-class RouterException extends \Buki\Router\RouterException
+class RouterException extends \Ballybran\Route\RouterException
 {
     /**
      * Create Exception Class.
